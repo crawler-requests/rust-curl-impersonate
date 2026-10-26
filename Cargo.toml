@@ -8,7 +8,7 @@ repository = "https://github.com/crawler-requests/rust-curl-impersonate"
 rust-version = "1.85"
 
 [dependencies]
-wreq = { version = "6.0.0-rc.31", default-features = false, features = ["tokio-rt", "webpki-roots", "gzip", "brotli", "zstd", "deflate", "socks", "ws", "cookies", "json", "stream"] }
+wreq = { version = "6.0.0-rc.31", default-features = false, features = ["tokio-rt", "webpki-roots", "gzip", "brotli", "zstd", "deflate", "socks", "ws", "cookies", "json", "stream", "multipart"] }
 tokio = { version = "1", features = ["rt", "macros"] }
 brotli = "7"
 flate2 = "1"

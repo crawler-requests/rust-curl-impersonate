@@ -17,7 +17,9 @@ let response = client.get("https://example.com").send().await?;
 println!("{}", response.status());
 ```
 
-`Profile::find` 接受 `profile::TARGETS` 里的任何一个名字。代理用 `ClientBuilder::proxy`，接受 `http://`、`https://` 和 `socks5://`。WebSocket 用 `Client::websocket`，走同一套 TLS 指纹。
+`Profile::find` 接受 `profile::TARGETS` 里的任何一个名字。代理用 `ClientBuilder::proxy`，接受 `http://`、`https://` 和 `socks5://`。WebSocket 用 `Client::websocket`，走同一套 TLS 指纹；`Client::websocket_deflate` 会在握手里带上 `permessage-deflate; client_max_window_bits`。
+
+每个预设按 `lib/impersonate.c` 的顺序发送默认请求头。上传表单用 `FormBoundary::WebKit` 或 `FormBoundary::Firefox`，分别生成 `------WebKitFormBoundary` 加 16 位字母数字、`------geckoformboundary` 加 32 位十六进制的分隔符，与 curl-impersonate 的 `form_boundary` 一致。Cookie 在 HTTP/2 上按每个 cookie 一个 `Cookie` 头发送，对应 `split_cookies`。
 
 `tools/gen_profiles.py` 从 `patches/curl.patch` 里 `impersonations[]` 的新增行重新生成 `src/profile/generated.rs`。
 

@@ -31,6 +31,10 @@
 //! - **HTTP/2 fingerprint.** SETTINGS values and order, pseudo-header order,
 //!   connection window and stream priority.
 //! - **WebSocket.** [`Client::websocket`] upgrades over the same TLS fingerprint.
+//!   [`Client::websocket_deflate`] offers the `permessage-deflate` extension that
+//!   curl-impersonate negotiates as `permessage-deflate; client_max_window_bits`.
+//! - **Multipart boundaries.** [`FormBoundary`] reproduces the `webkit` and `firefox`
+//!   boundaries curl-impersonate's presets select.
 //! - **SOCKS5.** [`ClientBuilder::proxy`] accepts `socks5://` URLs for TCP
 //!   connections.
 //!
@@ -51,9 +55,11 @@
 //!   `tls_record_size_limit = 0`, which BoringSSL rejects outright.
 
 mod client;
+mod form;
 pub mod profile;
 
 pub use client::{Client, ClientBuilder};
+pub use form::FormBoundary;
 pub use profile::Profile;
 pub use wreq::{Method, Proxy, StatusCode};
 
