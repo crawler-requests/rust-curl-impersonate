@@ -2,7 +2,8 @@
 //!
 //! The transport is [`wreq`], which links BoringSSL and exposes the ClientHello
 //! fields curl-impersonate patches BoringSSL to control: cipher order, extension
-//! permutation, GREASE, ECH grease, ALPS and certificate compression. [`Profile`]
+//! order, GREASE, ECH grease, ALPS, delegated credentials and certificate
+//! compression. [`Profile`]
 //! selects which browser's settings are applied.
 
 use std::time::Duration;
@@ -78,8 +79,9 @@ impl ClientBuilder {
 
     /// Route requests through a proxy.
     ///
-    /// `wreq` accepts `http://`, `https://` and, with the `socks` feature, `socks5://`.
-    /// SOCKS5 UDP associate for QUIC is not available: the transport has no HTTP/3.
+    /// `wreq` accepts `http://`, `https://` and, with the `socks` feature, `socks5://`
+    /// for TCP connections. SOCKS5 UDP associate exists only to carry QUIC, and the
+    /// transport has no HTTP/3, so it is not available.
     pub fn proxy(mut self, proxy: Proxy) -> Self {
         self.proxy = Some(proxy);
         self
@@ -108,4 +110,3 @@ impl ClientBuilder {
         })
     }
 }
-

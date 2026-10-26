@@ -1,16 +1,17 @@
 //! Rust rewrite of [curl-impersonate](https://github.com/lexiforest/curl-impersonate).
 //!
 //! curl-impersonate is a patched curl plus a patched BoringSSL. This crate keeps
-//! the BoringSSL half — it is the part that can actually build a browser's
-//! ClientHello — and reimplements the curl half on top of [`wreq`]: choosing a
-//! browser profile, applying its TLS, HTTP/2 and header settings, and sending the
+//! the BoringSSL half, which is what can actually build a browser's ClientHello,
+//! and reimplements the curl half on top of [`wreq`]: choosing one of the 48
+//! browser targets, applying its TLS, HTTP/2 and header settings, and sending the
 //! request.
 //!
 //! ```no_run
 //! use rust_curl_impersonate::{Client, Profile};
 //!
 //! # async fn example() -> rust_curl_impersonate::Result<()> {
-//! let client = Client::new(Profile::Chrome150)?;
+//! let profile = Profile::find("chrome150").expect("chrome150 is a known target");
+//! let client = Client::new(profile)?;
 //! let response = client.get("https://example.com").send().await?;
 //! println!("{}", response.status());
 //! # Ok(())
@@ -19,28 +20,35 @@
 //!
 //! # What is covered
 //!
-//! - **Browser profiles.** [`Profile::Chrome149`] delegates to wreq-util, which
-//!   ships Chrome, Edge, Firefox, Safari, Opera and OkHttp targets.
-//!   [`Profile::Chrome150`] is built in this crate from curl-impersonate's preset,
-//!   because wreq-util stops at Chrome 149. It sets the ML-DSA signature
-//!   algorithms, the `X25519MLKEM768` key share, GREASE, ECH grease, permuted
-//!   extensions and the HTTP/2 window update that preset records.
-//! - **TLS fingerprint.** Cipher order, curves, signature algorithms, extension
-//!   permutation, GREASE, ALPS and certificate compression are set through
-//!   BoringSSL, not rustls. rustls cannot express them.
+//! - **All 48 browser targets** from curl-impersonate's `lib/impersonate.c`,
+//!   including the Chrome 150-152, Firefox 153-155, Safari 260/270, OkHttp and Tor
+//!   targets that post-date the presets shipped by other Rust clients. Resolve one
+//!   with [`Profile::find`]; the full list is [`profile::TARGETS`].
+//! - **TLS fingerprint.** Cipher order (including the TLS 1.3 order), curves,
+//!   signature algorithms, extension order, GREASE, ECH grease, ALPS, delegated
+//!   credentials, key share selection, record size limit and certificate
+//!   compression are set through BoringSSL. rustls cannot express them.
 //! - **HTTP/2 fingerprint.** SETTINGS values and order, pseudo-header order,
 //!   connection window and stream priority.
 //! - **WebSocket.** [`Client::websocket`] upgrades over the same TLS fingerprint.
 //! - **SOCKS5.** [`ClientBuilder::proxy`] accepts `socks5://` URLs for TCP
 //!   connections.
 //!
-//! # What is not covered
+//! # What the transport cannot send
 //!
-//! - **HTTP/3.** Neither wreq nor its BoringSSL build exposes a QUIC stack, so
-//!   curl-impersonate's HTTP/3 settings, QUIC transport parameters and SOCKS5 UDP
-//!   associate have no transport to be applied to.
-//! - **Per-request JA3 strings.** A profile fixes the fingerprint for the whole
-//!   client. Arbitrary JA3 overrides are not parsed.
+//! [`profile::deviation`] names, per target, the preset fields that are recorded
+//! but not sent:
+//!
+//! - **ML-DSA signature algorithms.** curl-impersonate's Chrome 150 and later
+//!   presets lead `sig_hash_algs` with `mldsa44:mldsa65:mldsa87`. BoringSSL
+//!   implements ML-DSA but has no TLS signature-algorithm code point for it, so
+//!   the names are rejected and those presets drop them.
+//! - **HTTP/3.** No Rust QUIC stack can build a BoringSSL ClientHello: `quinn`
+//!   speaks only rustls, and wreq does not expose BoringSSL's QUIC API. The HTTP/3
+//!   SETTINGS, QUIC transport parameters and SOCKS5 UDP associate therefore have
+//!   nothing to be applied to.
+//! - **A record size limit of zero.** Chrome 151 and later presets set
+//!   `tls_record_size_limit = 0`, which BoringSSL rejects outright.
 
 mod client;
 pub mod profile;

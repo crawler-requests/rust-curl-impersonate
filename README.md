@@ -1,55 +1,49 @@
 # rust-curl-impersonate
 
-用 Rust 重写 [lexiforest/curl-impersonate](https://github.com/lexiforest/curl-impersonate)，并在它的预设之外增加浏览器版本。
+用 Rust 重写 [lexiforest/curl-impersonate](https://github.com/lexiforest/curl-impersonate)。
 
-curl-impersonate 是打在 curl 8.23.0 上的一组补丁，加上一份改过的 BoringSSL。指纹能生效是因为 BoringSSL 那部分：rustls 不暴露 cipher 顺序、扩展顺序、GREASE、ECH、ALPS 和证书压缩。本仓库因此把传输层放在 [`wreq`](https://crates.io/crates/wreq) 上，它链接 BoringSSL 并给出这些控制项，然后在上面重写 curl 那一层：选择浏览器预设、套用 TLS 与 HTTP/2 参数、发送请求。
+curl-impersonate 是打在 curl 8.23.0 上的一组补丁，加上一份改过的 BoringSSL。指纹能生效是因为 BoringSSL 那部分：rustls 不暴露 cipher 顺序、扩展顺序、GREASE、ECH、ALPS、delegated credentials 和证书压缩。本仓库把传输层放在 [`wreq`](https://crates.io/crates/wreq) 上，它链接 BoringSSL 并给出这些控制项，然后在上面重写 curl 那一层：选择浏览器预设、套用 TLS 与 HTTP/2 参数、发送请求。
+
+`lib/impersonate.c` 的 48 个预设全部可用，包括 wreq-util 尚未收录的 Chrome 150–152、Firefox 153–155、Safari 260/270、OkHttp 和 Tor。
 
 ## 用法
 
 ```rust
 use rust_curl_impersonate::{Client, Profile};
 
-let client = Client::new(Profile::Chrome150)?;
+let profile = Profile::find("chrome150").expect("known target");
+let client = Client::new(profile)?;
 let response = client.get("https://example.com").send().await?;
 println!("{}", response.status());
 ```
 
-`Profile::Chrome149` 委托给 wreq-util，它自带 Chrome、Edge、Firefox、Safari、Opera 和 OkHttp 的预设。`Profile::Chrome150` 是本仓库新增的：wreq-util 停在 Chrome 149，而 curl-impersonate 的 `lib/impersonate.c` 有 `chrome150`。
+`Profile::find` 接受 `profile::TARGETS` 里的任何一个名字。代理用 `ClientBuilder::proxy`，接受 `http://`、`https://` 和 `socks5://`。WebSocket 用 `Client::websocket`，走同一套 TLS 指纹。
 
-代理用 `ClientBuilder::proxy`，接受 `http://`、`https://` 和 `socks5://`。WebSocket 用 `Client::websocket`，走同一套 TLS 指纹。
+`tools/gen_profiles.py` 从 `patches/curl.patch` 里 `impersonations[]` 的新增行重新生成 `src/profile/generated.rs`。
 
 ## 已验证
 
-`cargo run --example echo` 对 `https://tls.peet.ws/api/all` 发一次 Chrome 150 请求，服务器回显的握手与 curl-impersonate 的 `chrome150` 预设一致：
+`cargo run --example echo <target>` 对 `https://tls.peet.ws/api/all` 发一次请求，服务器回显的握手与预设一致：
 
-| 字段 | 预设值 | 回显 |
-|---|---|---|
-| 协议 | HTTP/2 | `h2` |
-| JA4 | Chrome 桌面形态 | `t13d1515h2_…` |
-| 首个 cipher | GREASE | `TLS_GREASE (0x7A7A)` |
-| 曲线 | `X25519MLKEM768:X25519:P-256:P-384` | 顺序一致，含 GREASE |
-| ECH | `ech = "true"` | 扩展 65037 |
-| ALPS | 新 codepoint | 扩展 17613 `application_settings` |
-| HTTP/2 SETTINGS | `1:65536;2:0;4:6291456;6:262144` | 逐项一致 |
-| 伪头顺序 | `m,a,s,p` | `:method,:authority,:scheme,:path` |
-| User-Agent | Chrome/150.0.0.0 | 一致 |
+| 预设 | 回显核对 |
+|---|---|
+| `chrome150` | JA4 `t13d1515h2`，首个 cipher 为 GREASE，曲线 `X25519MLKEM768:X25519:P-256:P-384`，扩展 65037（ECH）与 17613（ALPS 新 codepoint），HTTP/2 SETTINGS `1:65536;2:0;4:6291456;6:262144`，伪头 `m,a,s,p`，UA Chrome/150.0.0.0 |
+| `firefox133` | 扩展顺序 `0-23-65281-10-11-35-16-5-34-51-43-13-45-28-27-65037` 逐项一致，含 delegated credentials (34)、record_size_limit (28)、compress_certificate (27)；曲线含 `X25519MLKEM768`、`P-521`、`ffdhe2048`、`ffdhe3072`；HTTP/2 SETTINGS `1:65536;2:0;4:131072;5:16384`，伪头 `m,p,a,s` |
+| `safari180` | HTTP/2 SETTINGS `2:0;3:100;4:2097152;8:1;9:1`，含 `ENABLE_CONNECT_PROTOCOL` 与 `NO_RFC7540_PRIORITIES`，伪头 `m,s,a,p`，曲线 `X25519:P-256:P-384:P-521` |
 
-## 与 curl-impersonate 的差距
+## 传输层表达不了的字段
 
-curl-impersonate 的 `chrome150` 预设在签名算法列表开头放了 `mldsa44:mldsa65:mldsa87`。wreq 链接的 BoringSSL 不认识这三个名字，设置后握手直接失败（`INVALID_SIGNATURE_ALGORITHM`）。`Profile::Chrome150` 因此去掉它们，并在 [`CHROME150_UNSUPPORTED_SIGALGS`](src/profile.rs) 里记录。要补上这一项，需要换一份打过 curl-impersonate 的 `patches/boringssl.patch` 的 BoringSSL。
+`profile::deviation` 按预设列出这些差异：
 
-其余未覆盖的部分：
-
-- **HTTP/3。** wreq 没有 QUIC 栈，所以预设里的 HTTP/3 SETTINGS、QUIC 传输参数、初始包号和 CID 长度没有地方可写。
-- **SOCKS5 UDP ASSOCIATE。** 它只为 HTTP/3 over SOCKS5 服务，同样受限于没有 QUIC。SOCKS5 的 TCP 代理可用。
-- **其余 47 个预设。** `lib/impersonate.c` 有 48 个目标。wreq-util 覆盖了其中大部分的浏览器家族，但版本号并不一一对应；本仓库目前只把 `chrome150` 按 curl-impersonate 的数据单独建了预设。
-- **任意 JA3 字符串。** 指纹在创建客户端时固定，不支持逐请求覆盖。
+- **ML-DSA 签名算法。** Chrome 150 及更新的预设把 `mldsa44:mldsa65:mldsa87` 放在签名算法列表开头。wreq 链接的 BoringSSL 实现了 ML-DSA，但 TLS 层没有这三个算法的 code point 和名字映射，设置后握手直接失败（`INVALID_SIGNATURE_ALGORITHM`）。这些预设因此去掉它们。code point 仍是草案，没有稳定值，硬编码会让服务器无法识别。
+- **HTTP/3 与 SOCKS5 UDP ASSOCIATE。** 10 个预设带 HTTP/3 SETTINGS、QUIC 传输参数和初始包号。Rust 生态里能用的 QUIC 栈是 quinn，它的 TLS 只有 rustls，而 rustls 不能定制 ClientHello；wreq 不暴露 BoringSSL 的 `SSL_set_quic_method`。curl-impersonate 自己的 QUIC 也是借 ngtcp2 实现的。SOCKS5 的 TCP 代理可用。
+- **`tls_record_size_limit = 0`。** Chrome 151 及更新的预设用 0 表示不发送该扩展，BoringSSL 把 0 当作非法值直接拒绝，所以这些预设省略它。
 
 ## 构建
 
 ```bash
 cargo test
-cargo run --example echo
+cargo run --example echo chrome150
 ```
 
 `wreq` 在编译期构建 BoringSSL，首次编译需要 C 编译器和 cmake，耗时几分钟。
