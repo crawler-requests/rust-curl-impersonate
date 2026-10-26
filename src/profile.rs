@@ -1,174 +1,233 @@
 //! Browser impersonation profiles.
 //!
-//! A profile is data, not behaviour: it records every knob curl-impersonate
-//! stores in `struct impersonate_opts` (`lib/impersonate.h`). Applying a profile
-//! to a real TLS handshake is a separate layer and is not implemented yet.
+//! A profile names a browser target and resolves to a [`wreq::Emulation`], which
+//! carries the TLS, HTTP/2 and header settings actually used on the wire.
 //!
-//! Field values are transcribed from lexiforest/curl-impersonate
-//! `patches/curl.patch` against curl 8.23.0. `None` means the upstream preset
-//! leaves the field unset, so the TLS stack's own default applies.
+//! Targets that [`wreq_util::Profile`] already ships delegate to it. Targets it
+//! does not ship are built here from curl-impersonate's preset data; `chrome150`
+//! is the first of those.
 
-/// `struct impersonate_opts`, one entry per supported browser target.
+use wreq::header::{HeaderMap, HeaderValue};
+use wreq::http2::{
+    Http2Options, PseudoId, PseudoOrder, SettingId, SettingsOrder, StreamDependency, StreamId,
+};
+use wreq::tls::{AlpsProtocol, TlsOptions, TlsVersion};
+use wreq::{Emulation, IntoEmulation, header};
+
+/// A browser target this crate can impersonate.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct Profile {
-    /// Canonical target name, e.g. `chrome150`.
-    pub target: &'static str,
-    pub alias: &'static str,
-    /// curl `CURL_HTTP_VERSION_*`. `2` is HTTP/2.
-    pub http_version: u8,
-    pub ciphers: &'static [&'static str],
-    /// TLS extension 10, `CURLOPT_SSL_EC_CURVES`.
-    pub curves: Option<&'static [&'static str]>,
-    /// TLS extension 13. `None` keeps the TLS stack default.
-    pub sig_hash_algs: Option<&'static [&'static str]>,
-    /// QUIC uses a different verify list: BoringSSL's default keeps `rsa_pkcs1_sha1`,
-    /// which Chrome strips for TCP.
-    pub http3_sig_hash_algs: Option<&'static [&'static str]>,
-    pub alpn: bool,
-    pub alps: bool,
-    /// `true` once the preset randomises ClientHello extension order per connection.
-    pub tls_permute_extensions: bool,
-    pub tls_session_ticket: bool,
-    /// TLS extension 27, e.g. `brotli`.
-    pub cert_compression: Option<&'static str>,
-    /// Header lines sent verbatim, in order, when default headers are enabled.
-    pub headers: &'static [&'static str],
-    /// `id:value` pairs separated by `;`, e.g. `1:65536;2:0;4:6291456;6:262144`.
-    pub http2_settings: Option<&'static str>,
-    pub http2_window_update: Option<u32>,
-    pub http2_stream_weight: Option<u16>,
-    pub http2_stream_exclusive: bool,
-    pub http3_settings: Option<&'static str>,
-    /// Pseudo header order: `m` method, `a` authority, `s` scheme, `p` path.
-    pub http3_pseudo_headers_order: Option<&'static str>,
-    pub quic_cid_length: Option<&'static str>,
-    /// `1` matches Chrome's QUIC initial packet number.
-    pub quic_initial_packet_number: Option<i64>,
-    pub quic_transport_parameters: Option<&'static str>,
-    /// Extension type numbers in the order they appear in the HTTP/3 ClientHello.
-    pub http3_tls_extension_order: Option<&'static str>,
-    /// Encrypted ClientHello. The string `true` enables GREASE ECH.
-    pub ech: Option<&'static str>,
-    pub tls_use_new_alps_codepoint: bool,
-    pub tls_signed_cert_timestamps: bool,
-    pub tls_grease: bool,
-    /// One `Cookie` header per pair instead of joining them.
-    pub split_cookies: bool,
-    /// `multipart/form-data` boundary style, `webkit` or `firefox`.
-    pub form_boundary: Option<&'static str>,
+pub enum Profile {
+    /// Chrome 149, the newest Chrome target shipped by wreq-util 3.0.0-rc.14.
+    Chrome149,
+    /// Chrome 150. wreq-util stops at 149; the TLS and HTTP/2 settings come from
+    /// curl-impersonate's `chrome150` entry in `lib/impersonate.c`.
+    Chrome150,
 }
 
 impl Profile {
-    pub fn find(target: &str) -> Option<&'static Profile> {
-        PROFILES.iter().find(|profile| profile.target == target)
+    pub fn target(self) -> &'static str {
+        match self {
+            Profile::Chrome149 => "chrome149",
+            Profile::Chrome150 => "chrome150",
+        }
+    }
+
+    pub fn find(target: &str) -> Option<Profile> {
+        match target {
+            "chrome149" => Some(Profile::Chrome149),
+            "chrome150" => Some(Profile::Chrome150),
+            _ => None,
+        }
+    }
+
+    /// The emulation settings sent on the wire for this profile.
+    pub fn emulation(self) -> Emulation {
+        match self {
+            Profile::Chrome149 => wreq_util::Profile::Chrome149.into_emulation(),
+            Profile::Chrome150 => chrome150(),
+        }
     }
 }
 
-const CHROME_MODERN_CIPHERS: &[&str] = &[
-    "TLS_AES_128_GCM_SHA256",
-    "TLS_AES_256_GCM_SHA384",
-    "TLS_CHACHA20_POLY1305_SHA256",
-    "ECDHE-ECDSA-AES128-GCM-SHA256",
-    "ECDHE-RSA-AES128-GCM-SHA256",
-    "ECDHE-ECDSA-AES256-GCM-SHA384",
-    "ECDHE-RSA-AES256-GCM-SHA384",
-    "ECDHE-ECDSA-CHACHA20-POLY1305",
-    "ECDHE-RSA-CHACHA20-POLY1305",
-    "ECDHE-RSA-AES128-SHA",
-    "ECDHE-RSA-AES256-SHA",
-    "AES128-GCM-SHA256",
-    "AES256-GCM-SHA384",
-    "AES128-SHA",
-    "AES256-SHA",
-];
+/// Chrome's cipher list as curl-impersonate records it for `chrome150`.
+const CHROME_CIPHERS: &str = "TLS_AES_128_GCM_SHA256:\
+TLS_AES_256_GCM_SHA384:\
+TLS_CHACHA20_POLY1305_SHA256:\
+TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:\
+TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:\
+TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:\
+TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:\
+TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:\
+TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:\
+TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:\
+TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:\
+TLS_RSA_WITH_AES_128_GCM_SHA256:\
+TLS_RSA_WITH_AES_256_GCM_SHA384:\
+TLS_RSA_WITH_AES_128_CBC_SHA:\
+TLS_RSA_WITH_AES_256_CBC_SHA";
 
-/// Chrome 150, transcribed from `impersonations[]` in `lib/impersonate.c`.
-pub const CHROME_150: Profile = Profile {
-    target: "chrome150",
-    alias: "chrome150",
-    http_version: 2,
-    ciphers: CHROME_MODERN_CIPHERS,
-    curves: Some(&["X25519MLKEM768", "X25519", "P-256", "P-384"]),
-    sig_hash_algs: Some(&[
-        "mldsa44",
-        "mldsa65",
-        "mldsa87",
-        "ecdsa_secp256r1_sha256",
-        "rsa_pss_rsae_sha256",
-        "rsa_pkcs1_sha256",
-        "ecdsa_secp384r1_sha384",
-        "rsa_pss_rsae_sha384",
-        "rsa_pkcs1_sha384",
-        "rsa_pss_rsae_sha512",
-        "rsa_pkcs1_sha512",
-    ]),
-    http3_sig_hash_algs: Some(&[
-        "ecdsa_secp256r1_sha256",
-        "rsa_pss_rsae_sha256",
-        "rsa_pkcs1_sha256",
-        "ecdsa_secp384r1_sha384",
-        "rsa_pss_rsae_sha384",
-        "rsa_pkcs1_sha384",
-        "rsa_pss_rsae_sha512",
-        "rsa_pkcs1_sha512",
-        "rsa_pkcs1_sha1",
-    ]),
-    alpn: true,
-    alps: true,
-    tls_permute_extensions: true,
-    tls_session_ticket: true,
-    cert_compression: Some("brotli"),
-    headers: &[
-        "sec-ch-ua: \"Not;A=Brand\";v=\"8\", \"Chromium\";v=\"150\", \"Google Chrome\";v=\"150\"",
-        "sec-ch-ua-mobile: ?0",
-        "sec-ch-ua-platform: \"macOS\"",
-        "Upgrade-Insecure-Requests: 1",
-        "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
-        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Sec-Fetch-Site: none",
-        "Sec-Fetch-Mode: navigate",
-        "Sec-Fetch-User: ?1",
-        "Sec-Fetch-Dest: document",
-        "Accept-Encoding: gzip, deflate, br, zstd",
-        "Accept-Language: en-US,en;q=0.9",
-        "Priority: u=0, i",
-    ],
-    http2_settings: Some("1:65536;2:0;4:6291456;6:262144"),
-    http2_window_update: Some(15_663_105),
-    http2_stream_weight: Some(256),
-    http2_stream_exclusive: true,
-    http3_settings: Some("1:65536;6:262144;7:100;51:1;GREASE"),
-    http3_pseudo_headers_order: Some("masp"),
-    quic_cid_length: Some("webkit"),
-    quic_initial_packet_number: Some(1),
-    quic_transport_parameters: Some(
-        "1:30000;3:1472;4:15728640;5:6291456;6:6291456;7:6291456;8:100;9:103;15:;17:1@1,GREASE;32:65536;12584:0x4f524947;GREASE",
-    ),
-    http3_tls_extension_order: Some("0-10-13-16-27-43-45-51-57-17613-65037"),
-    ech: Some("true"),
-    tls_use_new_alps_codepoint: true,
-    tls_signed_cert_timestamps: true,
-    tls_grease: true,
-    split_cookies: true,
-    form_boundary: Some("webkit"),
-};
+/// `sig_hash_algs` from curl-impersonate's `chrome150` preset, minus the three
+/// leading ML-DSA entries. That preset reads `mldsa44:mldsa65:mldsa87:...`, but
+/// the BoringSSL build linked by wreq rejects those names with
+/// `INVALID_SIGNATURE_ALGORITHM` and aborts the handshake. They are recorded in
+/// [`CHROME150_UNSUPPORTED_SIGALGS`] until the TLS backend learns them.
+const CHROME150_SIGALGS: &str = "ecdsa_secp256r1_sha256:\
+rsa_pss_rsae_sha256:\
+rsa_pkcs1_sha256:\
+ecdsa_secp384r1_sha384:\
+rsa_pss_rsae_sha384:\
+rsa_pkcs1_sha384:\
+rsa_pss_rsae_sha512:\
+rsa_pkcs1_sha512";
 
-pub static PROFILES: &[Profile] = &[CHROME_150];
+/// Signature algorithms curl-impersonate advertises for `chrome150` that the
+/// current TLS backend cannot express.
+pub const CHROME150_UNSUPPORTED_SIGALGS: &[&str] = &["mldsa44", "mldsa65", "mldsa87"];
+
+fn chrome150() -> Emulation {
+    let tls = TlsOptions::builder()
+        .grease_enabled(true)
+        .enable_ocsp_stapling(true)
+        .enable_signed_cert_timestamps(true)
+        .curves_list("X25519MLKEM768:X25519:P-256:P-384")
+        .sigalgs_list(CHROME150_SIGALGS)
+        .cipher_list(CHROME_CIPHERS)
+        .min_tls_version(TlsVersion::TLS_1_2)
+        .max_tls_version(TlsVersion::TLS_1_3)
+        .permute_extensions(true)
+        .pre_shared_key(true)
+        .enable_ech_grease(true)
+        .alps_protocols([AlpsProtocol::HTTP2])
+        .alps_use_new_codepoint(true)
+        .aes_hw_override(true)
+        .build();
+
+    // curl-impersonate: http2_settings = "1:65536;2:0;4:6291456;6:262144",
+    // http2_window_update = 15663105, stream weight 256 exclusive on stream 0.
+    let http2 = Http2Options::builder()
+        .header_table_size(65536)
+        .enable_push(false)
+        .initial_window_size(6291456)
+        .max_header_list_size(262144)
+        .initial_connection_window_size(15663105)
+        .headers_stream_dependency(StreamDependency::new(StreamId::zero(), 255, true))
+        .headers_pseudo_order(
+            PseudoOrder::builder()
+                .extend([
+                    PseudoId::Method,
+                    PseudoId::Authority,
+                    PseudoId::Scheme,
+                    PseudoId::Path,
+                ])
+                .build(),
+        )
+        .settings_order(
+            SettingsOrder::builder()
+                .extend([
+                    SettingId::HeaderTableSize,
+                    SettingId::EnablePush,
+                    SettingId::InitialWindowSize,
+                    SettingId::MaxHeaderListSize,
+                ])
+                .build(),
+        )
+        .build();
+
+    // `http_headers` from curl-impersonate's chrome150 preset, macOS platform.
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        header::HeaderName::from_static("sec-ch-ua"),
+        HeaderValue::from_static(
+            "\"Not;A=Brand\";v=\"8\", \"Chromium\";v=\"150\", \"Google Chrome\";v=\"150\"",
+        ),
+    );
+    headers.insert(
+        header::HeaderName::from_static("sec-ch-ua-mobile"),
+        HeaderValue::from_static("?0"),
+    );
+    headers.insert(
+        header::HeaderName::from_static("sec-ch-ua-platform"),
+        HeaderValue::from_static("\"macOS\""),
+    );
+    headers.insert(
+        header::UPGRADE_INSECURE_REQUESTS,
+        HeaderValue::from_static("1"),
+    );
+    headers.insert(
+        header::USER_AGENT,
+        HeaderValue::from_static(
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+        ),
+    );
+    headers.insert(
+        header::ACCEPT,
+        HeaderValue::from_static(
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        ),
+    );
+    headers.insert(
+        header::HeaderName::from_static("sec-fetch-site"),
+        HeaderValue::from_static("none"),
+    );
+    headers.insert(
+        header::HeaderName::from_static("sec-fetch-mode"),
+        HeaderValue::from_static("navigate"),
+    );
+    headers.insert(
+        header::HeaderName::from_static("sec-fetch-user"),
+        HeaderValue::from_static("?1"),
+    );
+    headers.insert(
+        header::HeaderName::from_static("sec-fetch-dest"),
+        HeaderValue::from_static("document"),
+    );
+    headers.insert(
+        header::ACCEPT_ENCODING,
+        HeaderValue::from_static("gzip, deflate, br, zstd"),
+    );
+    headers.insert(
+        header::ACCEPT_LANGUAGE,
+        HeaderValue::from_static("en-US,en;q=0.9"),
+    );
+    headers.insert(
+        header::HeaderName::from_static("priority"),
+        HeaderValue::from_static("u=0, i"),
+    );
+
+    Emulation::builder()
+        .tls_options(tls)
+        .http2_options(http2)
+        .headers(headers)
+        .build(wreq::Group::new("chrome_150"))
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn chrome150_matches_upstream_preset() {
-        let profile = Profile::find("chrome150").unwrap();
-        assert!(profile.tls_grease);
-        assert!(profile.tls_permute_extensions);
-        assert_eq!(profile.curves.unwrap()[0], "X25519MLKEM768");
-        assert_eq!(profile.http2_window_update, Some(15_663_105));
-        assert_eq!(profile.http3_pseudo_headers_order, Some("masp"));
-        assert_eq!(profile.quic_initial_packet_number, Some(1));
-        assert_eq!(profile.headers.len(), 13);
-        assert!(profile.headers[0].contains("Chromium\";v=\"150\""));
+    fn profiles_resolve_to_emulation_settings() {
+        assert_eq!(Profile::find("chrome150"), Some(Profile::Chrome150));
+        assert!(Profile::find("nope").is_none());
+
+        let chrome150 = Profile::Chrome150.emulation();
+        let tls = chrome150.tls_options.expect("chrome150 sets tls options");
+        assert_eq!(
+            tls.curves_list.as_deref(),
+            Some("X25519MLKEM768:X25519:P-256:P-384")
+        );
+        assert_eq!(tls.sigalgs_list.as_deref(), Some(CHROME150_SIGALGS));
+        assert_eq!(tls.permute_extensions, Some(true));
+        assert!(tls.enable_ech_grease);
+        assert!(tls.alps_use_new_codepoint);
+
+        let http2 = chrome150.http2_options.expect("chrome150 sets http2 options");
+        assert_eq!(http2.initial_conn_window_size, 15663105);
+        assert_eq!(http2.header_table_size, Some(65536));
+        assert_eq!(http2.initial_window_size, 6291456);
+        assert_eq!(http2.max_header_list_size, Some(262144));
+
+        // Chrome 149 stays delegated to wreq-util rather than re-declared here.
+        assert!(Profile::Chrome149.emulation().tls_options.is_some());
     }
 }

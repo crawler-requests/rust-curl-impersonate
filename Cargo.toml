@@ -3,7 +3,14 @@ name = "rust-curl-impersonate"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-description = "Pure Rust rewrite of curl-impersonate: browser TLS, HTTP/2 and HTTP/3 fingerprints"
+description = "Rust rewrite of curl-impersonate: browser TLS, HTTP/2 and HTTP/3 fingerprints"
 repository = "https://github.com/crawler-requests/rust-curl-impersonate"
+rust-version = "1.85"
 
 [dependencies]
+wreq = { version = "6.0.0-rc.31", default-features = false, features = ["tokio-rt", "webpki-roots", "gzip", "brotli", "zstd", "deflate", "socks", "ws", "cookies", "json", "stream"] }
+wreq-util = { version = "3.0.0-rc.14", default-features = false, features = ["emulation", "tokio-rt"] }
+tokio = { version = "1", features = ["rt", "macros"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }

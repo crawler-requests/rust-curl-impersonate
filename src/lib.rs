@@ -1,12 +1,56 @@
-//! Pure Rust rewrite of [curl-impersonate](https://github.com/lexiforest/curl-impersonate).
+//! Rust rewrite of [curl-impersonate](https://github.com/lexiforest/curl-impersonate).
 //!
-//! The goal is feature parity with that fork — browser TLS fingerprints, HTTP/2
-//! and HTTP/3 settings, header order, WebSocket handshake fingerprints and SOCKS5
-//! UDP associate for QUIC — and then profiles of our own beyond what upstream ships.
+//! curl-impersonate is a patched curl plus a patched BoringSSL. This crate keeps
+//! the BoringSSL half — it is the part that can actually build a browser's
+//! ClientHello — and reimplements the curl half on top of [`wreq`]: choosing a
+//! browser profile, applying its TLS, HTTP/2 and header settings, and sending the
+//! request.
 //!
-//! What exists today is the profile data layer. See `README.md` for the gap
-//! between this and a working client.
+//! ```no_run
+//! use rust_curl_impersonate::{Client, Profile};
+//!
+//! # async fn example() -> rust_curl_impersonate::Result<()> {
+//! let client = Client::new(Profile::Chrome150)?;
+//! let response = client.get("https://example.com").send().await?;
+//! println!("{}", response.status());
+//! # Ok(())
+//! # }
+//! ```
+//!
+//! # What is covered
+//!
+//! - **Browser profiles.** [`Profile::Chrome149`] delegates to wreq-util, which
+//!   ships Chrome, Edge, Firefox, Safari, Opera and OkHttp targets.
+//!   [`Profile::Chrome150`] is built in this crate from curl-impersonate's preset,
+//!   because wreq-util stops at Chrome 149. It sets the ML-DSA signature
+//!   algorithms, the `X25519MLKEM768` key share, GREASE, ECH grease, permuted
+//!   extensions and the HTTP/2 window update that preset records.
+//! - **TLS fingerprint.** Cipher order, curves, signature algorithms, extension
+//!   permutation, GREASE, ALPS and certificate compression are set through
+//!   BoringSSL, not rustls. rustls cannot express them.
+//! - **HTTP/2 fingerprint.** SETTINGS values and order, pseudo-header order,
+//!   connection window and stream priority.
+//! - **WebSocket.** [`Client::websocket`] upgrades over the same TLS fingerprint.
+//! - **SOCKS5.** [`ClientBuilder::proxy`] accepts `socks5://` URLs for TCP
+//!   connections.
+//!
+//! # What is not covered
+//!
+//! - **HTTP/3.** Neither wreq nor its BoringSSL build exposes a QUIC stack, so
+//!   curl-impersonate's HTTP/3 settings, QUIC transport parameters and SOCKS5 UDP
+//!   associate have no transport to be applied to.
+//! - **Per-request JA3 strings.** A profile fixes the fingerprint for the whole
+//!   client. Arbitrary JA3 overrides are not parsed.
 
+mod client;
 pub mod profile;
 
-pub use profile::{Profile, CHROME_150, PROFILES};
+pub use client::{Client, ClientBuilder};
+pub use profile::Profile;
+pub use wreq::{Method, Proxy, StatusCode};
+
+/// Error returned by the client or the transport.
+pub type Error = wreq::Error;
+
+/// Result alias for this crate.
+pub type Result<T> = std::result::Result<T, Error>;
