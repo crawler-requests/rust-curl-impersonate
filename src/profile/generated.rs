@@ -126,13 +126,13 @@ pub fn deviation(target: &str) -> Option<&'static str> {
     "chrome145" => "HTTP/3 settings have no QUIC transport",
     "chrome146" => "HTTP/3 settings have no QUIC transport",
     "chrome150" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
-    "chrome151" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport; record_size_limit 0 is rejected by BoringSSL and omitted",
-    "chrome151_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport; record_size_limit 0 is rejected by BoringSSL and omitted",
-    "chrome152" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport; record_size_limit 0 is rejected by BoringSSL and omitted",
-    "chrome152_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport; record_size_limit 0 is rejected by BoringSSL and omitted",
+    "chrome151" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
+    "chrome151_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
+    "chrome152" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
+    "chrome152_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
     "firefox147" => "HTTP/3 settings have no QUIC transport",
-    "safari270" => "HTTP/3 settings have no QUIC transport; record_size_limit 0 is rejected by BoringSSL and omitted",
-    "safari270_ios" => "HTTP/3 settings have no QUIC transport; record_size_limit 0 is rejected by BoringSSL and omitted",
+    "safari270" => "HTTP/3 settings have no QUIC transport",
+    "safari270_ios" => "HTTP/3 settings have no QUIC transport",
         _ => return None,
     })
 }
@@ -2011,6 +2011,7 @@ fn profile_chrome151() -> Emulation {
         .enable_ech_grease(true)
         .alps_protocols([AlpsProtocol::HTTP2])
         .alps_use_new_codepoint(true)
+        .record_size_limit(0)
         .key_shares(&[KeyShare::X25519_MLKEM768, KeyShare::X25519])
         .certificate_compressors(&[&BrotliCompressor as &dyn CertificateCompressor])
         .build();
@@ -2130,6 +2131,7 @@ fn profile_chrome151_macos() -> Emulation {
         .enable_ech_grease(true)
         .alps_protocols([AlpsProtocol::HTTP2])
         .alps_use_new_codepoint(true)
+        .record_size_limit(0)
         .key_shares(&[KeyShare::X25519_MLKEM768, KeyShare::X25519])
         .certificate_compressors(&[&BrotliCompressor as &dyn CertificateCompressor])
         .build();
@@ -2249,6 +2251,7 @@ fn profile_chrome152() -> Emulation {
         .enable_ech_grease(true)
         .alps_protocols([AlpsProtocol::HTTP2])
         .alps_use_new_codepoint(true)
+        .record_size_limit(0)
         .key_shares(&[KeyShare::X25519_MLKEM768, KeyShare::X25519])
         .certificate_compressors(&[&BrotliCompressor as &dyn CertificateCompressor])
         .build();
@@ -2373,6 +2376,7 @@ fn profile_chrome152_macos() -> Emulation {
         .enable_ech_grease(true)
         .alps_protocols([AlpsProtocol::HTTP2])
         .alps_use_new_codepoint(true)
+        .record_size_limit(0)
         .key_shares(&[KeyShare::X25519_MLKEM768, KeyShare::X25519])
         .certificate_compressors(&[&BrotliCompressor as &dyn CertificateCompressor])
         .build();
@@ -4692,6 +4696,7 @@ fn profile_safari270() -> Emulation {
         .permute_extensions(false)
         .pre_shared_key(true)
         .enable_ech_grease(false)
+        .record_size_limit(0)
         .extension_permutation(&[ExtensionType::SERVER_NAME, ExtensionType::EXTENDED_MASTER_SECRET, ExtensionType::RENEGOTIATE, ExtensionType::SUPPORTED_GROUPS, ExtensionType::EC_POINT_FORMATS, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::STATUS_REQUEST, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::CERTIFICATE_TIMESTAMP, ExtensionType::KEY_SHARE, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::CERT_COMPRESSION])
         .key_shares(&[KeyShare::X25519_MLKEM768, KeyShare::X25519])
         .certificate_compressors(&[&ZlibCompressor as &dyn CertificateCompressor])
@@ -4785,6 +4790,7 @@ fn profile_safari270_ios() -> Emulation {
         .permute_extensions(false)
         .pre_shared_key(true)
         .enable_ech_grease(false)
+        .record_size_limit(0)
         .extension_permutation(&[ExtensionType::SERVER_NAME, ExtensionType::EXTENDED_MASTER_SECRET, ExtensionType::RENEGOTIATE, ExtensionType::SUPPORTED_GROUPS, ExtensionType::EC_POINT_FORMATS, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::STATUS_REQUEST, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::CERTIFICATE_TIMESTAMP, ExtensionType::KEY_SHARE, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::CERT_COMPRESSION])
         .key_shares(&[KeyShare::X25519_MLKEM768, KeyShare::X25519])
         .certificate_compressors(&[&ZlibCompressor as &dyn CertificateCompressor])

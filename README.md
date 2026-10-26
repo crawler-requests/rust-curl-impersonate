@@ -39,7 +39,6 @@ println!("{}", response.status());
 
 - **ML-DSA 签名算法。** Chrome 150 及更新的预设把 `mldsa44:mldsa65:mldsa87` 放在签名算法列表开头。wreq 链接的 BoringSSL 实现了 ML-DSA，但 TLS 层没有这三个算法的 code point 和名字映射，设置后握手直接失败（`INVALID_SIGNATURE_ALGORITHM`）。这些预设因此去掉它们。code point 仍是草案，没有稳定值，硬编码会让服务器无法识别。
 - **HTTP/3 与 SOCKS5 UDP ASSOCIATE。** 10 个预设带 HTTP/3 SETTINGS、QUIC 传输参数和初始包号。Rust 生态里能用的 QUIC 栈是 quinn，它的 TLS 只有 rustls，而 rustls 不能定制 ClientHello；wreq 不暴露 BoringSSL 的 `SSL_set_quic_method`。curl-impersonate 自己的 QUIC 也是借 ngtcp2 实现的。SOCKS5 的 TCP 代理可用。
-- **`tls_record_size_limit = 0`。** Chrome 151 及更新的预设用 0 表示不发送该扩展，BoringSSL 把 0 当作非法值直接拒绝，所以这些预设省略它。
 
 ## 构建
 

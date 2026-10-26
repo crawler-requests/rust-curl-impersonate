@@ -51,8 +51,6 @@
 //!   speaks only rustls, and wreq does not expose BoringSSL's QUIC API. The HTTP/3
 //!   SETTINGS, QUIC transport parameters and SOCKS5 UDP associate therefore have
 //!   nothing to be applied to.
-//! - **A record size limit of zero.** Chrome 151 and later presets set
-//!   `tls_record_size_limit = 0`, which BoringSSL rejects outright.
 
 mod client;
 mod form;

@@ -250,7 +250,9 @@ def emit_profile(row):
         out.append("        .alps_use_new_codepoint(true)")
     if row["delegated"]:
         out.append(f"        .delegated_credentials({rust_str(row['delegated'])})")
-    if row["recsize"] not in (None, 0):
+    # BoringSSL treats 0 as "do not send the extension", which is exactly what
+    # curl-impersonate's presets use 0 to mean, so the value is passed through.
+    if row["recsize"] is not None:
         out.append(f"        .record_size_limit({row['recsize']})")
     if row["extorder"]:
         ids = ", ".join(EXT[part] for part in row["extorder"].split("-"))
@@ -332,14 +334,12 @@ def main():
         parts.append(body)
         targets.append(row["target"])
         match_arms.append(f'        "{row["target"]}" => {fn_name(row["target"])}(),')
-        if dropped or row["h3settings"] or row["recsize"] == 0:
+        if dropped or row["h3settings"]:
             bits = []
             if dropped:
                 bits.append("drops signature algorithms " + ", ".join(dropped))
             if row["h3settings"]:
                 bits.append("HTTP/3 settings have no QUIC transport")
-            if row["recsize"] == 0:
-                bits.append("record_size_limit 0 is rejected by BoringSSL and omitted")
             notes.append(f'    "{row["target"]}" => "{"; ".join(bits)}",')
 
     target_list = "\n".join(f"    {rust_str(target)}," for target in targets)

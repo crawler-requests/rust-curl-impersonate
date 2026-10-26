@@ -105,8 +105,11 @@ mod tests {
         ] {
             assert!(deviation(target).unwrap().contains("HTTP/3"), "{target}");
         }
-        // BoringSSL rejects a record size limit of zero.
-        assert!(deviation("chrome151")
+        // A record size limit of zero means "send no extension", and BoringSSL
+        // implements it that way, so chrome151 no longer deviates on it.
+        let chrome151 = Profile::find("chrome151").unwrap().emulation();
+        assert_eq!(chrome151.tls_options.unwrap().record_size_limit, Some(0));
+        assert!(!deviation("chrome151")
             .unwrap()
             .contains("record_size_limit"));
         // Firefox's extension order and delegated credentials are representable.
