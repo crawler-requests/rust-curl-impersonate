@@ -1,0 +1,9 @@
+[package]
+name = "rust-curl-impersonate"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Pure Rust rewrite of curl-impersonate: browser TLS, HTTP/2 and HTTP/3 fingerprints"
+repository = "https://github.com/crawler-requests/rust-curl-impersonate"
+
+[dependencies]
