@@ -124,6 +124,9 @@ jobs:
             case "\$arg" in
               --target=*|-target=*) continue ;;
               -target) skip=1; continue ;;
+              # rustc hands this GNU ld workaround to aarch64 linkers; zig's
+              # lld rejects it.
+              -Wl,--fix-cortex-a53-843419|--fix-cortex-a53-843419) continue ;;
             esac
             filtered+=("\$arg")
           done
