@@ -201,7 +201,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: dist-${{ matrix.target }}
-          path: dist/*
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
           if-no-files-found: error
 
   release:
@@ -218,9 +220,12 @@ jobs:
         run: |
           cd dist
           ls -l
-          sha256sum * > SHA256SUMS
+          sha256sum *.tar.gz *.zip > SHA256SUMS
       - uses: softprops/action-gh-release@v2
         with:
-          files: dist/*
+          files: |
+            dist/*.tar.gz
+            dist/*.zip
+            dist/SHA256SUMS
           fail_on_unmatched_files: true
           generate_release_notes: true
