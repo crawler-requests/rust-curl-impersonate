@@ -103,9 +103,10 @@ body: <!doctype html><html lang=en>...
   - 每个平台构建 `examples/echo` 与 cdylib，调用 `scripts/package_artifact.py`
   - 汇总 `SHA256SUMS`，用 `softprops/action-gh-release` 发布
 
-两个 workflow 已通过 PyYAML 解析；除 Windows/Android/macOS 目标外，workflow 中
-用到的构建、打包、Python 冒烟命令均在本机按相同参数执行过。GitHub 上的首次真实
-运行仍需推送后确认。
+两个 workflow 都已在 GitHub 上真实运行。v0.1.0 的 Release 运行 43088342862
+包含 test + 9 个 build job + publish，全部 success；产物发布在
+https://github.com/crawler-requests/rust-curl-impersonate/releases/tag/v0.1.0 。
+CI 流程在 2398d4f 上运行 43088439998，success。
 
 ## 4. 回归
 
@@ -120,3 +121,68 @@ provider 会让另一个测试的 refresh 偶发 `service unavailable`。测试�
 最后重新构建了宿主的 `cargo build --release --examples` 与
 `cargo build --release -p rust-curl-impersonate-ffi`，并用改动后的工作树重新跑了
 path 与 git 两个外部消费者，均输出 `profile=chrome150 target=chrome150`。
+
+## 5. GitHub Actions 实跑结果（v0.1.0）
+
+Release run 43088342862（tag push，2026-11-11）：`test (linux x86_64)` success，
+9 个 build job 全部 success，`publish GitHub release` success。9 个目标为：
+
+| 目标 | 产物 | 大小（字节） | 架构校验 |
+|---|---|---|---|
+| x86_64-unknown-linux-gnu | .tar.gz | 7,618,447 | ELF x86-64，BuildID，含 echo |
+| aarch64-unknown-linux-gnu | .tar.gz | 7,535,405 | ELF ARM aarch64，含 echo |
+| x86_64-unknown-linux-musl | .tar.gz | 6,896,597 | ELF x86-64（static-pie echo） |
+| aarch64-unknown-linux-musl | .tar.gz | 6,442,202 | ELF ARM aarch64（static-pie echo） |
+| x86_64-apple-darwin | .tar.gz | 6,887,677 | Mach-O x86_64 dylib/executable |
+| aarch64-apple-darwin | .tar.gz | 6,633,545 | Mach-O arm64 dylib/executable |
+| x86_64-pc-windows-msvc | .zip | 7,984,770 | PE32+ x86-64 DLL/EXE + .dll.lib + .pdb |
+| aarch64-pc-windows-msvc | .zip | 7,163,724 | PE32+ Aarch64 DLL/EXE + .dll.lib + .pdb |
+| aarch64-linux-android | .tar.gz | 3,866,801 | ELF ARM aarch64；NEEDED: libc++_shared、libc、libm、libdl |
+
+`SHA256SUMS`（9 个压缩包，下载后 `sha256sum -c` 全部成功）：
+
+```
+cdf2dbf0b60babdb836ac8589f3e9ccb679c5060fb039a075721331f84eaa6f2  aarch64-apple-darwin.tar.gz
+71d6c04ffc8caa1f313215d9e8fc6a06a0111692546287072fb6bda7f620e857  aarch64-linux-android.tar.gz
+638109b918a5e8755cf6de9ef2ab1fae023fb1530811267fdf6407f25d23757e  aarch64-unknown-linux-gnu.tar.gz
+eb362858178271897ced81eec83bf1d41dc6c891db290a8f44629c6116fc7fc4  aarch64-unknown-linux-musl.tar.gz
+d2e37f5180c18fdd34f71e25e616cd92835fb430a41f1c6aa3c744491a469383  x86_64-apple-darwin.tar.gz
+7b64c8ed49602e1aa313950db329c5047052b3be525c37305bc73197c9195f88  x86_64-unknown-linux-gnu.tar.gz
+e56524d779fe3337af77d91720f873cf30593b64cb07d8effe4e0849c6abfe13  x86_64-unknown-linux-musl.tar.gz
+41267ca23f143d95e1a904c6e30cd7e55c7ab291ec8599694562db86562a8993  aarch64-pc-windows-msvc.zip
+d8b2e5f789408125b641f386bb517425dde9b8cad0d6797bd8b3a51748cc4a57  x86_64-pc-windows-msvc.zip
+```
+
+每个桌面/服务器包内都有 `lib/<cdylib>`、`include/rci.h`、`bin/echo`、`LICENSE`、
+`README.md`；Windows 包另有 `.dll.lib` 与 `.pdb`；Android 包只有库、头文件与文档。
+
+## 6. Release 产物运行校验
+
+Linux（直接跑 Release 里下载的 `bin/echo chrome150 https://example.com/`，
+aarch64 用 `qemu-aarch64-static`，gnu 加 `-L /usr/aarch64-linux-gnu`）：
+
+```
+x86_64-unknown-linux-gnu      exit=0  status: 200 OK
+x86_64-unknown-linux-musl     exit=0  status: 200 OK
+aarch64-unknown-linux-gnu     exit=0  status: 200 OK
+aarch64-unknown-linux-musl    exit=0  status: 200 OK
+```
+
+ctypes 加载 Release 里的 cdylib（`bindings/ffi/python/demo.py`）：
+
+```
+宿主机 x86_64 gnu  .so   abi version: 1 / http status: 200
+Alpine x86_64 musl .so   abi version: 1 / http status: 200
+```
+
+无法在本机执行的平台做了二进制级校验：
+
+- macOS x86_64/arm64：`file` 为 Mach-O 64-bit executable/shared library，导出表里
+  7 个 `rci_*` 符号齐全。
+- Windows x86_64/arm64：`file` 为 PE32+ x86-64/Aarch64 DLL 与 EXE，
+  `llvm-readobj --coff-exports` 显示 7 个 `rci_*` 导出。
+- Android arm64：ELF aarch64，`readelf -Ws` 可见 `rci_*`，`DT_NEEDED` 含
+  `libc++_shared.so`（消费方需随 APK 打包 NDK 的同名库）。
+
+macOS/Windows/Android 尚未在真机跑 `echo`，属于剩余风险；Linux 四个目标已端到端
+访问真实 HTTPS 站点。

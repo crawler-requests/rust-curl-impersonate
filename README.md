@@ -268,8 +268,8 @@ Python `ctypes` 实测返回 HTTP 200、`h2`、Chrome/150.0.0.0 的 UA 与 JA4�
   `aarch64-pc-windows-msvc`、`aarch64-linux-android` 的 C ABI 共享库与 `echo`
   冒烟程序，打成 `rust-curl-impersonate-ffi-<version>-<target>.tar.gz`（Windows 为
   `.zip`，内含 `lib/`、`include/rci.h`、`bin/echo`、LICENSE 与绑定 README），
-  汇总 `SHA256SUMS` 后发布到 GitHub Release。Windows arm64 与 Android 属于
-  `continue-on-error` 的探索性目标。
+  汇总 `SHA256SUMS` 后发布到 GitHub Release。9 个目标全部构建成功后才会发布；
+  `v0.1.0` 的产物见 <https://github.com/crawler-requests/rust-curl-impersonate/releases/tag/v0.1.0>。
 
 本地复现某个平台的产物：
 

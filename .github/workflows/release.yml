@@ -61,13 +61,10 @@ jobs:
           - target: aarch64-pc-windows-msvc
             os: windows-latest
             name: windows-arm64
-            experimental: true
           - target: aarch64-linux-android
             os: ubuntu-latest
             name: android-arm64
-            experimental: true
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental == true }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
