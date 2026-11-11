@@ -1,0 +1,46 @@
+Unable to find image 'denoland/deno:alpine' locally
+alpine: Pulling from denoland/deno
+e2de96513ba9: Already exists
+3fc3b8b2376e: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+2edff9641068: Pulling fs layer
+d3b349916868: Pulling fs layer
+7289bd10e28b: Pulling fs layer
+39ce6bf24231: Pulling fs layer
+33b1a3098329: Pulling fs layer
+900ecd08c5f7: Pulling fs layer
+803f6bdaa017: Pulling fs layer
+39ce6bf24231: Waiting
+900ecd08c5f7: Waiting
+803f6bdaa017: Waiting
+33b1a3098329: Waiting
+d3b349916868: Waiting
+7289bd10e28b: Waiting
+2edff9641068: Verifying Checksum
+2edff9641068: Download complete
+4f4fb700ef54: Verifying Checksum
+7289bd10e28b: Verifying Checksum
+7289bd10e28b: Download complete
+d3b349916868: Verifying Checksum
+d3b349916868: Download complete
+33b1a3098329: Verifying Checksum
+33b1a3098329: Download complete
+3fc3b8b2376e: Verifying Checksum
+3fc3b8b2376e: Download complete
+3fc3b8b2376e: Pull complete
+4f4fb700ef54: Pull complete
+2edff9641068: Pull complete
+d3b349916868: Pull complete
+7289bd10e28b: Pull complete
+803f6bdaa017: Verifying Checksum
+803f6bdaa017: Download complete
+900ecd08c5f7: Verifying Checksum
+900ecd08c5f7: Download complete
+39ce6bf24231: Verifying Checksum
+39ce6bf24231: Download complete
+39ce6bf24231: Pull complete
+33b1a3098329: Pull complete
+900ecd08c5f7: Pull complete
+803f6bdaa017: Pull complete
+Digest: sha256:75749604f68aea01d39bead15fd1c86343639e44eb8c58ab051da8a924799d01
+Status: Downloaded newer image for denoland/deno:alpine

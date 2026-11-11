@@ -1,0 +1,224 @@
+全库实测：154 条基础记录 + 33 个别名；examples/echo 对 tls.peet.ws 逐条握手。
+
+字段说明：identical = cipher/曲线/签名算法/扩展集合与顺序/ALPN/JA4 与抓包完全一致；differs 后面列出差异字段。
+
+go1.26                   close    differs    t13d1312h2_f57a46bbacb6_ab7e3b40a677 -> t13d1311h2_f57a46bbacb6_8ae82214aac3
+    extensions missing=[50] extra=[]; ciphers; groups
+python3.12_requests      partial  differs    t13d3112h1_e8f1e7e78f70_b26ce05bbdd6 -> t13d2910h1_9ac3848deeb6_3f2a2b408976
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+python3.12_urllib        partial  differs    t13d3113h1_e8f1e7e78f70_d339722ba4af -> t13d2911h1_9ac3848deeb6_75c239c97f63
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+python3.12_aiohttp       partial  differs    t13d3112h1_e8f1e7e78f70_d41ae481755e -> t13d2911h1_9ac3848deeb6_75c239c97f63
+    extensions missing=[22] extra=[]; ciphers; groups; sigalgs
+curl8.5_h2               partial  differs    t13d3112h2_e8f1e7e78f70_b26ce05bbdd6 -> t13d2910h2_9ac3848deeb6_3f2a2b408976
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+curl8.5_http1            partial  differs    t13d3112h1_e8f1e7e78f70_b26ce05bbdd6 -> t13d2910h1_9ac3848deeb6_3f2a2b408976
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+java21_httpclient        partial  differs    t13d3113h2_1d947a95fc68_7e1102d2036b -> t13d2312h2_6cd7aff8ed7b_f0b0bd731038
+    extensions missing=[17, 50] extra=[21]; ciphers; groups; sigalgs
+java21_urlconn           partial  differs    t13d3112_1d947a95fc68_7e1102d2036b -> t13d2311_6cd7aff8ed7b_f0b0bd731038
+    extensions missing=[17, 50] extra=[21]; ciphers; groups; sigalgs
+node22_https             partial  differs    t13d5910_a33745022dd6_1f22a2ca17c4 -> t13d2910_9ac3848deeb6_75c239c97f63
+    extensions missing=[22] extra=[21]; ciphers; groups; sigalgs
+node22_http2             partial  differs    t13d5911h2_a33745022dd6_1f22a2ca17c4 -> t13d2911h2_9ac3848deeb6_75c239c97f63
+    extensions missing=[22] extra=[21]; ciphers; groups; sigalgs
+node22_fetch             partial  differs    t13d5911h1_a33745022dd6_1f22a2ca17c4 -> t13d2911h1_9ac3848deeb6_75c239c97f63
+    extensions missing=[22] extra=[21]; ciphers; groups; sigalgs
+go1.26_http1             close    differs    t13d1311_f57a46bbacb6_ab7e3b40a677 -> t13d1310_f57a46bbacb6_8ae82214aac3
+    extensions missing=[50] extra=[]; ciphers; groups
+python3.12_httpx         partial  differs    t13d4313h1_c7886603b240_d339722ba4af -> t13d2911h1_9ac3848deeb6_75c239c97f63
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+python3.12_httpclient    partial  differs    t13d3113h1_e8f1e7e78f70_d339722ba4af -> t13d2911h1_9ac3848deeb6_75c239c97f63
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+bun1.3.14                exact    identical  t13d1714h1_5b57614c22b0_43ade6aba3df -> t13d1714h1_5b57614c22b0_43ade6aba3df
+php8.3_curl              partial  differs    t13d3112h2_e8f1e7e78f70_b26ce05bbdd6 -> t13d2910h2_9ac3848deeb6_3f2a2b408976
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+php8.3_streams           partial  differs    t13d7511_479067518aa3_d41ae481755e -> t13d2910_9ac3848deeb6_75c239c97f63
+    extensions missing=[22] extra=[]; ciphers; groups; sigalgs
+wget1.21.4               partial  differs    t13d7511_479067518aa3_fb8d5ffd48c1 -> t13d2910_9ac3848deeb6_75c239c97f63
+    extensions missing=[22, 49] extra=[21]; ciphers; groups; sigalgs
+perl5_lwp                partial  differs    t13d3112_e8f1e7e78f70_ccd0985badbe -> t13d2911_9ac3848deeb6_f0b0bd731038
+    extensions missing=[22] extra=[]; ciphers; groups; sigalgs
+openssl3_sclient         partial  differs    t13d3111h1_e8f1e7e78f70_1f22a2ca17c4 -> t13d2911h1_9ac3848deeb6_75c239c97f63
+    extensions missing=[22] extra=[21]; ciphers; groups; sigalgs
+rust_reqwest_rustls      close    differs    t13d1011h2_61a7ad8aa9b6_3fcd1a44f3e3 -> t13d911h2_f91f431d341e_3fcd1a44f3e3
+    ciphers
+chromium156              close    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+    extensions missing=[51764] extra=[]; sigalgs
+firefox158               exact    identical  t13d1517h2_8daaf6152771_3cbfd9057e0d -> t13d1517h2_8daaf6152771_3cbfd9057e0d
+android_confirmed        exact    identical  t12d129h2_d34a8e72043a_b39be8c56a14 -> t12d129h2_d34a8e72043a_b39be8c56a14
+android_okhttp13         exact    identical  t13d1513h2_8daaf6152771_eca864cca44a -> t13d1513h2_8daaf6152771_eca864cca44a
+android_confirmed2       exact    differs    t12d1210h2_d34a8e72043a_f88f2b2eb673 -> t12d129h2_d34a8e72043a_b39be8c56a14
+    extensions missing=[21] extra=[]
+android_mesh             exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+android_mesh1            exact    identical  t12d149h1_c866b44c5a26_b39be8c56a14 -> t12d149h1_c866b44c5a26_b39be8c56a14
+android_okhttp7          close    differs    t12d128h2_d34a8e72043a_31a7e1922da8 -> t12d128h2_d34a8e72043a_8c06664c3ac5
+    sigalgs
+android_okhttp8          exact    identical  t12d129h2_d34a8e72043a_e08eabe7240f -> t12d129h2_d34a8e72043a_e08eabe7240f
+android_okhttp9          exact    identical  t12d129h2_d34a8e72043a_b39be8c56a14 -> t12d129h2_d34a8e72043a_b39be8c56a14
+android_okhttp10         exact    identical  t13d1513h2_8daaf6152771_eca864cca44a -> t13d1513h2_8daaf6152771_eca864cca44a
+android_okhttp11         exact    identical  t13d1513h2_8daaf6152771_eca864cca44a -> t13d1513h2_8daaf6152771_eca864cca44a
+android_okhttp12         exact    identical  t13d1513h2_8daaf6152771_eca864cca44a -> t13d1513h2_8daaf6152771_eca864cca44a
+android_nike             close    differs    t13d1513h2_8daaf6152771_eca864cca44a -> t13d1513h2_8daaf6152771_eca864cca44a
+    extensions missing=[] extra=[None]
+android_zalando          exact    identical  t13d1514h2_8daaf6152771_43ade6aba3df -> t13d1514h2_8daaf6152771_43ade6aba3df
+ios_confirmed            exact    identical  t13d1314h2_f57a46bbacb6_14788d8d241b -> t13d1314h2_f57a46bbacb6_14788d8d241b
+ios_safari18_5           exact    identical  t13d2014h2_a09f3c656075_e42f34c56612 -> t13d2014h2_a09f3c656075_e42f34c56612
+ios_safari26             exact    identical  t13d2013h2_a09f3c656075_7f0f34a4126d -> t13d2013h2_a09f3c656075_7f0f34a4126d
+opera91                  exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_brave146       exact    identical  t13d1516h2_8daaf6152771_d8a2da3f94cd -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+tlsclient_cloudflare     partial  differs    t12d58h1_be41622fbb2f_3c5a66c06c35 -> t12d47h1_cefcabfea53d_38702d7861db
+    extensions missing=[22] extra=[]; ciphers; sigalgs
+tlsclient_chrome103      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome104      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome105      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome106      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome107      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome108      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome109      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome110      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome111      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome112      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome117      exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_chrome120      exact    differs    t13d1516h2_8daaf6152771_02713d6af862 -> t13d1517h2_8daaf6152771_b1ff8ab2d16f
+    extensions missing=[] extra=[21]
+tlsclient_chrome124      exact    identical  t13d1516h2_8daaf6152771_02713d6af862 -> t13d1516h2_8daaf6152771_02713d6af862
+tlsclient_chrome131      exact    identical  t13d1516h2_8daaf6152771_02713d6af862 -> t13d1516h2_8daaf6152771_02713d6af862
+tlsclient_chrome133      exact    identical  t13d1516h2_8daaf6152771_d8a2da3f94cd -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+tlsclient_chrome144      exact    identical  t13d1516h2_8daaf6152771_d8a2da3f94cd -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+tlsclient_chrome146      close    differs    t13d1517h2_8daaf6152771_dcad5a053991 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+    extensions missing=[51764] extra=[]
+tlsclient_chrome150      close    differs    t13d1516h2_8daaf6152771_806a8c22fdea -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+    sigalgs
+tlsclient_chrome152      close    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+    extensions missing=[51764] extra=[]; sigalgs
+tlsclient_firefox102     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
+tlsclient_firefox104     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
+tlsclient_firefox105     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
+tlsclient_firefox106     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
+tlsclient_firefox108     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
+tlsclient_firefox110     close    identical  t13d1713h2_5b57614c22b0_f81080dfc557 -> t13d1713h2_5b57614c22b0_f81080dfc557
+tlsclient_firefox117     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
+tlsclient_firefox120     close    identical  t13d1713h2_5b57614c22b0_748f4c70de1c -> t13d1713h2_5b57614c22b0_748f4c70de1c
+tlsclient_firefox123     close    identical  t13d1715h2_5b57614c22b0_5c2c66f702b0 -> t13d1715h2_5b57614c22b0_5c2c66f702b0
+tlsclient_firefox132     exact    identical  t13d1714h2_5b57614c22b0_3dd24b5ebec4 -> t13d1714h2_5b57614c22b0_3dd24b5ebec4
+tlsclient_firefox133     exact    identical  t13d1714h2_5b57614c22b0_3dd24b5ebec4 -> t13d1714h2_5b57614c22b0_3dd24b5ebec4
+tlsclient_firefox135     exact    identical  t13d1715h2_5b57614c22b0_a54fffd0eb61 -> t13d1715h2_5b57614c22b0_a54fffd0eb61
+tlsclient_firefox147     exact    identical  t13d1717h2_5b57614c22b0_68c5a8c2958d -> t13d1717h2_5b57614c22b0_68c5a8c2958d
+tlsclient_firefox148     exact    identical  t13d1917h2_4d8ed5baf28e_3cbfd9057e0d -> t13d1917h2_4d8ed5baf28e_3cbfd9057e0d
+tlsclient_opera89        exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_opera90        exact    identical  t13d1516h2_8daaf6152771_e5627efa2ab1 -> t13d1516h2_8daaf6152771_e5627efa2ab1
+tlsclient_safari15_6_1   exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+tlsclient_safari16       exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+tlsclient_safari_ipad15_6 exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+tlsclient_ios_mms        exact    identical  t13d1810_e8a523a41297_78e6aca7449b -> t13d1810_e8a523a41297_78e6aca7449b
+tlsclient_ios_mms2       exact    identical  t13d1810_e8a523a41297_78e6aca7449b -> t13d1810_e8a523a41297_78e6aca7449b
+tlsclient_ios_mms3       exact    identical  t13d1314h2_f57a46bbacb6_2a6581477f52 -> t13d1314h2_f57a46bbacb6_2a6581477f52
+tlsclient_ios_mesh       exact    identical  t13d1314h2_f57a46bbacb6_14788d8d241b -> t13d1314h2_f57a46bbacb6_14788d8d241b
+tlsclient_ios_mesh2      exact    identical  t13d1714h2_0633f72d41ca_14788d8d241b -> t13d1714h2_0633f72d41ca_14788d8d241b
+tlsclient_ios_nike       exact    identical  t13d1314h2_f57a46bbacb6_14788d8d241b -> t13d1314h2_f57a46bbacb6_14788d8d241b
+tlsclient_ios_zalando    exact    identical  t13d1314h2_f57a46bbacb6_14788d8d241b -> t13d1314h2_f57a46bbacb6_14788d8d241b
+tlsclient_ios_safari15_5 exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+tlsclient_ios_safari15_6 exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+tlsclient_ios_safari16   exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+tlsclient_ios_safari17   exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+tlsclient_ios_safari18   exact    identical  t13d2014h2_a09f3c656075_14788d8d241b -> t13d2014h2_a09f3c656075_14788d8d241b
+utls_chrome58            close    differs    t12d1311h1_8b80da21ef18_eb7c9aabf852 -> t12d1310h1_8b80da21ef18_e69ac49eb88f
+    extensions missing=[30032] extra=[]
+utls_chrome62            close    differs    t12d1311h1_8b80da21ef18_eb7c9aabf852 -> t12d1310h1_8b80da21ef18_e69ac49eb88f
+    extensions missing=[30032] extra=[]
+utls_chrome70            close    differs    t13d1616h1_46e7e9700bed_4551aecd7b38 -> t13d1615h1_46e7e9700bed_45f260be83e2
+    extensions missing=[30032] extra=[]
+utls_chrome72            exact    identical  t13d1615h1_46e7e9700bed_45f260be83e2 -> t13d1615h1_46e7e9700bed_45f260be83e2
+utls_chrome83            exact    identical  t13d1515h1_8daaf6152771_de4a06bb82e3 -> t13d1515h1_8daaf6152771_de4a06bb82e3
+utls_chrome87            exact    identical  t13d1515h1_8daaf6152771_de4a06bb82e3 -> t13d1515h1_8daaf6152771_de4a06bb82e3
+utls_chrome96            exact    identical  t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
+utls_chrome100           exact    identical  t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
+utls_chrome102           exact    identical  t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
+utls_chrome106shuffle    exact    differs    t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
+    extension order
+utls_chrome115pq         exact    identical  t13d1515h1_8daaf6152771_f37e75b10bcc -> t13d1515h1_8daaf6152771_f37e75b10bcc
+utls_chrome120           exact    identical  t13d1517h1_8daaf6152771_b1ff8ab2d16f -> t13d1517h1_8daaf6152771_b1ff8ab2d16f
+utls_chrome120pq         exact    identical  t13d1516h1_8daaf6152771_02713d6af862 -> t13d1516h1_8daaf6152771_02713d6af862
+utls_chrome131           exact    identical  t13d1516h1_8daaf6152771_02713d6af862 -> t13d1516h1_8daaf6152771_02713d6af862
+utls_chrome133           exact    identical  t13d1516h1_8daaf6152771_d8a2da3f94cd -> t13d1516h1_8daaf6152771_d8a2da3f94cd
+utls_firefox55           exact    identical  t12d159h1_073e58a039a6_e70312a1ce2c -> t12d159h1_073e58a039a6_e70312a1ce2c
+utls_firefox56           exact    identical  t12d159h1_073e58a039a6_e70312a1ce2c -> t12d159h1_073e58a039a6_e70312a1ce2c
+utls_firefox63           exact    identical  t13d1814h1_29a2cd9e9f10_d267a5f792d4 -> t13d1814h1_29a2cd9e9f10_d267a5f792d4
+utls_firefox65           exact    identical  t13d1814h1_29a2cd9e9f10_d267a5f792d4 -> t13d1814h1_29a2cd9e9f10_d267a5f792d4
+utls_firefox99           exact    identical  t13d1815h1_e8a523a41297_3d5424432f57 -> t13d1815h1_e8a523a41297_3d5424432f57
+utls_firefox102          exact    identical  t13d1715h1_5b57614c22b0_3d5424432f57 -> t13d1715h1_5b57614c22b0_3d5424432f57
+utls_firefox105          exact    identical  t13d1715h1_5b57614c22b0_3d5424432f57 -> t13d1715h1_5b57614c22b0_3d5424432f57
+utls_firefox120          exact    identical  t13d1715h1_5b57614c22b0_5c2c66f702b0 -> t13d1715h1_5b57614c22b0_5c2c66f702b0
+utls_safari16            exact    identical  t13d2014h1_a09f3c656075_14788d8d241b -> t13d2014h1_a09f3c656075_14788d8d241b
+utls_ios11               close    differs    t12d2010h1_2a284e3b0c56_f05fdf8c38a9 -> t12d209h1_2a284e3b0c56_6e2cce1a33e5
+    extensions missing=[13172] extra=[]
+utls_ios12               close    differs    t12d2310h1_f91c41aead95_12b7a1cb7c36 -> t12d239h1_f91c41aead95_e0e2b8a7da62
+    extensions missing=[13172] extra=[]
+utls_ios13               exact    identical  t13d2613h1_2802a3db6c62_845d286b0d67 -> t13d2613h1_2802a3db6c62_845d286b0d67
+utls_ios14               exact    identical  t13d2613h1_2802a3db6c62_845d286b0d67 -> t13d2613h1_2802a3db6c62_845d286b0d67
+utls_android11okhttp     exact    identical  t12d128h1_d34a8e72043a_036209cd1ead -> t12d128h1_d34a8e72043a_036209cd1ead
+utls_edge85              exact    identical  t13d1515h1_8daaf6152771_de4a06bb82e3 -> t13d1515h1_8daaf6152771_de4a06bb82e3
+utls_edge106             exact    identical  t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
+utls_360_7_5             partial  differs    t12d2010h1_0bf03fa604e3_736b2a1ed4d3 -> t12d1510h1_ec29cb507bb3_5af529090790
+    extensions missing=[13172, 30031] extra=[21, 23]; ciphers; sigalgs
+utls_360_11_0            close    differs    t13d1616h1_46e7e9700bed_4551aecd7b38 -> t13d1615h1_46e7e9700bed_45f260be83e2
+    extensions missing=[30032] extra=[]
+utls_qq11_1              exact    identical  t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
+go1.21                   close    differs    t13d1911h2_9dc949149365_e7c285222651 -> t13d1912h2_9dc949149365_cb16dbeb0c10
+    extensions missing=[] extra=[21]; ciphers
+go1.22                   close    differs    t13d1411h2_cbb2034c60b8_e7c285222651 -> t13d1412h2_cbb2034c60b8_cb16dbeb0c10
+    extensions missing=[] extra=[21]; ciphers
+go1.23                   close    differs    t13d1311h2_f57a46bbacb6_e7c285222651 -> t13d1311h2_f57a46bbacb6_e7c285222651
+    ciphers
+go1.24                   close    differs    t13d1311h2_f57a46bbacb6_e7c285222651 -> t13d1311h2_f57a46bbacb6_e7c285222651
+    ciphers
+node24_https             partial  differs    t13d5211_b262b3658495_8e6e362c5eac -> t13d2910_9ac3848deeb6_bff1261881eb
+    extensions missing=[22] extra=[]; ciphers; groups; sigalgs
+node24_http2             partial  differs    t13d5212h2_b262b3658495_8e6e362c5eac -> t13d2911h2_9ac3848deeb6_bff1261881eb
+    extensions missing=[22] extra=[]; ciphers; groups; sigalgs
+curl7.88.1_h2            partial  differs    t13d3112h2_e8f1e7e78f70_8d633dac7124 -> t13d2910h2_9ac3848deeb6_9f733520e4e2
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+curl7.88.1_http1         partial  differs    t13d3112h1_e8f1e7e78f70_8d633dac7124 -> t13d2910h1_9ac3848deeb6_9f733520e4e2
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+curl8.10.1_h2            partial  differs    t13d3112h2_e8f1e7e78f70_6bebaf5329ac -> t13d2910h2_9ac3848deeb6_3f2a2b408976
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+curl8.10.1_http1         partial  differs    t13d3112h1_e8f1e7e78f70_6bebaf5329ac -> t13d2910h1_9ac3848deeb6_3f2a2b408976
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+python3.9_urllib         partial  differs    t13d3013_1d37bd780c83_5ae85263eb3b -> t13d2911_9ac3848deeb6_b88b5d832a88
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+python3.11_urllib        partial  differs    t13d1714h1_ab0a1bf427ad_5ae85263eb3b -> t13d1712h1_ab0a1bf427ad_b88b5d832a88
+    extensions missing=[22, 49] extra=[]; groups; sigalgs
+java8_urlconn            partial  differs    t13d339_80cecea31fe6_9da38b6fd1bc -> t13d269_399c8018fe05_dacad4df302e
+    extensions missing=[50] extra=[21]; ciphers; groups; sigalgs
+java11_httpclient        partial  differs    t13d3112h2_1d947a95fc68_b72e173852fa -> t13d2311h2_6cd7aff8ed7b_cc031649e29d
+    extensions missing=[17, 50] extra=[21]; ciphers; groups; sigalgs
+java11_urlconn           partial  differs    t13d3111_1d947a95fc68_b72e173852fa -> t13d2310_6cd7aff8ed7b_cc031649e29d
+    extensions missing=[17, 50] extra=[21]; ciphers; groups; sigalgs
+java17_urlconn           partial  differs    t13d3112_1d947a95fc68_7e1102d2036b -> t13d2311_6cd7aff8ed7b_f0b0bd731038
+    extensions missing=[17, 50] extra=[21]; ciphers; groups; sigalgs
+openssl1.1_sclient       partial  differs    t13d3111h1_e8f1e7e78f70_5ac7197df9d2 -> t13d2911h1_9ac3848deeb6_4ea354780e76
+    extensions missing=[22] extra=[21]; ciphers; groups; sigalgs
+openssl3.3_sclient       partial  differs    t13d3111h1_e8f1e7e78f70_518fb456ca59 -> t13d2911h1_9ac3848deeb6_75c239c97f63
+    extensions missing=[22] extra=[21]; ciphers; groups; sigalgs
+wget1.21_bookworm        partial  differs    t13d2913_723694b0fccc_899037bd0b8c -> t13d2113_3bfe00f7fbe8_328a4bfaec59
+    extensions missing=[49] extra=[23]; ciphers; groups; sigalgs
+php8.1_streams           partial  differs    t13d6811_13e0e9e1c501_8e6e362c5eac -> t13d2910_9ac3848deeb6_bff1261881eb
+    extensions missing=[22] extra=[]; ciphers; groups; sigalgs
+go1.20                   close    differs    t13d1910h2_9dc949149365_97f8aa674fd9 -> t13d1912h2_9dc949149365_cb16dbeb0c10
+    extensions missing=[] extra=[21, 23]; ciphers
+python3.8_urllib         partial  differs    t13d3112_e8f1e7e78f70_d339722ba4af -> t13d2910_9ac3848deeb6_75c239c97f63
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+ruby3.3_nethttp          partial  differs    t13d3012_1d37bd780c83_89ab6efea773 -> t13d2910_9ac3848deeb6_bff1261881eb
+    extensions missing=[22, 49] extra=[]; ciphers; groups; sigalgs
+deno_fetch               close    differs    t13d1011h2_61a7ad8aa9b6_f9531d972513 -> t13d911h2_f91f431d341e_f9531d972513
+    ciphers
+dart_httpclient          exact    identical  t13d1710_5b57614c22b0_78e6aca7449b -> t13d1710_5b57614c22b0_78e6aca7449b
+erlang_ssl               partial  differs    t13d257_77cab16fc9f0_78a613864d9e -> t13d117_a4c8ab769d32_4c0313b15efe
+    extensions missing=[50] extra=[23]; ciphers; groups; sigalgs
+dotnet8_http1            partial  differs    t13d1211_a538d02d76d5_f6eeaf393d2e -> t13d1110_c5d436628c5c_b81ef59ec1e8
+    extensions missing=[22] extra=[]; ciphers; groups; sigalgs
+dotnet8_http2            partial  differs    t13d1212h2_a538d02d76d5_f6eeaf393d2e -> t13d1112h2_c5d436628c5c_f0b0bd731038
+    extensions missing=[22] extra=[21]; ciphers; groups; sigalgs
+
+summary: identical 90/154, JA4 identical 94/154, supported subset 154/154, no echo 0/154

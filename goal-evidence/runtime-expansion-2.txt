@@ -1,0 +1,12 @@
+新增 8 条由官方 Docker/发行版镜像抓到的运行时指纹（154 条基础记录，33 个别名，共 187 条）
+
+go1.20             go1.20                 close    h1=False 0-5-10-11-13-65281-16-18-43-51
+python3.8_urllib   python3.8              partial  h1=True  0-11-10-35-23-13-43-45-51
+ruby3.3_nethttp    ruby:3.3-alpine        partial  h1=True  65281-0-11-10-35-23-13-43-45-51
+deno_fetch         denoland/deno:alpine   close    h1=False 5-16-23-51-10-45-11-35-43-13-0
+dart_httpclient    dart:stable            exact    h1=True  0-23-65281-10-11-35-13-51-45-43
+erlang_ssl         erlang:27              partial  h1=True  51-11-0-43-10-13
+dotnet8_http1      dotnet/sdk:8.0         partial  h1=True  0-11-10-35-5-23-13-43-45-51
+dotnet8_http2      dotnet/sdk:8.0         partial  h1=False 0-11-10-35-5-16-23-13-43-45-51
+
+实测：examples/echo 逐条握手，tools/check_subset.py 8/8 通过（BoringSSL 能发的 cipher/曲线/签名算法/扩展集合与顺序与抓包逐项一致）；dart_httpclient 的 JA4 与抓包完全相同。

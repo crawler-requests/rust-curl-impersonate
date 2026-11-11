@@ -1,0 +1,3 @@
+[cloud-api] serving goal-evidence/cloud-library.json at http://127.0.0.1:8747/fingerprints.json etag="d50fb15867828caf" bearer=required
+[cloud-api] GET /fingerprints.json if-none-match=None authorization='Bearer ***' -> 200
+[cloud-api] GET /fingerprints.json if-none-match='"d50fb15867828caf"' authorization='Bearer ***' -> 304

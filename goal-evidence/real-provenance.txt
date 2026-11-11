@@ -1,0 +1,215 @@
+builtin fingerprint provenance audit
+date: 2026-11-12
+library: src/fingerprint/builtin.json
+generator: tools/gen_fingerprints.py (reads only tools/capture/raw/*.json)
+
+records: 194 total = 161 captured base + 33 aliases
+base records with an existing raw capture: 161/161
+raw captures carrying tls.peet.ws response markers: 161/161
+base records whose version string appears in the raw user-agent: 85/161
+  (the remainder are runtimes whose UA has no patch version, e.g.
+   Go-http-client/2.0, okhttp/4.12.0, or an empty UA; their version comes
+   from the exact binary that produced the capture, recorded in the source path)
+aliases resolving to a captured record or a curl-impersonate preset: 33/33
+records with no real capture behind them: 0
+
+problems:
+  none
+
+per-record source
+  go1.26                   tools/capture/raw/go1.26.json
+  python3.12_requests      tools/capture/raw/python3.12_requests.json
+  python3.12_urllib        tools/capture/raw/python3.12_urllib.json
+  python3.12_aiohttp       tools/capture/raw/python3.12_aiohttp.json
+  curl8.5_h2               tools/capture/raw/curl8.5_h2.json
+  curl8.5_http1            tools/capture/raw/curl8.5_http1.json
+  java21_httpclient        tools/capture/raw/java21_httpclient.json
+  java21_urlconn           tools/capture/raw/java21_urlconn.json
+  node22_https             tools/capture/raw/node22_https.json
+  node22_http2             tools/capture/raw/node22_http2.json
+  node22_fetch             tools/capture/raw/node22_fetch.json
+  go1.26_http1             tools/capture/raw/go1.26_http1.json
+  python3.12_httpx         tools/capture/raw/python3.12_httpx.json
+  python3.12_httpclient    tools/capture/raw/python3.12_httpclient.json
+  bun1.3.14                tools/capture/raw/bun1.3.14.json
+  php8.3_curl              tools/capture/raw/php8.3_curl.json
+  php8.3_streams           tools/capture/raw/php8.3_streams.json
+  wget1.21.4               tools/capture/raw/wget1.21.4.json
+  perl5_lwp                tools/capture/raw/perl5_lwp.json
+  openssl3_sclient         tools/capture/raw/openssl3_sclient.json
+  rust_reqwest_rustls      tools/capture/raw/rust_reqwest_rustls.json
+  chromium156              tools/capture/raw/chromium156.json
+  chromium157              tools/capture/raw/chromium157.json
+  chrome158                tools/capture/raw/chrome158.json
+  chrome159                tools/capture/raw/chrome159.json
+  firefox158               tools/capture/raw/firefox158.json
+  firefox159               tools/capture/raw/firefox159.json
+  firefox160               tools/capture/raw/firefox160.json
+  firefox161               tools/capture/raw/firefox161.json
+  firefox162               tools/capture/raw/firefox162.json
+  android_confirmed        tools/capture/raw/android_confirmed.json
+  android_okhttp13         tools/capture/raw/android_okhttp13.json
+  android_confirmed2       tools/capture/raw/android_confirmed2.json
+  android_mesh             tools/capture/raw/android_mesh.json
+  android_mesh1            tools/capture/raw/android_mesh1.json
+  android_okhttp7          tools/capture/raw/android_okhttp7.json
+  android_okhttp8          tools/capture/raw/android_okhttp8.json
+  android_okhttp9          tools/capture/raw/android_okhttp9.json
+  android_okhttp10         tools/capture/raw/android_okhttp10.json
+  android_okhttp11         tools/capture/raw/android_okhttp11.json
+  android_okhttp12         tools/capture/raw/android_okhttp12.json
+  android_nike             tools/capture/raw/android_nike.json
+  android_zalando          tools/capture/raw/android_zalando.json
+  ios_confirmed            tools/capture/raw/ios_confirmed.json
+  ios_safari18_5           tools/capture/raw/ios_safari18_5.json
+  ios_safari26             tools/capture/raw/ios_safari26.json
+  opera91                  tools/capture/raw/opera91.json
+  tlsclient_brave146       tools/capture/raw/tlsclient_brave146.json
+  tlsclient_cloudflare     tools/capture/raw/tlsclient_cloudflare.json
+  tlsclient_chrome103      tools/capture/raw/tlsclient_chrome103.json
+  tlsclient_chrome104      tools/capture/raw/tlsclient_chrome104.json
+  tlsclient_chrome105      tools/capture/raw/tlsclient_chrome105.json
+  tlsclient_chrome106      tools/capture/raw/tlsclient_chrome106.json
+  tlsclient_chrome107      tools/capture/raw/tlsclient_chrome107.json
+  tlsclient_chrome108      tools/capture/raw/tlsclient_chrome108.json
+  tlsclient_chrome109      tools/capture/raw/tlsclient_chrome109.json
+  tlsclient_chrome110      tools/capture/raw/tlsclient_chrome110.json
+  tlsclient_chrome111      tools/capture/raw/tlsclient_chrome111.json
+  tlsclient_chrome112      tools/capture/raw/tlsclient_chrome112.json
+  tlsclient_chrome117      tools/capture/raw/tlsclient_chrome117.json
+  tlsclient_chrome120      tools/capture/raw/tlsclient_chrome120.json
+  tlsclient_chrome124      tools/capture/raw/tlsclient_chrome124.json
+  tlsclient_chrome131      tools/capture/raw/tlsclient_chrome131.json
+  tlsclient_chrome133      tools/capture/raw/tlsclient_chrome133.json
+  tlsclient_chrome144      tools/capture/raw/tlsclient_chrome144.json
+  tlsclient_chrome146      tools/capture/raw/tlsclient_chrome146.json
+  tlsclient_chrome150      tools/capture/raw/tlsclient_chrome150.json
+  tlsclient_chrome152      tools/capture/raw/tlsclient_chrome152.json
+  tlsclient_firefox102     tools/capture/raw/tlsclient_firefox102.json
+  tlsclient_firefox104     tools/capture/raw/tlsclient_firefox104.json
+  tlsclient_firefox105     tools/capture/raw/tlsclient_firefox105.json
+  tlsclient_firefox106     tools/capture/raw/tlsclient_firefox106.json
+  tlsclient_firefox108     tools/capture/raw/tlsclient_firefox108.json
+  tlsclient_firefox110     tools/capture/raw/tlsclient_firefox110.json
+  tlsclient_firefox117     tools/capture/raw/tlsclient_firefox117.json
+  tlsclient_firefox120     tools/capture/raw/tlsclient_firefox120.json
+  tlsclient_firefox123     tools/capture/raw/tlsclient_firefox123.json
+  tlsclient_firefox132     tools/capture/raw/tlsclient_firefox132.json
+  tlsclient_firefox133     tools/capture/raw/tlsclient_firefox133.json
+  tlsclient_firefox135     tools/capture/raw/tlsclient_firefox135.json
+  tlsclient_firefox147     tools/capture/raw/tlsclient_firefox147.json
+  tlsclient_firefox148     tools/capture/raw/tlsclient_firefox148.json
+  tlsclient_opera89        tools/capture/raw/tlsclient_opera89.json
+  tlsclient_opera90        tools/capture/raw/tlsclient_opera90.json
+  tlsclient_safari15_6_1   tools/capture/raw/tlsclient_safari15_6_1.json
+  tlsclient_safari16       tools/capture/raw/tlsclient_safari16.json
+  tlsclient_safari_ipad15_6 tools/capture/raw/tlsclient_safari_ipad15_6.json
+  tlsclient_ios_mms        tools/capture/raw/tlsclient_ios_mms.json
+  tlsclient_ios_mms2       tools/capture/raw/tlsclient_ios_mms2.json
+  tlsclient_ios_mms3       tools/capture/raw/tlsclient_ios_mms3.json
+  tlsclient_ios_mesh       tools/capture/raw/tlsclient_ios_mesh.json
+  tlsclient_ios_mesh2      tools/capture/raw/tlsclient_ios_mesh2.json
+  tlsclient_ios_nike       tools/capture/raw/tlsclient_ios_nike.json
+  tlsclient_ios_zalando    tools/capture/raw/tlsclient_ios_zalando.json
+  tlsclient_ios_safari15_5 tools/capture/raw/tlsclient_ios_safari15_5.json
+  tlsclient_ios_safari15_6 tools/capture/raw/tlsclient_ios_safari15_6.json
+  tlsclient_ios_safari16   tools/capture/raw/tlsclient_ios_safari16.json
+  tlsclient_ios_safari17   tools/capture/raw/tlsclient_ios_safari17.json
+  tlsclient_ios_safari18   tools/capture/raw/tlsclient_ios_safari18.json
+  utls_chrome58            tools/capture/raw/utls_chrome58.json
+  utls_chrome62            tools/capture/raw/utls_chrome62.json
+  utls_chrome70            tools/capture/raw/utls_chrome70.json
+  utls_chrome72            tools/capture/raw/utls_chrome72.json
+  utls_chrome83            tools/capture/raw/utls_chrome83.json
+  utls_chrome87            tools/capture/raw/utls_chrome87.json
+  utls_chrome96            tools/capture/raw/utls_chrome96.json
+  utls_chrome100           tools/capture/raw/utls_chrome100.json
+  utls_chrome102           tools/capture/raw/utls_chrome102.json
+  utls_chrome106shuffle    tools/capture/raw/utls_chrome106shuffle.json
+  utls_chrome115pq         tools/capture/raw/utls_chrome115pq.json
+  utls_chrome120           tools/capture/raw/utls_chrome120.json
+  utls_chrome120pq         tools/capture/raw/utls_chrome120pq.json
+  utls_chrome131           tools/capture/raw/utls_chrome131.json
+  utls_chrome133           tools/capture/raw/utls_chrome133.json
+  utls_firefox55           tools/capture/raw/utls_firefox55.json
+  utls_firefox56           tools/capture/raw/utls_firefox56.json
+  utls_firefox63           tools/capture/raw/utls_firefox63.json
+  utls_firefox65           tools/capture/raw/utls_firefox65.json
+  utls_firefox99           tools/capture/raw/utls_firefox99.json
+  utls_firefox102          tools/capture/raw/utls_firefox102.json
+  utls_firefox105          tools/capture/raw/utls_firefox105.json
+  utls_firefox120          tools/capture/raw/utls_firefox120.json
+  utls_safari16            tools/capture/raw/utls_safari16.json
+  utls_ios11               tools/capture/raw/utls_ios11.json
+  utls_ios12               tools/capture/raw/utls_ios12.json
+  utls_ios13               tools/capture/raw/utls_ios13.json
+  utls_ios14               tools/capture/raw/utls_ios14.json
+  utls_android11okhttp     tools/capture/raw/utls_android11okhttp.json
+  utls_edge85              tools/capture/raw/utls_edge85.json
+  utls_edge106             tools/capture/raw/utls_edge106.json
+  utls_360_7_5             tools/capture/raw/utls_360_7_5.json
+  utls_360_11_0            tools/capture/raw/utls_360_11_0.json
+  utls_qq11_1              tools/capture/raw/utls_qq11_1.json
+  go1.21                   tools/capture/raw/go1.21.json
+  go1.22                   tools/capture/raw/go1.22.json
+  go1.23                   tools/capture/raw/go1.23.json
+  go1.24                   tools/capture/raw/go1.24.json
+  node24_https             tools/capture/raw/node24_https.json
+  node24_http2             tools/capture/raw/node24_http2.json
+  curl7.88.1_h2            tools/capture/raw/curl7.88.1_h2.json
+  curl7.88.1_http1         tools/capture/raw/curl7.88.1_http1.json
+  curl8.10.1_h2            tools/capture/raw/curl8.10.1_h2.json
+  curl8.10.1_http1         tools/capture/raw/curl8.10.1_http1.json
+  python3.9_urllib         tools/capture/raw/python3.9_urllib.json
+  python3.11_urllib        tools/capture/raw/python3.11_urllib.json
+  java8_urlconn            tools/capture/raw/java8_urlconn.json
+  java11_httpclient        tools/capture/raw/java11_httpclient.json
+  java11_urlconn           tools/capture/raw/java11_urlconn.json
+  java17_urlconn           tools/capture/raw/java17_urlconn.json
+  openssl1.1_sclient       tools/capture/raw/openssl1.1_sclient.json
+  openssl3.3_sclient       tools/capture/raw/openssl3.3_sclient.json
+  wget1.21_bookworm        tools/capture/raw/wget1.21_bookworm.json
+  php8.1_streams           tools/capture/raw/php8.1_streams.json
+  go1.20                   tools/capture/raw/go1.20.json
+  python3.8_urllib         tools/capture/raw/python3.8_urllib.json
+  ruby3.3_nethttp          tools/capture/raw/ruby3.3_nethttp.json
+  deno_fetch               tools/capture/raw/deno_fetch.json
+  dart_httpclient          tools/capture/raw/dart_httpclient.json
+  erlang_ssl               tools/capture/raw/erlang_ssl.json
+  dotnet8_http1            tools/capture/raw/dotnet8_http1.json
+  dotnet8_http2            tools/capture/raw/dotnet8_http2.json
+
+aliases (all resolve through Profile::find, asserted by tests/fingerprints.rs)
+  chrome_android           extends chrome131_android
+  safari_ios               extends safari270_ios
+  okhttp_android           extends okhttp4_android
+  golang                   extends go1.26
+  python                   extends python3.12_requests
+  curl                     extends curl8.5_h2
+  java                     extends java21_httpclient
+  node                     extends node22_http2
+  bun                      extends bun1.3.14
+  php                      extends php8.3_curl
+  wget                     extends wget1.21.4
+  perl                     extends perl5_lwp
+  rust                     extends rust_reqwest_rustls
+  httpx                    extends python3.12_httpx
+  chrome                   extends chromium156
+  firefox                  extends firefox158
+  android                  extends android_okhttp13
+  android7                 extends android_okhttp7
+  android8                 extends android_okhttp8
+  android9                 extends android_okhttp9
+  android10                extends android_okhttp10
+  android11                extends android_okhttp11
+  android12                extends android_okhttp12
+  nike                     extends android_nike
+  zalando                  extends android_zalando
+  ios                      extends ios_safari26
+  opera                    extends opera91
+  openssl                  extends openssl3_sclient
+  ruby                     extends ruby3.3_nethttp
+  deno                     extends deno_fetch
+  dart                     extends dart_httpclient
+  erlang                   extends erlang_ssl
+  dotnet                   extends dotnet8_http2

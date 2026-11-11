@@ -1,0 +1,5 @@
+java_capture/Capture.java:34: 警告: [deprecation] URL中的URL(String)已过时
+            HttpsURLConnection connection = (HttpsURLConnection) new URL(URL).openConnection();
+                                                                 ^
+1 个警告
+urlconnection HTTP/1.1 200 OK 200

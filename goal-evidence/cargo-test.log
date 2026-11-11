@@ -1,0 +1,130 @@
+warning: unused import: `ExtensionType`
+  --> src/quic/crypto.rs:21:61
+   |
+21 |     CertificateCompressionAlgorithm, CertificateCompressor, ExtensionType, Ssl, SslContext,
+   |                                                             ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `contains_mldsa` is never used
+   --> src/policy.rs:251:8
+    |
+251 | pub fn contains_mldsa(list: &str) -> bool {
+    |        ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `read_level` is never read
+   --> src/quic/crypto.rs:468:5
+    |
+465 | struct BoringSession {
+    |        ------------- field in this struct
+...
+468 |     read_level: usize,
+    |     ^^^^^^^^^^
+
+warning: method `tls` is never used
+   --> src/quic/crypto.rs:871:12
+    |
+848 | impl BoringClientConfig {
+    | ----------------------- method in this implementation
+...
+871 |     pub fn tls(&self) -> &QuicTls {
+    |            ^^^
+
+warning: struct `ScriptedRng` is never constructed
+   --> src/quic/params.rs:463:12
+    |
+463 | pub struct ScriptedRng {
+    |            ^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> src/quic/params.rs:470:12
+    |
+468 | impl ScriptedRng {
+    | ---------------- associated function in this implementation
+469 |     /// Replay `bytes`, panicking if the encoder reads past the end.
+470 |     pub fn new(bytes: &[u8]) -> Self {
+    |            ^^^
+
+warning: `rust-curl-impersonate` (lib) generated 6 warnings (run `cargo fix --lib -p rust-curl-impersonate` to apply 1 suggestion)
+warning: `rust-curl-impersonate` (lib test) generated 4 warnings (4 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.10s
+     Running unittests src/lib.rs (target/debug/deps/rust_curl_impersonate-210a91277d54b4be)
+
+running 29 tests
+test policy::tests::empty_trust_anchors_advertise_nothing_specific ... ok
+test profile::behavior::tests::okhttp_sets_no_boundary_and_unknown_names_stay_unset ... ok
+test cookies::tests::split_keeps_each_cookie ... ok
+test cookies::tests::unsplit_keeps_one_header ... ok
+test quic::h3::tests::settings_keep_preset_order_and_expand_grease ... ok
+test quic::params::tests::firefox_connection_id_length_stays_between_8_and_20 ... ok
+test quic::params::tests::neqo_packet_number_stays_inside_1_to_1024 ... ok
+test quic::params::tests::server_only_parameters_are_rejected ... ok
+test quic::params::tests::hex_values_are_raw_bytes ... ok
+test quic::params::tests::a_large_id_uses_a_four_byte_varint ... ok
+test form::tests::boundaries_match_curl_impersonate ... ok
+test quic::params::tests::auto_source_connection_id_copies_the_local_id ... ok
+test quic::h3::tests::decode_waits_for_a_complete_frame ... ok
+test quic::params::tests::chrome145_encodes_empty_source_connection_id_and_version_info ... ok
+test quic::h3::tests::headers_round_trip_in_order ... ok
+test quic::params::tests::varints_use_the_shortest_encoding ... ok
+test policy::tests::trust_anchor_oids_sit_under_the_prefix ... ok
+test socks::tests::datagram_carries_the_payload_after_the_header ... ok
+test socks::tests::associate_request_is_command_three ... ok
+test socks::tests::http3_socks5_selects_udp_associate ... ok
+test profile::tests::chrome150_matches_curl_impersonate ... ok
+test profile::tests::deviations_cover_every_unrepresentable_field ... ok
+test quic::crypto::tests::packet_keys_match_the_rfc_vector ... ok
+test quic::crypto::tests::initial_secrets_match_the_rfc_vector ... ok
+test quic::crypto::tests::captured_packet_keys ... ok
+test quic::crypto::tests::packet_protection_round_trips ... ok
+test quic::crypto::tests::seal_matches_an_independent_implementation ... ok
+test profile::tests::every_target_resolves_to_wire_settings ... ok
+test quic::crypto::tests::dropping_the_session_frees_the_shared_ex_data ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/api.rs (target/debug/deps/api-a13b63be52c67a5a)
+
+running 10 tests
+test http2_overrides_keep_unset_fields ... ok
+test delegated_proxy_hostname_is_resolved_and_the_origin_is_not ... ok
+test delegated_dns_and_credential_isolation ... ok
+test impersonate_register_and_websocket_overrides ... ok
+test redirects_and_cookie_changes_use_the_installed_policy ... ok
+test http3_tls_overrides_stay_on_the_quic_path ... ok
+test caller_overrides_reach_the_tcp_and_quic_handshakes ... ok
+test headers_cookies_boundaries_and_http3_selection ... ok
+test presets_keep_their_tls_inputs_on_tcp_and_quic ... ok
+test caller_supplied_chrome_reaches_the_handshake ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/wire.rs (target/debug/deps/wire-3abb04025bbb3692)
+
+running 13 tests
+test websocket_deflate_offers_permessage_deflate ... ok
+test override_keeps_the_preset_and_applies_the_caller_changes ... ok
+test okhttp_does_not_invent_a_form_boundary ... ok
+test chrome150_names_the_mldsa_deviation_and_drops_those_algorithms ... ok
+test firefox133_splits_cookies_and_uses_its_pseudo_order ... ok
+test preset_form_boundary_matches_webkit_or_firefox ... ok
+test firefox147_initial_packet_number_stays_inside_neqo_range ... ok
+test http3_socks5_uses_udp_associate ... ok
+test chrome150_initial_carries_packet_number_one ... ok
+test firefox147_initial_scid_matches_parameter_0x0f ... ok
+test chrome150_override_packet_number_is_on_the_wire ... ok
+test firefox147_second_connection_stamps_its_own_source_connection_id ... ok
+test chrome150_keeps_tls_and_leaves_http2_pseudo_order_unset ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests rust_curl_impersonate
+
+running 1 test
+test src/lib.rs - (line 9) - compile ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+exit_code=0

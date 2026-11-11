@@ -1,0 +1,79 @@
+new real-version records: live echo check against tls.peet.ws
+date: 2026-11-11
+method:
+  - captures: the real browser process that produced each record wrote
+    tools/capture/raw/<name>.json (no hand-edited version numbers, no reuse of
+    an older capture).
+      chromium157  Snap Chromium 157.0.8103.38 (this machine)
+      chrome158    Google Chrome for Testing 158.0.8127.18 (Beta channel)
+      chrome159    Google Chrome for Testing 159.0.8144.0 (Dev channel)
+      firefox159   Mozilla Snap 159.0.1   (latest/stable)
+      firefox160   Mozilla Snap 160.0     (latest/candidate)
+      firefox161   Mozilla Snap 161.0b1   (latest/beta)
+      firefox162   Mozilla Snap 162.0a1   (latest/edge)
+  - echo: `cargo run --example echo <record>` against https://tls.peet.ws/api/all,
+    one run per record (outputs kept under goal-evidence/echo-real/).
+  - comparison: `python3 -I tools/compare_echo.py tools/capture/raw goal-evidence/echo-real <record>`
+    plus a GREASE-aware dump of the extension and signature_algorithms lists.
+  - chrome158 was captured twice (tools/capture/raw/chrome158.json and
+    chrome158b.json); both captures have JA4
+    t13d1519h2_8daaf6152771_3d1b1b7bef36 and both carry pre_shared_key, so
+    the PSK/extensions-4832 difference is a property of the build, not of a
+    single handshake. chrome158b has no separate echo run.
+
+result summary
+  firefox159, firefox160, firefox161, firefox162:
+    TLS structure and JA4 identical to the capture:
+      t13d1517h2_8daaf6152771_3cbfd9057e0d  (all five Firefox 158-162 builds
+    share the same JA4; the wire really is unchanged across these versions).
+  chromium157:
+    capture JA4 t13d1517h2_8daaf6152771_cb7bf5808d99
+    echo   JA4 t13d1516h2_8daaf6152771_d8a2da3f94cd
+    extension missing: 51764
+    sigalgs only in capture: GREASE 0xdada, mldsa44/65/87 (0x904/0x905/0x906)
+  chrome158 and chrome159:
+    capture JA4 t13d1519h2_8daaf6152771_3d1b1b7bef36
+    echo   JA4 t13d1516h2_8daaf6152771_d8a2da3f94cd
+    extensions missing: 41 (pre_shared_key), 4832, 51764
+    sigalgs only in capture: GREASE (0x5a5a / 0x0a0a), mldsa44/65/87
+    (both builds carry the two new extensions Chromium 158 added; a fresh
+    profile hits the test page twice, so the handshake also carries a real
+    pre_shared_key binder)
+
+all differences above are already listed in the records' `deviations`:
+  - extensions 4832 and 51764 cannot be emitted by BoringSSL;
+  - pre_shared_key (41) is sent only when a cached session ticket is supplied;
+  - ML-DSA signature algorithms and signature_algorithms GREASE are not
+    emitted by BoringSSL;
+  - BoringSSL adds padding (21) for 256-511 byte ClientHellos when the
+    capture has none.
+No difference appeared that is not covered by a deviation.
+
+raw per-record diff
+== chromium157
+  ja4 capture: t13d1517h2_8daaf6152771_cb7bf5808d99  echo: t13d1516h2_8daaf6152771_d8a2da3f94cd
+  ext missing: [51764]  extra: []
+  sigalgs only in capture: ['0xdada', '0x904', '0x905', '0x906']
+  sigalgs only in echo   : []
+== chrome158
+  ja4 capture: t13d1519h2_8daaf6152771_3d1b1b7bef36  echo: t13d1516h2_8daaf6152771_d8a2da3f94cd
+  ext missing: [41, 4832, 51764]  extra: []
+  sigalgs only in capture: ['0x5a5a', '0x904', '0x905', '0x906']
+  sigalgs only in echo   : []
+== chrome159
+  ja4 capture: t13d1519h2_8daaf6152771_3d1b1b7bef36  echo: t13d1516h2_8daaf6152771_d8a2da3f94cd
+  ext missing: [41, 4832, 51764]  extra: []
+  sigalgs only in capture: ['0xa0a', '0x904', '0x905', '0x906']
+  sigalgs only in echo   : []
+== firefox159
+  ja4 capture: t13d1517h2_8daaf6152771_3cbfd9057e0d  echo: t13d1517h2_8daaf6152771_3cbfd9057e0d
+  ext missing: []  extra: []
+== firefox160
+  ja4 capture: t13d1517h2_8daaf6152771_3cbfd9057e0d  echo: t13d1517h2_8daaf6152771_3cbfd9057e0d
+  ext missing: []  extra: []
+== firefox161
+  ja4 capture: t13d1517h2_8daaf6152771_3cbfd9057e0d  echo: t13d1517h2_8daaf6152771_3cbfd9057e0d
+  ext missing: []  extra: []
+== firefox162
+  ja4 capture: t13d1517h2_8daaf6152771_3cbfd9057e0d  echo: t13d1517h2_8daaf6152771_3cbfd9057e0d
+  ext missing: []  extra: []

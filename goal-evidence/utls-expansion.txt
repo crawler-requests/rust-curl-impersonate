@@ -1,0 +1,185 @@
+uTLS records: 34 total, 23 structurally identical, 1 differ only in extension order (permute_extensions)
+utls_360_11_0              close    JA4 DIFF  diffs=['extensions missing=[30032] extra=[]']
+                           capture=t13d1616h1_46e7e9700bed_4551aecd7b38 live=t13d1615h1_46e7e9700bed_45f260be83e2
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL never sends captured extension 30032 (unknown).
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_360_7_5               partial  JA4 DIFF  diffs=['extensions missing=[13172, 30031] extra=[23]', 'ciphers', 'sigalgs']
+                           capture=t12d2010h1_0bf03fa604e3_736b2a1ed4d3 live=t12d159h1_ec29cb507bb3_6eb38da025ee
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL cannot send 5 captured cipher suites: TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_RC4_128_SHA and 1 more (15 sent).
+                            - BoringSSL cannot send 2 captured signature algorithms: dsa_sha256, 0x202 (6 sent).
+                            - BoringSSL never sends captured extension 13172 (unknown), 30031 (unknown).
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+                            - BoringSSL always sends extended_master_secret (23); the capture omits it.
+
+utls_android11okhttp       exact    JA4 same  diffs=none
+                           capture=t12d128h1_d34a8e72043a_036209cd1ead live=t12d128h1_d34a8e72043a_036209cd1ead
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_chrome100             exact    JA4 same  diffs=none
+                           capture=t13d1516h1_8daaf6152771_e5627efa2ab1 live=t13d1516h1_8daaf6152771_e5627efa2ab1
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome102             exact    JA4 same  diffs=none
+                           capture=t13d1516h1_8daaf6152771_e5627efa2ab1 live=t13d1516h1_8daaf6152771_e5627efa2ab1
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome106shuffle      exact    JA4 same  diffs=['extension order']
+                           capture=t13d1516h1_8daaf6152771_e5627efa2ab1 live=t13d1516h1_8daaf6152771_e5627efa2ab1
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome115pq           close    JA4 DIFF  diffs=['extensions missing=[] extra=[21]', 'groups']
+                           capture=t13d1515h1_8daaf6152771_f37e75b10bcc live=t13d1516h1_8daaf6152771_e5627efa2ab1
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL cannot send 1 captured groups: X25519Kyber768 (25497) (3 sent).
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_chrome120             exact    JA4 DIFF  diffs=['extensions missing=[21] extra=[]']
+                           capture=t13d1517h1_8daaf6152771_b1ff8ab2d16f live=t13d1516h1_8daaf6152771_02713d6af862
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome120pq           close    JA4 same  diffs=['groups']
+                           capture=t13d1516h1_8daaf6152771_02713d6af862 live=t13d1516h1_8daaf6152771_02713d6af862
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL cannot send 1 captured groups: X25519Kyber768 (25497) (3 sent).
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_chrome131             exact    JA4 same  diffs=none
+                           capture=t13d1516h1_8daaf6152771_02713d6af862 live=t13d1516h1_8daaf6152771_02713d6af862
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_chrome133             exact    JA4 same  diffs=none
+                           capture=t13d1516h1_8daaf6152771_d8a2da3f94cd live=t13d1516h1_8daaf6152771_d8a2da3f94cd
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_chrome58              close    JA4 DIFF  diffs=['extensions missing=[30032] extra=[]']
+                           capture=t12d1311h1_8b80da21ef18_eb7c9aabf852 live=t12d1310h1_8b80da21ef18_e69ac49eb88f
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL never sends captured extension 30032 (unknown).
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+                            - The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together.
+
+utls_chrome62              close    JA4 DIFF  diffs=['extensions missing=[30032] extra=[]']
+                           capture=t12d1311h1_8b80da21ef18_eb7c9aabf852 live=t12d1310h1_8b80da21ef18_e69ac49eb88f
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL never sends captured extension 30032 (unknown).
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+                            - The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together.
+
+utls_chrome70              close    JA4 DIFF  diffs=['extensions missing=[30032] extra=[]']
+                           capture=t13d1616h1_46e7e9700bed_4551aecd7b38 live=t13d1615h1_46e7e9700bed_45f260be83e2
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL never sends captured extension 30032 (unknown).
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome72              exact    JA4 same  diffs=none
+                           capture=t13d1615h1_46e7e9700bed_45f260be83e2 live=t13d1615h1_46e7e9700bed_45f260be83e2
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome83              exact    JA4 same  diffs=none
+                           capture=t13d1515h1_8daaf6152771_de4a06bb82e3 live=t13d1515h1_8daaf6152771_de4a06bb82e3
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome87              exact    JA4 same  diffs=none
+                           capture=t13d1515h1_8daaf6152771_de4a06bb82e3 live=t13d1515h1_8daaf6152771_de4a06bb82e3
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_chrome96              exact    JA4 same  diffs=none
+                           capture=t13d1516h1_8daaf6152771_e5627efa2ab1 live=t13d1516h1_8daaf6152771_e5627efa2ab1
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_edge106               exact    JA4 same  diffs=none
+                           capture=t13d1516h1_8daaf6152771_e5627efa2ab1 live=t13d1516h1_8daaf6152771_e5627efa2ab1
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_edge85                exact    JA4 same  diffs=none
+                           capture=t13d1515h1_8daaf6152771_de4a06bb82e3 live=t13d1515h1_8daaf6152771_de4a06bb82e3
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_firefox102            exact    JA4 same  diffs=none
+                           capture=t13d1715h1_5b57614c22b0_3d5424432f57 live=t13d1715h1_5b57614c22b0_3d5424432f57
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_firefox105            exact    JA4 same  diffs=none
+                           capture=t13d1715h1_5b57614c22b0_3d5424432f57 live=t13d1715h1_5b57614c22b0_3d5424432f57
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_firefox120            exact    JA4 same  diffs=none
+                           capture=t13d1715h1_5b57614c22b0_5c2c66f702b0 live=t13d1715h1_5b57614c22b0_5c2c66f702b0
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_firefox55             exact    JA4 same  diffs=none
+                           capture=t12d159h1_073e58a039a6_e70312a1ce2c live=t12d159h1_073e58a039a6_e70312a1ce2c
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_firefox56             exact    JA4 same  diffs=none
+                           capture=t12d159h1_073e58a039a6_e70312a1ce2c live=t12d159h1_073e58a039a6_e70312a1ce2c
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_firefox63             exact    JA4 same  diffs=none
+                           capture=t13d1814h1_29a2cd9e9f10_d267a5f792d4 live=t13d1814h1_29a2cd9e9f10_d267a5f792d4
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_firefox65             exact    JA4 same  diffs=none
+                           capture=t13d1814h1_29a2cd9e9f10_d267a5f792d4 live=t13d1814h1_29a2cd9e9f10_d267a5f792d4
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_firefox99             exact    JA4 same  diffs=none
+                           capture=t13d1815h1_e8a523a41297_3d5424432f57 live=t13d1815h1_e8a523a41297_3d5424432f57
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_ios11                 close    JA4 DIFF  diffs=['extensions missing=[13172] extra=[]']
+                           capture=t12d2010h1_2a284e3b0c56_f05fdf8c38a9 live=t12d209h1_2a284e3b0c56_6e2cce1a33e5
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL never sends captured extension 13172 (unknown).
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_ios12                 close    JA4 DIFF  diffs=['extensions missing=[13172] extra=[]']
+                           capture=t12d2310h1_f91c41aead95_12b7a1cb7c36 live=t12d239h1_f91c41aead95_e0e2b8a7da62
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - BoringSSL never sends captured extension 13172 (unknown).
+                            - BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.
+
+utls_ios13                 exact    JA4 same  diffs=none
+                           capture=t13d2613h1_2802a3db6c62_845d286b0d67 live=t13d2613h1_2802a3db6c62_845d286b0d67
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_ios14                 exact    JA4 same  diffs=none
+                           capture=t13d2613h1_2802a3db6c62_845d286b0d67 live=t13d2613h1_2802a3db6c62_845d286b0d67
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_qq11_1                exact    JA4 same  diffs=none
+                           capture=t13d1516h1_8daaf6152771_e5627efa2ab1 live=t13d1516h1_8daaf6152771_e5627efa2ab1
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+
+utls_safari16              exact    JA4 same  diffs=none
+                           capture=t13d2014h1_a09f3c656075_14788d8d241b live=t13d2014h1_a09f3c656075_14788d8d241b
+                            - The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.
+                            - The capture carries the padding extension (21); BoringSSL emits padding only when the emulated ClientHello length is 256-511 bytes, so the live length may differ.
+

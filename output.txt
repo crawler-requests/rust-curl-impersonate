@@ -1,0 +1,4 @@
+abi version: 1
+http status: 200
+body: hello from rust-curl-impersonate
+

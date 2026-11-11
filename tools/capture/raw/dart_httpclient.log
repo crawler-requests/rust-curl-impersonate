@@ -1,0 +1,23 @@
+Unable to find image 'dart:stable' locally
+stable: Pulling from library/dart
+37fb86c2a767: Already exists
+5cb9a1a08bad: Pulling fs layer
+e3d8383a0453: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+b1b7358e2d9d: Pulling fs layer
+b1b7358e2d9d: Waiting
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+e3d8383a0453: Verifying Checksum
+e3d8383a0453: Download complete
+5cb9a1a08bad: Verifying Checksum
+5cb9a1a08bad: Download complete
+5cb9a1a08bad: Pull complete
+e3d8383a0453: Pull complete
+4f4fb700ef54: Pull complete
+b1b7358e2d9d: Verifying Checksum
+b1b7358e2d9d: Download complete
+b1b7358e2d9d: Pull complete
+Digest: sha256:854f3c50b1cbd4a5a54c9fa67d4f5b6702ac49b4a26d21a80e7712a72528b215
+Status: Downloaded newer image for dart:stable
+dart 200

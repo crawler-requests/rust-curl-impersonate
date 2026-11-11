@@ -3,3 +3,6 @@ Cargo.lock
 
 __pycache__/
 *.pyc
+/tools/capture/rust_capture/target
+/tools/capture/tlsclient_capture_bin
+/tools/capture/utls_capture_bin

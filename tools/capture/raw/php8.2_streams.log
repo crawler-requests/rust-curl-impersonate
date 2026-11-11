@@ -1,0 +1,47 @@
+Unable to find image 'php:8.2-cli' locally
+8.2-cli: Pulling from library/php
+37fb86c2a767: Already exists
+2a08ec89db61: Pulling fs layer
+14b9851580a8: Pulling fs layer
+3f7b9d52b1b0: Pulling fs layer
+762c96f914b2: Pulling fs layer
+876ccb2ec307: Pulling fs layer
+f205efec36ab: Pulling fs layer
+0e8735389faa: Pulling fs layer
+3e2c789b400c: Pulling fs layer
+14246fca1b55: Pulling fs layer
+762c96f914b2: Waiting
+876ccb2ec307: Waiting
+f205efec36ab: Waiting
+14246fca1b55: Waiting
+0e8735389faa: Waiting
+3e2c789b400c: Waiting
+3f7b9d52b1b0: Verifying Checksum
+3f7b9d52b1b0: Download complete
+2a08ec89db61: Download complete
+2a08ec89db61: Pull complete
+876ccb2ec307: Verifying Checksum
+876ccb2ec307: Download complete
+762c96f914b2: Verifying Checksum
+762c96f914b2: Download complete
+0e8735389faa: Verifying Checksum
+0e8735389faa: Download complete
+3e2c789b400c: Download complete
+14246fca1b55: Verifying Checksum
+14246fca1b55: Download complete
+f205efec36ab: Verifying Checksum
+f205efec36ab: Download complete
+14b9851580a8: Verifying Checksum
+14b9851580a8: Download complete
+14b9851580a8: Pull complete
+3f7b9d52b1b0: Pull complete
+762c96f914b2: Pull complete
+876ccb2ec307: Pull complete
+f205efec36ab: Pull complete
+0e8735389faa: Pull complete
+3e2c789b400c: Pull complete
+14246fca1b55: Pull complete
+Digest: sha256:604de2f0cba9e9dde16cf717c2f03b0948c99949bdf7c11cdf76326e0da7d2ea
+Status: Downloaded newer image for php:8.2-cli
+8.2.35 OpenSSL 3.5.7 9 Jun 2026
+php streams: 11075

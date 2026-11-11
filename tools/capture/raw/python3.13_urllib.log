@@ -1,0 +1,20 @@
+Unable to find image 'python:3.13-slim' locally
+3.13-slim: Pulling from library/python
+37fb86c2a767: Pulling fs layer
+0069ea31add0: Pulling fs layer
+faa890a31e98: Pulling fs layer
+f7a79299dedd: Pulling fs layer
+f7a79299dedd: Waiting
+0069ea31add0: Verifying Checksum
+0069ea31add0: Download complete
+f7a79299dedd: Download complete
+faa890a31e98: Verifying Checksum
+faa890a31e98: Download complete
+37fb86c2a767: Download complete
+37fb86c2a767: Pull complete
+0069ea31add0: Pull complete
+faa890a31e98: Pull complete
+f7a79299dedd: Pull complete
+Digest: sha256:09a17cad02668ae61ece136b4fd36ac3849e14f670ebedb637ea3e15580525bc
+Status: Downloaded newer image for python:3.13-slim
+urllib: 200 11

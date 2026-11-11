@@ -2,8 +2,9 @@
 """Generate src/profile/generated.rs from curl-impersonate's impersonate.c.
 
 Reads the added lines of patches/curl.patch (the impersonations[] table) and
-emits one Rust function per browser target. Only fields the transport can
-actually send are emitted; HTTP/3 and ML-DSA entries are recorded as dropped.
+emits one Rust function per browser target. ML-DSA signature algorithms have no
+TLS code point in BoringSSL, so they are dropped and recorded. HTTP/3 presets
+are emitted as Http3Profile values consumed by the QUIC transport.
 """
 
 import re
@@ -52,6 +53,9 @@ EXT = {
     "43": "ExtensionType::SUPPORTED_VERSIONS",
     "45": "ExtensionType::PSK_KEY_EXCHANGE_MODES",
     "51": "ExtensionType::KEY_SHARE",
+    "57": "ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD",
+    "17613": "ExtensionType::APPLICATION_SETTINGS",
+    "51764": "ExtensionType::from(51764)",
     "65037": "ExtensionType::ENCRYPTED_CLIENT_HELLO",
     "65281": "ExtensionType::RENEGOTIATE",
 }
@@ -215,12 +219,102 @@ def parse(path):
                 "h2excl": integer(re.search(r"=\s*(-?\d+)", text_of("http2_stream_exclusive")).group(1)) if "http2_stream_exclusive" in fields else None,
                 "h2pseudo": string(text_of("http2_pseudo_headers_order")),
                 "h3settings": string(text_of("http3_settings")),
+                "h3curves": string(text_of("http3_curves")),
+                "h3sig": string(text_of("http3_sig_hash_algs")),
+                "h3extorder": string(text_of("http3_tls_extension_order")),
+                "h3pseudo": string(text_of("http3_pseudo_headers_order")),
+                "h3headers": headers(text_of("http3_headers")),
+                "h3headerorder": string(text_of("http3_http_header_order")),
+                "quicparams": string(text_of("quic_transport_parameters")),
+                "quiccid": string(text_of("quic_cid_length")),
+                "quicpn": integer(re.search(r"=\s*(-?\d+)", text_of("quic_initial_packet_number")).group(1)) if "quic_initial_packet_number" in fields else None,
                 "headers": headers(text_of("http_headers")),
+                # Applied by src/profile/behavior.rs. Not emitted into generated.rs;
+                # update that table when impersonations[] changes these fields.
                 "split_cookies": boolean(re.search(r"=\s*(\w+)", text_of("split_cookies")).group(1)) if "split_cookies" in fields else False,
                 "form_boundary": string(text_of("form_boundary")),
             })
             block = None
     return rows
+
+
+def h3_settings_list(spec):
+    """Render curl-impersonate's `id:value;GREASE` string as Rust entries."""
+    items = []
+    for part in spec.split(";"):
+        if part == "GREASE":
+            items.append("H3Setting::Grease")
+        else:
+            ident, value = part.split(":")
+            items.append(f"H3Setting::Value({ident}, {value})")
+    return ", ".join(items)
+
+
+def emit_http3(row):
+    """Emit the QUIC-only overrides of one preset.
+
+    curl-impersonate applies http3_curves, http3_sig_hash_algs and
+    http3_tls_extension_order only to QUIC connections, falling back to the TLS
+    values when one is unset. http3_headers replaces the default headers only
+    when the preset sets it.
+    """
+    target = row["target"]
+    curves = row["h3curves"] or row["curves"]
+    sig = row["h3sig"] if row["h3sig"] is not None else row["sig"]
+    sigalgs = ":".join(name for name in (sig or "").split(":") if name and name not in MLDSA)
+    extorder = row["h3extorder"] or row["extorder"]
+    headerorder = row["h3headerorder"]
+
+    lines = [f"fn http3_{fn_name(target)}() -> Http3Profile {{"]
+    lines.append("    Http3Profile {")
+    lines.append(f"        grease: {str(row['grease']).lower()},")
+    lines.append(f"        signed_cert_timestamps: {str(row['sct']).lower()},")
+    lines.append(f"        session_ticket: {str(row['ticket']).lower()},")
+    lines.append(f"        curves: {rust_str(curves or '')},")
+    lines.append(f"        sigalgs: {rust_str(sigalgs)},")
+    lines.append(f"        ciphers: {rust_str(row['ciphers'])},")
+    lines.append(f"        permute_extensions: {str(row['permute']).lower()},")
+    lines.append(f"        ech_grease: {str(row['ech'] == 'true').lower()},")
+    lines.append(f"        new_alps: {str(row['new_alps']).lower()},")
+    lines.append(f"        delegated_credentials: {('Some(' + rust_str(row['delegated']) + ')') if row['delegated'] else 'None'},")
+    lines.append(f"        record_size_limit: {('Some(' + str(row['recsize']) + ')') if row['recsize'] is not None else 'None'},")
+    if extorder:
+        ids = ", ".join(EXT[part] for part in extorder.split("-"))
+        if "ExtensionType::from" in ids:
+            # ExtensionType's constructor is not const, so a permutation that
+            # names an extension btls leaves unnamed cannot live in a static.
+            lines.append(f"        extension_permutation: Box::leak(Box::new([{ids}])),")
+        else:
+            lines.append(f"        extension_permutation: &[{ids}],")
+    else:
+        lines.append("        extension_permutation: &[],")
+    if row["keyshare_limit"] and curves:
+        shares = ", ".join(KEY_SHARE[name] for name in curves.split(":")[: row["keyshare_limit"]])
+        lines.append(f"        key_shares: &[{shares}],")
+    else:
+        lines.append("        key_shares: &[],")
+    if row["certcomp"]:
+        compressors = ", ".join(f'"{name}"' for name in row["certcomp"].split(","))
+        lines.append(f"        cert_compression: &[{compressors}],")
+    else:
+        lines.append("        cert_compression: &[],")
+    lines.append(f"        settings: &[{h3_settings_list(row['h3settings'])}],")
+    lines.append(f"        transport_parameters: {rust_str(row['quicparams'] or '')},")
+    lines.append(f"        cid_profile: {('Some(' + rust_str(row['quiccid']) + ')') if row['quiccid'] else 'None'},")
+    lines.append(f"        initial_packet_number: {'None' if row['quicpn'] is None else 'Some(' + str(row['quicpn']) + ')'},")
+    lines.append(f"        pseudo_order: {rust_str(row['h3pseudo'] or '')},")
+    lines.append(f"        header_order: {('Some(' + rust_str(headerorder) + ')') if headerorder else 'None'},")
+    headers = row["h3headers"] or row["headers"]
+    lines.append("        headers: &[")
+    for entry in headers:
+        name, value = entry.split(": ", 1)
+        lines.append(f"            ({rust_str(name)}, {rust_str(value)}),")
+    lines.append("        ],")
+    lines.append("    }")
+    lines.append("}")
+    lines.append("")
+    return "\n".join(lines)
+
 
 def emit_profile(row):
     target = row["target"]
@@ -327,6 +421,8 @@ def main():
     rows = parse(sys.argv[1])
     parts = []
     match_arms = []
+    http3_parts = []
+    http3_arms = []
     targets = []
     notes = []
     for row in rows:
@@ -334,15 +430,14 @@ def main():
         parts.append(body)
         targets.append(row["target"])
         match_arms.append(f'        "{row["target"]}" => {fn_name(row["target"])}(),')
-        if dropped or row["h3settings"]:
-            bits = []
-            if dropped:
-                bits.append("drops signature algorithms " + ", ".join(dropped))
-            if row["h3settings"]:
-                bits.append("HTTP/3 settings have no QUIC transport")
-            notes.append(f'    "{row["target"]}" => "{"; ".join(bits)}",')
+        if row["h3settings"]:
+            http3_parts.append(emit_http3(row))
+            http3_arms.append(f'        "{row["target"]}" => Some(http3_{fn_name(row["target"])}()),')
+        if dropped:
+            notes.append(f'    "{row["target"]}" => "drops signature algorithms {", ".join(dropped)}",')
 
     target_list = "\n".join(f"    {rust_str(target)}," for target in targets)
+    http3_match = chr(10).join(http3_arms) if http3_arms else "        // no preset carries HTTP/3"
     text = f"""//! Browser profiles generated from curl-impersonate's `impersonations[]`.
 //!
 //! Regenerated by `tools/gen_profiles.py` from the added lines of
@@ -379,7 +474,80 @@ pub fn deviation(target: &str) -> Option<&'static str> {{
     }})
 }}
 
-{chr(10).join(parts)}"""
+/// One HTTP/3 SETTINGS entry, in the order curl-impersonate sends it.
+///
+/// `Grease` stands for the literal `GREASE` token, which curl-impersonate turns
+/// into a random setting id of the form `0x1f * N + 0x21` with a random value.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum H3Setting {{
+    /// A setting with a fixed id and value.
+    Value(u64, u64),
+    /// A GREASE setting whose id and value are chosen per connection.
+    Grease,
+}}
+
+/// The QUIC-only settings of one browser preset.
+///
+/// curl-impersonate keeps these separate from the TLS and HTTP/2 settings and
+/// applies them only after HTTP/3 is negotiated. An empty `key_shares` or
+/// `cert_compression` means the preset sets no limit or no compression.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Http3Profile {{
+    /// TLS GREASE, matching the preset's `tls_grease`.
+    pub grease: bool,
+    /// Signed certificate timestamps extension.
+    pub signed_cert_timestamps: bool,
+    /// TLS session ticket extension.
+    pub session_ticket: bool,
+    /// Key exchange groups for the QUIC ClientHello.
+    pub curves: &'static str,
+    /// Signature algorithms for the QUIC ClientHello, with ML-DSA names removed.
+    pub sigalgs: &'static str,
+    /// Cipher list, shared with the TLS preset.
+    pub ciphers: &'static str,
+    /// BoringSSL's permuted-extension behavior.
+    pub permute_extensions: bool,
+    /// ECH grease extension.
+    pub ech_grease: bool,
+    /// Use the new ALPS codepoint.
+    pub new_alps: bool,
+    /// Delegated credentials signature algorithms, when the preset sets them.
+    pub delegated_credentials: Option<&'static str>,
+    /// Record size limit. `Some(0)` means the extension is not sent.
+    pub record_size_limit: Option<u16>,
+    /// ClientHello extension order for the QUIC handshake.
+    pub extension_permutation: &'static [ExtensionType],
+    /// Key shares, truncated to the preset's `tls_key_shares_limit`.
+    pub key_shares: &'static [KeyShare],
+    /// Certificate compression algorithms, in preset order.
+    pub cert_compression: &'static [&'static str],
+    /// HTTP/3 SETTINGS, in preset order.
+    pub settings: &'static [H3Setting],
+    /// QUIC transport parameters in curl-impersonate's `id:value` syntax.
+    pub transport_parameters: &'static str,
+    /// Connection id length profile, `webkit` or `firefox`.
+    pub cid_profile: Option<&'static str>,
+    /// Initial packet number. `-1` is Neqo's biased random range 1..=1024.
+    pub initial_packet_number: Option<i64>,
+    /// HTTP/3 pseudo-header order, letters `m`, `a`, `s`, `p`.
+    pub pseudo_order: &'static str,
+    /// HTTP/3 header order. `None` keeps the preset's HTTP header order.
+    pub header_order: Option<&'static str>,
+    /// HTTP/3 request headers. The preset's own `http3_headers` when set, else
+    /// the default headers.
+    pub headers: &'static [(&'static str, &'static str)],
+}}
+
+/// The HTTP/3 settings of a preset, when it carries any.
+pub fn http3(target: &str) -> Option<Http3Profile> {{
+    match target {{
+{http3_match}
+        _ => None,
+    }}
+}}
+
+{chr(10).join(parts)}
+{chr(10).join(http3_parts)}"""
     sys.stdout.write(text)
 
 

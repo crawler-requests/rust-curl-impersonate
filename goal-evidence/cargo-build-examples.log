@@ -1,0 +1,44 @@
+warning: unused config key `net.timeout` in `/home/cc11001100/.cargo/config.toml`
+warning: function `contains_mldsa` is never used
+   --> src/policy.rs:259:8
+    |
+259 | pub fn contains_mldsa(list: &str) -> bool {
+    |        ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `read_level` is never read
+   --> src/quic/crypto.rs:468:5
+    |
+465 | struct BoringSession {
+    |        ------------- field in this struct
+...
+468 |     read_level: usize,
+    |     ^^^^^^^^^^
+
+warning: method `tls` is never used
+   --> src/quic/crypto.rs:871:12
+    |
+848 | impl BoringClientConfig {
+    | ----------------------- method in this implementation
+...
+871 |     pub fn tls(&self) -> &QuicTls {
+    |            ^^^
+
+warning: struct `ScriptedRng` is never constructed
+   --> src/quic/params.rs:463:12
+    |
+463 | pub struct ScriptedRng {
+    |            ^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> src/quic/params.rs:470:12
+    |
+468 | impl ScriptedRng {
+    | ---------------- associated function in this implementation
+469 |     /// Replay `bytes`, panicking if the encoder reads past the end.
+470 |     pub fn new(bytes: &[u8]) -> Self {
+    |            ^^^
+
+warning: `rust-curl-impersonate` (lib) generated 5 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s

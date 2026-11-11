@@ -1,0 +1,14 @@
+Android records: live examples/echo vs tools/capture/raw (2026-11-05)
+android_confirmed    ciphers=ok ext_set=ok http2=ok ja4=ok live=t12d129h2_d34a8e72043a_b39be8c56a14 capture=t12d129h2_d34a8e72043a_b39be8c56a14
+android_confirmed2   ciphers=ok ext_set=DIFF http2=ok ja4=DIFF live=t12d129h2_d34a8e72043a_b39be8c56a14 capture=t12d1210h2_d34a8e72043a_f88f2b2eb673
+android_mesh         ciphers=ok ext_set=ok http2=ok ja4=ok live=t13d1516h2_8daaf6152771_e5627efa2ab1 capture=t13d1516h2_8daaf6152771_e5627efa2ab1
+android_mesh1        ciphers=ok ext_set=ok http2=ok ja4=ok live=t12d149h1_c866b44c5a26_b39be8c56a14 capture=t12d149h1_c866b44c5a26_b39be8c56a14
+android_okhttp7      ciphers=ok ext_set=ok http2=ok ja4=DIFF live=t12d128h2_d34a8e72043a_8c06664c3ac5 capture=t12d128h2_d34a8e72043a_31a7e1922da8
+android_okhttp8      ciphers=ok ext_set=ok http2=ok ja4=ok live=t12d129h2_d34a8e72043a_e08eabe7240f capture=t12d129h2_d34a8e72043a_e08eabe7240f
+android_okhttp9      ciphers=ok ext_set=ok http2=ok ja4=ok live=t12d129h2_d34a8e72043a_b39be8c56a14 capture=t12d129h2_d34a8e72043a_b39be8c56a14
+android_okhttp10     ciphers=ok ext_set=ok http2=ok ja4=ok live=t13d1513h2_8daaf6152771_eca864cca44a capture=t13d1513h2_8daaf6152771_eca864cca44a
+android_okhttp11     ciphers=ok ext_set=ok http2=ok ja4=ok live=t13d1513h2_8daaf6152771_eca864cca44a capture=t13d1513h2_8daaf6152771_eca864cca44a
+android_okhttp12     ciphers=ok ext_set=ok http2=ok ja4=ok live=t13d1513h2_8daaf6152771_eca864cca44a capture=t13d1513h2_8daaf6152771_eca864cca44a
+android_okhttp13     ciphers=ok ext_set=ok http2=ok ja4=ok live=t13d1513h2_8daaf6152771_eca864cca44a capture=t13d1513h2_8daaf6152771_eca864cca44a
+android_nike         ciphers=ok ext_set=DIFF http2=ok ja4=ok live=t13d1513h2_8daaf6152771_eca864cca44a capture=t13d1513h2_8daaf6152771_eca864cca44a
+android_zalando      ciphers=ok ext_set=ok http2=ok ja4=ok live=t13d1514h2_8daaf6152771_43ade6aba3df capture=t13d1514h2_8daaf6152771_43ade6aba3df

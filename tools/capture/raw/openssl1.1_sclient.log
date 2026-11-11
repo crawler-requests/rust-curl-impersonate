@@ -1,0 +1,8 @@
+Unable to find image 'alpine:3.15' locally
+3.15: Pulling from library/alpine
+d078792c4f91: Pulling fs layer
+d078792c4f91: Download complete
+d078792c4f91: Pull complete
+Digest: sha256:19b4bcc4f60e99dd5ebdca0cbce22c503bbcff197549d7e19dab4f22254dc864
+Status: Downloaded newer image for alpine:3.15
+OpenSSL 1.1.1w  11 Sep 2023

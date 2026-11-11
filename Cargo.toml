@@ -1,3 +1,10 @@
+[workspace]
+members = ["bindings/ffi"]
+# Path dependencies inside the repository are not workspace members: their
+# tests/benches need upstream-only dev-dependencies and must not run here.
+exclude = ["vendor/wreq", "vendor/quinn", "vendor/quinn-proto"]
+resolver = "2"
+
 [package]
 name = "rust-curl-impersonate"
 version = "0.1.0"
@@ -8,11 +15,25 @@ repository = "https://github.com/crawler-requests/rust-curl-impersonate"
 rust-version = "1.85"
 
 [dependencies]
-wreq = { version = "6.0.0-rc.31", default-features = false, features = ["tokio-rt", "webpki-roots", "gzip", "brotli", "zstd", "deflate", "socks", "ws", "cookies", "json", "stream", "multipart"] }
-tokio = { version = "1", features = ["rt", "macros"] }
+# The custom transport changes live in the repository, not in a registry patch,
+# so any consumer that depends on this crate (path or git) gets them without
+# configuring `[patch.crates-io]` itself.
+wreq = { path = "vendor/wreq", default-features = false, features = ["tokio-rt", "webpki-roots", "gzip", "brotli", "zstd", "deflate", "socks", "ws", "cookies", "json", "stream", "multipart"] }
+tokio = { version = "1", features = ["rt", "macros", "net", "io-util", "time"] }
 brotli = "7"
 flate2 = "1"
 zstd = "0.13"
+quinn = { path = "vendor/quinn", default-features = false, features = ["runtime-tokio"] }
+quinn-proto = { path = "vendor/quinn-proto", default-features = false }
+btls = "0.5.6"
+btls-sys = "0.5.6"
+getrandom = "0.3"
+bytes = "1"
+foreign-types = "0.5"
+webpki-root-certs = "1.0.8"
+qpack = "0.1.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 
 [dev-dependencies]
-tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "io-util", "time"] }

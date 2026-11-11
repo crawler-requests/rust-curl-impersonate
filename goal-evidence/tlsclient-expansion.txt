@@ -1,0 +1,15 @@
+tls-client expansion: 52 captures live-verified with examples/echo on 2026-11-05
+JA4 identical: 48/52
+  tlsclient_chrome146: ja4 (live t13d1516h2_8daaf6152771_d8a2da3f94cd, capture t13d1517h2_8daaf6152771_dcad5a053991)
+  tlsclient_chrome150: ja4 (live t13d1516h2_8daaf6152771_d8a2da3f94cd, capture t13d1516h2_8daaf6152771_806a8c22fdea)
+  tlsclient_chrome152: ja4 (live t13d1516h2_8daaf6152771_d8a2da3f94cd, capture t13d1517h2_8daaf6152771_cb7bf5808d99)
+  tlsclient_cloudflare: cipher, ext, ja4 (live t12d47h1_cefcabfea53d_38702d7861db, capture t12d58h1_be41622fbb2f_3c5a66c06c35)
+  tlsclient_firefox102: http2 (live t13d1715h2_5b57614c22b0_3d5424432f57, capture t13d1715h2_5b57614c22b0_3d5424432f57)
+  tlsclient_firefox104: http2 (live t13d1715h2_5b57614c22b0_3d5424432f57, capture t13d1715h2_5b57614c22b0_3d5424432f57)
+  tlsclient_firefox105: http2 (live t13d1715h2_5b57614c22b0_3d5424432f57, capture t13d1715h2_5b57614c22b0_3d5424432f57)
+  tlsclient_firefox106: http2 (live t13d1715h2_5b57614c22b0_3d5424432f57, capture t13d1715h2_5b57614c22b0_3d5424432f57)
+  tlsclient_firefox108: http2 (live t13d1715h2_5b57614c22b0_3d5424432f57, capture t13d1715h2_5b57614c22b0_3d5424432f57)
+  tlsclient_firefox110: http2 (live t13d1713h2_5b57614c22b0_f81080dfc557, capture t13d1713h2_5b57614c22b0_f81080dfc557)
+  tlsclient_firefox117: http2 (live t13d1715h2_5b57614c22b0_3d5424432f57, capture t13d1715h2_5b57614c22b0_3d5424432f57)
+  tlsclient_firefox120: http2 (live t13d1713h2_5b57614c22b0_748f4c70de1c, capture t13d1713h2_5b57614c22b0_748f4c70de1c)
+  tlsclient_firefox123: http2 (live t13d1715h2_5b57614c22b0_5c2c66f702b0, capture t13d1715h2_5b57614c22b0_5c2c66f702b0)

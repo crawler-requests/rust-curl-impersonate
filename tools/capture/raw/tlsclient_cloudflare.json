@@ -1,0 +1,148 @@
+{
+  "donate": "Please consider donating to keep this API running. Visit https://tls.peet.ws",
+  "ip": "1.203.173.127:12526",
+  "http_version": "HTTP/1.1",
+  "method": "GET",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+  "tls": {
+    "ciphers": [
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
+      "TLS_EMPTY_RENEGOTIATION_INFO"
+    ],
+    "extensions": [
+      {
+        "name": "server_name (0)",
+        "server_name": "tls.peet.ws"
+      },
+      {
+        "name": "ec_point_formats (11)",
+        "elliptic_curves_point_formats": [
+          "0x00",
+          "0x01",
+          "0x02"
+        ]
+      },
+      {
+        "name": "supported_groups (10)",
+        "supported_groups": [
+          "P-256 (23)"
+        ]
+      },
+      {
+        "name": "session_ticket (35)",
+        "data": ""
+      },
+      {
+        "name": "application_layer_protocol_negotiation (16)",
+        "protocols": [
+          "http/1.1"
+        ]
+      },
+      {
+        "name": "encrypt_then_mac (22)",
+        "data": ""
+      },
+      {
+        "name": "extended_master_secret (23)",
+        "master_secret_data": "",
+        "extended_master_secret_data": ""
+      },
+      {
+        "name": "signature_algorithms (13)",
+        "signature_algorithms": [
+          "ecdsa_secp256r1_sha256",
+          "ecdsa_secp384r1_sha384",
+          "ecdsa_secp521r1_sha512",
+          "ed25519",
+          "ed25519",
+          "rsa_pss_pss_sha256",
+          "rsa_pss_pss_sha384",
+          "rsa_pss_pss_sha512",
+          "rsa_pss_rsae_sha256",
+          "rsa_pss_rsae_sha384",
+          "rsa_pss_rsae_sha512",
+          "rsa_pkcs1_sha256",
+          "rsa_pkcs1_sha384",
+          "rsa_pkcs1_sha512",
+          "0x303",
+          "ecdsa_sha1",
+          "0x301",
+          "rsa_pkcs1_sha1",
+          "0x302",
+          "0x202",
+          "0x402",
+          "0x502",
+          "0x602"
+        ]
+      }
+    ],
+    "tls_version_record": "771",
+    "tls_version_negotiated": "771",
+    "ja3": "771,49171-49172-49161-49162-255,0-11-10-35-16-22-23-13,23,0-1-2",
+    "ja3_hash": "1ba298e44112a4d4c91800ebaa6ccd2f",
+    "ja4": "t12d58h1_be41622fbb2f_3c5a66c06c35",
+    "ja4_r": "t12d58h1_00ff,c009,c00a,c013,c014_000a,000b,000d,0016,0017,0023_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0203,0301,0201,0302,0202,0402,0502,0602",
+    "peetprint": "|1.1|23|1027-1283-1539-2055-2056-2057-2058-2059-2052-2053-2054-1025-1281-1537-771-515-769-513-770-514-1026-1282-1538|0||49171-49172-49161-49162-255|0-10-11-13-16-22-23-35",
+    "peetprint_hash": "550528b866d095e983580fcf61e6b635",
+    "client_random": "4f403c2f5daa3eb0219666706b1b60ead78c1edf83d5899627c97052a54fc5a2",
+    "session_id": "835d89dcae786ac7ebf6527dd58802370d7959b718cb8396ac342dd77af989f2"
+  },
+  "http1": {
+    "headers": [
+      "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+      "Accept-Encoding: gzip, deflate, br, zstd",
+      "Accept-Language: en-US,en;q=0.9",
+      "Host: tls.peet.ws",
+      "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+    ]
+  },
+  "tcpip": {
+    "cap_length": 216,
+    "dst_port": 443,
+    "src_port": 12526,
+    "ip": {
+      "id": 39804,
+      "ttl": 51,
+      "ip_version": 4,
+      "dst_ip": "205.185.123.167",
+      "src_ip": "1.203.173.127"
+    },
+    "tcp": {
+      "ack": 1944901618,
+      "checksum": 39935,
+      "seq": 4079887816,
+      "window": 26
+    },
+    "tcp_syn": {
+      "ip_version": 4,
+      "src_ip": "1.203.173.127",
+      "dst_ip": "205.185.123.167",
+      "src_port": 12526,
+      "dst_port": 443,
+      "ttl": 51,
+      "ip_id": 39798,
+      "df": true,
+      "ecn": false,
+      "window": 42340,
+      "mss": 1400,
+      "window_scale": 11,
+      "sack_permitted": true,
+      "timestamps": true,
+      "options": [
+        "mss",
+        "sackOK",
+        "timestamp",
+        "nop",
+        "wscale"
+      ],
+      "options_raw": "020405780402080a4e31fa23000000000103030b",
+      "option_order": "mss,sackOK,timestamp,nop,wscale",
+      "payload_len": 0,
+      "packet_len": 60
+    },
+    "p0f": "4:51+?:0:1400:42340,11:mss,sok,ts,nop,ws:df,id+:0"
+  }
+}

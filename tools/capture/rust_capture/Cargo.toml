@@ -1,0 +1,12 @@
+[package]
+name = "rust_capture"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# Keep the tiny capture crate independent from the repository's package.
+[workspace]
+
+[dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "http2"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

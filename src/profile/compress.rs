@@ -12,6 +12,16 @@ use flate2::{read::ZlibDecoder, write::ZlibEncoder, Compression};
 use wreq::tls::compress::{CertificateCompressionAlgorithm, CertificateCompressor, Codec};
 use zstd::stream::{Decoder as ZstdDecoder, Encoder as ZstdEncoder};
 
+/// The compressor BoringSSL advertises for one preset algorithm name.
+pub(crate) fn named(name: &str) -> Option<&'static dyn CertificateCompressor> {
+    match name {
+        "zlib" => Some(&ZlibCompressor),
+        "brotli" => Some(&BrotliCompressor),
+        "zstd" => Some(&ZstdCompressor),
+        _ => None,
+    }
+}
+
 #[derive(Debug)]
 pub struct BrotliCompressor;
 

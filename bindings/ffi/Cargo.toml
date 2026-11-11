@@ -1,0 +1,15 @@
+[package]
+name = "rust-curl-impersonate-ffi"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "C ABI shared library for wrapping rust-curl-impersonate from other languages"
+
+[lib]
+name = "rust_curl_impersonate_ffi"
+crate-type = ["cdylib"]
+
+[dependencies]
+rust-curl-impersonate = { path = "../.." }
+tokio = { version = "1", features = ["rt-multi-thread", "time"] }
+serde_json = "1"

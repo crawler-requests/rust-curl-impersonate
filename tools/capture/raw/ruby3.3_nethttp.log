@@ -1,0 +1,17 @@
+Unable to find image 'ruby:3.3-alpine' locally
+3.3-alpine: Pulling from library/ruby
+881fc932939e: Already exists
+6859596dd3e3: Pulling fs layer
+ccd1d4602a8f: Pulling fs layer
+d62f481cd9f5: Pulling fs layer
+d62f481cd9f5: Verifying Checksum
+d62f481cd9f5: Download complete
+6859596dd3e3: Download complete
+6859596dd3e3: Pull complete
+ccd1d4602a8f: Verifying Checksum
+ccd1d4602a8f: Download complete
+ccd1d4602a8f: Pull complete
+d62f481cd9f5: Pull complete
+Digest: sha256:2fda53cb7c1c93618593afce7404e311b2b44b0eab35bfeace3981aa0be4ff54
+Status: Downloaded newer image for ruby:3.3-alpine
+ruby 3.3.13

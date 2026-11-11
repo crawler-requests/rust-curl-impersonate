@@ -1,0 +1,24 @@
+20 records from Docker-sourced runtime versions
+
+go1.21                 close    h1=False JA4 DIFF diffs=['extensions missing=[] extra=[21]', 'ciphers']
+go1.22                 close    h1=False JA4 DIFF diffs=['extensions missing=[] extra=[21]', 'ciphers']
+go1.23                 close    h1=False JA4 same diffs=['ciphers']
+go1.24                 close    h1=False JA4 same diffs=['ciphers']
+node24_https           partial  h1=True  JA4 DIFF diffs=['extensions missing=[22] extra=[]', 'ciphers', 'groups', 'sigalgs']
+node24_http2           partial  h1=False JA4 DIFF diffs=['extensions missing=[22] extra=[]', 'ciphers', 'groups', 'sigalgs']
+curl7.88.1_h2          partial  h1=False JA4 DIFF diffs=['extensions missing=[22, 49] extra=[]', 'ciphers', 'groups', 'sigalgs']
+curl7.88.1_http1       partial  h1=True  JA4 DIFF diffs=['extensions missing=[22, 49] extra=[]', 'ciphers', 'groups', 'sigalgs']
+curl8.10.1_h2          partial  h1=False JA4 DIFF diffs=['extensions missing=[22, 49] extra=[]', 'ciphers', 'groups', 'sigalgs']
+curl8.10.1_http1       partial  h1=True  JA4 DIFF diffs=['extensions missing=[22, 49] extra=[]', 'ciphers', 'groups', 'sigalgs']
+python3.9_urllib       partial  h1=True  JA4 DIFF diffs=['extensions missing=[22, 49] extra=[]', 'ciphers', 'groups', 'sigalgs']
+python3.11_urllib      partial  h1=True  JA4 DIFF diffs=['extensions missing=[22, 49] extra=[]', 'groups', 'sigalgs']
+java8_urlconn          partial  h1=True  JA4 DIFF diffs=['extensions missing=[50] extra=[21]', 'ciphers', 'groups', 'sigalgs']
+java11_httpclient      partial  h1=False JA4 DIFF diffs=['extensions missing=[17, 50] extra=[21]', 'ciphers', 'groups', 'sigalgs']
+java11_urlconn         partial  h1=True  JA4 DIFF diffs=['extensions missing=[17, 50] extra=[21]', 'ciphers', 'groups', 'sigalgs']
+java17_urlconn         partial  h1=True  JA4 DIFF diffs=['extensions missing=[17, 50] extra=[21]', 'ciphers', 'groups', 'sigalgs']
+openssl1.1_sclient     partial  h1=True  JA4 DIFF diffs=['extensions missing=[22] extra=[21]', 'ciphers', 'groups', 'sigalgs']
+openssl3.3_sclient     partial  h1=True  JA4 DIFF diffs=['extensions missing=[22] extra=[21]', 'ciphers', 'groups', 'sigalgs']
+wget1.21_bookworm      partial  h1=True  JA4 DIFF diffs=['extensions missing=[49] extra=[23]', 'ciphers', 'groups', 'sigalgs']
+php8.1_streams         partial  h1=True  JA4 DIFF diffs=['extensions missing=[22] extra=[]', 'ciphers', 'groups', 'sigalgs']
+
+identical: 0/20

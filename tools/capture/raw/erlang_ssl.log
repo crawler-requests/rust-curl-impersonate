@@ -1,0 +1,35 @@
+Unable to find image 'erlang:27' locally
+27: Pulling from library/erlang
+69245854ad58: Pulling fs layer
+338554e9113f: Pulling fs layer
+d6c30932f8d3: Pulling fs layer
+9bab93d346cd: Pulling fs layer
+3f32be588a54: Pulling fs layer
+da75f0ac4332: Pulling fs layer
+bdfeafd4db2d: Pulling fs layer
+3f32be588a54: Waiting
+da75f0ac4332: Waiting
+bdfeafd4db2d: Waiting
+338554e9113f: Verifying Checksum
+338554e9113f: Download complete
+d6c30932f8d3: Verifying Checksum
+d6c30932f8d3: Download complete
+69245854ad58: Verifying Checksum
+69245854ad58: Download complete
+69245854ad58: Pull complete
+338554e9113f: Pull complete
+d6c30932f8d3: Pull complete
+da75f0ac4332: Verifying Checksum
+da75f0ac4332: Download complete
+3f32be588a54: Verifying Checksum
+3f32be588a54: Download complete
+9bab93d346cd: Verifying Checksum
+9bab93d346cd: Download complete
+bdfeafd4db2d: Download complete
+9bab93d346cd: Pull complete
+3f32be588a54: Pull complete
+da75f0ac4332: Pull complete
+bdfeafd4db2d: Pull complete
+Digest: sha256:b59ebb8896568c227b2905c18bac6f458f10527952c079264dcca463b93dfcb1
+Status: Downloaded newer image for erlang:27
+erlang 27

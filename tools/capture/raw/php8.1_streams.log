@@ -1,0 +1,51 @@
+Unable to find image 'php:8.1-cli' locally
+8.1-cli: Pulling from library/php
+02d7611c4eae: Pulling fs layer
+839d56af6db4: Pulling fs layer
+609ce6d23d8f: Pulling fs layer
+9bf13bd366d8: Pulling fs layer
+8cb54280ae2f: Pulling fs layer
+bae0b1d3f968: Pulling fs layer
+daa233a13a4e: Pulling fs layer
+9698628695d2: Pulling fs layer
+37f0a21ed350: Pulling fs layer
+8cb54280ae2f: Waiting
+f5fc4c77eb7f: Pulling fs layer
+9bf13bd366d8: Waiting
+bae0b1d3f968: Waiting
+daa233a13a4e: Waiting
+f5fc4c77eb7f: Waiting
+9698628695d2: Waiting
+37f0a21ed350: Waiting
+839d56af6db4: Verifying Checksum
+839d56af6db4: Download complete
+9bf13bd366d8: Verifying Checksum
+9bf13bd366d8: Download complete
+8cb54280ae2f: Verifying Checksum
+8cb54280ae2f: Download complete
+bae0b1d3f968: Verifying Checksum
+bae0b1d3f968: Download complete
+02d7611c4eae: Verifying Checksum
+02d7611c4eae: Download complete
+02d7611c4eae: Pull complete
+839d56af6db4: Pull complete
+9698628695d2: Download complete
+37f0a21ed350: Verifying Checksum
+37f0a21ed350: Download complete
+f5fc4c77eb7f: Download complete
+daa233a13a4e: Verifying Checksum
+daa233a13a4e: Download complete
+609ce6d23d8f: Verifying Checksum
+609ce6d23d8f: Download complete
+609ce6d23d8f: Pull complete
+9bf13bd366d8: Pull complete
+8cb54280ae2f: Pull complete
+bae0b1d3f968: Pull complete
+daa233a13a4e: Pull complete
+9698628695d2: Pull complete
+37f0a21ed350: Pull complete
+f5fc4c77eb7f: Pull complete
+Digest: sha256:76e563191d1ade120313a8736df24154d21da5155c0756f147c0b01bd19d9087
+Status: Downloaded newer image for php:8.1-cli
+8.1.34 OpenSSL 3.5.4 30 Sep 2025
+php streams: 11077

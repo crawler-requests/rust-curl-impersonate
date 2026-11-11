@@ -1,0 +1,18 @@
+Unable to find image 'golang:1.19-alpine' locally
+1.19-alpine: Pulling from library/golang
+7264a8db6415: Already exists
+c4d48a809fc2: Pulling fs layer
+e2e938b61487: Pulling fs layer
+7896c2688058: Pulling fs layer
+c4d48a809fc2: Verifying Checksum
+c4d48a809fc2: Download complete
+c4d48a809fc2: Pull complete
+7896c2688058: Verifying Checksum
+7896c2688058: Download complete
+e2e938b61487: Verifying Checksum
+e2e938b61487: Download complete
+e2e938b61487: Pull complete
+7896c2688058: Pull complete
+Digest: sha256:0ec0646e208ea58e5d29e558e39f2e59fccf39b7bda306cb53bbaff91919eca5
+Status: Downloaded newer image for golang:1.19-alpine
+go: HTTP/2.0 200 OK

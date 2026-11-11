@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: test (linux x86_64)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ci-test
+      - name: Test
+        run: cargo test --workspace
+
+  consumer:
+    name: downstream consumer without patches
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: crate
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Create a crate that only uses a path dependency
+        run: |
+          mkdir -p consumer/src
+          cat > consumer/Cargo.toml <<'EOF'
+          [package]
+          name = "consumer"
+          version = "0.0.0"
+          edition = "2021"
+
+          [dependencies]
+          rust-curl-impersonate = { path = "../crate" }
+          EOF
+          cat > consumer/src/main.rs <<'EOF'
+          fn main() {
+              let profile = rust_curl_impersonate::Profile::find("chrome150")
+                  .expect("chrome150 must exist");
+              println!("profile={} target={}", profile.name(), profile.target());
+          }
+          EOF
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ci-consumer
+          workspaces: consumer -> target
+      - name: Build and run the consumer
+        run: cd consumer && cargo run --quiet
+
+  ffi:
+    name: C ABI smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ci-ffi
+      - name: Build shared library
+        run: cargo build -p rust-curl-impersonate-ffi --release
+      - name: Exercise it from Python
+        run: |
+          mkdir -p site && echo 'hello from rust-curl-impersonate' > site/index.html
+          python3 -m http.server 8765 --directory site &
+          for _ in $(seq 1 20); do
+            curl -sf http://127.0.0.1:8765/ >/dev/null && break
+            sleep 0.5
+          done
+          python3 bindings/ffi/python/demo.py chrome150 http://127.0.0.1:8765/ \
+            | tee output.txt
+          grep -q 'http status: 200' output.txt
+          grep -q 'hello from rust-curl-impersonate' output.txt

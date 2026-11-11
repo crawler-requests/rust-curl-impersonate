@@ -15,7 +15,9 @@ use wreq::multipart::Form;
 /// Which browser's multipart boundary a form should carry.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FormBoundary {
-    /// Chrome, Edge, Safari and OkHttp presets (`form_boundary = "webkit"`).
+    /// Chrome, Edge and Safari presets (`form_boundary = "webkit"`).
+    ///
+    /// `okhttp4_android` sets no `form_boundary`.
     WebKit,
     /// Firefox and Tor presets (`form_boundary = "firefox"`).
     Firefox,

@@ -1,0 +1,122 @@
+# 依赖分发与 CI/CD 验证
+
+日期：2026-11-12。验证机：Linux x86_64。
+
+## 1. 下游依赖零配置（path 与 git）
+
+根 `Cargo.toml` 不再有 `[patch.crates-io]`，三个定制依赖直接指向仓库内源码：
+
+```toml
+wreq = { path = "vendor/wreq", ... }
+quinn = { path = "vendor/quinn", ... }
+quinn-proto = { path = "vendor/quinn-proto", ... }
+```
+
+`vendor/quinn/Cargo.toml` 里的 `quinn-proto` 也改成 `path = "../quinn-proto"`。
+`cargo metadata` 显示三个包都没有 registry source：
+
+```
+quinn 0.11.12        source=None  vendor/quinn/Cargo.toml
+quinn-proto 0.11.19  source=None  vendor/quinn-proto/Cargo.toml
+wreq 6.0.0-rc.31     source=None  vendor/wreq/Cargo.toml
+```
+
+独立消费者 A（path 依赖，`Cargo.toml` 里没有任何 `[patch.crates-io]`）：
+
+```
+$ cat /tmp/rci-consumer/Cargo.toml
+[dependencies]
+rust-curl-impersonate = { path = "/home/cc11001100/github/crawler-requests/rust-curl-impersonate" }
+
+$ cd /tmp/rci-consumer && cargo run --quiet
+profile=chrome150 target=chrome150
+```
+
+独立消费者 B（git 依赖，指向工作树快照的独立仓库）：
+
+```
+$ grep rust-curl-impersonate /tmp/rci-consumer-git/Cargo.toml
+rust-curl-impersonate = { git = "file:///tmp/rci-git" }
+
+$ cd /tmp/rci-consumer-git && cargo run --quiet
+profile=chrome150 target=chrome150
+```
+
+两个消费者都重新编译了 vendored wreq/quinn/BoringSSL，说明源码分发本身可用。
+
+## 2. 跨平台构建与打包（本地实测）
+
+| 目标 | cdylib | echo | 结果 |
+|---|---|---|---|
+| x86_64-unknown-linux-gnu | 9,913,168 B | 9,918,008 B | 宿主原生，Python ctypes 实测 |
+| aarch64-unknown-linux-gnu | 10,342,920 B | 10,339,752 B | qemu-aarch64 运行 echo：`https://example.com/` 返回 200 |
+| x86_64-unknown-linux-musl | 8,306,920 B | 8,384,856 B | `python:3.12-alpine` 容器内 ctypes：abi version 1、HTTP 200 |
+| aarch64-unknown-linux-musl | 7,457,888 B | 7,555,032 B | qemu-aarch64 运行静态 echo：`https://example.com/` 返回 200 |
+
+musl 构建环境（Debian 的 musl-gcc 只有 C 驱动，BoringSSL 需要 C++ 标准库）：
+
+```
+CC_x86_64_unknown_linux_musl=zig cc -target x86_64-linux-musl     (wrapper)
+CXX_x86_64_unknown_linux_musl=zig c++ -target x86_64-linux-musl   (wrapper)
+CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=<zig cc wrapper>
+RUSTFLAGS=-C target-feature=-crt-static
+```
+
+wrapper 额外过滤 btls-sys 传下来的 `--target=x86_64-unknown-linux-musl`
+（zig 的汇编器不认 Rust triple）。
+
+Alpine 实测输出：
+
+```
+$ docker run --rm -e RCI_LIB=.../librust_curl_impersonate_ffi.so -v "$PWD":/repo:ro \
+    -w /repo python:3.12-alpine python3 bindings/ffi/python/demo.py chrome150 https://example.com/
+abi version: 1
+http status: 200
+body: <!doctype html><html lang=en>...
+```
+
+`scripts/package_artifact.py` 产出的三个压缩包（版本 0.1.0）：
+
+```
+7,616,018 B  rust-curl-impersonate-ffi-0.1.0-x86_64-unknown-linux-gnu.tar.gz
+             sha256 b4d68dea49b10bf088cc8be03385e566685661cbdf34241f92729f302d08e0a6
+7,581,861 B  rust-curl-impersonate-ffi-0.1.0-aarch64-unknown-linux-gnu.tar.gz
+             sha256 216196ae59b592fc540157d727a765fe7e7161f7e0a8394221526fcf51119184
+6,886,104 B  rust-curl-impersonate-ffi-0.1.0-x86_64-unknown-linux-musl.tar.gz
+             sha256 e45e4423d44fe9ad370fa89487c5463f55079cd1f5a7fecad65c1f0807eafefa
+6,408,227 B  rust-curl-impersonate-ffi-0.1.0-aarch64-unknown-linux-musl.tar.gz
+             sha256 780441b0f5be95eee93b49d0ec03350571df85a7ddf3d66af3cd601d04d9e6b6
+```
+
+每个包内都有 `lib/<cdylib>`、`include/rci.h`、`bin/echo`、`LICENSE`、`README.md`。
+
+## 3. CI/CD
+
+- `.github/workflows/ci.yml`
+  - `test`：`cargo test --workspace`
+  - `consumer`：现场创建一个只有 path 依赖、没有 patch 的外部 crate，`cargo run`
+  - `ffi`：构建 cdylib，启动本地 HTTP 服务，用 Python ctypes 调用并断言 200 与响应体
+- `.github/workflows/release.yml`
+  - `v*` tag 或手动触发；先跑全量测试
+  - 矩阵：linux gnu x86_64/aarch64、linux musl x86_64/aarch64、macOS x86_64/arm64、
+    Windows x86_64/arm64、Android arm64（后两个 `continue-on-error`）
+  - 每个平台构建 `examples/echo` 与 cdylib，调用 `scripts/package_artifact.py`
+  - 汇总 `SHA256SUMS`，用 `softprops/action-gh-release` 发布
+
+两个 workflow 已通过 PyYAML 解析；除 Windows/Android/macOS 目标外，workflow 中
+用到的构建、打包、Python 冒烟命令均在本机按相同参数执行过。GitHub 上的首次真实
+运行仍需推送后确认。
+
+## 4. 回归
+
+`cargo test --workspace`：库单元测试 29、`tests/api.rs` 10、`tests/fingerprints.rs` 19、
+`tests/providers.rs` 15、`tests/wire.rs` 13、文档测试 2，共 88 条全部通过。
+
+`tests/providers.rs` 共享进程级 provider 注册表，而 `refresh_providers()` 会重载
+所有 provider；并行运行时 `a_failing_refresh_keeps_the_loaded_records` 注册的失败
+provider 会让另一个测试的 refresh 偶发 `service unavailable`。测试改为通过
+`exclusive()` 串行访问注册表后，连续 5 次运行 15/15 通过。
+
+最后重新构建了宿主的 `cargo build --release --examples` 与
+`cargo build --release -p rust-curl-impersonate-ffi`，并用改动后的工作树重新跑了
+path 与 git 两个外部消费者，均输出 `profile=chrome150 target=chrome150`。

@@ -1,0 +1,34 @@
+binary and C ABI build check
+date: 2026-11-12T01:08:58+08:00
+
+=== cargo build --release
+warning: `rust-curl-impersonate` (lib) generated 5 warnings
+    Finished `release` profile [optimized] target(s) in 0.09s
+-rw-rw-r-- 2 cc11001100 cc11001100 7523126 11月 12 01:02 target/release/librust_curl_impersonate.rlib
+
+=== cargo build --release --examples
+warning: `rust-curl-impersonate` (lib) generated 5 warnings
+    Finished `release` profile [optimized] target(s) in 0.08s
+-rwxrwxr-x 2 cc11001100 cc11001100 9918008 11月 12 01:02 target/release/examples/echo
+-rwxrwxr-x 2 cc11001100 cc11001100 6885040 11月 12 01:02 target/release/examples/h3probe
+-rwxrwxr-x 2 cc11001100 cc11001100 9174144 11月 12 01:02 target/release/examples/launch
+
+=== cargo build -p rust-curl-impersonate-ffi --release
+warning: `rust-curl-impersonate` (lib) generated 5 warnings
+    Finished `release` profile [optimized] target(s) in 0.08s
+-rwxrwxr-x 2 cc11001100 cc11001100 9912336 11月 12 01:06 target/release/librust_curl_impersonate_ffi.so
+000000000031bfd0 T rci_client_free
+000000000031c030 T rci_client_new
+000000000031c6f0 T rci_get
+000000000031c860 T rci_last_error
+000000000031c880 T rci_request
+000000000031cb40 T rci_string_free
+000000000031cb70 T rci_version
+
+=== python ctypes -> cdylib -> tls.peet.ws
+abi version: 1
+http status: 200
+http version: h2
+user agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+ja4: t13d1516h2_8daaf6152771_d8a2da3f94cd
+akamai h2: 1:65536;2:0;4:6291456;6:262144|15597570|0|m,s,a,p

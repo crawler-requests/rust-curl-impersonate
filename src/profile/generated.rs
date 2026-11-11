@@ -123,18 +123,94 @@ pub fn emulation(target: &str) -> Option<Emulation> {
 /// Why a target's wire settings differ from curl-impersonate's preset.
 pub fn deviation(target: &str) -> Option<&'static str> {
     Some(match target {
-    "chrome145" => "HTTP/3 settings have no QUIC transport",
-    "chrome146" => "HTTP/3 settings have no QUIC transport",
-    "chrome150" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
-    "chrome151" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
-    "chrome151_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
-    "chrome152" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
-    "chrome152_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87; HTTP/3 settings have no QUIC transport",
-    "firefox147" => "HTTP/3 settings have no QUIC transport",
-    "safari270" => "HTTP/3 settings have no QUIC transport",
-    "safari270_ios" => "HTTP/3 settings have no QUIC transport",
+        "chrome150" => "drops signature algorithms mldsa44, mldsa65, mldsa87",
+        "chrome151" => "drops signature algorithms mldsa44, mldsa65, mldsa87",
+        "chrome151_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87",
+        "chrome152" => "drops signature algorithms mldsa44, mldsa65, mldsa87",
+        "chrome152_macos" => "drops signature algorithms mldsa44, mldsa65, mldsa87",
         _ => return None,
     })
+}
+
+/// One HTTP/3 SETTINGS entry, in the order curl-impersonate sends it.
+///
+/// `Grease` stands for the literal `GREASE` token, which curl-impersonate turns
+/// into a random setting id of the form `0x1f * N + 0x21` with a random value.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum H3Setting {
+    /// A setting with a fixed id and value.
+    Value(u64, u64),
+    /// A GREASE setting whose id and value are chosen per connection.
+    Grease,
+}
+
+/// The QUIC-only settings of one browser preset.
+///
+/// curl-impersonate keeps these separate from the TLS and HTTP/2 settings and
+/// applies them only after HTTP/3 is negotiated. An empty `key_shares` or
+/// `cert_compression` means the preset sets no limit or no compression.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Http3Profile {
+    /// TLS GREASE, matching the preset's `tls_grease`.
+    pub grease: bool,
+    /// Signed certificate timestamps extension.
+    pub signed_cert_timestamps: bool,
+    /// TLS session ticket extension.
+    pub session_ticket: bool,
+    /// Key exchange groups for the QUIC ClientHello.
+    pub curves: &'static str,
+    /// Signature algorithms for the QUIC ClientHello, with ML-DSA names removed.
+    pub sigalgs: &'static str,
+    /// Cipher list, shared with the TLS preset.
+    pub ciphers: &'static str,
+    /// BoringSSL's permuted-extension behavior.
+    pub permute_extensions: bool,
+    /// ECH grease extension.
+    pub ech_grease: bool,
+    /// Use the new ALPS codepoint.
+    pub new_alps: bool,
+    /// Delegated credentials signature algorithms, when the preset sets them.
+    pub delegated_credentials: Option<&'static str>,
+    /// Record size limit. `Some(0)` means the extension is not sent.
+    pub record_size_limit: Option<u16>,
+    /// ClientHello extension order for the QUIC handshake.
+    pub extension_permutation: &'static [ExtensionType],
+    /// Key shares, truncated to the preset's `tls_key_shares_limit`.
+    pub key_shares: &'static [KeyShare],
+    /// Certificate compression algorithms, in preset order.
+    pub cert_compression: &'static [&'static str],
+    /// HTTP/3 SETTINGS, in preset order.
+    pub settings: &'static [H3Setting],
+    /// QUIC transport parameters in curl-impersonate's `id:value` syntax.
+    pub transport_parameters: &'static str,
+    /// Connection id length profile, `webkit` or `firefox`.
+    pub cid_profile: Option<&'static str>,
+    /// Initial packet number. `-1` is Neqo's biased random range 1..=1024.
+    pub initial_packet_number: Option<i64>,
+    /// HTTP/3 pseudo-header order, letters `m`, `a`, `s`, `p`.
+    pub pseudo_order: &'static str,
+    /// HTTP/3 header order. `None` keeps the preset's HTTP header order.
+    pub header_order: Option<&'static str>,
+    /// HTTP/3 request headers. The preset's own `http3_headers` when set, else
+    /// the default headers.
+    pub headers: &'static [(&'static str, &'static str)],
+}
+
+/// The HTTP/3 settings of a preset, when it carries any.
+pub fn http3(target: &str) -> Option<Http3Profile> {
+    match target {
+        "chrome145" => Some(http3_profile_chrome145()),
+        "chrome146" => Some(http3_profile_chrome146()),
+        "chrome150" => Some(http3_profile_chrome150()),
+        "chrome151" => Some(http3_profile_chrome151()),
+        "chrome151_macos" => Some(http3_profile_chrome151_macos()),
+        "chrome152" => Some(http3_profile_chrome152()),
+        "chrome152_macos" => Some(http3_profile_chrome152_macos()),
+        "firefox147" => Some(http3_profile_firefox147()),
+        "safari270" => Some(http3_profile_safari270()),
+        "safari270_ios" => Some(http3_profile_safari270_ios()),
+        _ => None,
+    }
 }
 
 fn profile_chrome100() -> Emulation {
@@ -4990,4 +5066,385 @@ fn profile_tor145() -> Emulation {
         .headers(headers)
         .orig_headers(header_order)
         .build(wreq::Group::new("tor145"))
+}
+
+fn http3_profile_chrome145() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA",
+        permute_extensions: true,
+        ech_grease: true,
+        new_alps: true,
+        delegated_credentials: None,
+        record_size_limit: None,
+        extension_permutation: &[ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_GROUPS, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::CERT_COMPRESSION, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::KEY_SHARE, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::APPLICATION_SETTINGS, ExtensionType::ENCRYPTED_CLIENT_HELLO],
+        key_shares: &[],
+        cert_compression: &["brotli"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(6, 262144), H3Setting::Value(7, 100), H3Setting::Value(51, 1), H3Setting::Grease],
+        transport_parameters: "1:30000;3:1472;4:15728640;5:6291456;6:6291456;7:6291456;8:100;9:103;15:;17:1@1,GREASE;32:65536;12583:AUTO;18258:1;GREASE",
+        cid_profile: Some("webkit"),
+        initial_packet_number: Some(1),
+        pseudo_order: "masp",
+        header_order: None,
+        headers: &[
+            ("sec-ch-ua", "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\""),
+            ("sec-ch-ua-mobile", "?0"),
+            ("sec-ch-ua-platform", "\"macOS\""),
+            ("Upgrade-Insecure-Requests", "1"),
+            ("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"),
+            ("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
+            ("Sec-Fetch-Site", "none"),
+            ("Sec-Fetch-Mode", "navigate"),
+            ("Sec-Fetch-User", "?1"),
+            ("Sec-Fetch-Dest", "document"),
+            ("Accept-Encoding", "gzip, deflate, br, zstd"),
+            ("Accept-Language", "en-US,en;q=0.9"),
+            ("Priority", "u=0, i"),
+        ],
+    }
+}
+
+fn http3_profile_chrome146() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA",
+        permute_extensions: true,
+        ech_grease: true,
+        new_alps: true,
+        delegated_credentials: None,
+        record_size_limit: None,
+        extension_permutation: &[ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_GROUPS, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::CERT_COMPRESSION, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::KEY_SHARE, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::APPLICATION_SETTINGS, ExtensionType::ENCRYPTED_CLIENT_HELLO],
+        key_shares: &[],
+        cert_compression: &["brotli"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(6, 262144), H3Setting::Value(7, 100), H3Setting::Value(51, 1), H3Setting::Grease],
+        transport_parameters: "1:30000;3:1472;4:15728640;5:6291456;6:6291456;7:6291456;8:100;9:103;15:;17:1@1,GREASE;32:65536;12583:AUTO;12584:0x4f524947;GREASE",
+        cid_profile: Some("webkit"),
+        initial_packet_number: Some(1),
+        pseudo_order: "masp",
+        header_order: None,
+        headers: &[
+            ("sec-ch-ua", "\"Chromium\";v=\"146\", \"Not-A.Brand\";v=\"24\", \"Google Chrome\";v=\"146\""),
+            ("sec-ch-ua-mobile", "?0"),
+            ("sec-ch-ua-platform", "\"macOS\""),
+            ("Upgrade-Insecure-Requests", "1"),
+            ("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"),
+            ("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
+            ("Sec-Fetch-Site", "none"),
+            ("Sec-Fetch-Mode", "navigate"),
+            ("Sec-Fetch-User", "?1"),
+            ("Sec-Fetch-Dest", "document"),
+            ("Accept-Encoding", "gzip, deflate, br, zstd"),
+            ("Accept-Language", "en-US,en;q=0.9"),
+            ("Priority", "u=0, i"),
+        ],
+    }
+}
+
+fn http3_profile_chrome150() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA",
+        permute_extensions: true,
+        ech_grease: true,
+        new_alps: true,
+        delegated_credentials: None,
+        record_size_limit: None,
+        extension_permutation: &[ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_GROUPS, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::CERT_COMPRESSION, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::KEY_SHARE, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::APPLICATION_SETTINGS, ExtensionType::ENCRYPTED_CLIENT_HELLO],
+        key_shares: &[],
+        cert_compression: &["brotli"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(6, 262144), H3Setting::Value(7, 100), H3Setting::Value(51, 1), H3Setting::Grease],
+        transport_parameters: "1:30000;3:1472;4:15728640;5:6291456;6:6291456;7:6291456;8:100;9:103;15:;17:1@1,GREASE;32:65536;12584:0x4f524947;GREASE",
+        cid_profile: Some("webkit"),
+        initial_packet_number: Some(1),
+        pseudo_order: "masp",
+        header_order: None,
+        headers: &[
+            ("sec-ch-ua", "\"Not;A=Brand\";v=\"8\", \"Chromium\";v=\"150\", \"Google Chrome\";v=\"150\""),
+            ("sec-ch-ua-mobile", "?0"),
+            ("sec-ch-ua-platform", "\"macOS\""),
+            ("Upgrade-Insecure-Requests", "1"),
+            ("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36"),
+            ("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
+            ("Sec-Fetch-Site", "none"),
+            ("Sec-Fetch-Mode", "navigate"),
+            ("Sec-Fetch-User", "?1"),
+            ("Sec-Fetch-Dest", "document"),
+            ("Accept-Encoding", "gzip, deflate, br, zstd"),
+            ("Accept-Language", "en-US,en;q=0.9"),
+            ("Priority", "u=0, i"),
+        ],
+    }
+}
+
+fn http3_profile_chrome151() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA",
+        permute_extensions: true,
+        ech_grease: true,
+        new_alps: true,
+        delegated_credentials: None,
+        record_size_limit: Some(0),
+        extension_permutation: &[ExtensionType::APPLICATION_SETTINGS, ExtensionType::KEY_SHARE, ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::ENCRYPTED_CLIENT_HELLO, ExtensionType::SUPPORTED_GROUPS, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::CERT_COMPRESSION],
+        key_shares: &[KeyShare::X25519_MLKEM768, KeyShare::X25519],
+        cert_compression: &["brotli"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(6, 262144), H3Setting::Value(7, 100), H3Setting::Value(51, 1), H3Setting::Grease],
+        transport_parameters: "5:6291456;12584:0x4f524947;8:100;9:103;17:1@1,GREASE;6:6291456;GREASE;1:30000;4:15728640;7:6291456;3:1472;15:AUTO;32:65536",
+        cid_profile: None,
+        initial_packet_number: None,
+        pseudo_order: "masp",
+        header_order: Some("sec-ch-ua,sec-ch-ua-mobile,sec-ch-ua-platform,upgrade-insecure-requests,user-agent,accept,sec-fetch-site,sec-fetch-mode,sec-fetch-user,sec-fetch-dest,referer,accept-encoding,accept-language,priority,cookie"),
+        headers: &[
+            ("sec-ch-ua", "\"Not=A?Brand\";v=\"99\", \"Google Chrome\";v=\"151\", \"Chromium\";v=\"151\""),
+            ("sec-ch-ua-mobile", "?0"),
+            ("sec-ch-ua-platform", "\"Windows\""),
+            ("upgrade-insecure-requests", "1"),
+            ("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"),
+            ("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
+            ("sec-fetch-site", "none"),
+            ("sec-fetch-mode", "navigate"),
+            ("sec-fetch-user", "?1"),
+            ("sec-fetch-dest", "document"),
+            ("accept-encoding", "gzip, deflate, br, zstd"),
+            ("accept-language", "en-US,en;q=0.9"),
+            ("priority", "u=0, i"),
+        ],
+    }
+}
+
+fn http3_profile_chrome151_macos() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA",
+        permute_extensions: true,
+        ech_grease: true,
+        new_alps: true,
+        delegated_credentials: None,
+        record_size_limit: Some(0),
+        extension_permutation: &[ExtensionType::APPLICATION_SETTINGS, ExtensionType::KEY_SHARE, ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::ENCRYPTED_CLIENT_HELLO, ExtensionType::SUPPORTED_GROUPS, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::CERT_COMPRESSION],
+        key_shares: &[KeyShare::X25519_MLKEM768, KeyShare::X25519],
+        cert_compression: &["brotli"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(6, 262144), H3Setting::Value(7, 100), H3Setting::Value(51, 1), H3Setting::Grease],
+        transport_parameters: "5:6291456;12584:0x4f524947;8:100;9:103;17:1@1,GREASE;6:6291456;GREASE;1:30000;4:15728640;7:6291456;3:1472;15:AUTO;32:65536",
+        cid_profile: None,
+        initial_packet_number: None,
+        pseudo_order: "masp",
+        header_order: Some("sec-ch-ua,sec-ch-ua-mobile,sec-ch-ua-platform,upgrade-insecure-requests,user-agent,accept,sec-fetch-site,sec-fetch-mode,sec-fetch-user,sec-fetch-dest,referer,accept-encoding,accept-language,priority,cookie"),
+        headers: &[
+            ("sec-ch-ua", "\"Not=A?Brand\";v=\"99\", \"Google Chrome\";v=\"151\", \"Chromium\";v=\"151\""),
+            ("sec-ch-ua-mobile", "?0"),
+            ("sec-ch-ua-platform", "\"macOS\""),
+            ("upgrade-insecure-requests", "1"),
+            ("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"),
+            ("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
+            ("sec-fetch-site", "none"),
+            ("sec-fetch-mode", "navigate"),
+            ("sec-fetch-user", "?1"),
+            ("sec-fetch-dest", "document"),
+            ("accept-encoding", "gzip, deflate, br, zstd"),
+            ("accept-language", "en-US,en;q=0.9"),
+            ("priority", "u=0, i"),
+        ],
+    }
+}
+
+fn http3_profile_chrome152() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA",
+        permute_extensions: true,
+        ech_grease: true,
+        new_alps: true,
+        delegated_credentials: None,
+        record_size_limit: Some(0),
+        extension_permutation: Box::leak(Box::new([ExtensionType::SERVER_NAME, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::ENCRYPTED_CLIENT_HELLO, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::APPLICATION_SETTINGS, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::KEY_SHARE, ExtensionType::SUPPORTED_GROUPS, ExtensionType::from(51764), ExtensionType::CERT_COMPRESSION])),
+        key_shares: &[KeyShare::X25519_MLKEM768, KeyShare::X25519],
+        cert_compression: &["brotli"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(6, 262144), H3Setting::Value(7, 100), H3Setting::Value(51, 1), H3Setting::Grease],
+        transport_parameters: "12584:0x4f524947;15:AUTO;GREASE;4:15728640;32:65536;5:6291456;9:103;1:30000;6:6291456;7:6291456;17:1@1,GREASE;3:1472;8:100",
+        cid_profile: None,
+        initial_packet_number: None,
+        pseudo_order: "masp",
+        header_order: Some("sec-ch-ua,sec-ch-ua-mobile,sec-ch-ua-platform,user-agent,accept,sec-fetch-site,sec-fetch-mode,sec-fetch-dest,referer,accept-encoding,accept-language,priority,cookie"),
+        headers: &[
+            ("sec-ch-ua", "\"Chromium\";v=\"152\", \"Not?A_Brand\";v=\"24\", \"Google Chrome\";v=\"152\""),
+            ("sec-ch-ua-mobile", "?0"),
+            ("sec-ch-ua-platform", "\"Windows\""),
+            ("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"),
+            ("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
+            ("sec-fetch-site", "none"),
+            ("sec-fetch-mode", "cors"),
+            ("sec-fetch-dest", "empty"),
+            ("accept-encoding", "gzip, deflate, br, zstd"),
+            ("accept-language", "en-US,en;q=0.9"),
+            ("priority", "u=1, i"),
+        ],
+    }
+}
+
+fn http3_profile_chrome152_macos() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA:AES256-SHA",
+        permute_extensions: true,
+        ech_grease: true,
+        new_alps: true,
+        delegated_credentials: None,
+        record_size_limit: Some(0),
+        extension_permutation: Box::leak(Box::new([ExtensionType::SERVER_NAME, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::ENCRYPTED_CLIENT_HELLO, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::APPLICATION_SETTINGS, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::KEY_SHARE, ExtensionType::SUPPORTED_GROUPS, ExtensionType::from(51764), ExtensionType::CERT_COMPRESSION])),
+        key_shares: &[KeyShare::X25519_MLKEM768, KeyShare::X25519],
+        cert_compression: &["brotli"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(6, 262144), H3Setting::Value(7, 100), H3Setting::Value(51, 1), H3Setting::Grease],
+        transport_parameters: "12584:0x4f524947;15:AUTO;GREASE;4:15728640;32:65536;5:6291456;9:103;1:30000;6:6291456;7:6291456;17:1@1,GREASE;3:1472;8:100",
+        cid_profile: None,
+        initial_packet_number: None,
+        pseudo_order: "masp",
+        header_order: Some("sec-ch-ua,sec-ch-ua-mobile,sec-ch-ua-platform,user-agent,accept,sec-fetch-site,sec-fetch-mode,sec-fetch-dest,referer,accept-encoding,accept-language,priority,cookie"),
+        headers: &[
+            ("sec-ch-ua", "\"Chromium\";v=\"152\", \"Not?A_Brand\";v=\"24\", \"Google Chrome\";v=\"152\""),
+            ("sec-ch-ua-mobile", "?0"),
+            ("sec-ch-ua-platform", "\"macOS\""),
+            ("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"),
+            ("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"),
+            ("sec-fetch-site", "none"),
+            ("sec-fetch-mode", "cors"),
+            ("sec-fetch-dest", "empty"),
+            ("accept-encoding", "gzip, deflate, br, zstd"),
+            ("accept-language", "en-US,en;q=0.9"),
+            ("priority", "u=1, i"),
+        ],
+    }
+}
+
+fn http3_profile_firefox147() -> Http3Profile {
+    Http3Profile {
+        grease: false,
+        signed_cert_timestamps: true,
+        session_ticket: true,
+        curves: "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
+        sigalgs: "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
+        ciphers: "TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
+        permute_extensions: false,
+        ech_grease: true,
+        new_alps: false,
+        delegated_credentials: Some("ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1"),
+        record_size_limit: Some(16385),
+        extension_permutation: &[ExtensionType::RECORD_SIZE_LIMIT, ExtensionType::KEY_SHARE, ExtensionType::CERT_COMPRESSION, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::DELEGATED_CREDENTIAL, ExtensionType::SUPPORTED_GROUPS, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::RENEGOTIATE, ExtensionType::EXTENDED_MASTER_SECRET, ExtensionType::STATUS_REQUEST, ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::ENCRYPTED_CLIENT_HELLO],
+        key_shares: &[KeyShare::X25519_MLKEM768, KeyShare::X25519, KeyShare::P256],
+        cert_compression: &["zlib", "brotli", "zstd"],
+        settings: &[H3Setting::Value(1, 65536), H3Setting::Value(7, 20), H3Setting::Value(727725890, 0), H3Setting::Value(16765559, 1), H3Setting::Value(51, 1), H3Setting::Value(8, 1)],
+        transport_parameters: "1:30000;4:25165824;5:12582912;6:1048576;7:1048576;8:100;9:100;11:20;14:8;15:AUTO;17:1@GREASE,1;GREASE;32:65535",
+        cid_profile: Some("firefox"),
+        initial_packet_number: Some(-1),
+        pseudo_order: "msap",
+        header_order: None,
+        headers: &[
+            ("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:147.0) Gecko/20100101 Firefox/147.0"),
+            ("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"),
+            ("Accept-Language", "en-US,en;q=0.9"),
+            ("Accept-Encoding", "gzip, deflate, br, zstd"),
+            ("Upgrade-Insecure-Requests", "1"),
+            ("Sec-Fetch-Dest", "document"),
+            ("Sec-Fetch-Mode", "navigate"),
+            ("Sec-Fetch-Site", "none"),
+            ("Sec-Fetch-User", "?1"),
+            ("Priority", "u=0, i"),
+            ("Te", "trailers"),
+        ],
+    }
+}
+
+fn http3_profile_safari270() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: false,
+        curves: "X25519:P-256:P-384:P-521",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        ciphers: "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA:AES128-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:DES-CBC3-SHA",
+        permute_extensions: false,
+        ech_grease: false,
+        new_alps: false,
+        delegated_credentials: None,
+        record_size_limit: Some(0),
+        extension_permutation: &[ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_GROUPS, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::STATUS_REQUEST, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::CERTIFICATE_TIMESTAMP, ExtensionType::KEY_SHARE, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::CERT_COMPRESSION],
+        key_shares: &[KeyShare::X25519, KeyShare::P256],
+        cert_compression: &["zlib"],
+        settings: &[H3Setting::Value(1, 16383), H3Setting::Value(7, 100), H3Setting::Grease],
+        transport_parameters: "9:8;14:64;15:AUTO;1:300000;4:16777216;5:2097152;6:2097152;7:2097152",
+        cid_profile: None,
+        initial_packet_number: None,
+        pseudo_order: "msap",
+        header_order: Some("sec-fetch-dest,user-agent,accept,referer,sec-fetch-site,sec-fetch-mode,accept-language,priority,accept-encoding,cookie"),
+        headers: &[
+            ("sec-fetch-dest", "document"),
+            ("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15"),
+            ("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"),
+            ("sec-fetch-site", "same-origin"),
+            ("sec-fetch-mode", "navigate"),
+            ("accept-language", "en-US,en;q=0.9"),
+            ("priority", "u=0, i"),
+            ("accept-encoding", "gzip, deflate, br, zstd"),
+        ],
+    }
+}
+
+fn http3_profile_safari270_ios() -> Http3Profile {
+    Http3Profile {
+        grease: true,
+        signed_cert_timestamps: true,
+        session_ticket: false,
+        curves: "X25519MLKEM768:X25519:P-256:P-384:P-521",
+        sigalgs: "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        ciphers: "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA:AES128-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:DES-CBC3-SHA",
+        permute_extensions: false,
+        ech_grease: false,
+        new_alps: false,
+        delegated_credentials: None,
+        record_size_limit: Some(0),
+        extension_permutation: &[ExtensionType::SERVER_NAME, ExtensionType::SUPPORTED_GROUPS, ExtensionType::APPLICATION_LAYER_PROTOCOL_NEGOTIATION, ExtensionType::STATUS_REQUEST, ExtensionType::SIGNATURE_ALGORITHMS, ExtensionType::CERTIFICATE_TIMESTAMP, ExtensionType::KEY_SHARE, ExtensionType::PSK_KEY_EXCHANGE_MODES, ExtensionType::SUPPORTED_VERSIONS, ExtensionType::QUIC_TRANSPORT_PARAMETERS_STANDARD, ExtensionType::CERT_COMPRESSION],
+        key_shares: &[KeyShare::X25519_MLKEM768, KeyShare::X25519],
+        cert_compression: &["zlib"],
+        settings: &[H3Setting::Value(1, 16383), H3Setting::Value(7, 100), H3Setting::Grease],
+        transport_parameters: "9:8;14:64;15:AUTO;4:16777216;5:2097152;6:2097152;7:2097152;4278716424:0x09",
+        cid_profile: None,
+        initial_packet_number: None,
+        pseudo_order: "msap",
+        header_order: Some("user-agent,accept,referer,accept-language,priority,accept-encoding,cookie"),
+        headers: &[
+            ("user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1"),
+            ("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"),
+            ("accept-language", "en-US,en;q=0.9"),
+            ("priority", "u=3"),
+            ("accept-encoding", "gzip, deflate, br"),
+        ],
+    }
 }

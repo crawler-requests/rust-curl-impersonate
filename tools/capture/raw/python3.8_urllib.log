@@ -1,0 +1,21 @@
+Unable to find image 'python:3.8-slim' locally
+3.8-slim: Pulling from library/python
+302e3ee49805: Pulling fs layer
+030d7bdc20a6: Pulling fs layer
+a3f1dfe736c5: Pulling fs layer
+3971691a3637: Pulling fs layer
+3971691a3637: Waiting
+a3f1dfe736c5: Verifying Checksum
+a3f1dfe736c5: Download complete
+030d7bdc20a6: Verifying Checksum
+030d7bdc20a6: Download complete
+3971691a3637: Download complete
+302e3ee49805: Verifying Checksum
+302e3ee49805: Download complete
+302e3ee49805: Pull complete
+030d7bdc20a6: Pull complete
+a3f1dfe736c5: Pull complete
+3971691a3637: Pull complete
+Digest: sha256:1d52838af602b4b5a831beb13a0e4d073280665ea7be7f69ce2382f29c5a613f
+Status: Downloaded newer image for python:3.8-slim
+urllib: 200 11

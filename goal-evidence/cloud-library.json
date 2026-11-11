@@ -1,0 +1,93 @@
+{
+  "fingerprints": [
+    {
+      "name": "cloud_premium",
+      "family": "chrome",
+      "client": "Chrome 150 (premium lane)",
+      "version": "150.0.0.0",
+      "platform": "any",
+      "source": "cloud.acme.example/fingerprints, subscription lane premium",
+      "fidelity": "exact",
+      "extends": "chrome150"
+    },
+    {
+      "name": "cloud_chrome_patch",
+      "family": "chrome",
+      "client": "Chrome 150 (hot patch)",
+      "version": "150.0.0.0+patch",
+      "platform": "any",
+      "source": "cloud.acme.example/fingerprints, hot-fix lane",
+      "fidelity": "exact",
+      "extends": "chrome150"
+    },
+    {
+      "name": "cloud_chrome_full",
+      "family": "chrome",
+      "client": "Chrome 151 (complete record lane)",
+      "version": "151.0.0.0",
+      "platform": "macos",
+      "source": "cloud.acme.example/fingerprints, complete-record lane",
+      "fidelity": "close",
+      "tls": {
+        "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+        "curves": "X25519MLKEM768:X25519:P-256:P-384",
+        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256",
+        "extension_order": "0-5-10-11-13-16-27-35-43-45-51-17613-65037",
+        "alpn": ["h2", "http/1.1"],
+        "grease": true,
+        "permute_extensions": true,
+        "session_ticket": true,
+        "ocsp_stapling": true,
+        "alps": true,
+        "new_alps_codepoint": true,
+        "cert_compression": "brotli",
+        "record_size_limit": 0
+      },
+      "http2": {
+        "settings": "1:65536;2:0;3:1000;4:6291456;6:262144",
+        "pseudo_order": "m,a,s,p",
+        "window_update": 15663105,
+        "initial_window_size": 6291456,
+        "no_priority": true
+      },
+      "headers": [
+        ["sec-ch-ua", "\"Chromium\";v=\"151\", \"Google Chrome\";v=\"151\""],
+        ["sec-ch-ua-mobile", "?0"],
+        ["sec-ch-ua-platform", "\"macOS\""],
+        ["user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"],
+        ["accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"],
+        ["accept-language", "en-US,en;q=0.9"],
+        ["accept-encoding", "gzip, deflate, br, zstd"]
+      ],
+      "form_boundary": "webkit",
+      "split_cookies": true,
+      "http3": {
+        "settings": "1:1;6:1;7:1;GREASE",
+        "initial_packet_number": 1,
+        "transport_parameters": "1:30000;3:1472;4:15728640;5:6291456;6:6291456;7:6291456;8:100;9:103;15:AUTO;32:65536;GREASE",
+        "pseudo_order": "m,a,s,p",
+        "curves": "X25519MLKEM768:X25519:P-256",
+        "grease": true,
+        "permute_extensions": true,
+        "session_ticket": true,
+        "signed_cert_timestamps": true,
+        "new_alps": true,
+        "record_size_limit": 0,
+        "cert_compression": "brotli"
+      }
+    },
+    {
+      "name": "go1.26",
+      "family": "cloud",
+      "client": "Go net/http (cloud override)",
+      "version": "go1.26.5-cloud",
+      "platform": "any",
+      "source": "cloud.acme.example/fingerprints, overrides built-in go1.26 until unregistered",
+      "fidelity": "partial",
+      "tls": {
+        "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384",
+        "alpn": ["h2", "http/1.1"]
+      }
+    }
+  ]
+}

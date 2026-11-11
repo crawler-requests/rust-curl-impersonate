@@ -1,0 +1,36 @@
+指纹库改为可加载的 Provider 机制（不再是一整块写死的 include_str!）
+
+新增文件：src/fingerprint/provider.rs
+  - trait FingerprintProvider { id, description, priority, load() -> Vec<Fingerprint> }
+    对象安全、Send + Sync，可被外部 crate 实现。
+  - BuiltinProvider          嵌入本 crate 的库（id="builtin"，priority=0，不可卸载）
+  - JsonProvider             内存里的 JSON，或 from_path() 按路径每次 load 时重读
+  - DirProvider              目录下全部 *.json，按文件名排序
+  - FnProvider<F>            闭包，每次 load 都调用，是接云端/授权记录服务的接缝
+  - register_provider / register_provider_with_priority / unregister_provider
+  - refresh_providers        重新 load 所有非内置 provider，失败的保留旧记录并汇总报错
+  - providers / provider_of  列出注册情况和每条记录实际由哪个 provider 提供
+  - 优先级常量 PRIORITY_BUILTIN(0) < PRIORITY_CLOUD(50) < PRIORITY_USER(100)
+
+合并语义：
+  - 名字冲突时高优先级胜出；同优先级则后注册者胜出（用于运行时给内置记录打补丁）。
+  - 被覆盖的名字保留首次出现的位置，因此内置记录的顺序不变。
+  - 注册前校验：id 非空、非保留、不重复；provider 内部记录名不重复；名字非空；
+    extends 的目标必须能解析（失败时整个 provider 回滚，不留半套记录）。
+
+对既有 API 的兼容：
+  - builtin()      仍是嵌入库本身（未变，仍是 &'static [Fingerprint]）
+  - records()      新增：全部 provider 合并后的记录
+  - find/names/families/by_family 改为读合并视图，因此 provider 的记录无需 install 即可
+    被 Profile::find 选中
+  - load_json/load_json_file/to_json/parse_json 全部保留（install 语义不变）
+  - Profile::find、ProfileSpec、Profile::register 的调用方无需改动
+
+验证：
+  - tests/providers.rs 10 条用例：内嵌是默认 provider、JSON provider 可解析、
+    高优先级覆盖、同优先级后者胜出、注册前校验（重名/空名/保留 id/重复 id/坏 JSON/缺文件）、
+    extends 内置记录、extends 未知目标回滚、目录 provider、refresh 生效、
+    refresh 失败保留旧记录、provider_of/provider info。
+  - cargo test：146 条既有用例 + 10 条新用例全绿（fingerprints 18, providers 10, wire 13,
+    protocol/其它见 cargo test 输出）。
+  - examples/fingerprints 现在先打印 provider 列表（builtin, priority 0, 187 records）。
