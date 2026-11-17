@@ -97,8 +97,16 @@ date: 2026-11-17
    upgrade-insecure-requests and sec-fetch-user keep their http2 position
    (this is what the record's `header_order` expresses).
 
-   Tests: policy::tests::an_empty_http3_header_list_keeps_the_regular_headers
-   and tests/fingerprints.rs::library_records_send_their_headers_on_http3.
+   c) the send path itself (H3Endpoint::request_headers) also read only
+      `endpoint.header_order` and never `profile.header_order`, so even a
+      correct Prepared still wrote the wrong order. It now falls back to the
+      profile, mirroring the pseudo-header lookup.
+
+   Tests: policy::tests::an_empty_http3_header_list_keeps_the_regular_headers,
+   tests/fingerprints.rs::library_records_send_their_headers_on_http3 and
+   the_http3_request_uses_the_records_header_order (the last one asserts the
+   exact list `assemble_headers` produces, i.e. what goes on the wire:
+   :method :authority :scheme :path sec-ch-ua-platform user-agent sec-ch-ua ...).
 
 8. note on the earlier probe attempts
    260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's

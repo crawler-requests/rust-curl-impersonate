@@ -1399,3 +1399,31 @@ fn library_records_send_their_headers_on_http3() {
     // The record's own HTTP/3 order puts sec-ch-ua-platform first.
     assert_eq!(h3.first().map(String::as_str), Some("sec-ch-ua-platform"));
 }
+
+#[tokio::test]
+async fn the_http3_request_uses_the_records_header_order() {
+    // `assemble_headers` is exactly what the send path writes, so this checks
+    // the wire order the server would see rather than an intermediate list.
+    let client = Client::new(Profile::find("chrome160").unwrap()).unwrap();
+    let sent: Vec<String> = client
+        .http3_endpoint()
+        .unwrap()
+        .assemble_headers("example.com", "/", None)
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+
+    let pseudo: Vec<&str> = sent
+        .iter()
+        .take(4)
+        .map(String::as_str)
+        .collect();
+    assert_eq!(pseudo, [":method", ":authority", ":scheme", ":path"]);
+    // NetLog showed sec-ch-ua-platform, then user-agent, then sec-ch-ua.
+    let regular: Vec<&str> = sent[4..].iter().map(String::as_str).collect();
+    assert_eq!(regular.first().copied(), Some("sec-ch-ua-platform"));
+    assert_eq!(regular.get(1).copied(), Some("user-agent"));
+    assert_eq!(regular.get(2).copied(), Some("sec-ch-ua"));
+    assert!(regular.contains(&"accept-language"), "{regular:?}");
+    assert!(regular.contains(&"priority"), "{regular:?}");
+}

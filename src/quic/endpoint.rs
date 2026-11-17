@@ -379,7 +379,13 @@ fn request_headers(
         Some(endpoint.profile.headers),
         &endpoint.regular_headers,
     );
-    if let Some(order) = endpoint.header_order.as_deref() {
+    // A bind-level override wins; otherwise the profile's own HTTP/3 order
+    // applies, the same way the pseudo-header order falls back to it.
+    if let Some(order) = endpoint
+        .header_order
+        .as_deref()
+        .or(endpoint.profile.header_order)
+    {
         fields = policy::order_headers(&fields, order);
     }
     // HTTP/3 field names are lowercase. curl-impersonate stores them in the
