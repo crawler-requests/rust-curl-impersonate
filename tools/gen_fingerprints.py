@@ -389,6 +389,14 @@ PROFILES = [
         "http3": {
             "settings": "1:65536;6:262144;7:100;51:1;GREASE",
             "pseudo_order": "masp",
+            # Eight real H3 requests in the NetLog agree on this order. The
+            # navigations never happened, so upgrade-insecure-requests and
+            # sec-fetch-user keep their position from the http2 capture.
+            "header_order": (
+                "sec-ch-ua-platform,user-agent,sec-ch-ua,sec-ch-ua-mobile,accept,"
+                "sec-fetch-site,sec-fetch-mode,sec-fetch-dest,referer,"
+                "accept-encoding,accept-language,priority"
+            ),
             "transport_parameters": (
                 "12584:0x4f524947;15:AUTO;GREASE;4:15728640;32:65536;"
                 "5:6291456;9:103;1:30000;6:6291456;7:6291456;"

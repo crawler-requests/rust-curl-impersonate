@@ -452,7 +452,10 @@ pub fn negotiated_headers(
         if let Some(headers) = http3_override {
             return headers.to_vec();
         }
-        if let Some(headers) = profile_http3 {
+        // An empty list means "the profile set no HTTP/3 headers of its own",
+        // not "send no headers". Returning it verbatim would strip every
+        // regular header from the request.
+        if let Some(headers) = profile_http3.filter(|headers| !headers.is_empty()) {
             return headers
                 .iter()
                 .map(|(name, value)| ((*name).to_string(), (*value).to_string()))
@@ -465,6 +468,30 @@ pub fn negotiated_headers(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn an_empty_http3_header_list_keeps_the_regular_headers() {
+        // `profile_http3: Some(&[])` is what a record with an `http3` block
+        // but no HTTP/3 headers of its own produces. It must fall back to the
+        // regular headers; returning it verbatim sends a request with no
+        // headers at all.
+        let regular = vec![
+            ("user-agent".to_string(), "UA".to_string()),
+            ("accept".to_string(), "*/*".to_string()),
+        ];
+        let empty: &[(&str, &str)] = &[];
+        assert_eq!(
+            negotiated_headers(true, None, Some(empty), &regular),
+            regular
+        );
+
+        let own: &[(&str, &str)] = &[("user-agent", "QUIC UA")];
+        assert_eq!(
+            negotiated_headers(true, None, Some(own), &regular),
+            vec![("user-agent".to_string(), "QUIC UA".to_string())]
+        );
+        assert_eq!(negotiated_headers(false, None, Some(own), &regular), regular);
+    }
 
     #[test]
     fn empty_trust_anchors_advertise_nothing_specific() {

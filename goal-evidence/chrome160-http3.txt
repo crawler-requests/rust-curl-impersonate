@@ -75,7 +75,32 @@ date: 2026-11-17
    asserts key_share, ALPS, GREASE, supported_versions, a non-empty
    transport-parameters extension and a well-framed 51764 list.
 
-7. note on the earlier probe attempts
+7. HTTP/3 request headers
+   Two more defects found while checking the headers:
+
+   a) `policy::negotiated_headers` returned `Some(&[])` (a record with an
+      `http3` block but no HTTP/3 headers of its own) verbatim, so the
+      request was built with NO headers at all - no user-agent, no accept.
+      An empty list now means "use the regular headers".
+
+   b) `Prepared::http3_header_order()` only returned a caller override and
+      never the profile's own `header_order`, so a record's HTTP/3 order
+      never reached the wire. It now falls back to the profile, and
+      `http3_fields()` uses the accessor instead of reading the raw field.
+
+   chrome160's HTTP/3 header order comes from eight real requests in the
+   NetLog (all agree):
+     sec-ch-ua-platform, user-agent, sec-ch-ua, sec-ch-ua-mobile, accept,
+     sec-fetch-site, sec-fetch-mode, sec-fetch-dest, referer,
+     accept-encoding, accept-language, priority
+   Those requests were fetches, not navigations, so
+   upgrade-insecure-requests and sec-fetch-user keep their http2 position
+   (this is what the record's `header_order` expresses).
+
+   Tests: policy::tests::an_empty_http3_header_list_keeps_the_regular_headers
+   and tests/fingerprints.rs::library_records_send_their_headers_on_http3.
+
+8. note on the earlier probe attempts
    260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's
    per-source-IP application policy; identical requests succeed seconds later
    and the QUIC/TLS/H3 handshake completes every time.

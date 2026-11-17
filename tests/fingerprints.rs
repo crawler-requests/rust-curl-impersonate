@@ -1381,3 +1381,21 @@ fn library_http3_profile_inherits_the_records_tls_handshake() {
 fn policy_extension_count(order: &str) -> usize {
     order.split('-').filter(|id| !id.is_empty()).count()
 }
+
+#[test]
+fn library_records_send_their_headers_on_http3() {
+    // A record's `http3` block usually has no headers of its own. Building the
+    // HTTP/3 request from an empty profile list used to drop every header, so
+    // the request went out with no user-agent at all.
+    let client = Client::new(Profile::find("chrome160").unwrap()).unwrap();
+    let h3: Vec<String> = client
+        .headers_after_negotiation(true)
+        .unwrap()
+        .into_iter()
+        .map(|(name, _)| name)
+        .collect();
+    assert!(h3.contains(&"user-agent".to_string()), "H3 headers: {h3:?}");
+    assert!(h3.contains(&"accept-language".to_string()), "H3 headers: {h3:?}");
+    // The record's own HTTP/3 order puts sec-ch-ua-platform first.
+    assert_eq!(h3.first().map(String::as_str), Some("sec-ch-ua-platform"));
+}

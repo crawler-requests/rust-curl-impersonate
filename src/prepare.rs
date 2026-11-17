@@ -410,7 +410,11 @@ impl Prepared {
     }
 
     pub(crate) fn http3_header_order(&self) -> Option<&str> {
-        self.http3_header_order.as_deref()
+        // A caller override wins; otherwise the record's HTTP/3 order applies,
+        // the same way http3_pseudo_order falls back to the profile.
+        self.http3_header_order
+            .as_deref()
+            .or_else(|| self.http3.and_then(|profile| profile.header_order))
     }
 }
 
@@ -422,7 +426,7 @@ fn http3_fields(prepared: &Prepared) -> Vec<(String, String)> {
         profile_headers,
         &prepared.regular_headers,
     );
-    if let Some(order) = prepared.http3_header_order.as_deref() {
+    if let Some(order) = prepared.http3_header_order() {
         headers = policy::order_headers(&headers, order);
     }
     headers
