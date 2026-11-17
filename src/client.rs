@@ -461,6 +461,13 @@ impl ClientBuilder {
         self
     }
 
+    /// Enables the TLS session cache, so a second connection to the same origin
+    /// carries `pre_shared_key` the way a browser's resumed handshake does.
+    pub fn pre_shared_key(mut self, enabled: bool) -> Self {
+        self.overrides.pre_shared_key = Some(enabled);
+        self
+    }
+
     pub fn permute_extensions(mut self, enabled: bool) -> Self {
         self.overrides.permute_extensions = Some(enabled);
         self

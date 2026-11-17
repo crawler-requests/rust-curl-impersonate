@@ -678,17 +678,18 @@ fn utls_records_cover_legacy_browsers_and_http1_chrome() {
         );
     }
 
-    // Chrome 58-72 still send BoringSSL's ChannelID extension, which the
-    // transport has no way to enable, so those records are `close`.
+    // Chrome 58-72 send the deprecated ChannelID extension (30032). The
+    // vendored BoringSSL can now offer it with an empty payload, so those
+    // records carry it and no longer list it as unsendable.
     let chrome58 = fingerprint::find("utls_chrome58").unwrap();
     assert_eq!(chrome58.family, "chrome");
-    assert_eq!(chrome58.fidelity, Some(Fidelity::Close));
     assert_eq!(chrome58.tls.max_version.as_deref(), Some("1.2"));
     assert_eq!(
         chrome58.tls.extension_order.as_deref(),
-        Some("65281-0-23-35-13-5-18-16-11-10")
+        Some("65281-0-23-35-13-5-18-16-30032-11-10")
     );
-    assert!(chrome58
+    assert!(chrome58.tls.channel_id, "ChannelID is offered now");
+    assert!(!chrome58
         .deviations
         .iter()
         .any(|note| note.contains("30032")));

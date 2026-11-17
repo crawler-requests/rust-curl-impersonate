@@ -91,6 +91,7 @@ pub struct Overrides {
     pub new_alps_codepoint: Option<bool>,
     pub cert_compression: Option<String>,
     pub session_ticket: Option<bool>,
+    pub pre_shared_key: Option<bool>,
     pub permute_extensions: Option<bool>,
     pub grease: Option<bool>,
     pub extension_order: Option<String>,
@@ -568,6 +569,9 @@ fn apply_tls(tls: Option<&mut wreq::tls::TlsOptions>, overrides: &Overrides) -> 
     }
     if let Some(spec) = overrides.cert_compression.as_deref() {
         tls.certificate_compressors = Some(Cow::Owned(compressors(spec)?));
+    }
+    if let Some(enabled) = overrides.pre_shared_key {
+        tls.pre_shared_key = enabled;
     }
     if let Some(enabled) = overrides.session_ticket {
         tls.session_ticket = enabled;

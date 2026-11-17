@@ -311,6 +311,13 @@ pub struct TlsOptions {
     /// `SSL_CTX_set_server_padding_request`.
     pub server_padding_request: Option<u16>,
 
+    /// Offer the deprecated ChannelID extension (30032) with an empty payload,
+    /// as Chrome 58-70 did.
+    pub channel_id_offer: bool,
+
+    /// Send the padding extension (21) with exactly this payload length.
+    pub force_padding_len: Option<usize>,
+
     /// `SSL_set_enforce_rsa_key_usage`. `Some(false)` is key-usage-no-check.
     /// `None` leaves BoringSSL's default.
     pub enforce_rsa_key_usage: Option<bool>,
@@ -576,6 +583,20 @@ impl TlsOptionsBuilder {
         self
     }
 
+    /// Offers the deprecated ChannelID extension (30032).
+    #[inline]
+    pub fn channel_id_offer(mut self, enabled: bool) -> Self {
+        self.config.channel_id_offer = enabled;
+        self
+    }
+
+    /// Sends the padding extension with exactly `len` payload bytes.
+    #[inline]
+    pub fn force_padding_len(mut self, len: usize) -> Self {
+        self.config.force_padding_len = Some(len);
+        self
+    }
+
     /// Sets whether RSA key usage is enforced. `false` skips the check.
     #[inline]
     pub fn enforce_rsa_key_usage(mut self, enabled: bool) -> Self {
@@ -631,6 +652,8 @@ impl Default for TlsOptions {
             random_aes_hw_override: false,
             trust_anchors: None,
             server_padding_request: None,
+            channel_id_offer: false,
+            force_padding_len: None,
             enforce_rsa_key_usage: None,
         }
     }

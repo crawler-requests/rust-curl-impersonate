@@ -139,6 +139,8 @@ SUPPORTED_EXTENSIONS = {
     51764,
     # Chromium's server padding request, added by scripts/boringssl/chrome4832.patch.
     4832,
+    # Deprecated ChannelID, offered empty by Chrome 58-70 (same patch).
+    30032,
 }
 EXTENSION_NAMES = {
     0: "server_name",
@@ -397,10 +399,6 @@ PROFILES = [
         "version": "160.0.8167.0",
         "platform": "linux",
         "permute_extensions": True,
-        # Chromium's extension 4832, server padding request, value 0.
-        "server_padding_request": 0,
-        # Keep the capture's sigalg codepoints, including ML-DSA and GREASE.
-        "sigalg_codes_from_capture": True,
         # QUIC fields from the same binary's NetLog (--log-net-log
         # --net-log-capture-mode=IncludeSensitive) over a real H3 connection to
         # quic.nginx.org. Transport parameters and SETTINGS are what Chromium
@@ -1960,7 +1958,22 @@ def build_record(spec):
     if trust_entry.get("data"):
         payload = bytes.fromhex(trust_entry["data"])
         if len(payload) >= 2 and int.from_bytes(payload[:2], "big") == len(payload) - 2:
-            trust_anchors = payload[2:].hex() or None
+            # An empty identifier list still advertises the extension, which is
+            # what e.g. tlsclient_chrome146's capture does. Keep the empty
+            # string so the record says "send 51764" rather than "no 51764".
+            trust_anchors = payload[2:].hex()
+
+    # Chrome 58-70 offer the deprecated ChannelID extension (30032).
+    channel_id = 30032 in exts
+
+    # pre_shared_key means the capture came from a resumed session: the
+    # record needs the session cache on to reproduce that ClientHello.
+    resumed = 41 in exts
+
+    # The capture's padding length (RFC 7685). BoringSSL derives padding from
+    # the ClientHello size, so a recorded length is applied explicitly.
+    pad_entry = exts.get(21) or {}
+    padding_len = pad_entry.get("padding_data_length")
 
     alps_old = 17513 in exts
     alps_new = 17613 in exts
@@ -1989,15 +2002,30 @@ def build_record(spec):
         tls_record["record_size_limit"] = record_size_limit
     if delegated_credentials:
         tls_record["delegated_credentials"] = ":".join(delegated_credentials)
-    if trust_anchors:
+    if trust_anchors is not None:
         tls_record["trust_anchors"] = trust_anchors
-    # Chrome 156+ sends sigalg codepoints BoringSSL has no name for. Record the
-    # capture's exact list so the extension can carry them verbatim.
-    if spec.get("sigalg_codes_from_capture"):
-        raw = (exts.get(13) or {}).get("signature_algorithms") or []
-        codes = [sigalg_code(name) for name in raw]
-        if all(code is not None for code in codes):
-            tls_record["sigalg_codes"] = codes
+    if channel_id:
+        tls_record["channel_id"] = True
+    if padding_len:
+        tls_record["padding_len"] = padding_len
+    if resumed:
+        tls_record["pre_shared_key"] = True
+    # Chrome 156+ sends sigalg codepoints BoringSSL has no name for (ML-DSA, a
+    # GREASE value). Record the capture's exact list so the extension carries
+    # them verbatim. This is driven by the capture, not a per-record flag, so
+    # every Chrome record gets it.
+    raw = (exts.get(13) or {}).get("signature_algorithms") or []
+    codes = [sigalg_code(name) for name in raw]
+    if raw and all(code is not None for code in codes):
+        tls_record["sigalg_codes"] = codes
+
+    # Extension 4832 (Chromium's server padding request). It is sent with the
+    # captured payload when the patch carrying the writer is in the build.
+    pad_entry = exts.get(4832)
+    if pad_entry and pad_entry.get("data"):
+        payload = bytes.fromhex(pad_entry["data"])
+        if len(payload) == 2:
+            tls_record["server_padding_request"] = int.from_bytes(payload, "big")
     if spec.get("server_padding_request") is not None:
         tls_record["server_padding_request"] = spec["server_padding_request"]
     # Always record ALPN. An empty list means the client sends no ALPN

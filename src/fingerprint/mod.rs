@@ -215,6 +215,17 @@ pub struct TlsFingerprint {
     /// has no name for (ML-DSA, GREASE) still reach the extension.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub sigalg_codes: Option<Vec<u16>>,
+    /// Offer the deprecated ChannelID extension (30032) with an empty payload,
+    /// as Chrome 58-70 did.
+    #[serde(default)]
+    pub channel_id: bool,
+    /// Payload length of the RFC 7685 padding extension (21), as captured.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub padding_len: Option<usize>,
+    /// The capture carries `pre_shared_key` from a resumed session. The record
+    /// needs the session cache on to reproduce that ClientHello.
+    #[serde(default)]
+    pub pre_shared_key: bool,
 }
 
 fn yes() -> bool {
@@ -249,6 +260,9 @@ impl Default for TlsFingerprint {
             trust_anchors: None,
             server_padding_request: None,
             sigalg_codes: None,
+            channel_id: false,
+            padding_len: None,
+            pre_shared_key: false,
         }
     }
 }
@@ -701,6 +715,15 @@ impl Fingerprint {
         }
         if let Some(value) = tls.server_padding_request {
             builder = builder.server_padding_request(value);
+        }
+        if tls.channel_id {
+            builder = builder.channel_id_offer(true);
+        }
+        if let Some(len) = tls.padding_len {
+            builder = builder.force_padding_len(len);
+        }
+        if tls.pre_shared_key {
+            builder = builder.pre_shared_key(true);
         }
         if let Some(hex) = &tls.trust_anchors {
             builder = builder.trust_anchors(policy::trust_anchors_hex(hex)?);

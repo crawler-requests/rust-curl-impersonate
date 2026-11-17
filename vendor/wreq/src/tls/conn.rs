@@ -484,6 +484,26 @@ impl TlsConnectorBuilder {
         // scripts/boringssl/chrome4832.patch. Without it the extension simply
         // stays off, so a default build keeps working.
         #[allow(unexpected_cfgs)]
+        if opts.channel_id_offer {
+            #[cfg(chrome_4832)]
+            #[allow(unsafe_code)]
+            unsafe {
+                btls_sys::SSL_CTX_set_channel_id_offer(connector.as_ptr(), 1)
+            };
+        }
+
+        #[allow(unexpected_cfgs)]
+        if let Some(len) = opts.force_padding_len {
+            #[cfg(chrome_4832)]
+            #[allow(unsafe_code)]
+            unsafe {
+                btls_sys::SSL_CTX_set_force_padding_len(connector.as_ptr(), len)
+            };
+            #[cfg(not(chrome_4832))]
+            let _ = len;
+        }
+
+        #[allow(unexpected_cfgs)]
         if let Some(value) = opts.server_padding_request {
             #[cfg(chrome_4832)]
             #[allow(unsafe_code)]
