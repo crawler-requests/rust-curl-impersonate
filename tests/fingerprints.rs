@@ -1365,6 +1365,9 @@ fn library_http3_profile_inherits_the_records_tls_handshake() {
     assert!(http3
         .transport_parameters
         .contains("12584:0x4f5249474e4f4950"));
+    // Chrome advertises active_connection_id_limit 5. Without it the peer
+    // assumes RFC 9000's default 2.
+    assert!(http3.transport_parameters.contains("14:5"));
 
     assert_eq!(quic.curves, record.tls.curves.as_deref().unwrap());
     assert_eq!(quic.grease, record.tls.grease);

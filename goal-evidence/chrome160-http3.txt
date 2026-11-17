@@ -25,7 +25,10 @@ date: 2026-11-17
 
    The record used to carry only `ORIG` for 12584, i.e. a third of the real
    value; it now records `ORIG,NOIP` (0x4f5249474e4f4950), the value Chrome
-   sends to a non-Google origin.
+   sends to a non-Google origin. The record also had no `14:`
+   (active_connection_id_limit) at all, so the peer assumed RFC 9000's
+   default 2 where Chrome advertises 5; `14:5` is recorded now. A dump of the
+   decrypted Initial confirms `active_connection_id_limit on wire = 5`.
 
    HTTP/3 SETTINGS sent by Chrome 160:
      SETTINGS_QPACK_MAX_TABLE_CAPACITY 65536,

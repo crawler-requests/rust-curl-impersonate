@@ -401,9 +401,11 @@ PROFILES = [
                 "accept-encoding,accept-language,priority"
             ),
             "transport_parameters": (
+                # 14: active_connection_id_limit, which Chrome sends as 5.
+                # Leaving it out makes the peer assume RFC 9000's default 2.
                 "12584:0x4f5249474e4f4950;15:AUTO;GREASE;4:15728640;32:65536;"
                 "5:6291456;9:103;1:30000;6:6291456;7:6291456;"
-                "17:1@1,GREASE;3:1472;8:100"
+                "17:1@1,GREASE;3:1472;8:100;14:5"
             ),
         },
     },
