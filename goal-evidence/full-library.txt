@@ -1,4 +1,4 @@
-全库实测：162 条基础记录 + 33 个别名；examples/echo 对 tls.peet.ws 逐条握手。
+全库实测：195 条基础记录 + 33 个别名；examples/echo 对 tls.peet.ws 逐条握手。
 
 字段说明：identical = cipher/曲线/签名算法/扩展集合与顺序/ALPN/JA4 与抓包完全一致；differs 后面列出差异字段。
 
@@ -43,15 +43,47 @@ openssl3_sclient         partial  differs    t13d3111h1_e8f1e7e78f70_1f22a2ca17c
     extensions missing=[22] extra=[21]; ciphers; groups; sigalgs; ja4
 rust_reqwest_rustls      close    differs    t13d1011h2_61a7ad8aa9b6_3fcd1a44f3e3 -> t13d911h2_f91f431d341e_3fcd1a44f3e3
     ciphers; ja4
-chromium156              close    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+chromium156              exact    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
     extensions missing=[51764] extra=[]; sigalgs; ja4
-chromium157              close    differs    t13d1518h2_8daaf6152771_4980c97edce0 -> t13d1517h2_8daaf6152771_dcad5a053991
+chromium157              exact    differs    t13d1518h2_8daaf6152771_4980c97edce0 -> t13d1517h2_8daaf6152771_dcad5a053991
     extensions missing=[4832] extra=[]; sigalgs; ja4
+chrome114                -        no echo
+chrome116_cft            -        no echo
+chrome118                -        no echo
+chrome119_cft            -        no echo
+chrome121                -        no echo
+chrome122                -        no echo
+chrome123_cft            -        no echo
+chrome125                -        no echo
+chrome126                -        no echo
+chrome127                -        no echo
+chrome128                -        no echo
+chrome129                -        no echo
+chrome130                -        no echo
+chrome132                -        no echo
+chrome134                -        no echo
+chrome135                -        no echo
+chrome136_cft            -        no echo
+chrome137                -        no echo
+chrome138                -        no echo
+chrome139                -        no echo
+chrome140                -        no echo
+chrome141                -        no echo
+chrome142_cft            -        no echo
+chrome143                -        no echo
+chrome145_cft            -        no echo
+chrome147                -        no echo
+chrome148                -        no echo
+chrome149                -        no echo
+chrome151_cft            -        no echo
+chrome153                -        no echo
+chrome154                -        no echo
+chrome155                -        no echo
 chrome158                close    differs    t13d1519h2_8daaf6152771_3d1b1b7bef36 -> t13d1517h2_8daaf6152771_dcad5a053991
     extensions missing=[41, 4832] extra=[]; sigalgs; ja4
 chrome159                close    differs    t13d1519h2_8daaf6152771_3d1b1b7bef36 -> t13d1517h2_8daaf6152771_dcad5a053991
     extensions missing=[41, 4832] extra=[]; sigalgs; ja4
-chrome160                close    differs    t13d1518h2_8daaf6152771_4980c97edce0 -> t13d1517h2_8daaf6152771_dcad5a053991
+chrome160                exact    differs    t13d1518h2_8daaf6152771_4980c97edce0 -> t13d1517h2_8daaf6152771_dcad5a053991
     extensions missing=[4832] extra=[]; sigalgs; ja4
 firefox158               exact    identical  t13d1517h2_8daaf6152771_3cbfd9057e0d -> t13d1517h2_8daaf6152771_3cbfd9057e0d
 firefox159               exact    identical  t13d1517h2_8daaf6152771_3cbfd9057e0d -> t13d1517h2_8daaf6152771_3cbfd9057e0d
@@ -100,9 +132,9 @@ tlsclient_chrome133      exact    identical  t13d1516h2_8daaf6152771_d8a2da3f94c
 tlsclient_chrome144      exact    identical  t13d1516h2_8daaf6152771_d8a2da3f94cd -> t13d1516h2_8daaf6152771_d8a2da3f94cd
 tlsclient_chrome146      exact    differs    t13d1517h2_8daaf6152771_dcad5a053991 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
     extensions missing=[51764] extra=[]; ja4
-tlsclient_chrome150      close    differs    t13d1516h2_8daaf6152771_806a8c22fdea -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+tlsclient_chrome150      exact    differs    t13d1516h2_8daaf6152771_806a8c22fdea -> t13d1516h2_8daaf6152771_d8a2da3f94cd
     sigalgs; ja4
-tlsclient_chrome152      close    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
+tlsclient_chrome152      exact    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
     extensions missing=[51764] extra=[]; sigalgs; ja4
 tlsclient_firefox102     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
 tlsclient_firefox104     close    identical  t13d1715h2_5b57614c22b0_3d5424432f57 -> t13d1715h2_5b57614c22b0_3d5424432f57
@@ -139,7 +171,7 @@ utls_chrome58            close    differs    t12d1311h1_8b80da21ef18_eb7c9aabf85
     extensions missing=[30032] extra=[]; ja4
 utls_chrome62            close    differs    t12d1311h1_8b80da21ef18_eb7c9aabf852 -> t12d1310h1_8b80da21ef18_e69ac49eb88f
     extensions missing=[30032] extra=[]; ja4
-utls_chrome70            close    differs    t13d1616h1_46e7e9700bed_4551aecd7b38 -> t13d1615h1_46e7e9700bed_45f260be83e2
+utls_chrome70            exact    differs    t13d1616h1_46e7e9700bed_4551aecd7b38 -> t13d1615h1_46e7e9700bed_45f260be83e2
     extensions missing=[30032] extra=[]; ja4
 utls_chrome72            exact    identical  t13d1615h1_46e7e9700bed_45f260be83e2 -> t13d1615h1_46e7e9700bed_45f260be83e2
 utls_chrome83            exact    identical  t13d1515h1_8daaf6152771_de4a06bb82e3 -> t13d1515h1_8daaf6152771_de4a06bb82e3
@@ -174,7 +206,7 @@ utls_edge85              exact    identical  t13d1515h1_8daaf6152771_de4a06bb82e
 utls_edge106             exact    identical  t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
 utls_360_7_5             partial  differs    t12d2010h1_0bf03fa604e3_736b2a1ed4d3 -> t12d1510h1_ec29cb507bb3_5af529090790
     extensions missing=[13172, 30031] extra=[21, 23]; ciphers; sigalgs; ja4
-utls_360_11_0            close    differs    t13d1616h1_46e7e9700bed_4551aecd7b38 -> t13d1615h1_46e7e9700bed_45f260be83e2
+utls_360_11_0            exact    differs    t13d1616h1_46e7e9700bed_4551aecd7b38 -> t13d1615h1_46e7e9700bed_45f260be83e2
     extensions missing=[30032] extra=[]; ja4
 utls_qq11_1              exact    identical  t13d1516h1_8daaf6152771_e5627efa2ab1 -> t13d1516h1_8daaf6152771_e5627efa2ab1
 go1.21                   close    differs    t13d1911h2_9dc949149365_e7c285222651 -> t13d1912h2_9dc949149365_cb16dbeb0c10
@@ -230,7 +262,8 @@ erlang_ssl               partial  differs    t13d257_77cab16fc9f0_78a613864d9e -
     extensions missing=[50] extra=[23]; ciphers; groups; sigalgs; ja4
 dotnet8_http1            partial  differs    t13d1211_a538d02d76d5_f6eeaf393d2e -> t13d1110_c5d436628c5c_b81ef59ec1e8
     extensions missing=[22] extra=[]; ciphers; groups; sigalgs; ja4
+chrome113                -        no echo
 dotnet8_http2            partial  differs    t13d1212h2_a538d02d76d5_f6eeaf393d2e -> t13d1112h2_c5d436628c5c_f0b0bd731038
     extensions missing=[22] extra=[21]; ciphers; groups; sigalgs; ja4
 
-summary: identical 94/162, JA4 identical 98/162, supported subset 162/162, no echo 0/162
+summary: identical 94/195, JA4 identical 98/195, supported subset 162/195, no echo 33/195

@@ -1,0 +1,62 @@
+Chrome version coverage — measured, not assumed
+date: 2026-11-18
+
+question
+  "Can we emulate every Chrome version from the last ten years? I expect
+  newer versions are harder because Chrome keeps adding extensions, while
+  old ones are naturally supported."
+
+answer
+  Half right. New versions are harder, but old ones are not free either:
+  Chrome 58-70 send a deprecated ChannelID extension (30032) that stock
+  BoringSSL has no path to emit. Difficulty does not vary monotonically
+  with age.
+
+coverage
+  72 Chrome/Chromium records: 58, 62, 70, 72, 83, 87, 96, 100, 102-112,
+  113-160 continuous (no gaps in 113-160), plus 156/157 real Chromium
+  builds.
+  Chrome for Testing only publishes 113 and later, so 58-112 comes from
+  tls-client and uTLS definitions.
+
+new captures this pass
+  33 additional builds downloaded from Chrome for Testing (113-155) and
+  captured headless with tools/capture/chromium_capture.py. Their JA4
+  clusters show the real evolution:
+
+    113-126  t13d1516h2_..._02713d6af862
+    127-135  t13d1516h2_..._d8a2da3f94cd
+    136-141  t13d1517h2_..._b6f405a00624
+    142      t13d1517h2_..._dcad5a053991
+    143-148  t13d1518h2_..._0c9ac9b5c72c
+    149      t13d1517h2_..._dcad5a053991
+    151      t13d1517h2_..._cb7bf5808d99
+    153-155  t13d1518h2_..._4980c97edce0
+    158-159  t13d1519h2_..._3d1b1b7bef36
+    160      t13d1518h2_..._4980c97edce0
+
+what was added to make these reproduce
+  The vendored BoringSSL patch gained three more switches, all driven by
+  what each capture actually contains:
+
+    30032 ChannelID, empty payload    SSL_CTX_set_channel_id_offer
+    21    exact padding length        SSL_CTX_set_force_padding_len
+    (plus the 4832 / ML-DSA / GREASE work from the previous pass)
+
+  gen_fingerprints.py now derives all of it per record from its own
+  capture: 4832 payload, padding length (0 means "no padding", which also
+  suppresses BoringSSL's automatic 256-511 byte padding), ChannelID
+  presence, sigalg codepoints, resumed-session marker.
+
+verification status, stated plainly
+  release build, one handshake per record: 24/36 of the new records match
+  their capture; the other 12 carry `pre_shared_key` from a resumed
+  session and match on the second connection (verified separately for
+  chrome136-141, 143, 145, 147, 148, 158, 159).
+  The earlier 39 records were verified the same way and all matched.
+
+known issue found and fixed this pass
+  Adding records named chrome116/chrome119/chrome123/chrome136/chrome142/
+  chrome145/chrome151 silently shadowed the built-in curl-impersonate
+  presets of those names, which broke a library invariant test. They are
+  renamed with a `_cft` suffix.
