@@ -160,7 +160,27 @@ date: 2026-11-17
      safari270_ios                      9
      chrome160 (record)                17
 
-10. note on the earlier probe attempts
+10. attempt: capture Chrome's QUIC ClientHello directly (did not work)
+   `--origin-to-force-quic-on=quic.nginx.org:443` does make Chrome open QUIC
+   connections, but every SSL_HANDSHAKE_MESSAGE_SENT in that NetLog is still
+   a TCP ClientHello: QUIC handshake bytes go through
+   socket_bio_adapter and are not logged as TLS handshake messages, and the
+   forced runs ended in ERR_QUIC_PROTOCOL_ERROR. So the QUIC ClientHello
+   cannot be read from NetLog with this Chrome build.
+
+   The attempt did yield a second cross-check of the TCP handshake: that
+   NetLog contains 11 distinct Chrome 160 ClientHellos, every one with two
+   GREASE extensions and the same 18 non-GREASE extensions. Our live echo
+   sends 19 extensions (2 GREASE + 17), so the same single 4832 gap shows up
+   from three independent sources (tls.peet.ws capture, NetLog handshake
+   bytes, live echo).
+
+   The QUIC ClientHello is therefore checked structurally instead: the
+   decrypted Initial carries key_share, ALPS, ECH GREASE, supported_versions,
+   trust anchors, a non-empty transport-parameters extension and two GREASE
+   extensions, which is the shape Chrome's QUIC ClientHello has.
+
+11. note on the earlier probe attempts
    260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's
    per-source-IP application policy; identical requests succeed seconds later
    and the QUIC/TLS/H3 handshake completes every time.
