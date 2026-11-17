@@ -117,7 +117,24 @@ date: 2026-11-17
    exact list `assemble_headers` produces, i.e. what goes on the wire:
    :method :authority :scheme :path sec-ch-ua-platform user-agent sec-ch-ua ...).
 
-8. note on the earlier probe attempts
+8. cross-check: NetLog's ClientHello vs the record
+   `SSL_HANDSHAKE_MESSAGE_SENT` in the same NetLog carries a complete
+   ClientHello record. Parsing it (18 extensions after dropping GREASE):
+
+     0 5 10 11 13 16 18 23 27 35 43 45 51 4832 17613 51764 65037 65281
+
+   The chrome160 record's `tls.extension_order` is the same set minus 4832 -
+   no extension appears on one side only and not the other. So the
+   tls.peet.ws capture and a local Chrome run agree, and 4832 is the single
+   remaining gap.
+
+   4832 payload is 0000 (server padding request, value 0). The bundled
+   BoringSSL (btls-sys 0.5.6) exposes neither SSL_set_server_padding_request
+   nor SSL_CTX_add_custom_ext, so there is no path to emit it; checked
+   against ssl.h, ssl_lib.cc and extensions.cc. It stays a documented
+   deviation, now with its exact payload recorded.
+
+9. note on the earlier probe attempts
    260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's
    per-source-IP application policy; identical requests succeed seconds later
    and the QUIC/TLS/H3 handshake completes every time.
