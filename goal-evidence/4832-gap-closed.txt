@@ -1,0 +1,56 @@
+the last fingerprint gap, closed
+date: 2026-11-18
+
+question
+  Chrome 160's ClientHello could not be reproduced byte for byte. The
+  record listed three deviations: extension 4832, the ML-DSA signature
+  algorithms, and signature_algorithms GREASE. This asks whether those can
+  be sent too.
+
+answer
+  Yes. They are Chromium-only behaviours that upstream BoringSSL does not
+  implement, so the vendored BoringSSL was patched.
+
+what the patch does (scripts/boringssl/chrome4832.patch, ~50 added lines)
+  1. SSL_CTX_set_server_padding_request(ctx, value) stores the value.
+  2. Extension 4832 is registered in kExtensions with a writer that emits
+     `ext_len=2, value` - Chromium sends 0000. It participates in the
+     extension permutation like every other extension.
+  3. set_sigalg_prefs keeps codepoints BoringSSL has no name for instead of
+     returning INVALID_SIGNATURE_ALGORITHM, so 0x0904/0x0905/0x0906 (ML-DSA)
+     and a GREASE value reach signature_algorithms.
+
+reproduction
+  scripts/boringssl/build.sh                 # btls patches + this patch
+  eval "$(scripts/boringssl/build.sh --env)"
+  cargo build --release
+
+live result (target/release/examples/echo chrome160 https://tls.peet.ws/api/all)
+
+  JA4        ours t13d1518h2_8daaf6152771_4980c97edce0
+             cap  t13d1518h2_8daaf6152771_4980c97edce0        MATCH
+
+  extensions ours 15 non-GREASE / cap 15                     IDENTICAL
+
+  sigalgs    ours 0x2a2a 0x904 0x905 0x906 ecdsa_secp256r1_sha256
+                  rsa_pss_rsae_sha256 rsa_pkcs1_sha256
+                  ecdsa_secp384r1_sha384 rsa_pss_rsae_sha384
+                  rsa_pkcs1_sha384 rsa_pss_rsae_sha512 rsa_pkcs1_sha512
+             cap  the same list                            IDENTICAL
+
+  Akamai h2  ours 1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p
+             cap  the same value                            IDENTICAL
+
+so chrome160 now reproduces its capture exactly, not "apart from 4832".
+
+what is still not identical
+  BoringSSL appends a padding extension (21) when the ClientHello is
+  between 256 and 511 bytes; the capture has none. That is length
+  dependent, not a missing capability: a ClientHello outside that range
+  never gets it. It is the only entry left in chrome160's deviations.
+
+both build configurations work
+  patched: 96 tests pass; echo chrome160 matches the capture
+  stock:   96 tests pass; vendor/wreq/build.rs finds no
+           SSL_CTX_set_server_padding_request and cfg(chrome_4832) stays
+           off, so extension 4832 is simply not sent
