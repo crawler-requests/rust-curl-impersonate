@@ -125,7 +125,7 @@ API，仍保留在记录的 `deviations` 里。
   `vendor/wreq`、`vendor/quinn`、`vendor/quinn-proto`（`vendor/quinn` 也改为
   path 依赖 `vendor/quinn-proto`），不再使用 `[patch.crates-io]`。独立项目用
   path 或 git 依赖指向本仓库即可直接编译，不需要了解或复制任何 patch
-  （已用独立 path 消费者与 git 消费者零配置实测）。
+  （已用独立 path 消费者与 git 消费者零配置实测：两者都发真实请求，回显的 JA4 与 Akamai 指纹分别是预置的 `t13d1516h2_8daaf6152771_d8a2da3f94cd` 与 `1:65536;2:0;4:6291456;6:262144|15597570|0|m,s,a,p`，证据 `goal-evidence/external-consumers.txt`）。
 - **发布到 crates.io 前**：crates.io 不接受 path 依赖，届时需要把 `vendor/`
   下的修改上游化，或改为发布 fork 后引用。GitHub Releases 的二进制分发不受
   此限。

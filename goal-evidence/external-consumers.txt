@@ -1,0 +1,32 @@
+external consumers — real handshake, not just compilation
+date: 2026-11-17
+
+Both consumer projects depend on this crate with no [patch.crates-io] block
+and no vendored copy; they only pull in the repository.
+
+1. path dependency
+   /tmp/rci-consumer/Cargo.toml:
+     rust-curl-impersonate = { path = ".../rust-curl-impersonate" }
+   program: Profile::find("chrome150") -> Client::new -> GET
+            https://tls.peet.ws/api/all
+   output:
+     profile=chrome150 target=chrome150
+     status=200 OK
+     ja4="t13d1516h2_8daaf6152771_d8a2da3f94cd"
+     akamai="1:65536;2:0;4:6291456;6:262144|15597570|0|m,s,a,p"
+
+2. git dependency
+   /tmp/rci-consumer-git/Cargo.toml:
+     rust-curl-impersonate = { git = "file:///tmp/rci-git" }
+   same program, same output:
+     status=200 OK
+     ja4="t13d1516h2_8daaf6152771_d8a2da3f94cd"
+     akamai="1:65536;2:0;4:6291456;6:262144|15597570|0|m,s,a,p"
+
+The JA4 and Akamai values are chrome150's recorded values, so the preset
+reached the wire unchanged through an outside project that never touched
+vendor/.
+
+Earlier these consumers only called Profile::find; they now send a request
+and check the echoed fingerprint, which is what the claim "a standalone
+project can use this crate with zero configuration" actually needs.
