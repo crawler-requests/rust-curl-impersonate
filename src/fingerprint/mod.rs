@@ -614,6 +614,14 @@ impl Fingerprint {
                 Some(spec) => leak(spec),
                 None => "",
             },
+            // Trust anchors ride along with the TLS handshake; a QUIC record
+            // sends the same extension 51764 Chrome does.
+            trust_anchors: match self.tls.trust_anchors.as_deref() {
+                Some(hex) => Some(&*Box::leak(
+                    policy::trust_anchors_hex(hex)?.into_boxed_slice(),
+                )),
+                None => None,
+            },
             cid_profile: None,
             initial_packet_number: http3.initial_packet_number,
             pseudo_order,

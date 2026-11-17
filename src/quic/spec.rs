@@ -68,7 +68,7 @@ impl QuicTls {
             ech_grease: profile.ech_grease,
             alps: profile.new_alps,
             new_alps: profile.new_alps,
-            trust_anchors: None,
+            trust_anchors: profile.trust_anchors.map(<[u8]>::to_vec),
             enforce_rsa_key_usage: None,
         }
     }

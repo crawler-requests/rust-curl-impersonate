@@ -10,8 +10,8 @@ use std::time::Duration;
 use rust_curl_impersonate::profile::{self, http3};
 use rust_curl_impersonate::quic::endpoint::H3Endpoint;
 use rust_curl_impersonate::quic::{
-    client_transport_parameter_from, initial_source_connection_id_from, open_client_datagram,
-    OpenedInitial,
+    client_hello_extensions_from, client_transport_parameter_from,
+    initial_source_connection_id_from, open_client_datagram, OpenedInitial,
 };
 use rust_curl_impersonate::{Client, Method, Profile};
 use wreq::header;
@@ -432,6 +432,54 @@ fn advertised_cid_limit(packets: &[OpenedInitial]) -> Option<u64> {
         number = (number << 8) | u64::from(*byte);
     }
     Some(number)
+}
+
+#[tokio::test]
+async fn chrome160_quic_client_hello_carries_key_share_alps_and_grease() {
+    // The record's `http3` block only names SETTINGS, pseudo order and
+    // transport parameters. Everything else has to come from its TLS
+    // handshake. This reads the ClientHello off the wire, so a profile that
+    // silently lost those fields fails here even if `quic_tls()` looks right.
+    let client = client("chrome160");
+    let packets = capture_initial_flight(&client).await;
+    let payloads: Vec<&[u8]> = packets
+        .iter()
+        .map(|packet| packet.payload.as_slice())
+        .collect();
+    let extensions = client_hello_extensions_from(payloads).expect("client hello");
+    let kinds: Vec<u16> = extensions.iter().map(|(kind, _)| *kind).collect();
+
+    assert!(kinds.contains(&51), "no key_share extension: {kinds:?}");
+    assert!(kinds.contains(&17613), "no ALPS extension: {kinds:?}");
+    // Chrome 156+ sends draft-ietf-tls-trust-anchors here too; the QUIC
+    // ClientHello must not drop the record's extension 51764.
+    let anchors = extensions
+        .iter()
+        .find(|(kind, _)| *kind == 51764)
+        .map(|(_, data)| data.clone())
+        .expect("trust anchors extension 51764");
+    assert_eq!(
+        u16::from_be_bytes([anchors[0], anchors[1]]) as usize,
+        anchors.len() - 2,
+        "trust anchor list length does not match its payload"
+    );
+    assert!(
+        kinds.iter().any(|kind| {
+            // GREASE extension types are 0x?a?a.
+            kind & 0x0f0f == 0x0a0a
+        }),
+        "no GREASE extension: {kinds:?}"
+    );
+    assert!(kinds.contains(&43), "no supported_versions: {kinds:?}");
+    // The transport-parameters extension must carry the preset's QUIC
+    // parameters, not an empty body.
+    let params = extensions
+        .iter()
+        .find(|(kind, _)| *kind == 0x39)
+        .map(|(_, data)| data)
+        .expect("quic transport parameters extension");
+    assert!(!params.is_empty(), "empty QUIC transport parameters");
+    eprintln!("chrome160 QUIC ClientHello extensions: {kinds:?}");
 }
 
 #[tokio::test]

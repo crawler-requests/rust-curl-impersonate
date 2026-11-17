@@ -12,7 +12,7 @@ mod params;
 pub mod spec;
 
 pub use crypto::{
-    client_transport_parameter_from, initial_source_connection_id,
+    client_hello_extensions_from, client_transport_parameter_from, initial_source_connection_id,
     initial_source_connection_id_from, open_client_datagram, open_client_initial, OpenedInitial,
 };
 pub use params::Rng;

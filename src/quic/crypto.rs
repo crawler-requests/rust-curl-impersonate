@@ -1379,6 +1379,65 @@ fn client_hello_extension(handshake: &[u8], extension_type: u16) -> Result<Vec<u
     Err(format!("client hello has no extension {extension_type}"))
 }
 
+/// Every extension in the ClientHello of one Initial flight, in wire order.
+///
+/// Returns `(type, payload)` pairs exactly as they were sent, so a test can
+/// check that a QUIC handshake really carries the extensions the profile asked
+/// for rather than only that the profile requested them.
+pub fn client_hello_extensions_from<'a>(
+    payloads: impl IntoIterator<Item = &'a [u8]>,
+) -> Result<Vec<(u16, Vec<u8>)>, String> {
+    let mut crypto = Vec::new();
+    for payload in payloads {
+        crypto.extend(crypto_stream(payload)?);
+        if crypto.first() == Some(&1) && handshake_complete(&crypto) {
+            break;
+        }
+    }
+    if crypto.is_empty() {
+        return Err("initial payload has no crypto frame".into());
+    }
+    if crypto.first() != Some(&1) {
+        return Err("payload is not a client hello".into());
+    }
+    let len = u32::from_be_bytes([
+        0,
+        *crypto.get(1).ok_or("handshake")?,
+        *crypto.get(2).ok_or("handshake")?,
+        *crypto.get(3).ok_or("handshake")?,
+    ]) as usize;
+    let body = crypto.get(4..4 + len).ok_or("truncated client hello")?;
+    let mut pos = 2 + 32;
+    let sid_len = *body.get(pos).ok_or("session id")? as usize;
+    pos += 1 + sid_len;
+    let cs_len = u16::from_be_bytes([
+        *body.get(pos).ok_or("ciphers")?,
+        *body.get(pos + 1).ok_or("ciphers")?,
+    ]) as usize;
+    pos += 2 + cs_len;
+    let comp_len = *body.get(pos).ok_or("compression")? as usize;
+    pos += 1 + comp_len;
+    let ext_len = u16::from_be_bytes([
+        *body.get(pos).ok_or("extensions")?,
+        *body.get(pos + 1).ok_or("extensions")?,
+    ]) as usize;
+    pos += 2;
+    let ext_end = pos + ext_len;
+    if ext_end > body.len() {
+        return Err("truncated client hello extensions".into());
+    }
+    let mut extensions = Vec::new();
+    while pos + 4 <= ext_end {
+        let kind = u16::from_be_bytes([body[pos], body[pos + 1]]);
+        let size = u16::from_be_bytes([body[pos + 2], body[pos + 3]]) as usize;
+        pos += 4;
+        let data = body.get(pos..pos + size).ok_or("truncated extension")?;
+        extensions.push((kind, data.to_vec()));
+        pos += size;
+    }
+    Ok(extensions)
+}
+
 fn transport_parameter(params: &[u8], id: u64) -> Result<Vec<u8>, String> {
     let mut pos = 0usize;
     while pos < params.len() {

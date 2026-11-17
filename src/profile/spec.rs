@@ -552,6 +552,7 @@ impl ProfileSpec {
                 Some(spec) => leak(spec),
                 None => "",
             },
+            trust_anchors: None,
             cid_profile: None,
             initial_packet_number: self.initial_packet_number,
             pseudo_order,

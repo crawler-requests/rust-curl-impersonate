@@ -61,7 +61,21 @@ date: 2026-11-17
    Regression test: tests/fingerprints.rs
    library_http3_profile_inherits_the_records_tls_handshake.
 
-6. note on the earlier probe attempts
+6. trust anchors reach the QUIC ClientHello too
+   Http3Profile gained `trust_anchors`, QuicTls::from_profile copies it, and
+   Fingerprint::http3_profile() fills it from the record's
+   tls.trust_anchors. The wire check below shows extension 51764 in the
+   QUIC ClientHello, which previously only the TCP handshake sent.
+
+   Decrypted Initial, chrome160 (tests/wire.rs, wire order):
+     27242(GREASE) 17613(ALPS) 43 18 51(key_share) 65037(ECH GREASE)
+     16 51764(trust anchors) 0 10 45 13 27 57(QUIC transport params)
+     35466(GREASE)
+   New test: chrome160_quic_client_hello_carries_key_share_alps_and_grease
+   asserts key_share, ALPS, GREASE, supported_versions, a non-empty
+   transport-parameters extension and a well-framed 51764 list.
+
+7. note on the earlier probe attempts
    260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's
    per-source-IP application policy; identical requests succeed seconds later
    and the QUIC/TLS/H3 handshake completes every time.
