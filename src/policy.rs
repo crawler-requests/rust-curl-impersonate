@@ -317,6 +317,45 @@ pub fn trust_anchors(spec: &str) -> Result<TrustAnchors, String> {
     Ok(TrustAnchors { wire, ids })
 }
 
+/// Decode the trust-anchor identifiers captured inside extension 51764.
+///
+/// The capture stores the extension payload: a u16 list length followed by
+/// length-prefixed identifiers. BoringSSL's
+/// `SSL_set1_requested_trust_anchors` takes the identifiers without that
+/// outer length, so [`crate::Fingerprint`] records keep only the inner list.
+/// The bytes are validated here so a malformed record fails at build time
+/// rather than at the first handshake.
+pub fn trust_anchors_hex(hex: &str) -> Result<Vec<u8>, String> {
+    if hex.len() % 2 != 0 {
+        return Err("trust anchor hex has an odd length".to_string());
+    }
+    let mut wire = Vec::with_capacity(hex.len() / 2);
+    let bytes = hex.as_bytes();
+    for pair in bytes.chunks(2) {
+        let high = hex_digit(pair[0])?;
+        let low = hex_digit(pair[1])?;
+        wire.push(high << 4 | low);
+    }
+    let mut rest = &wire[..];
+    while !rest.is_empty() {
+        let len = rest[0] as usize;
+        if len == 0 || rest.len() < 1 + len {
+            return Err("trust anchor list is not length-prefixed identifiers".to_string());
+        }
+        rest = &rest[1 + len..];
+    }
+    Ok(wire)
+}
+
+fn hex_digit(byte: u8) -> Result<u8, String> {
+    match byte {
+        b'0'..=b'9' => Ok(byte - b'0'),
+        b'a'..=b'f' => Ok(byte - b'a' + 10),
+        b'A'..=b'F' => Ok(byte - b'A' + 10),
+        _ => Err(format!("trust anchor hex contains {:?}", byte as char)),
+    }
+}
+
 fn encode_relative_oid(relative: &str) -> Result<Vec<u8>, String> {
     let mut arcs = vec![1u64, 3, 6, 1, 4, 1];
     for piece in relative.split('.') {
@@ -445,5 +484,18 @@ mod tests {
         assert_eq!(anchors.ids.len(), 1);
         assert_eq!(anchors.ids[0], encode_relative_oid("1.2").unwrap());
         assert_eq!(anchors.wire[0] as usize, anchors.ids[0].len());
+    }
+
+    #[test]
+    fn captured_trust_anchor_hex_keeps_the_identifier_list() {
+        assert_eq!(
+            trust_anchors_hex("02aabb03ccddee").unwrap(),
+            vec![2, 0xaa, 0xbb, 3, 0xcc, 0xdd, 0xee]
+        );
+        assert_eq!(trust_anchors_hex("").unwrap(), Vec::<u8>::new());
+        assert!(trust_anchors_hex("0").is_err(), "odd length");
+        assert!(trust_anchors_hex("00").is_err(), "zero-length id");
+        assert!(trust_anchors_hex("04aabb").is_err(), "truncated id");
+        assert!(trust_anchors_hex("01zz").is_err(), "not hex");
     }
 }

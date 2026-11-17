@@ -89,7 +89,7 @@ def compare(raw, live):
     live_alpn = payload(live_tls, 16).get("protocols")
     if raw_alpn != live_alpn:
         diffs.append("alpn " + str(raw_alpn) + " -> " + str(live_alpn))
-    if raw.get("ja4") != live.get("ja4"):
+    if raw_tls.get("ja4") != live_tls.get("ja4"):
         diffs.append("ja4")
     return diffs
 

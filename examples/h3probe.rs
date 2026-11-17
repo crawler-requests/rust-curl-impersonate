@@ -1,5 +1,7 @@
-//! One live HTTP/3 request against quic.nginx.org, used to check that a preset's
-//! QUIC handshake completes and the response comes back.
+//! One live HTTP/3 request, used to check that a preset's QUIC handshake
+//! completes and the response comes back.
+//!
+//! Usage: h3probe [target] [host] [path]
 
 use std::net::ToSocketAddrs;
 
@@ -8,13 +10,14 @@ use rust_curl_impersonate::quic::endpoint::H3Endpoint;
 
 #[tokio::main]
 async fn main() {
-    let target = std::env::args()
-        .nth(1)
-        .unwrap_or_else(|| "chrome145".to_string());
+    let mut args = std::env::args().skip(1);
+    let target = args.next().unwrap_or_else(|| "chrome145".to_string());
+    let host = args.next().unwrap_or_else(|| "quic.nginx.org".to_string());
+    let path = args.next().unwrap_or_else(|| "/".to_string());
     let profile = http3(&target).unwrap_or_else(|| panic!("{target} has no HTTP/3 profile"));
     let endpoint = H3Endpoint::bind(&profile).expect("bind");
 
-    let addr = ("quic.nginx.org", 443)
+    let addr = (host.as_str(), 443)
         .to_socket_addrs()
         .expect("resolve")
         .find(|addr| addr.is_ipv4())
@@ -23,7 +26,7 @@ async fn main() {
 
     let outcome = tokio::time::timeout(
         std::time::Duration::from_secs(8),
-        endpoint.get(addr, "quic.nginx.org", "/"),
+        endpoint.get(addr, &host, &path),
     )
     .await;
     match outcome {

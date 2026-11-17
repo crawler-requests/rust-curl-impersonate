@@ -33,7 +33,7 @@ println!("{}", response.status());
 
 ## 内置客户端指纹库
 
-`fingerprint` 模块把真实客户端的抓包做成数据记录。161 条抓包记录配 33 个别名，覆盖 Go、Python（`requests`/`urllib`/`aiohttp`/`httpx`/`http.client`）、libcurl + OpenSSL、JDK `HttpClient`/`HttpsURLConnection`、Node.js（`https`/`http2`/`fetch`）、Bun、Deno、PHP（curl/stream 流）、Ruby `Net::HTTP`、GNU Wget（GnuTLS）、Perl LWP、OpenSSL `s_client`、Erlang/OTP `ssl`、Dart `dart:io`、.NET `HttpClient`、Rust reqwest + rustls、真实浏览器进程实测的 Chromium 156/157、Chrome for Testing 158/159 与 Firefox 158–162（stable/candidate/beta/nightly），来自 `bogdanfinn/tls-client` ClientHello 定义并实测抓包的 Chrome 103–152、Firefox 102–148、Safari 15–26（macOS/iOS/iPad）、Cloudflare 自定义 profile、Brave、Opera、Android 应用/OkHttp（Android 7–13、Mesh、ConfirmedAndroid、Nike、Zalando）和 iOS 应用（Confirmed、MMS、Mesh、Nike、Zalando），来自 `refraction-networking/utls` 的旧版 Chrome 58–133、Firefox 55–120、Safari 16/iOS 11–14、Edge 85/106、360 浏览器 7.5/11.0、QQ 浏览器 11.1 和 Android 11 OkHttp，以及用官方 Docker 镜像抓到的多版本运行时（Go 1.20–1.26、Node 24、PHP 7.4/8.1/8.2、Python 3.8/3.9/3.11、Java 8/11/17、.NET 8、curl 7.88.1/8.10.1、Ruby 3.3、Deno 2.9、Dart 3.13、Erlang OTP 27、OpenSSL s_client 1.1.1/3.1/3.3、Debian wget 1.21.3）：
+`fingerprint` 模块把真实客户端的抓包做成数据记录。162 条抓包记录配 33 个别名，覆盖 Go、Python（`requests`/`urllib`/`aiohttp`/`httpx`/`http.client`）、libcurl + OpenSSL、JDK `HttpClient`/`HttpsURLConnection`、Node.js（`https`/`http2`/`fetch`）、Bun、Deno、PHP（curl/stream 流）、Ruby `Net::HTTP`、GNU Wget（GnuTLS）、Perl LWP、OpenSSL `s_client`、Erlang/OTP `ssl`、Dart `dart:io`、.NET `HttpClient`、Rust reqwest + rustls、真实浏览器进程实测的 Chromium 156/157、Chrome for Testing 158/159/160（Canary）与 Firefox 158–162（stable/candidate/beta/nightly），来自 `bogdanfinn/tls-client` ClientHello 定义并实测抓包的 Chrome 103–152、Firefox 102–148、Safari 15–26（macOS/iOS/iPad）、Cloudflare 自定义 profile、Brave、Opera、Android 应用/OkHttp（Android 7–13、Mesh、ConfirmedAndroid、Nike、Zalando）和 iOS 应用（Confirmed、MMS、Mesh、Nike、Zalando），来自 `refraction-networking/utls` 的旧版 Chrome 58–133、Firefox 55–120、Safari 16/iOS 11–14、Edge 85/106、360 浏览器 7.5/11.0、QQ 浏览器 11.1 和 Android 11 OkHttp，以及用官方 Docker 镜像抓到的多版本运行时（Go 1.20–1.26、Node 24、PHP 7.4/8.1/8.2、Python 3.8/3.9/3.11、Java 8/11/17、.NET 8、curl 7.88.1/8.10.1、Ruby 3.3、Deno 2.9、Dart 3.13、Erlang OTP 27、OpenSSL s_client 1.1.1/3.1/3.3、Debian wget 1.21.3）：
 
 ```rust
 let client = Client::new(Profile::find("go1.26")?)?;   // 或 "golang"
@@ -95,11 +95,11 @@ refresh_providers().unwrap();                        // 带 If-None-Match 重验
 
 **Provider 协议**（`docs/provider-protocol.md`）把整份扩展契约写成规范：`FingerprintProvider` 的四个方法、优先级与遮蔽规则、`load()` 的生命周期保证（锁外运行、可重复调用、不得改注册表）、一条记录能表达的完整字段表，以及三种数据源的接入方式——内嵌文件（`include_str!` / `from_path` / `DirProvider`）、远端加载（`RemoteProvider` + ETag/304 服务端协议）、你完全自定义的源（实现 trait 即可，见 `examples/custom_provider.rs` 的手写实现）。"只要实现协议就能扩展"是这套机制的设计目标。数据/指纹 Provider 化的覆盖度盘点见 `goal-evidence/provider-coverage.md`。
 
-Chromium 156/157 与 Firefox 158 记录来自当前机器上的真实浏览器进程，版本比 curl-impersonate 的 48 个预置（Chrome 150–152、Firefox 153–155）更新；GREASE、ALPS（17613）、ECH GREASE、证书压缩、`record_size_limit`、delegated credentials 都按抓包写入。Chromium 每次连接都会重排扩展列表，记录里的 `extension_order` 只是抓包得到的集合，`permute_extensions` 打开后由 BoringSSL 逐次随机排列；Firefox 的顺序固定，按原样发送。
+Chromium 156/157、Chrome 158–160 与 Firefox 158 记录来自当前机器上的真实浏览器进程，版本比 curl-impersonate 的 48 个预置（Chrome 150–152、Firefox 153–155）更新；GREASE、ALPS（17613）、ECH GREASE、证书压缩、`record_size_limit`、delegated credentials、trust anchors（抓包里的扩展 51764）都按抓包写入。Chromium 每次连接都会重排扩展列表，记录里的 `extension_order` 只是抓包得到的集合，`permute_extensions` 打开后由 BoringSSL 逐次随机排列；Firefox 的顺序固定，按原样发送。
 
-更高版本同样来自真实浏览器进程，不是手写或改版本号：Chrome 157 取自本机 Snap Chromium，Chrome 158/159 取自 Google 官方的 **Chrome for Testing**（Beta/Dev 通道构建），Firefox 159–162 取自 Mozilla 官方 Snap 的 stable/candidate/beta/edge 通道（159.0.1 / 160.0 / 161.0b1 / 162.0a1）。每个版本都跑一次真实请求，从回显服务取回浏览器实际发出的 ClientHello。`tools/compare_echo.py` 对每条新记录做线上对比：Firefox 159–162 的 TLS 结构与 JA4 与抓包完全一致；Chrome 157/158/159 的差异只有 BoringSSL 发不出的扩展（4832、51764）、pre_shared_key（BoringSSL 仅在提供缓存 ticket 时才发）和 ML-DSA 签名算法，全部写进 `deviations`（证据 `goal-evidence/real-versions-echo.txt`）。
+更高版本同样来自真实浏览器进程，不是手写或改版本号：Chrome 157 取自本机 Snap Chromium，Chrome 158/159 取自 Google 官方的 **Chrome for Testing**（Beta/Dev 通道构建），Chrome 160 取自 Chrome for Testing 的 **Canary** 通道（160.0.8158.0），Firefox 159–162 取自 Mozilla 官方 Snap 的 stable/candidate/beta/edge 通道（159.0.1 / 160.0 / 161.0b1 / 162.0a1）。每个版本都跑一次真实请求，从回显服务取回浏览器实际发出的 ClientHello。`tools/compare_echo.py` 对每条新记录做线上对比：Firefox 159–162 的 TLS 结构与 JA4 与抓包完全一致；Chrome 157 的扩展集合现在也完全一致（JA4 末段仍因 ML-DSA 签名算法不同），Chrome 158–160 的差异只剩 BoringSSL 发不出的扩展 4832（server padding request，本仓库内置的 BoringSSL 还没有这个 API）、pre_shared_key（BoringSSL 仅在提供缓存 ticket 时才发）和 ML-DSA 签名算法，全部写进 `deviations`（证据 `goal-evidence/real-versions-echo.txt`、`goal-evidence/latest-chrome.txt`）。
 
-整库可溯源：每条记录的 `source` 都指向产生它的那份原始回显（如 `tls.peet.ws capture, tools/capture/raw/chromium157.json`），`tools/gen_fingerprints.py` 只读 `tools/capture/raw/` 下的抓包，重跑即可得到同一份库。161 条抓包记录逐条对应到一个存在的原始文件，33 个别名全部解析到抓包记录或 curl-impersonate 预置，没有任何 simulated、手写或改版本号的记录。逐条审计见 `goal-evidence/real-provenance.txt`。
+整库可溯源：每条记录的 `source` 都指向产生它的那份原始回显（如 `tls.peet.ws capture, tools/capture/raw/chromium157.json`），`tools/gen_fingerprints.py` 只读 `tools/capture/raw/` 下的抓包，重跑即可得到同一份库。162 条抓包记录逐条对应到一个存在的原始文件，33 个别名全部解析到抓包记录或 curl-impersonate 预置，没有任何 simulated、手写或改版本号的记录。逐条审计见 `goal-evidence/real-provenance.txt`。
 
 同一语言的不同版本会发出不同的 ClientHello，光靠本机装的版本覆盖不到。`tools/capture/docker_capture.sh` 用官方镜像补齐：Go 1.19–1.25（1.26 取自本机）、Node 18/20/24（OpenSSL 3.5 的 X25519MLKEM768 + ML-DSA）、Python 3.8/3.9/3.10/3.11/3.13、Java 8 `HttpsURLConnection`（没有 `java.net.http`）与 Java 11/17 两种栈、curl 7.88.1（OpenSSL 1.1.1）与 8.10.1、OpenSSL `s_client` 1.1.1w/3.1/3.3、PHP 7.4/8.1/8.2 的 stream 流、Ruby 3.3 `Net::HTTP`、Deno（rustls）、Dart `dart:io`、Erlang/OTP 27 `ssl`、.NET 8 `HttpClient`（HTTP/1.1 与 HTTP/2 各一条）、Debian bookworm 的 GnuTLS wget。镜像里跑的是上游运行时本身，抓到的就是生产服务端会看到的 ClientHello；`Capture8.java` 是 Java 8 专用抓包程序，状态行写 stderr 以免混进 JSON，`dotnet_capture.cs` 用显式 `VersionPolicy` 请求 h2 或 h1。
 
@@ -190,11 +190,11 @@ let profiles = rust_curl_impersonate::fingerprint::load_json_file("my-clients.js
 
 ### 抓包复现结果
 
-`cargo run --example echo <记录名>` 对 `tls.peet.ws` 实测 154 条抓包记录：HTTP/2 SETTINGS、WINDOW_UPDATE、伪头顺序、普通头顺序、HTTP/1.1 请求头、ALPN、cipher/曲线/签名算法的相对顺序、扩展集合、key share 全部与抓包一致（Chromium 的扩展顺序每次连接随机重排，其余记录按抓包顺序）；剩余差异只有 BoringSSL 发不出的字段，并逐条写进记录的 `deviations`。新增的 Chromium 157 / Chrome 158 / Chrome 159 与 Firefox 159–162 同样逐条实测，结果见 `goal-evidence/real-versions-echo.txt`：
+`cargo run --example echo <记录名>` 对 `tls.peet.ws` 实测 162 条抓包记录：HTTP/2 SETTINGS、WINDOW_UPDATE、伪头顺序、普通头顺序、HTTP/1.1 请求头、ALPN、cipher/曲线/签名算法的相对顺序、扩展集合、key share 全部与抓包一致（Chromium 的扩展顺序每次连接随机重排，其余记录按抓包顺序）；剩余差异只有 BoringSSL 发不出的字段，并逐条写进记录的 `deviations`。新增的 Chromium 157 / Chrome 158 / Chrome 159 与 Firefox 159–162 同样逐条实测，结果见 `goal-evidence/real-versions-echo.txt`：
 
 - BoringSSL 总是把 TLS 1.3 cipher 排在 TLS 1.2 前面（Go 的抓包相反）；
 - 不支持的 cipher suite、X448/ffdhe4096+ 曲线、`rsa_pss_pss_*`/DSA/`ecdsa_sha224` 等签名算法、`signature_algorithms_cert`/`status_request_v2`/`encrypt_then_mac` 不会发送；
-- Chrome 156 的 `mldsa44`/`mldsa65`/`mldsa87` 以及 tls.peet.ws 未命名的扩展 51764 发不出去；BoringSSL 的 GREASE 覆盖 cipher、曲线、版本、key share 和扩展，但不覆盖 signature_algorithms；
+- Chrome 156+ 的 `mldsa44`/`mldsa65`/`mldsa87` 签名算法、扩展 4832（server padding request）以及 signature_algorithms GREASE 发不出去（扩展 51764 的信任锚标识符现在通过 `SSL_set1_requested_trust_anchors` 原样发送）；BoringSSL 的 GREASE 覆盖 cipher、曲线、版本、key share 和扩展，但不覆盖 signature_algorithms；
 - Go/JDK 的抓包没有 padding (21)，而 BoringSSL 在 ClientHello 长度 256–511 字节时会自动追加；
 - Node 的 `:authority` 带默认 `:443`，传输层省略默认端口；
 - Node HTTP/2 的空 SETTINGS 帧无法发送，改用 `INITIAL_WINDOW_SIZE=65535` 近似；
@@ -203,7 +203,7 @@ let profiles = rust_curl_impersonate::fingerprint::load_json_file("my-clients.js
 
 Chromium 156 和 Firefox 158 实测的 JA4 分别是 `t13d1516h2_8daaf6152771_d8a2da3f94cd` 和 `t13d1517h2_8daaf6152771_3cbfd9057e0d`；Firefox 的扩展顺序逐项一致，Chromium 的扩展集合一致且每次连接重新排列，两者的 cipher/曲线/签名算法、key share、HTTP/2 SETTINGS、伪头顺序与请求头顺序都与记录一致。Bun 的 JA4 是 `t13d1714h1_5b57614c22b0_43ade6aba3df`，HTTP/1.1 的字段全部在 BoringSSL 能表达的范围内。
 
-全库实测汇总：154 条抓包记录里 90 条的 cipher、曲线、签名算法、扩展集合与顺序、ALPN 和 JA4 与抓包完全一致，94 条 JA4 相同；`tools/check_subset.py` 对 154/154 条确认「BoringSSL 能发的那部分字段、顺序与抓包完全一致」——OpenSSL/GnuTLS 系的 X448、ffdhe4096+、brainpool、ML-DSA、CCM、DHE-DSS 和 `encrypt_then_mac` 发不出，属能力边界而不是映射错误。新增 34 条 uTLS 与 28 条 Docker 记录的子集检查同样全部通过（34/34、28/28）。逐条表格由 `tools/library_report.py` 重新生成（`goal-evidence/full-library.txt`）。新增 7 条最新版本记录（Chromium 157、Chrome 158/159、Firefox 159–162）的线上验证见 `goal-evidence/real-versions-echo.txt`。
+全库实测汇总：162 条抓包记录里 94 条的 cipher、曲线、签名算法、扩展集合与顺序、ALPN 和 JA4 与抓包完全一致，98 条 JA4 相同；`tools/check_subset.py` 对 162/162 条确认「BoringSSL 能发的那部分字段、顺序与抓包完全一致」——OpenSSL/GnuTLS 系的 X448、ffdhe4096+、brainpool、ML-DSA、CCM、DHE-DSS 和 `encrypt_then_mac` 发不出，属能力边界而不是映射错误。新增 34 条 uTLS 与 28 条 Docker 记录的子集检查同样全部通过（34/34、28/28）。逐条表格由 `tools/library_report.py` 重新生成（`goal-evidence/full-library.txt`）。新增 7 条最新版本记录（Chromium 157、Chrome 158/159、Firefox 159–162）的线上验证见 `goal-evidence/real-versions-echo.txt`。2026-11-13 加入 Chrome 160（Canary）后重新跑这 8 条：Firefox 159–162 仍与抓包完全一致；Chromium 157 的扩展集合也一致（51764 现在通过 trust anchors 发出）；Chrome 158/159/160 的差异只剩 4832、pre_shared_key 与 ML-DSA，Chrome 160 的线上 JA4 为 `t13d1517h2_8daaf6152771_dcad5a053991`（抓包 `t13d1518h2_8daaf6152771_4980c97edce0`）。证据 `goal-evidence/latest-chrome.txt`、`goal-evidence/echo-latest/`。
 
 新增的 34 条 `utls_` 记录全部实测：23 条的扩展集合/顺序、cipher、曲线、签名算法和 JA4 与抓包逐项相同（`utls_chrome106shuffle` 是随机重排，集合相同；`utls_chrome120` 的 padding 21 随 ClientHello 长度变化，因此偶尔出现或消失）。其余差异都在 `deviations` 里：Chrome 58/62/70 与 360 11.0 的 BoringSSL ChannelID 扩展 30032 发不出；iOS 11/12 与 360 7.5 的 NPN（13172）发不出；360 7.5 还带旧 ChannelID 30031、RC4/DHE-DSS cipher 和 DSA 签名算法，且抓包没有 BoringSSL 必发的 extended_master_secret（23），记录为 `partial`；Chrome 115/120 PQ 的 X25519Kyber768 key share 发不出，记录为 `close`。
 
@@ -231,7 +231,7 @@ Chromium 156 和 Firefox 158 实测的 JA4 分别是 `t13d1516h2_8daaf6152771_d8
 
 - **只有三个 ML-DSA 签名算法被丢掉。** Chrome 150 及更新的预设把 `mldsa44`、`mldsa65`、`mldsa87` 放在签名算法列表开头。BoringSSL 拒绝这三个名字，实际装上的算法列表里没有它们。除此之外的签名算法都会保留。code point 仍是草案，没有硬编码。
 
-HTTP/3 由 `Client::http3_get` 发送。第一枚 Initial 的包号就是预设策略的结果：Chrome 145/146/150 为 1，Firefox 147 的 `-1` 落在 1..=1024。`15:AUTO` 的源连接 ID 与包头里的 Source Connection ID 是同一串字节。
+HTTP/3 由 `Client::http3_get` 发送。第一枚 Initial 的包号就是预设策略的结果：Chrome 145/146/150 为 1，Firefox 147 的 `-1` 落在 1..=1024。`15:AUTO` 的源连接 ID 与包头里的 Source Connection ID 是同一串字节。传输参数里的 `active_connection_id_limit`（0x0e）按预设值发送，quinn 的连接 ID 队列也按同一数值扩容：Firefox 147 通告 8、Safari 270 通告 64，队列跟着变大，服务端填满该窗口也不会触发 `CONNECTION_ID_LIMIT_ERROR`。
 
 ## 构建
 

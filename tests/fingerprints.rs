@@ -274,15 +274,17 @@ fn browser_captures_keep_grease_alps_ech_and_compression() {
     got.sort_unstable();
     assert_eq!(
         got,
-        vec![0, 5, 10, 11, 13, 16, 18, 23, 27, 35, 43, 45, 51, 17_613, 65_037, 65_281]
+        vec![
+            0, 5, 10, 11, 13, 16, 18, 23, 27, 35, 43, 45, 51, 17_613, 51_764, 65_037,
+            65_281
+        ]
     );
+    // The trust_anchors extension is sent from the captured identifier list.
     assert!(chrome
         .tls
-        .extension_order
+        .trust_anchors
         .as_deref()
-        .unwrap()
-        .split('-')
-        .all(|id| id != "51764"));
+        .is_some_and(|hex| !hex.is_empty()));
     let http2 = chrome.http2.as_ref().unwrap();
     assert_eq!(
         http2.settings.as_deref(),
@@ -292,7 +294,7 @@ fn browser_captures_keep_grease_alps_ech_and_compression() {
     assert_eq!(http2.window_update, Some(15_663_105));
     let note = chrome.deviation().unwrap();
     assert!(note.contains("mldsa44"));
-    assert!(note.contains("51764"));
+    assert!(!note.contains("51764"), "trust anchors are sent now");
 
     let tls = Profile::find("chromium156")
         .unwrap()
@@ -311,6 +313,7 @@ fn browser_captures_keep_grease_alps_ech_and_compression() {
     assert!(tls.alps_use_new_codepoint);
     assert!(tls.enable_ech_grease);
     assert_eq!(tls.certificate_compressors.unwrap().len(), 1);
+    assert!(tls.trust_anchors.as_deref().is_some_and(|ids| !ids.is_empty()));
 
     let firefox = fingerprint::find("firefox158").unwrap();
     assert_eq!(firefox.fidelity, Some(Fidelity::Exact));

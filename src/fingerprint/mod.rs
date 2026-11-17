@@ -200,6 +200,11 @@ pub struct TlsFingerprint {
     /// Delegated credential signature algorithms.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub delegated_credentials: Option<String>,
+    /// Hex-encoded trust-anchor identifiers, exactly as carried inside
+    /// extension 51764. BoringSSL sends them through
+    /// `SSL_set1_requested_trust_anchors`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub trust_anchors: Option<String>,
 }
 
 fn yes() -> bool {
@@ -231,6 +236,7 @@ impl Default for TlsFingerprint {
             cert_compression: None,
             record_size_limit: None,
             delegated_credentials: None,
+            trust_anchors: None,
         }
     }
 }
@@ -630,6 +636,9 @@ impl Fingerprint {
         }
         if let Some(list) = &tls.delegated_credentials {
             builder = builder.delegated_credentials(list.clone());
+        }
+        if let Some(hex) = &tls.trust_anchors {
+            builder = builder.trust_anchors(policy::trust_anchors_hex(hex)?);
         }
         if let Some(version) = tls.min_version.as_deref() {
             builder = builder.min_tls_version(parse_version(version)?);

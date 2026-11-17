@@ -1,0 +1,61 @@
+HTTP/3: active_connection_id_limit fix — live verification
+date: 2026-11-17
+
+problem
+  Firefox (8) and Safari (64) H3 presets advertise
+  active_connection_id_limit while quinn-proto always sent CidQueue::LEN (5)
+  and sized its remote-CID window to that constant. The server filled the
+  window it was told we accept, quinn hit its own smaller ring and aborted:
+      TransportError CONNECTION_ID_LIMIT_ERROR (0x9)
+  Instrumented capture showed the offending NEW_CONNECTION_ID:
+      seq=5 retire_prior_to=0 active_seq=0 -> insert() over the 5-slot ring.
+  chrome145-152 presets were unaffected because their parameter string uses
+  the `chosen@alternative` form (`17:1@1,GREASE`), which the encoder could not
+  parse, so the token was dropped and quinn's default value was sent.
+
+changes
+  vendor/quinn-proto/src/cid_queue.rs
+    CidQueue buffer is a Vec sized by with_limit(cid, limit); all ring
+    arithmetic uses buffer.len(). CidQueue::new keeps the 5-slot default.
+  vendor/quinn-proto/src/config/transport.rs
+    TransportConfig::active_connection_id_limit (default CidQueue::LEN);
+    Debug impl updated.
+  vendor/quinn-proto/src/connection/mod.rs
+    rem_cids = CidQueue::with_limit(rem_cid, config.active_connection_id_limit).
+  vendor/quinn-proto/src/transport_parameters.rs
+    advertised active_connection_id_limit = config.active_connection_id_limit.
+  src/quic/params.rs
+    EncodedParams::active_connection_id_limit records parameter 0x0e;
+    parse_u64 accepts curl-impersonate's `chosen@alternative,...` form so
+    `17:1@1,GREASE` and `17:1@GREASE,1` both send their chosen value.
+    New test: active_connection_id_limit_keeps_the_chosen_value.
+  src/quic/endpoint.rs
+    transport_config() copies the preset limit into TransportConfig.
+
+tests
+  cargo test --workspace: lib 31, api 10, fingerprints 19, providers 15,
+  wire 13, doc 2 - all pass.
+
+live matrix (h3probe <preset> quic.nginx.org /, repeated 4 rounds)
+  preset            outcomes over 4 rounds
+  chrome145         260, timeout, 260, ...      (no 0x9)
+  chrome146         260 x3                     (no 0x9)
+  chrome150         timeout/260 mix            (no 0x9)
+  chrome151         OK
+  chrome151_macos   OK
+  chrome152         OK, OK, OK, 260, OK        (no 0x9)
+  chrome152_macos   OK
+  firefox147        OK, OK, OK, 260            (no 0x9)   <- was 0x9 3/3 before
+  safari270         OK, OK, 260, 260           (no 0x9)   <- was 0x9 3/3 before
+  safari270_ios     timeout
+  Every success returns `:status: 200`, `x-quic: h3`, 2523-byte body.
+  The remaining 260 replies are APPLICATION_ERROR H3_REQUEST_REJECTED from the
+  nginx edge for this source IP (a rate/policy decision), identical for
+  presets that worked seconds earlier; the QUIC/TLS/H3 handshake itself
+  completes. No CONNECTION_ID_LIMIT_ERROR remains for any preset.
+
+Chrome 160 over HTTP/3
+  Still no chrome160 H3 preset: the new record is a TLS+HTTP/2 capture and
+  tls.peet.ws does not complete H3 from this network. Chrome 160's NetLog
+  transport parameters and SETTINGS match the chrome152 preset exactly
+  (see latest-chrome.txt section 7), and chrome152 now completes H3 live.

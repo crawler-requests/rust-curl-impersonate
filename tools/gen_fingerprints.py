@@ -122,6 +122,8 @@ SUPPORTED_SIGALGS = {
 SUPPORTED_EXTENSIONS = {
     0, 5, 10, 11, 13, 14, 16, 18, 23, 27, 28, 34, 35, 41, 42, 43, 44, 45, 47,
     51, 57, 65037, 65281, 17513, 17613, 65445,
+    # draft-ietf-tls-trust-anchors, sent when the caller supplies identifiers.
+    51764,
 }
 EXTENSION_NAMES = {
     0: "server_name",
@@ -369,6 +371,15 @@ PROFILES = [
         "family": "chrome",
         "client": "Chrome for Testing (headless)",
         "version": "159.0.8144.0",
+        "platform": "linux",
+        "permute_extensions": True,
+    },
+    {
+        "file": "chrome160.json",
+        "name": "chrome160",
+        "family": "chrome",
+        "client": "Chrome for Testing Canary (headless)",
+        "version": "160.0.8158.0",
         "platform": "linux",
         "permute_extensions": True,
     },
@@ -1868,6 +1879,16 @@ def build_record(spec):
                     f"BoringSSL cannot send the delegated credential algorithm {value}."
                 )
 
+    # Extension 51764 carries a u16 list length followed by length-prefixed
+    # trust-anchor identifiers. BoringSSL's SSL_set1_requested_trust_anchors
+    # takes exactly the inner list, so keep those bytes and drop the length.
+    trust_anchors = None
+    trust_entry = exts.get(51764) or {}
+    if trust_entry.get("data"):
+        payload = bytes.fromhex(trust_entry["data"])
+        if len(payload) >= 2 and int.from_bytes(payload[:2], "big") == len(payload) - 2:
+            trust_anchors = payload[2:].hex() or None
+
     alps_old = 17513 in exts
     alps_new = 17613 in exts
 
@@ -1895,6 +1916,8 @@ def build_record(spec):
         tls_record["record_size_limit"] = record_size_limit
     if delegated_credentials:
         tls_record["delegated_credentials"] = ":".join(delegated_credentials)
+    if trust_anchors:
+        tls_record["trust_anchors"] = trust_anchors
     # Always record ALPN. An empty list means the client sends no ALPN
     # extension, which is different from "the transport decides".
     tls_record["alpn"] = alpn or []

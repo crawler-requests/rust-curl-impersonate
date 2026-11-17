@@ -1,0 +1,128 @@
+latest Chrome protocol-stack impersonation — live verification
+date: 2026-11-13
+
+1. latest Chrome builds at the time of the check
+   (chromiumdash fetch_releases, platform=Linux, num=2)
+     Stable  157.0.8103.78
+     Beta    159.0.8154.6
+     Dev     159.0.8144.0
+     Canary  160.0.8158.0
+
+2. new capture: Chrome for Testing Canary 160.0.8158.0 (linux64, headless)
+   command: chrome --headless=new --no-sandbox --disable-gpu --dump-dom \
+              https://tls.peet.ws/api/all
+   file:    tools/capture/raw/chrome160.json (11277 bytes, 2026-11-13)
+   UA:      Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like
+            Gecko) Chrome/160.0.8158.0 Safari/537.36
+   TLS:     1.3 (772), JA4 t13d1518h2_8daaf6152771_4980c97edce0, 18 extensions
+   h2:      Akamai 1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p
+   the recorder descriptor in tools/gen_fingerprints.py is `chrome160`;
+   `python3 -I tools/gen_fingerprints.py` writes 195 records, incl. chrome160.
+
+3. transport change: captured extension 51764 (trust anchors) is now sent
+   Chrome 156+ carries draft-ietf-tls-trust-anchors as extension 51764
+   (0xca34). The capture payload is a u16 list length followed by
+   length-prefixed trust-anchor identifiers. BoringSSL exposes
+   SSL_set1_requested_trust_anchors() and takes exactly that identifier list.
+   - tools/gen_fingerprints.py: 51764 is a supported extension; the identifier
+     bytes are stored as hex in the record field `tls.trust_anchors`.
+   - src/fingerprint/mod.rs: TlsFingerprint::trust_anchors -> wreq
+     TlsOptions::trust_anchors; src/policy.rs validates the list framing.
+   Effect: chromium157's extension set now matches its capture exactly, and
+   Chrome 158/159/160 only miss 4832 (server padding request, whose
+   SSL_set_server_padding_request API is not in the bundled BoringSSL).
+
+4. live echo (built from this tree, `cargo build --release --example echo`)
+   command: target/release/examples/echo chrome160 https://tls.peet.ws/api/all
+   result:  exit 0, `status: 200 OK`
+   capture JA4: t13d1518h2_8daaf6152771_4980c97edce0   (18 extensions)
+   echo    JA4: t13d1517h2_8daaf6152771_dcad5a053991   (17 extensions)
+   extension missing: [4832]; extra: []
+   sigalgs only in capture: GREASE 0x8a8a, mldsa44/65/87 (0x904/0x905/0x906)
+   everything else matches the capture:
+     cipher list/order, supported_groups, key shares, ALPN [h2, http/1.1],
+     TLS version range, ALPS codepoint 17613, ECH GREASE 65037, SCT,
+     status_request, session_ticket, cert compression brotli,
+     renegotiation_info, ec_point_formats, extension 51764, GREASE on the
+     cipher/group/version/key-share/extension lists.
+   HTTP/2:
+     Akamai fingerprint identical: 1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p
+     request pseudo-header order m,a,s,p, all 16 request headers, order and
+     values identical to the capture (sec-ch-ua/UA say Chrome 160, x86_64 Linux).
+     only wire difference: the HEADERS frame carries the RFC 7540 PRIORITY flag
+     with exclusive=1, depends_on=0, weight=256 (length 441 vs 436); the h2
+     crate does not write that flag, while the Akamai hash (which counts
+     SETTINGS + WINDOW_UPDATE + pseudo order) is unchanged.
+
+   compare_echo.py output:
+     chrome160: extensions missing=[4832] extra=[], sigalgs, ja4
+
+5. same run for the other newest records (goal-evidence/echo-latest/)
+   firefox159/160/161/162: TLS structure and JA4 identical to the captures
+     (t13d1517h2_8daaf6152771_3cbfd9057e0d)
+   chromium157: extension set identical (JA4 count 1517); JA4 last segment
+     differs only because of ML-DSA/GREASE signature algorithms
+   chrome158/159: missing [41 (pre_shared_key), 4832]; capture is a resumed
+     handshake, a fresh session has no ticket to send
+   chrome160: missing [4832]
+   no difference appeared outside the records' `deviations`.
+
+6. C ABI release build (bindings/ffi), Python ctypes
+   library: target/release/librust_curl_impersonate_ffi.so
+   call:    rci_get("chrome160", "https://tls.peet.ws/api/all")
+   status:  200
+   http_version h2
+   JA4:     t13d1517h2_8daaf6152771_dcad5a053991
+   UA:      ... Chrome/160.0.8158.0 Safari/537.36
+   Akamai:  1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p
+   51764 present: true; 4832 present: false
+
+   re-verified 2026-11-17 after the HTTP/3 active_connection_id_limit fix:
+     status 200, h2, JA4 t13d1517h2_8daaf6152771_dcad5a053991,
+     Akamai 1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p,
+     51764 present: true, 4832 present: false.
+
+7. HTTP/3 (Chrome/Google QUIC stack)
+   - QUIC/H3 presets exist for chrome145/146/150/151/151_macos/152/152_macos,
+     firefox147, safari270, safari270_ios; earlier live h3probe runs against
+     quic.nginx.org returned `x-quic: h3` and a 2523-byte body for
+     chrome145/146/150 (PROGRESS.md).
+   - Chrome 160 NetLog (--log-net-log --net-log-capture-mode=IncludeSensitive)
+     shows the client transport parameters and H3 SETTINGS:
+       max_idle_timeout 30000, max_udp_payload_size 1472,
+       initial_max_data 15728640, initial_max_stream_data_* 6291456,
+       initial_max_streams_bidi 100, initial_max_streams_uni 103,
+       active_connection_id_limit 5, initial_source_connection_id AUTO,
+       max_datagram_frame_size 65536, google_connection_options
+       ORIG,NOIP,ECCP, GREASE;
+       SETTINGS 1:65536, 6:262144, 7:100, 51:1, GREASE.
+     The chrome152 H3 preset in src/profile/generated.rs carries exactly these
+     values, so Chrome 152–160 do not differ on the QUIC transport layer.
+   - the fresh chrome160 record is a TLS+HTTP/2 capture (tls.peet.ws did not
+     complete an H3 handshake from this network), so `http3("chrome160")` is
+     not defined; H3 for Chrome is available through the chrome152 preset.
+   - during this session quic.nginx.org began rejecting requests from this
+     network with H3_REQUEST_REJECTED (260), including presets that succeeded
+     minutes earlier (external/rate-limit behaviour, no QUIC code changed).
+   - re-checked on 2026-11-17: chrome152/firefox147/safari270 now all complete
+     H3 live (`:status: 200`, `x-quic: h3`, 2523-byte body) once the
+     active_connection_id_limit bug below was fixed; remaining 260 replies are
+     the nginx edge's application-level policy for this source IP. See
+     goal-evidence/h3-active-connection-id-limit.txt.
+   - 2026-11-17 fix: quinn-proto sent active_connection_id_limit 5 while
+     Firefox (8) and Safari (64) presets advertise their own value; the peer
+     filled that window and quinn aborted with CONNECTION_ID_LIMIT_ERROR (0x9).
+     quinn-proto now sizes its CID queue from the same value it advertises,
+     src/quic/params.rs records parameter 0x0e and parses
+     `chosen@alternative,...`, and endpoint transport_config copies the preset
+     value in. All 10 H3 presets handshake without 0x9.
+
+8. residual deviations (all in the record's `deviations`)
+   - extension 4832 (server padding request): bundled BoringSSL lacks
+     SSL_set_server_padding_request; Chrome 160 sends payload 0000.
+   - mldsa44/mldsa65/mldsa87 signature algorithms and signature_algorithms
+     GREASE: BoringSSL cannot send them.
+   - pre_shared_key: only sent when a cached ticket is supplied; a fresh
+     session has none.
+   - BoringSSL pads 256-511 byte ClientHellos with extension 21; the capture
+     has no padding.

@@ -16,7 +16,7 @@
 | 缺失 | — | 无（参考项目的 47 个全部存在） |
 | 额外 | — | `okhttp4_android` |
 | HTTP/3 专用指纹 | 10 个：chrome145/146/150/151/151_macos/152/152_macos、firefox147、safari270/270_ios | 同名 10 个函数 `http3_profile_*`，完全对应 |
-| 指纹数据来源 | 浏览器实测签名库 | 48 个预置 + 161 条独立真实抓包（含 Chromium 157、Chrome 158/159、Firefox 159–162 等参考项目尚未收录的版本） |
+| 指纹数据来源 | 浏览器实测签名库 | 48 个预置 + 162 条独立真实抓包（含 Chromium 157、Chrome 158/159/160、Firefox 159–162 等参考项目尚未收录的版本） |
 
 ## 2. 指纹字段
 
@@ -45,8 +45,14 @@
 | Akamai h2 指纹（优先级帧） | ✅ | `http2_no_priority()`、`stream_exclusive()`、记录 `priority_frames` |
 | HTTP/3 SETTINGS | ✅ | `http3_settings()` |
 | HTTP/3 伪头/头顺序 | ✅ | `http3_pseudo_order()`、`http3_header_order()` |
-| QUIC 传输参数 / CID 长度 / 初始包号 | ✅ | `quic_transport_parameters()`、`quic_cid()`、`initial_packet_number()` |
+| QUIC 传输参数 / CID 长度 / 初始包号 | ✅ | `quic_transport_parameters()`、`quic_cid()`、`initial_packet_number()`；`active_connection_id_limit` 按预设值通告，quinn 的 CID 队列同步扩容（Firefox 8 / Safari 64） |
 | HTTP/3 曲线与签名算法 | ✅ | `http3_curves()`、`http3_sigalgs()` |
+
+Chrome 156+ 抓包里的扩展 51764（draft-ietf-tls-trust-anchors）现在按原始标识符列表发送：
+`gen_fingerprints.py` 从扩展数据里取出列表，记录写入 `tls.trust_anchors`，emulation
+通过 BoringSSL 的 `SSL_set1_requested_trust_anchors` 发出。扩展 4832（server padding
+request）需要 `SSL_set_server_padding_request`，本仓库内置的 BoringSSL 版本还没有这个
+API，仍保留在记录的 `deviations` 里。
 
 唯一实质缺口是**真实 ECH**：Chromium 119+ 在拿到 DNS HTTPS 记录里的 ECHConfig
 后会发加密的 inner ClientHello；本仓库只能发 ECH grease。对没有配置 ECH 的站点，

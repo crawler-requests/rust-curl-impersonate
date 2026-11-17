@@ -1,12 +1,12 @@
 builtin fingerprint provenance audit
-date: 2026-11-12
+date: 2026-11-13
 library: src/fingerprint/builtin.json
 generator: tools/gen_fingerprints.py (reads only tools/capture/raw/*.json)
 
-records: 194 total = 161 captured base + 33 aliases
-base records with an existing raw capture: 161/161
-raw captures carrying tls.peet.ws response markers: 161/161
-base records whose version string appears in the raw user-agent: 85/161
+records: 195 total = 162 captured base + 33 aliases
+base records with an existing raw capture: 162/162
+raw captures carrying tls.peet.ws response markers: 162/162
+base records whose version string appears in the raw user-agent: 86/162
   (the remainder are runtimes whose UA has no patch version, e.g.
    Go-http-client/2.0, okhttp/4.12.0, or an empty UA; their version comes
    from the exact binary that produced the capture, recorded in the source path)
@@ -42,6 +42,7 @@ per-record source
   chromium157              tools/capture/raw/chromium157.json
   chrome158                tools/capture/raw/chrome158.json
   chrome159                tools/capture/raw/chrome159.json
+  chrome160                tools/capture/raw/chrome160.json
   firefox158               tools/capture/raw/firefox158.json
   firefox159               tools/capture/raw/firefox159.json
   firefox160               tools/capture/raw/firefox160.json
@@ -178,38 +179,3 @@ per-record source
   erlang_ssl               tools/capture/raw/erlang_ssl.json
   dotnet8_http1            tools/capture/raw/dotnet8_http1.json
   dotnet8_http2            tools/capture/raw/dotnet8_http2.json
-
-aliases (all resolve through Profile::find, asserted by tests/fingerprints.rs)
-  chrome_android           extends chrome131_android
-  safari_ios               extends safari270_ios
-  okhttp_android           extends okhttp4_android
-  golang                   extends go1.26
-  python                   extends python3.12_requests
-  curl                     extends curl8.5_h2
-  java                     extends java21_httpclient
-  node                     extends node22_http2
-  bun                      extends bun1.3.14
-  php                      extends php8.3_curl
-  wget                     extends wget1.21.4
-  perl                     extends perl5_lwp
-  rust                     extends rust_reqwest_rustls
-  httpx                    extends python3.12_httpx
-  chrome                   extends chromium156
-  firefox                  extends firefox158
-  android                  extends android_okhttp13
-  android7                 extends android_okhttp7
-  android8                 extends android_okhttp8
-  android9                 extends android_okhttp9
-  android10                extends android_okhttp10
-  android11                extends android_okhttp11
-  android12                extends android_okhttp12
-  nike                     extends android_nike
-  zalando                  extends android_zalando
-  ios                      extends ios_safari26
-  opera                    extends opera91
-  openssl                  extends openssl3_sclient
-  ruby                     extends ruby3.3_nethttp
-  deno                     extends deno_fetch
-  dart                     extends dart_httpclient
-  erlang                   extends erlang_ssl
-  dotnet                   extends dotnet8_http2

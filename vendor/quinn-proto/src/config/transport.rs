@@ -62,6 +62,14 @@ pub struct TransportConfig {
     /// Quinn starts at zero. Browser presets pin a different value, and the
     /// peer observes it on the first Initial.
     pub(crate) initial_packet_number: u64,
+
+    /// `active_connection_id_limit` this endpoint advertises.
+    ///
+    /// quinn used to derive it from its CID queue size. Browser presets
+    /// advertise their own value (Firefox 8, Safari 64) and size the queue to
+    /// match, otherwise a peer filling the advertised window trips
+    /// `CONNECTION_ID_LIMIT_ERROR`.
+    pub(crate) active_connection_id_limit: u64,
 }
 
 impl TransportConfig {
@@ -89,6 +97,16 @@ impl TransportConfig {
     /// first flight.
     pub fn initial_packet_number(&mut self, number: u64) -> &mut Self {
         self.initial_packet_number = number;
+        self
+    }
+
+    /// `active_connection_id_limit` advertised to the peer.
+    ///
+    /// The CID queue is sized to the same value, so the peer may always fill
+    /// the advertised window. Values below 2 are illegal in RFC 9000 and are
+    /// raised to 2, the protocol minimum.
+    pub fn active_connection_id_limit(&mut self, value: u64) -> &mut Self {
+        self.active_connection_id_limit = value.max(2);
         self
     }
 
@@ -419,6 +437,7 @@ impl Default for TransportConfig {
 
             qlog_sink: QlogSink::default(),
             initial_packet_number: 0,
+            active_connection_id_limit: crate::cid_queue::CidQueue::LEN as u64,
         }
     }
 }
@@ -453,6 +472,7 @@ impl fmt::Debug for TransportConfig {
             enable_segmentation_offload,
             qlog_sink,
             initial_packet_number,
+            active_connection_id_limit,
         } = self;
         let mut s = fmt.debug_struct("TransportConfig");
 
@@ -482,7 +502,8 @@ impl fmt::Debug for TransportConfig {
             .field("datagram_send_buffer_size", datagram_send_buffer_size)
             // congestion_controller_factory not debug
             .field("enable_segmentation_offload", enable_segmentation_offload)
-            .field("initial_packet_number", initial_packet_number);
+            .field("initial_packet_number", initial_packet_number)
+            .field("active_connection_id_limit", active_connection_id_limit);
         if cfg!(feature = "qlog") {
             s.field("qlog_stream", &qlog_sink.is_enabled());
         }

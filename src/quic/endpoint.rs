@@ -410,6 +410,9 @@ fn transport_config(
 ) -> TransportConfig {
     let mut config = TransportConfig::default();
     params::apply_flow_control(encoded, &mut config);
+    if let Some(limit) = encoded.active_connection_id_limit {
+        config.active_connection_id_limit(limit);
+    }
     if let Some(number) = initial_packet_number {
         config.initial_packet_number(u64::from(number));
     }

@@ -24,6 +24,8 @@ const VERSION_INFORMATION_DRAFT: u64 = 0xff73db;
 const INITIAL_RTT: u64 = 0x3127;
 /// Chrome's private version parameter, sent as four big-endian bytes.
 const GOOGLE_VERSION: u64 = 0x4752;
+/// `active_connection_id_limit`.
+const ACTIVE_CONNECTION_ID_LIMIT: u64 = 0x0e;
 
 /// GREASE transport parameter ids are `31 * N + 27`.
 const GREASE_ID_BASE: u64 = 27;
@@ -100,6 +102,12 @@ pub struct EncodedParams {
     pub max_datagram_frame_size: Option<u64>,
     /// Chrome's initial RTT guess, when the preset sets `12583`.
     pub initial_rtt: Option<Duration>,
+    /// `active_connection_id_limit`.
+    ///
+    /// quinn sizes its CID queue and the advertised parameter from the same
+    /// value, so a preset limit is copied into the transport config rather
+    /// than encoded from the string alone.
+    pub active_connection_id_limit: Option<u64>,
 }
 
 /// Encode a curl-impersonate transport parameter string.
@@ -125,6 +133,7 @@ pub fn encode(
         max_udp_payload_size: None,
         max_datagram_frame_size: None,
         initial_rtt: None,
+        active_connection_id_limit: None,
     };
 
     for token in spec.split(';').filter(|token| !token.is_empty()) {
@@ -338,6 +347,10 @@ fn record(out: &mut EncodedParams, id: u64, value: u64) {
             out.max_datagram_frame_size = Some(value);
             return;
         }
+        ACTIVE_CONNECTION_ID_LIMIT => {
+            out.active_connection_id_limit = Some(value);
+            return;
+        }
         INITIAL_RTT => {
             out.initial_rtt = Some(Duration::from_micros(value));
             return;
@@ -411,6 +424,14 @@ fn parse_version(token: &str, allow_grease: bool, rng: &mut impl Rng) -> Result<
 }
 
 fn parse_u64(text: &str) -> Result<u64, ParamError> {
+    if text.is_empty() {
+        return Err(ParamError::BadNumber);
+    }
+    // curl-impersonate's `chosen@alternative,...` lists are documented for
+    // version_information; the captured presets also use them on numeric
+    // parameters (`17:1@1,GREASE`, `17:1@GREASE,1`). The chosen value is what
+    // this handshake sends, exactly like a version list picks its first entry.
+    let text = text.split_once('@').map_or(text, |(chosen, _)| chosen);
     if text.is_empty() {
         return Err(ParamError::BadNumber);
     }
@@ -567,6 +588,28 @@ mod tests {
         // The id is past the four-byte range, so the encoding uses eight bytes
         // and starts with the 0xc0 prefix.
         assert_eq!(encoded.bytes[0] & 0xc0, 0xc0);
+    }
+
+    #[test]
+    fn active_connection_id_limit_keeps_the_chosen_value() {
+        // 0x0e is active_connection_id_limit; 0x11 is version_information, whose
+        // `chosen@alternative,...` list must not be mistaken for it. Firefox
+        // advertises 8 and Safari 64, and quinn sizes its CID queue from the
+        // same number, so the encoder has to report it exactly.
+        // The version-list GREASE reads 4 bytes; the GREASE parameter reads 8
+        // id bytes, 1 length byte and 1 value byte.
+        let mut rng = ScriptedRng::new(&[0; 14]);
+        let firefox = encode("14:8;17:1@GREASE,1", b"", &mut rng).unwrap();
+        assert_eq!(firefox.active_connection_id_limit, Some(8));
+
+        let mut rng = ScriptedRng::new(&[]);
+        let safari = encode("9:8;14:64", b"", &mut rng).unwrap();
+        assert_eq!(safari.active_connection_id_limit, Some(64));
+
+        let mut rng = ScriptedRng::new(&[0; 4]);
+        let chrome = encode("17:1@1,GREASE", b"", &mut rng).unwrap();
+        assert_eq!(chrome.active_connection_id_limit, None);
+        assert_eq!(chrome.params[0].id, VERSION_INFORMATION);
     }
 
     #[test]

@@ -1,0 +1,10 @@
+chrome145        handshake failed: read response: ConnectionLost(ApplicationClosed(ApplicationClose { error_code: 260, reason: b"stream error" }))
+chrome146        handshake failed: read response: ConnectionLost(ApplicationClosed(ApplicationClose { error_code: 260, reason: b"stream error" }))
+chrome150        handshake failed: open bi: ConnectionClosed(ConnectionClose { error_code: NO_ERROR, frame_type: None, reason: b"connection is closing, packet discarded" })
+chrome151        body: 2523 bytes
+chrome151_macos  body: 2523 bytes
+chrome152        body: 2523 bytes
+chrome152_macos  timed out after 8s with no response
+firefox147       body: 2523 bytes
+safari270        handshake failed: read response: ConnectionLost(ApplicationClosed(ApplicationClose { error_code: 260, reason: b"stream error" }))
+safari270_ios    timed out after 8s with no response
