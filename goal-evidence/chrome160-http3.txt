@@ -134,7 +134,33 @@ date: 2026-11-17
    against ssl.h, ssl_lib.cc and extensions.cc. It stays a documented
    deviation, now with its exact payload recorded.
 
-9. note on the earlier probe attempts
+9. note: curl-impersonate's Chrome presets use a different HTTP/3 order
+   The 48 presets in src/profile/generated.rs come from curl-impersonate and
+   keep its data. For Chrome 150+ that data is
+
+     sec-ch-ua, sec-ch-ua-mobile, sec-ch-ua-platform, user-agent, accept,
+     sec-fetch-site, sec-fetch-mode, sec-fetch-dest, referer, ...
+
+   whereas eight real Chrome 160 H3 requests send
+
+     sec-ch-ua-platform, user-agent, sec-ch-ua, sec-ch-ua-mobile, accept,
+     sec-fetch-site, sec-fetch-mode, sec-fetch-dest, referer, ...
+
+   so the preset order is not Chrome 160's order. This is recorded here
+   rather than silently "fixed": the presets are a faithful copy of the
+   reference project's table, and editing them would make the library stop
+   matching what it claims to reproduce. The chrome160 fingerprint record
+   carries the measured order instead.
+
+   Header counts per H3 target (from H3Endpoint::assemble_headers):
+     chrome145/146/150/151/151_macos   17
+     chrome152/152_macos               15
+     firefox147                        15
+     safari270                         12
+     safari270_ios                      9
+     chrome160 (record)                17
+
+10. note on the earlier probe attempts
    260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's
    per-source-IP application policy; identical requests succeed seconds later
    and the QUIC/TLS/H3 handshake completes every time.
