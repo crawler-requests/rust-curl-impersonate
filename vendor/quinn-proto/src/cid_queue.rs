@@ -24,6 +24,9 @@ pub(crate) struct CidQueue {
 }
 
 impl CidQueue {
+    /// A queue at the default limit. Only the unit tests below build one with
+    /// no explicit limit; production code always passes the advertised value.
+    #[cfg(test)]
     pub(crate) fn new(cid: ConnectionId) -> Self {
         Self::with_limit(cid, Self::LEN as u64)
     }

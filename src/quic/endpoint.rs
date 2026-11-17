@@ -257,14 +257,11 @@ async fn send_preface(connection: &Connection, settings: &[H3Setting]) -> Result
 /// Read the unidirectional streams the server opens so their data is
 /// acknowledged. A server's control stream left unread stalls the connection.
 async fn drain_incoming(connection: Connection) {
-    let mut log = String::new();
     loop {
         match connection.accept_uni().await {
             Ok(mut stream) => {
                 let mut buf = [0u8; 64];
                 let n = stream.read(&mut buf).await.unwrap_or(None).unwrap_or(0);
-                log.push_str(&format!("uni {} bytes: {:02x?}\n", n, &buf[..n]));
-                let _ = std::fs::write("/tmp/uni.txt", &log);
                 // The control stream is type 0x00. Once it is in, the request can
                 // be sent; keep draining the rest in the background.
                 if n > 0 && buf[0] == 0x00 {
@@ -332,7 +329,6 @@ async fn request(
             .read(&mut chunk)
             .await
             .map_err(|error| format!("read response: {error:?}"))?;
-        let _ = std::fs::write("/tmp/recv.txt", format!("read {read:?}\n"));
         match read {
             Some(n) => buf.extend_from_slice(&chunk[..n]),
             None => break,

@@ -481,11 +481,13 @@ fn write_varint(out: &mut Vec<u8>, value: u64) {
 }
 
 /// A [`Rng`] that replays fixed bytes, for tests.
+#[cfg(test)]
 pub struct ScriptedRng {
     bytes: Vec<u8>,
     cursor: usize,
 }
 
+#[cfg(test)]
 impl ScriptedRng {
     /// Replay `bytes`, panicking if the encoder reads past the end.
     pub fn new(bytes: &[u8]) -> Self {
@@ -496,6 +498,7 @@ impl ScriptedRng {
     }
 }
 
+#[cfg(test)]
 impl Rng for ScriptedRng {
     fn fill(&mut self, buf: &mut [u8]) {
         let end = self.cursor + buf.len();

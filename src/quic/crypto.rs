@@ -465,7 +465,6 @@ struct Shared {
 struct BoringSession {
     ssl: Ssl,
     shared: Arc<Mutex<Shared>>,
-    read_level: usize,
     write_level: usize,
     keys_ready: bool,
     handshaking: bool,
@@ -477,7 +476,6 @@ impl BoringSession {
         Self {
             ssl,
             shared,
-            read_level: 0,
             write_level: 0,
             keys_ready: false,
             handshaking: true,
@@ -580,7 +578,7 @@ impl crypto::Session for BoringSession {
     }
 
     fn read_handshake(&mut self, buf: &[u8]) -> Result<bool, TransportError> {
-        // Use the level BoringSSL is currently reading at. `self.read_level` lags
+        // Use the level BoringSSL is currently reading at. A cached level lags
         // behind it: the peer's Handshake flight arrives before the callback that
         // advances it has run, and feeding that flight at the old level makes
         // BoringSSL reject it as WRONG_ENCRYPTION_LEVEL_RECEIVED.
@@ -615,13 +613,7 @@ impl crypto::Session for BoringSession {
         // reset token) as illegal.
         match TransportParameters::read(Side::Client, &mut Cursor::new(bytes)) {
             Ok(params) => Ok(Some(params)),
-            Err(error) => {
-                let _ = std::fs::write(
-                    "/tmp/params.txt",
-                    format!("len={len} err={error:?} hex={}\n", hex_dump(bytes)),
-                );
-                Ok(None)
-            }
+            Err(_) => Ok(None),
         }
     }
 
@@ -773,10 +765,6 @@ extern "C" fn send_alert(
     with_shared(ssl, |shared| shared.alert = Some(alert))
 }
 
-fn hex_dump(bytes: &[u8]) -> String {
-    bytes.iter().map(|b| format!("{b:02x}")).collect()
-}
-
 fn with_shared(ssl: *mut btls_sys::SSL, body: impl FnOnce(&mut Shared)) -> c_int {
     let idx = ex_index();
     let ptr = unsafe { btls_sys::SSL_get_ex_data(ssl, idx) as *const Arc<Mutex<Shared>> };
@@ -865,11 +853,6 @@ impl BoringClientConfig {
             transport_params,
             tls,
         })
-    }
-
-    /// The ClientHello inputs this configuration installed.
-    pub fn tls(&self) -> &QuicTls {
-        &self.tls
     }
 
     /// The same `Arc` `configure` and `start_session` read.

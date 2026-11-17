@@ -256,11 +256,6 @@ pub fn install_sigalgs(list: &str) -> String {
         .join(":")
 }
 
-pub fn contains_mldsa(list: &str) -> bool {
-    list.split(':')
-        .any(|name| matches!(name, "mldsa44" | "mldsa65" | "mldsa87"))
-}
-
 /// Certificate compression names the handshake knows.
 pub fn cert_compression_names(spec: &str) -> Result<Vec<String>, String> {
     if spec.is_empty() {
