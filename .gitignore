@@ -10,3 +10,6 @@ __pycache__/
 # vendored crate build output /vendor-specific
 /vendor/*/target
 /vendor/quinn-proto/target
+
+# CI scratch output
+/output.txt

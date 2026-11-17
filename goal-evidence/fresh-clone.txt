@@ -1,0 +1,23 @@
+fresh clone — builds, tests and handshakes from the public repository
+date: 2026-11-17
+
+command: git clone --depth 1 git@github.com:crawler-requests/rust-curl-impersonate.git
+result:  9.8 MB working tree, no build artifacts (vendor/*/target is ignored)
+
+1. cargo test --workspace (clean target, no prior build in the clone)
+   lib 32, api 10, fingerprints 22, providers 15, wire 15, doc 2
+   -> 96 passed, 0 failed
+
+2. cargo run --release --example echo chrome160 https://tls.peet.ws/api/all
+   -> status: 200 OK
+
+3. cargo run --release --example h3probe -- chrome160 quic.nginx.org /
+   -> at the time of this run the nginx edge answered 260
+      (H3_REQUEST_REJECTED) for this source IP, which is the documented
+      rate limit; the same binary returned `:status: 200` / 2523-byte body
+      earlier in the session. The QUIC handshake itself completes - the 260
+      is the server's application-level reply.
+
+Also removed in this pass: `output.txt`, a scratch file written by the CI
+smoke step (`.github/workflows/ci.yml`) that had been committed with the
+release pipeline, so every clone carried stale output from a past run.
