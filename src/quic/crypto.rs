@@ -223,6 +223,10 @@ impl ChaChaHeaderKey {
     }
 }
 
+// The AES variant holds a 244-byte key schedule and ChaCha a 32-byte one. A
+// `QuicHeaderKey` is built once per packet protection key, and boxing would put
+// the AES case behind a pointer that every masked packet then chases.
+#[allow(clippy::large_enum_variant)]
 enum HeaderProtection {
     Aes(AesHeaderKey),
     ChaCha(ChaChaHeaderKey),
@@ -606,7 +610,7 @@ impl crypto::Session for BoringSession {
         if data.is_null() || len == 0 {
             return Ok(None);
         }
-        let bytes = unsafe { std::slice::from_raw_parts(data, len as usize) };
+        let bytes = unsafe { std::slice::from_raw_parts(data, len) };
         // These are the parameters the server sent us, so they are read from the
         // client's point of view. Reading them as the server rejects the
         // server-only fields (original destination connection id, the stateless
@@ -746,7 +750,7 @@ extern "C" fn add_handshake_data(
     len: usize,
 ) -> c_int {
     with_shared(ssl, |shared| {
-        let bytes = unsafe { std::slice::from_raw_parts(data, len as usize) };
+        let bytes = unsafe { std::slice::from_raw_parts(data, len) };
         shared.levels.0[level.0 as usize]
             .write
             .extend_from_slice(bytes);

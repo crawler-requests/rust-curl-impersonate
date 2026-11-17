@@ -795,15 +795,14 @@ fn docker_sourced_runtime_versions_are_embedded() {
         assert_eq!(record.family, "curl", "{name}");
         assert!(!record.http1_only(), "{name}");
     }
-    assert_eq!(
+    assert!(
         fingerprint::find("curl8.10.1_h2")
             .unwrap()
             .tls
             .curves
             .as_deref()
             .unwrap()
-            .contains("ffdhe2048"),
-        true
+            .contains("ffdhe2048")
     );
 
     // Java 8 URLConnection (TLS 1.2 with DHE-DSS ciphers) and Java 11/17

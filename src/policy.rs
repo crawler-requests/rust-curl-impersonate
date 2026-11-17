@@ -262,7 +262,7 @@ pub fn cert_compression_names(spec: &str) -> Result<Vec<String>, String> {
         return Err("certificate compression is empty".to_string());
     }
     let mut names = Vec::new();
-    for name in spec.split(|c| c == ',' || c == ':') {
+    for name in spec.split([',', ':']) {
         let name = name.trim();
         if !matches!(name, "zlib" | "brotli" | "zstd") {
             return Err(format!("unknown certificate compression {name}"));

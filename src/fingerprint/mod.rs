@@ -906,14 +906,17 @@ pub fn parse_json(text: &str) -> Result<Vec<Fingerprint>, String> {
     #[serde(untagged)]
     enum Input {
         List(Vec<Fingerprint>),
-        One(Fingerprint),
+        // Boxed: `Fingerprint` is ~1 KB and the enum is a one-shot parse
+        // result, so an inline `One` would make every `List`/`Named` value pay
+        // for it.
+        One(Box<Fingerprint>),
         Named(Document),
     }
 
     let mut records =
         match serde_json::from_str::<Input>(text).map_err(|error| error.to_string())? {
             Input::List(records) => records,
-            Input::One(record) => vec![record],
+            Input::One(record) => vec![*record],
             Input::Named(document) => document.fingerprints,
         };
     for record in &mut records {

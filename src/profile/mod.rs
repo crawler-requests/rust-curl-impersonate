@@ -42,7 +42,7 @@ struct StoredSpec {
 /// the bytes. Kept next to the emulation so an installed record reports the
 /// same family, fidelity and HTTP/1.1-only mode as the embedded metadata it
 /// came from.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Default)]
 pub(crate) struct StoredMeta {
     pub(crate) family: &'static str,
     pub(crate) platform: &'static str,
@@ -51,20 +51,6 @@ pub(crate) struct StoredMeta {
     pub(crate) http1_only: bool,
     pub(crate) form_boundary: Option<FormBoundary>,
     pub(crate) split_cookies: Option<bool>,
-}
-
-impl Default for StoredMeta {
-    fn default() -> Self {
-        Self {
-            family: "",
-            platform: "",
-            fidelity: None,
-            deviation: None,
-            http1_only: false,
-            form_boundary: None,
-            split_cookies: None,
-        }
-    }
 }
 
 static SPECS: Mutex<Vec<StoredSpec>> = Mutex::new(Vec::new());
@@ -157,7 +143,7 @@ impl Profile {
         if name.is_empty() {
             return Err("registered target name is empty".to_string());
         }
-        if TARGETS.iter().any(|known| *known == name) {
+        if TARGETS.contains(&name) {
             return Err(format!("{name} is already a built-in target"));
         }
         if fingerprint::find(name).is_some() {

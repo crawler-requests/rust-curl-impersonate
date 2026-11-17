@@ -119,12 +119,11 @@ async fn presets_keep_their_tls_inputs_on_tcp_and_quic() {
     assert!(quic.delegated_credentials.is_some());
     assert!(!quic.extension_permutation.is_empty());
     assert!(
-        client("safari270")
+        !client("safari270")
             .http3_endpoint()
             .unwrap()
             .quic_tls()
             .session_ticket
-            == false
     );
 
     let chrome152 = client("chrome152").http3_endpoint().unwrap();
@@ -844,9 +843,7 @@ async fn redirects_and_cookie_changes_use_the_installed_policy() {
                 }
                 let text = String::from_utf8_lossy(&request);
                 let body = if text.contains("GET /go ") {
-                    format!(
-                        "HTTP/1.1 302 Found\r\nLocation: http://10.1.2.3/secret\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
-                    )
+                    "HTTP/1.1 302 Found\r\nLocation: http://10.1.2.3/secret\r\nContent-Length: 0\r\nConnection: close\r\n\r\n".to_string()
                 } else if text.contains("GET /set ") {
                     "HTTP/1.1 200 OK\r\nContent-Length: 2\r\nSet-Cookie: id=1; Path=/\r\nSet-Cookie: gone=; Max-Age=0; Path=/\r\nConnection: close\r\n\r\nOK"
                         .to_string()

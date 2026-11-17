@@ -10,6 +10,12 @@
 //! library lands in `target/release/librust_curl_impersonate_ffi.so` (or the
 //! platform equivalent). See `python/demo.py` for a ctypes consumer.
 
+// The exported functions take raw pointers by contract: the ABI is fixed by
+// `rci.h`, so they cannot be marked `unsafe fn` without changing what a C
+// caller sees. Every dereference is inside a `SAFETY:` comment stating the
+// caller obligation, same as libc.
+#![allow(clippy::not_unsafe_ptr_arg_deref)]
+
 use std::ffi::{c_char, CStr, CString};
 use std::time::Duration;
 

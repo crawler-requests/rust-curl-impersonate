@@ -194,7 +194,7 @@ impl Default for MessageCodec {
 }
 
 fn is_control(opcode: u8) -> bool {
-    matches!(opcode, 0x8 | 0x9 | 0xA)
+    matches!(opcode, 0x8..=0xA)
 }
 
 /// A WebSocket upgrade that offers `permessage-deflate`.

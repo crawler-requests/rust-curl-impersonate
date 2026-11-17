@@ -255,7 +255,7 @@ pub fn initial_packet_number(preset: i64, rng: &mut impl Rng) -> u32 {
     if preset < 0 {
         let mut bytes = [0u8; 2];
         rng.fill(&mut bytes);
-        let high = if bytes[1] > 224 { bytes[1] - 224 } else { 0 };
+        let high = bytes[1].saturating_sub(224);
         (bytes[0] & 0x1f) as u32 + ((high as u32) << 5) + 1
     } else {
         preset as u32

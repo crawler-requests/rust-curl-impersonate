@@ -627,7 +627,7 @@ fn loading_or_refreshing_a_provider_does_not_block_lookups() {
     assert_eq!(fingerprint::find("prov_blocked").unwrap().family, "go");
 
     // The same holds for a refresh whose reload blocks.
-    let refresh = std::thread::spawn(move || fingerprint::refresh_providers());
+    let refresh = std::thread::spawn(fingerprint::refresh_providers);
     let (started, go) = wait_for_load(&gate);
     started.send(()).unwrap();
     let t = std::time::Instant::now();
