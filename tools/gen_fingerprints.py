@@ -389,6 +389,9 @@ PROFILES = [
         "http3": {
             "settings": "1:65536;6:262144;7:100;51:1;GREASE",
             "pseudo_order": "masp",
+            # NetLog over quic.nginx.org sends google_connection_options
+            # ORIG,NOIP for a non-Google origin (ECCP is added only for
+            # Google's own hosts), so the generic-origin value is recorded.
             # Eight real H3 requests in the NetLog agree on this order. The
             # navigations never happened, so upgrade-insecure-requests and
             # sec-fetch-user keep their position from the http2 capture.
@@ -398,7 +401,7 @@ PROFILES = [
                 "accept-encoding,accept-language,priority"
             ),
             "transport_parameters": (
-                "12584:0x4f524947;15:AUTO;GREASE;4:15728640;32:65536;"
+                "12584:0x4f5249474e4f4950;15:AUTO;GREASE;4:15728640;32:65536;"
                 "5:6291456;9:103;1:30000;6:6291456;7:6291456;"
                 "17:1@1,GREASE;3:1472;8:100"
             ),

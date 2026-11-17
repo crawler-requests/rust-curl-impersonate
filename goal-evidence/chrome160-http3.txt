@@ -18,8 +18,14 @@ date: 2026-11-17
      initial_max_streams_bidi 100, initial_max_streams_uni 103,
      active_connection_id_limit 5, initial_source_connection_id 0,
      max_datagram_frame_size 65536,
-     google_connection_options ORIG,NOIP,ECCP, version_information
+     google_connection_options ORIG,NOIP (ECCP is added only for Google's own
+     hosts: 10 sessions to www.google.com sent ORIG,NOIP,ECCP, while
+     quic.nginx.org and update.googleapis.com sent ORIG,NOIP), version_information
      [chosen 00000001 other_versions 00000001], one GREASE parameter.
+
+   The record used to carry only `ORIG` for 12584, i.e. a third of the real
+   value; it now records `ORIG,NOIP` (0x4f5249474e4f4950), the value Chrome
+   sends to a non-Google origin.
 
    HTTP/3 SETTINGS sent by Chrome 160:
      SETTINGS_QPACK_MAX_TABLE_CAPACITY 65536,

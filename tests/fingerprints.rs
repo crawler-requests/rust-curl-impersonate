@@ -1359,7 +1359,12 @@ fn library_http3_profile_inherits_the_records_tls_handshake() {
 
     assert_eq!(http3.settings.len(), 5, "settings: {:?}", http3.settings);
     assert_eq!(http3.pseudo_order, "masp");
-    assert!(http3.transport_parameters.contains("12584:0x4f524947"));
+    // google_connection_options: Chrome sends ORIG,NOIP to a non-Google
+    // origin and adds ECCP only for Google's own hosts (NetLog over
+    // quic.nginx.org vs www.google.com).
+    assert!(http3
+        .transport_parameters
+        .contains("12584:0x4f5249474e4f4950"));
 
     assert_eq!(quic.curves, record.tls.curves.as_deref().unwrap());
     assert_eq!(quic.grease, record.tls.grease);
