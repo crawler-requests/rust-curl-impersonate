@@ -34,7 +34,12 @@ changes
 
 tests
   cargo test --workspace: lib 31, api 10, fingerprints 19, providers 15,
-  wire 13, doc 2 - all pass.
+  wire 14, doc 2; vendor/quinn-proto --lib 313 - all pass.
+  New wire test firefox147_and_safari270_advertise_their_own_connection_id_limit
+  decrypts the real Initial flight and reads parameter 0x0e from the
+  ClientHello: Firefox 147 sends 8, Safari 270 sends 64, chrome152 sends none
+  (record keeps quinn's default) - the same numbers quinn now sizes its queue
+  with.
 
 live matrix (h3probe <preset> quic.nginx.org /, repeated 4 rounds)
   preset            outcomes over 4 rounds

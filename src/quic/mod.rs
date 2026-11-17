@@ -12,8 +12,8 @@ mod params;
 pub mod spec;
 
 pub use crypto::{
-    initial_source_connection_id, initial_source_connection_id_from, open_client_datagram,
-    open_client_initial, OpenedInitial,
+    client_transport_parameter_from, initial_source_connection_id,
+    initial_source_connection_id_from, open_client_datagram, open_client_initial, OpenedInitial,
 };
 pub use params::Rng;
 

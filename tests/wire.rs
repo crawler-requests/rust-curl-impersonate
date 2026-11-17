@@ -10,7 +10,8 @@ use std::time::Duration;
 use rust_curl_impersonate::profile::{self, http3};
 use rust_curl_impersonate::quic::endpoint::H3Endpoint;
 use rust_curl_impersonate::quic::{
-    initial_source_connection_id_from, open_client_datagram, OpenedInitial,
+    client_transport_parameter_from, initial_source_connection_id_from, open_client_datagram,
+    OpenedInitial,
 };
 use rust_curl_impersonate::{Client, Method, Profile};
 use wreq::header;
@@ -416,6 +417,41 @@ async fn firefox147_initial_scid_matches_parameter_0x0f() {
         "firefox147 prepared_pn={expected} wire_pn={} scid={:02x?} param_0x0f={:02x?}",
         first.packet_number, first.src_cid, param
     );
+}
+
+/// The advertised `active_connection_id_limit` on the wire, or `None` when the
+/// preset does not send it.
+fn advertised_cid_limit(packets: &[OpenedInitial]) -> Option<u64> {
+    let payloads: Vec<&[u8]> = packets
+        .iter()
+        .map(|packet| packet.payload.as_slice())
+        .collect();
+    let value = client_transport_parameter_from(payloads, 0x0e).ok()?;
+    let mut number = (value[0] & 0x3f) as u64;
+    for byte in &value[1..] {
+        number = (number << 8) | u64::from(*byte);
+    }
+    Some(number)
+}
+
+#[tokio::test]
+async fn firefox147_and_safari270_advertise_their_own_connection_id_limit() {
+    // quinn sizes its remote-CID queue from the value it sends here. When the
+    // two disagreed (queue 5, advertised 8 or 64) the peer filled the window it
+    // was told about and quinn aborted with CONNECTION_ID_LIMIT_ERROR.
+    let firefox = client("firefox147");
+    let packets = capture_initial_flight(&firefox).await;
+    assert_eq!(advertised_cid_limit(&packets), Some(8));
+
+    let safari = client("safari270");
+    let packets = capture_initial_flight(&safari).await;
+    assert_eq!(advertised_cid_limit(&packets), Some(64));
+
+    // Chrome's presets leave 0x0e out, so quinn's default (its queue size) is
+    // what the peer reads. Nothing is overridden.
+    let chrome = client("chrome152");
+    let packets = capture_initial_flight(&chrome).await;
+    assert_eq!(advertised_cid_limit(&packets), None);
 }
 
 #[tokio::test]

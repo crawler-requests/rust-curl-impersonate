@@ -1268,6 +1268,30 @@ pub fn initial_source_connection_id_from<'a>(
     transport_parameter(&params, 0x0f)
 }
 
+/// Any transport parameter from every Initial in one flight, decoded from the
+/// ClientHello the preset actually sent.
+///
+/// The value is the raw parameter bytes: a varint for numeric parameters, the
+/// list for connection ids. This reads what went on the wire, not what the
+/// preset asked for.
+pub fn client_transport_parameter_from<'a>(
+    payloads: impl IntoIterator<Item = &'a [u8]>,
+    id: u64,
+) -> Result<Vec<u8>, String> {
+    let mut crypto = Vec::new();
+    for payload in payloads {
+        crypto.extend(crypto_stream(payload)?);
+        if crypto.first() == Some(&1) && handshake_complete(&crypto) {
+            break;
+        }
+    }
+    if crypto.is_empty() {
+        return Err("initial payload has no crypto frame".into());
+    }
+    let params = client_hello_extension(&crypto, 0x0039)?;
+    transport_parameter(&params, id)
+}
+
 fn crypto_stream(payload: &[u8]) -> Result<Vec<u8>, String> {
     let mut stream = Vec::new();
     let mut pos = 0usize;
