@@ -237,8 +237,11 @@ HTTP/3 由 `Client::http3_get` 发送。第一枚 Initial 的包号就是预设�
 
 ```bash
 cargo test
-cargo run --example echo chrome150
+cargo run --example echo chrome150                          # TLS + HTTP/2 实测
+cargo run --example h3probe -- chrome160 quic.nginx.org /   # HTTP/3 实测
 ```
+
+`h3probe` 的第一个参数可以是 `TARGETS` 里的任一预置，也可以是带 `http3` 块的指纹库记录（如 `chrome160`），两者都经 `Profile::find` 解析；第二、三个参数是主机与路径。成功时打印 `x-quic: h3` 与 `body: 2523 bytes`。`quic.nginx.org` 对单个源 IP 有短时限流，连续请求会出现 `260 H3_REQUEST_REJECTED` 或 8 秒无响应，隔几十秒重试即可；这不影响握手本身。
 
 `wreq` 在编译期构建 BoringSSL，首次编译需要 C 编译器和 cmake，耗时几分钟。
 
