@@ -1,5 +1,5 @@
 builtin fingerprint provenance audit
-date: 2026-11-13
+date: 2026-11-17
 library: src/fingerprint/builtin.json
 generator: tools/gen_fingerprints.py (reads only tools/capture/raw/*.json)
 
