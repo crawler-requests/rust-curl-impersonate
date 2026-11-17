@@ -258,6 +258,13 @@ pub struct TlsOptions {
     /// **Default:** `None`
     pub sigalgs_list: Option<Cow<'static, str>>,
 
+    /// Signature algorithm code points sent verbatim, in order.
+    ///
+    /// Unlike `sigalgs_list`, which goes through BoringSSL's name table, this
+    /// carries raw IANA values so a ClientHello can include algorithms the
+    /// library does not implement (ML-DSA, GREASE).
+    pub sigalgs_raw: Option<Cow<'static, [u16]>>,
+
     /// Cipher suite configuration string.
     ///
     /// Uses BoringSSL's mini-language to select, enable, and prioritize ciphers.
@@ -296,6 +303,13 @@ pub struct TlsOptions {
     /// `Some` empty advertises the extension with no specific anchor.
     /// `None` leaves the extension unset. This does not change the CA store.
     pub trust_anchors: Option<Cow<'static, [u8]>>,
+
+    /// Value for Chromium's server padding request extension (4832).
+    ///
+    /// `None` leaves the extension off. Chrome sends it with value 0 to ask
+    /// the server to pad its response; this needs a BoringSSL carrying
+    /// `SSL_CTX_set_server_padding_request`.
+    pub server_padding_request: Option<u16>,
 
     /// `SSL_set_enforce_rsa_key_usage`. `Some(false)` is key-usage-no-check.
     /// `None` leaves BoringSSL's default.
@@ -482,6 +496,13 @@ impl TlsOptionsBuilder {
         self
     }
 
+    /// Sets signature algorithms by raw code point, in wire order.
+    #[inline]
+    pub fn sigalgs_raw(mut self, values: impl Into<Cow<'static, [u16]>>) -> Self {
+        self.config.sigalgs_raw = Some(values.into());
+        self
+    }
+
     /// Sets the certificate compression algorithms.
     #[inline]
     pub fn certificate_compressors<T>(mut self, algs: T) -> Self
@@ -548,6 +569,13 @@ impl TlsOptionsBuilder {
         self
     }
 
+    /// Sets Chromium's server padding request value (extension 4832).
+    #[inline]
+    pub fn server_padding_request(mut self, value: u16) -> Self {
+        self.config.server_padding_request = Some(value);
+        self
+    }
+
     /// Sets whether RSA key usage is enforced. `false` skips the check.
     #[inline]
     pub fn enforce_rsa_key_usage(mut self, enabled: bool) -> Self {
@@ -595,12 +623,14 @@ impl Default for TlsOptions {
             curves_list: None,
             cipher_list: None,
             sigalgs_list: None,
+            sigalgs_raw: None,
             certificate_compressors: None,
             extension_permutation: None,
             aes_hw_override: None,
             preserve_tls13_cipher_list: None,
             random_aes_hw_override: false,
             trust_anchors: None,
+            server_padding_request: None,
             enforce_rsa_key_usage: None,
         }
     }

@@ -248,12 +248,51 @@ pub fn cid_profile(spec: &str) -> Result<&'static str, String> {
 }
 
 /// Drop the three ML-DSA names BoringSSL will not install.
+/// Code point for a signature algorithm name, when the name has one.
+pub fn sigalg_code(name: &str) -> Option<u16> {
+    let code = match name {
+        "ecdsa_secp256r1_sha256" => 0x0403,
+        "ecdsa_secp384r1_sha384" => 0x0503,
+        "ecdsa_secp521r1_sha512" => 0x0603,
+        "rsa_pss_rsae_sha256" => 0x0804,
+        "rsa_pss_rsae_sha384" => 0x0805,
+        "rsa_pss_rsae_sha512" => 0x0806,
+        "rsa_pkcs1_sha256" => 0x0401,
+        "rsa_pkcs1_sha384" => 0x0501,
+        "rsa_pkcs1_sha512" => 0x0601,
+        "ed25519" => 0x0807,
+        "rsa_pkcs1_sha1" => 0x0201,
+        "ecdsa_sha1" => 0x0203,
+        "mldsa44" => 0x0904,
+        "mldsa65" => 0x0905,
+        "mldsa87" => 0x0906,
+        _ => return None,
+    };
+    Some(code)
+}
+
+/// Prepare a captured signature algorithm list for the handshake.
+///
+/// ML-DSA names are kept: the vendored BoringSSL now passes unknown codepoints
+/// through to the extension, so a Chrome 156+ ClientHello can carry them the
+/// way the browser does. GREASE values (`0x2a2a`) are also kept.
 pub fn install_sigalgs(list: &str) -> String {
     list.split(':')
-        .filter(|name| !matches!(*name, "mldsa44" | "mldsa65" | "mldsa87"))
         .filter(|name| !name.is_empty())
         .collect::<Vec<_>>()
         .join(":")
+}
+
+/// The same list as raw code points, when every name has one.
+///
+/// BoringSSL resolves names through its own table, which has no ML-DSA entry.
+/// Turning the list into code points lets `SSL_CTX_set_verify_algorithm_prefs`
+/// carry them verbatim.
+pub fn sigalg_codes(list: &str) -> Option<Vec<u16>> {
+    list.split(':')
+        .filter(|name| !name.is_empty())
+        .map(sigalg_code)
+        .collect()
 }
 
 /// Certificate compression names the handshake knows.

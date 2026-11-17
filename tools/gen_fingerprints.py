@@ -102,6 +102,11 @@ SIGALG_CODES = {
     0x0906: "mldsa87",
 }
 SUPPORTED_SIGALGS = {
+    # ML-DSA: the vendored BoringSSL passes these codepoints through
+    # (scripts/boringssl/chrome4832.patch), so they reach the wire.
+    "mldsa44",
+    "mldsa65",
+    "mldsa87",
     "rsa_pkcs1_md5_sha1",
     "rsa_pkcs1_sha1",
     "rsa_pkcs1_sha256",
@@ -118,12 +123,22 @@ SUPPORTED_SIGALGS = {
     "ed25519",
 }
 
+# ML-DSA codepoints: the vendored BoringSSL carries them through, so the
+# generator maps them to names instead of leaving them as raw hex.
+SIGALG_CODES.update({
+    0x0904: "mldsa44",
+    0x0905: "mldsa65",
+    0x0906: "mldsa87",
+})
+
 # Extension ids in BoringSSL's kExtensions table (ssl/extensions.cc).
 SUPPORTED_EXTENSIONS = {
     0, 5, 10, 11, 13, 14, 16, 18, 23, 27, 28, 34, 35, 41, 42, 43, 44, 45, 47,
     51, 57, 65037, 65281, 17513, 17613, 65445,
     # draft-ietf-tls-trust-anchors, sent when the caller supplies identifiers.
     51764,
+    # Chromium's server padding request, added by scripts/boringssl/chrome4832.patch.
+    4832,
 }
 EXTENSION_NAMES = {
     0: "server_name",
@@ -382,6 +397,10 @@ PROFILES = [
         "version": "160.0.8167.0",
         "platform": "linux",
         "permute_extensions": True,
+        # Chromium's extension 4832, server padding request, value 0.
+        "server_padding_request": 0,
+        # Keep the capture's sigalg codepoints, including ML-DSA and GREASE.
+        "sigalg_codes_from_capture": True,
         # QUIC fields from the same binary's NetLog (--log-net-log
         # --net-log-capture-mode=IncludeSensitive) over a real H3 connection to
         # quic.nginx.org. Transport parameters and SETTINGS are what Chromium
@@ -1669,6 +1688,35 @@ def summarize(label, dropped, kept):
     )
 
 
+SIGALG_NAME_TO_CODE = {
+    "ecdsa_secp256r1_sha256": 0x0403,
+    "ecdsa_secp384r1_sha384": 0x0503,
+    "ecdsa_secp521r1_sha512": 0x0603,
+    "rsa_pss_rsae_sha256": 0x0804,
+    "rsa_pss_rsae_sha384": 0x0805,
+    "rsa_pss_rsae_sha512": 0x0806,
+    "rsa_pkcs1_sha256": 0x0401,
+    "rsa_pkcs1_sha384": 0x0501,
+    "rsa_pkcs1_sha512": 0x0601,
+    "ed25519": 0x0807,
+    "rsa_pkcs1_sha1": 0x0201,
+    "ecdsa_sha1": 0x0203,
+    "mldsa44": 0x0904,
+    "mldsa65": 0x0905,
+    "mldsa87": 0x0906,
+}
+
+
+def sigalg_code(name):
+    """Map a captured signature algorithm label to its code point."""
+    if isinstance(name, int):
+        return name
+    text = str(name)
+    if text.startswith("0x"):
+        return int(text, 16)
+    return SIGALG_NAME_TO_CODE.get(text)
+
+
 def build_record(spec):
     path = os.path.join(RAW, spec["file"])
     with open(path, "r", encoding="utf-8") as handle:
@@ -1727,7 +1775,8 @@ def build_record(spec):
     grease_sigalg = False
     for name in sigalgs_from(tls):
         if name.startswith("0x") and grease_code(parse_hex(name) or 0):
-            grease = True
+            # A GREASE sigalg now rides along in the raw code point list, so
+            # it is no longer a deviation.
             grease_sigalg = True
             continue
         if name in SUPPORTED_SIGALGS:
@@ -1737,11 +1786,9 @@ def build_record(spec):
     note = summarize("signature algorithms", dropped_sigalgs, sigalgs)
     if note:
         deviations.append(note)
-    if grease_sigalg:
-        deviations.append(
-            "BoringSSL does not put a GREASE value in signature_algorithms; it "
-            "greases the cipher, group, version, key-share and extension lists."
-        )
+    # A GREASE sigalg is carried by the raw code point list, so it is not a
+    # deviation any more. `grease_sigalg` only marks that the caller must use
+    # that path.
 
     captured_exts = [
         ext_id
@@ -1944,6 +1991,15 @@ def build_record(spec):
         tls_record["delegated_credentials"] = ":".join(delegated_credentials)
     if trust_anchors:
         tls_record["trust_anchors"] = trust_anchors
+    # Chrome 156+ sends sigalg codepoints BoringSSL has no name for. Record the
+    # capture's exact list so the extension can carry them verbatim.
+    if spec.get("sigalg_codes_from_capture"):
+        raw = (exts.get(13) or {}).get("signature_algorithms") or []
+        codes = [sigalg_code(name) for name in raw]
+        if all(code is not None for code in codes):
+            tls_record["sigalg_codes"] = codes
+    if spec.get("server_padding_request") is not None:
+        tls_record["server_padding_request"] = spec["server_padding_request"]
     # Always record ALPN. An empty list means the client sends no ALPN
     # extension, which is different from "the transport decides".
     tls_record["alpn"] = alpn or []

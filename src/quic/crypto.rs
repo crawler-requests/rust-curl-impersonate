@@ -879,7 +879,12 @@ fn configure(builder: &mut SslContextBuilder, tls: &QuicTls) -> Result<(), Strin
             .set_curves_list(&tls.curves)
             .map_err(|error| format!("curves: {error}"))?;
     }
-    if !tls.sigalgs.is_empty() {
+    // Raw codepoints win, so ML-DSA and GREASE reach the QUIC ClientHello the
+    // same way they do on the TCP path.
+    if tls.sigalgs_codes.is_some() {
+        // The code point list is applied to the connection below, where the
+        // SSL object exists; the builder has no raw-preference API.
+    } else if !tls.sigalgs.is_empty() {
         builder
             .set_sigalgs_list(&tls.sigalgs)
             .map_err(|error| format!("signature algorithms: {error}"))?;
@@ -967,6 +972,20 @@ fn register_cert_compression(
 /// btls exposes key shares, ECH grease and ALPS only on `Ssl`, so they cannot
 /// be set on the shared context.
 fn apply_connection_settings(ssl: &mut Ssl, tls: &QuicTls) -> Result<(), String> {
+    // Raw codepoints, so ML-DSA and GREASE reach the QUIC ClientHello.
+    if let Some(codes) = &tls.sigalgs_codes {
+        #[allow(unsafe_code)]
+        let rc = unsafe {
+            btls_sys::SSL_set_verify_algorithm_prefs(
+                ssl.as_ptr(),
+                codes.as_ptr().cast(),
+                codes.len(),
+            )
+        };
+        if rc != 1 {
+            return Err("signature algorithm preferences were rejected".to_string());
+        }
+    }
     if !tls.key_shares.is_empty() {
         ssl.set_client_key_shares(&tls.key_shares)
             .map_err(|error| format!("key shares: {error}"))?;

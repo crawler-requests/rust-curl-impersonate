@@ -407,8 +407,27 @@ impl TlsConnectorBuilder {
         // Set TLS curves list
         set_option_ref_try!(opts, curves_list, connector, set_curves_list);
 
-        // Set TLS signature algorithms list
-        set_option_ref_try!(opts, sigalgs_list, connector, set_sigalgs_list);
+        // Set TLS signature algorithms list. Raw code points win when set,
+        // because they can carry algorithms BoringSSL has no name for.
+        if let Some(ref values) = opts.sigalgs_raw {
+            // Raw codepoints, so algorithms BoringSSL has no name for
+            // (ML-DSA, GREASE) reach the extension unchanged.
+            #[allow(unsafe_code)]
+            let rc = unsafe {
+                btls_sys::SSL_CTX_set_verify_algorithm_prefs(
+                    connector.as_ptr(),
+                    values.as_ptr().cast(),
+                    values.len(),
+                )
+            };
+            if rc != 1 {
+                return Err(Error::tls(std::io::Error::other(
+                    "signature algorithm preferences were rejected",
+                )));
+            }
+        } else {
+            set_option_ref_try!(opts, sigalgs_list, connector, set_sigalgs_list);
+        }
 
         // Set TLS prreserve TLS 1.3 cipher list order
         set_option!(
@@ -458,6 +477,18 @@ impl TlsConnectorBuilder {
                     "trust anchors were rejected",
                 )));
             }
+        }
+
+        // Chromium's server padding request (extension 4832). Needs a
+        // BoringSSL carrying SSL_CTX_set_server_padding_request.
+        if let Some(value) = opts.server_padding_request {
+            #[allow(unsafe_code)]
+            unsafe {
+                btls_sys::SSL_CTX_set_server_padding_request(
+                    connector.as_ptr(),
+                    value as std::os::raw::c_int,
+                )
+            };
         }
 
         // Set TLS keylog handler.

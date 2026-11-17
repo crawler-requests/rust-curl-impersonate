@@ -252,7 +252,9 @@ fn go_fingerprint_matches_its_capture() {
 #[test]
 fn browser_captures_keep_grease_alps_ech_and_compression() {
     let chrome = fingerprint::find("chromium156").unwrap();
-    assert_eq!(chrome.fidelity, Some(Fidelity::Close));
+    // Extension 4832 and ML-DSA both reach the wire now, so this capture is
+    // reproduced exactly apart from the length-dependent padding.
+    assert_eq!(chrome.fidelity, Some(Fidelity::Exact));
     assert!(chrome.tls.grease, "Chromium greases every list");
     assert!(chrome.tls.alps, "Chromium advertises ALPS");
     assert!(chrome.tls.new_alps_codepoint);
@@ -293,8 +295,11 @@ fn browser_captures_keep_grease_alps_ech_and_compression() {
     assert_eq!(http2.pseudo_order.as_deref(), Some("masp"));
     assert_eq!(http2.window_update, Some(15_663_105));
     let note = chrome.deviation().unwrap();
-    assert!(note.contains("mldsa44"));
+    // ML-DSA and trust anchors both reach the wire now, so neither may still
+    // be listed as something the transport cannot send.
+    assert!(!note.contains("mldsa44"), "ML-DSA is sent now: {note}");
     assert!(!note.contains("51764"), "trust anchors are sent now");
+    assert!(!note.contains("4832"), "server padding request is sent now");
 
     let tls = Profile::find("chromium156")
         .unwrap()
@@ -355,9 +360,10 @@ fn browser_captures_keep_grease_alps_ech_and_compression() {
         )
     );
 
+    // The `chrome` alias resolves to a capture that now round-trips exactly.
     assert_eq!(
         Profile::find("chrome").unwrap().fidelity(),
-        Some(Fidelity::Close)
+        Some(Fidelity::Exact)
     );
     assert_eq!(
         Profile::find("firefox").unwrap().fidelity(),
@@ -600,10 +606,10 @@ fn tls_client_browser_and_ios_records_cover_more_versions() {
     );
     assert!(chrome133.validate().is_ok());
 
-    // Chrome 152 asks for ML-DSA signature algorithms BoringSSL cannot send.
+    // Chrome 152 asks for ML-DSA; the vendored BoringSSL now carries those
+    // codepoints, so the record no longer has to declare them unsendable.
     let chrome152 = fingerprint::find("tlsclient_chrome152").unwrap();
-    assert_eq!(chrome152.fidelity, Some(Fidelity::Close));
-    assert!(chrome152
+    assert!(!chrome152
         .deviations
         .iter()
         .any(|note| note.contains("mldsa44")));

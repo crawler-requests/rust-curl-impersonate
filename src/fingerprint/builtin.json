@@ -1064,16 +1064,14 @@
       "version": "156.0.8078.47",
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chromium156.json",
-      "fidelity": "close",
+      "fidelity": "exact",
       "deviations": [
-        "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
-        "BoringSSL does not put a GREASE value in signature_algorithms; it greases the cipher, group, version, key-share and extension lists.",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
         "extension_order": "18-35-11-51764-23-65281-51-5-16-27-17613-0-10-45-65037-13-43",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
@@ -1165,18 +1163,15 @@
       "version": "157.0.8103.78",
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chromium157.json",
-      "fidelity": "close",
+      "fidelity": "exact",
       "deviations": [
-        "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
-        "BoringSSL does not put a GREASE value in signature_algorithms; it greases the cipher, group, version, key-share and extension lists.",
-        "BoringSSL never sends captured extension 4832 (unknown).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
-        "extension_order": "43-0-13-10-11-51-35-51764-5-45-65037-65281-23-18-17613-16-27",
+        "sigalgs": "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "extension_order": "43-0-13-10-11-4832-51-35-51764-5-45-65037-65281-23-18-17613-16-27",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
         "permute_extensions": true,
@@ -1269,17 +1264,14 @@
       "source": "tls.peet.ws capture, tools/capture/raw/chrome158.json",
       "fidelity": "close",
       "deviations": [
-        "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
-        "BoringSSL does not put a GREASE value in signature_algorithms; it greases the cipher, group, version, key-share and extension lists.",
-        "BoringSSL never sends captured extension 4832 (unknown).",
         "The capture carries pre_shared_key (41) from a resumed session; BoringSSL emits it only when a cached session ticket is supplied, so a fresh handshake sends no PSK extension.",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
-        "extension_order": "16-11-43-17613-65281-0-5-65037-45-10-51-13-27-51764-23-18-35-41",
+        "sigalgs": "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "extension_order": "4832-16-11-43-17613-65281-0-5-65037-45-10-51-13-27-51764-23-18-35-41",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
         "permute_extensions": true,
@@ -1372,17 +1364,14 @@
       "source": "tls.peet.ws capture, tools/capture/raw/chrome159.json",
       "fidelity": "close",
       "deviations": [
-        "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
-        "BoringSSL does not put a GREASE value in signature_algorithms; it greases the cipher, group, version, key-share and extension lists.",
-        "BoringSSL never sends captured extension 4832 (unknown).",
         "The capture carries pre_shared_key (41) from a resumed session; BoringSSL emits it only when a cached session ticket is supplied, so a fresh handshake sends no PSK extension.",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
-        "extension_order": "0-11-27-13-5-16-23-18-65281-45-17613-43-65037-51-51764-10-35-41",
+        "sigalgs": "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "extension_order": "0-11-27-13-4832-5-16-23-18-65281-45-17613-43-65037-51-51764-10-35-41",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
         "permute_extensions": true,
@@ -1473,18 +1462,15 @@
       "version": "160.0.8167.0",
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome160.json",
-      "fidelity": "close",
+      "fidelity": "exact",
       "deviations": [
-        "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
-        "BoringSSL does not put a GREASE value in signature_algorithms; it greases the cipher, group, version, key-share and extension lists.",
-        "BoringSSL never sends captured extension 4832 (unknown).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
-        "extension_order": "5-45-43-35-27-10-0-65037-51-51764-23-13-16-18-65281-11-17613",
+        "sigalgs": "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "extension_order": "5-45-43-35-27-10-0-65037-4832-51-51764-23-13-16-18-65281-11-17613",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
         "permute_extensions": true,
@@ -1499,6 +1485,21 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df1302010582df1302060582df13020d0582df13020e0582df13020f0582df1302120582df1302130582df13021408839a648c9b2d010708839a648c9b2d010808839a648c9b2d010908839a648c9b2d010a08839a648c9b2d010b08839a648c9b2d010c08839a648c9b2d010d08839a648c9b2d011208839a648c9b2d011304d679090104d679090404d679090504d679090604d679090704d679090804d679090a04d679090b04d679090c04d679090d04d679090f",
+        "sigalg_codes": [
+          10794,
+          2308,
+          2309,
+          2310,
+          1027,
+          2052,
+          1025,
+          1283,
+          2053,
+          1281,
+          2054,
+          1537
+        ],
+        "server_padding_request": 0,
         "alpn": [
           "h2",
           "http/1.1"
@@ -4202,15 +4203,14 @@
       "version": "150",
       "platform": "windows",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome150.json",
-      "fidelity": "close",
+      "fidelity": "exact",
       "deviations": [
-        "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
         "extension_order": "51-0-17613-65281-10-27-35-5-23-43-13-18-11-65037-16-45",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
@@ -4265,16 +4265,14 @@
       "version": "152",
       "platform": "windows",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome152.json",
-      "fidelity": "close",
+      "fidelity": "exact",
       "deviations": [
-        "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
-        "BoringSSL does not put a GREASE value in signature_algorithms; it greases the cipher, group, version, key-share and extension lists.",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
         "extension_order": "51-0-17613-65281-10-27-35-5-23-43-13-18-11-65037-16-45-51764",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
@@ -8120,14 +8118,14 @@
       "deviations": [
         "BoringSSL cannot send 23 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_DHE_RSA_WITH_AES_256_CCM and 19 more (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 15 captured signature algorithms: mldsa65, mldsa87, mldsa44, ecdsa_brainpoolP256r1tls13_sha256 and 11 more (11 sent).",
+        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -8159,7 +8157,7 @@
       "deviations": [
         "BoringSSL cannot send 23 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_DHE_RSA_WITH_AES_256_CCM and 19 more (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 15 captured signature algorithms: mldsa65, mldsa87, mldsa44, ecdsa_brainpoolP256r1tls13_sha256 and 11 more (11 sent).",
+        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none.",
         "The capture sends :authority with the default :443 port; the transport omits the default port.",
@@ -8168,7 +8166,7 @@
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -8420,14 +8418,14 @@
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 15 captured signature algorithms: mldsa65, mldsa87, mldsa44, ecdsa_brainpoolP256r1tls13_sha256 and 11 more (11 sent).",
+        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51-27",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -8468,14 +8466,14 @@
       "fidelity": "partial",
       "deviations": [
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 15 captured signature algorithms: mldsa65, mldsa87, mldsa44, ecdsa_brainpoolP256r1tls13_sha256 and 11 more (11 sent).",
+        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-16-23-13-43-45-51-27",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -8852,14 +8850,14 @@
       "deviations": [
         "BoringSSL cannot send 39 captured cipher suites: TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA and 35 more (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 15 captured signature algorithms: mldsa65, mldsa87, mldsa44, ecdsa_brainpoolP256r1tls13_sha256 and 11 more (11 sent).",
+        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -8994,14 +8992,14 @@
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 15 captured signature algorithms: mldsa65, mldsa87, mldsa44, ecdsa_brainpoolP256r1tls13_sha256 and 11 more (11 sent).",
+        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -9403,7 +9401,7 @@
       "platform": "linux",
       "source": "alias of chromium156",
       "extends": "chromium156",
-      "fidelity": "close"
+      "fidelity": "exact"
     },
     {
       "name": "firefox",

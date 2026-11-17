@@ -399,7 +399,11 @@ impl ProfileSpec {
             tls = tls.curves_list(list.clone());
         }
         if let Some(list) = &self.sigalgs {
-            tls = tls.sigalgs_list(policy::install_sigalgs(list));
+            let installed = policy::install_sigalgs(list);
+            tls = match policy::sigalg_codes(&installed) {
+                Some(codes) => tls.sigalgs_raw(codes),
+                None => tls.sigalgs_list(installed),
+            };
         }
         if let Some(enabled) = self.grease {
             tls = tls.grease_enabled(enabled);

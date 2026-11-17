@@ -17,6 +17,9 @@ pub struct QuicTls {
     pub ciphers: String,
     pub curves: String,
     pub sigalgs: String,
+    /// Signature algorithm code points, used when the list has no names BoringSSL
+    /// can resolve (ML-DSA, GREASE).
+    pub sigalgs_codes: Option<Vec<u16>>,
     pub grease: bool,
     pub permute_extensions: bool,
     pub signed_cert_timestamps: bool,
@@ -51,6 +54,7 @@ impl QuicTls {
             ciphers: profile.ciphers.to_string(),
             curves: profile.curves.to_string(),
             sigalgs: policy::install_sigalgs(profile.sigalgs),
+            sigalgs_codes: policy::sigalg_codes(&policy::install_sigalgs(profile.sigalgs)),
             grease: profile.grease,
             permute_extensions: profile.permute_extensions,
             signed_cert_timestamps: profile.signed_cert_timestamps,

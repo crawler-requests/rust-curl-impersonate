@@ -549,7 +549,13 @@ fn apply_tls(tls: Option<&mut wreq::tls::TlsOptions>, overrides: &Overrides) -> 
     };
     if let Some(list) = overrides.sigalgs.as_deref() {
         let installed = policy::install_sigalgs(list);
-        tls.sigalgs_list = Some(Cow::Owned(installed));
+        match policy::sigalg_codes(&installed) {
+            Some(codes) => {
+                tls.sigalgs_raw = Some(Cow::Owned(codes));
+                tls.sigalgs_list = None;
+            }
+            None => tls.sigalgs_list = Some(Cow::Owned(installed)),
+        }
     }
     if let Some(enabled) = overrides.enable_alps {
         tls.alps_protocols = enabled.then_some(Cow::Borrowed(&[wreq::tls::AlpsProtocol::HTTP2]));
@@ -605,6 +611,12 @@ fn apply_tls(tls: Option<&mut wreq::tls::TlsOptions>, overrides: &Overrides) -> 
 }
 
 fn apply_quic_tls(tls: &mut QuicTls, overrides: &Overrides) -> Result<(), String> {
+    // `sigalgs` applies to both handshakes unless `http3_sigalgs` overrides it.
+    if let Some(list) = overrides.sigalgs.as_deref() {
+        let installed = policy::install_sigalgs(list);
+        tls.sigalgs_codes = policy::sigalg_codes(&installed);
+        tls.sigalgs = installed;
+    }
     if let Some(list) = overrides.sigalgs.as_deref() {
         tls.sigalgs = policy::install_sigalgs(list);
     }
@@ -658,7 +670,9 @@ fn apply_quic_tls(tls: &mut QuicTls, overrides: &Overrides) -> Result<(), String
         tls.curves = curves.to_string();
     }
     if let Some(list) = overrides.http3_sigalgs.as_deref() {
-        tls.sigalgs = policy::install_sigalgs(list);
+        let installed = policy::install_sigalgs(list);
+        tls.sigalgs_codes = policy::sigalg_codes(&installed);
+        tls.sigalgs = installed;
     }
     if let Some(spec) = overrides.http3_extension_order.as_deref() {
         tls.extension_permutation = extension_types(spec)?;

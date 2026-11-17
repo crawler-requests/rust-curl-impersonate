@@ -205,6 +205,16 @@ pub struct TlsFingerprint {
     /// `SSL_set1_requested_trust_anchors`.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub trust_anchors: Option<String>,
+    /// Value for Chromium's server padding request extension (4832). `None`
+    /// does not send the extension; `Some(0)` matches what Chrome sends.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub server_padding_request: Option<u16>,
+    /// Signature algorithm code points sent verbatim, in capture order.
+    ///
+    /// Used instead of [`Self::sigalgs`] when present, so algorithms BoringSSL
+    /// has no name for (ML-DSA, GREASE) still reach the extension.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub sigalg_codes: Option<Vec<u16>>,
 }
 
 fn yes() -> bool {
@@ -237,6 +247,8 @@ impl Default for TlsFingerprint {
             record_size_limit: None,
             delegated_credentials: None,
             trust_anchors: None,
+            server_padding_request: None,
+            sigalg_codes: None,
         }
     }
 }
@@ -652,8 +664,14 @@ impl Fingerprint {
         if let Some(list) = &tls.curves {
             builder = builder.curves_list(list.clone());
         }
-        if let Some(list) = &tls.sigalgs {
-            builder = builder.sigalgs_list(policy::install_sigalgs(list));
+        if let Some(codes) = &tls.sigalg_codes {
+            builder = builder.sigalgs_raw(codes.clone());
+        } else if let Some(list) = &tls.sigalgs {
+            let installed = policy::install_sigalgs(list);
+            builder = match policy::sigalg_codes(&installed) {
+                Some(codes) => builder.sigalgs_raw(codes),
+                None => builder.sigalgs_list(installed),
+            };
         }
         // BoringSSL's fixed extension order keeps the listed extensions in
         // place and only shuffles the rest, so it cannot model a client that
@@ -680,6 +698,9 @@ impl Fingerprint {
         }
         if let Some(list) = &tls.delegated_credentials {
             builder = builder.delegated_credentials(list.clone());
+        }
+        if let Some(value) = tls.server_padding_request {
+            builder = builder.server_padding_request(value);
         }
         if let Some(hex) = &tls.trust_anchors {
             builder = builder.trust_anchors(policy::trust_anchors_hex(hex)?);

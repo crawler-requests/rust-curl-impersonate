@@ -1,0 +1,119 @@
+diff --git a/include/openssl/ssl.h b/include/openssl/ssl.h
+index dd81949..78e1400 100644
+--- a/include/openssl/ssl.h
++++ b/include/openssl/ssl.h
+@@ -5267,6 +5267,11 @@ OPENSSL_EXPORT void SSL_CTX_set_retain_only_sha256_of_client_certs(SSL_CTX *ctx,
+ // GREASE. See RFC 8701.
+ OPENSSL_EXPORT void SSL_CTX_set_grease_enabled(SSL_CTX *ctx, int enabled);
+ 
++// SSL_CTX_set_server_padding_request configures the value sent in Chromium's
++// server padding request extension (4832). A negative |value| disables the
++// extension; 0..65535 is sent verbatim as the extension's u16 payload.
++OPENSSL_EXPORT void SSL_CTX_set_server_padding_request(SSL_CTX *ctx, int value);
++
+ // SSL_CTX_set_permute_extensions configures whether sockets on |ctx| should
+ // permute extensions. For now, this is only implemented for the ClientHello.
+ OPENSSL_EXPORT void SSL_CTX_set_permute_extensions(SSL_CTX *ctx, int enabled);
+diff --git a/ssl/extensions.cc b/ssl/extensions.cc
+index 1240cc6..e2e7353 100644
+--- a/ssl/extensions.cc
++++ b/ssl/extensions.cc
+@@ -3584,6 +3584,25 @@ static bool record_size_limit_add_serverhello(SSL_HANDSHAKE* hs, CBB* out) {
+ }
+ 
+ // kExtensions contains all the supported extensions.
++// Chromium's server padding request extension (4832). Chrome sends it with
++// payload 0 to ask the server to pad its response. It is not a standard TLS
++// extension and upstream BoringSSL does not implement it.
++static bool ext_server_padding_add_clienthello(const SSL_HANDSHAKE *hs,
++                                               CBB *out, CBB *out_compressible,
++                                               ssl_client_hello_type_t type) {
++  if (type == ssl_client_hello_inner) {
++    return true;
++  }
++  const int16_t value = hs->ssl->ctx->server_padding_request;
++  if (value < 0) {
++    return true;
++  }
++  CBB contents;
++  return CBB_add_u16(out, 4832) &&
++         CBB_add_u16_length_prefixed(out, &contents) &&
++         CBB_add_u16(&contents, (uint16_t)value) && CBB_flush(out);
++}
++
+ static const struct tls_extension kExtensions[] = {
+     {
+         TLSEXT_TYPE_server_name,
+@@ -3794,6 +3813,14 @@ static const struct tls_extension kExtensions[] = {
+       record_size_limit_parse_clienthello,
+       record_size_limit_add_serverhello,
+     },
++    {
++        // Chromium's server padding request, extension 4832.
++        4832,
++        ext_server_padding_add_clienthello,
++        forbid_parse_serverhello,
++        ignore_parse_clienthello,
++        dont_add_serverhello,
++    },
+ };
+ 
+ #define kNumExtensions (sizeof(kExtensions) / sizeof(struct tls_extension))
+diff --git a/ssl/internal.h b/ssl/internal.h
+index c80e565..b80d05c 100644
+--- a/ssl/internal.h
++++ b/ssl/internal.h
+@@ -4046,6 +4046,10 @@ struct ssl_ctx_st : public bssl::RefCounted<ssl_ctx_st> {
+   // grease_enabled is whether GREASE (RFC 8701) is enabled.
+   bool grease_enabled : 1;
+ 
++  // server_padding_request is the value sent in Chromium's server padding
++  // request extension (4832). A negative value disables the extension.
++  int16_t server_padding_request;
++
+   // permute_extensions is whether to permute extensions when sending messages.
+   bool permute_extensions : 1;
+ 
+diff --git a/ssl/ssl_lib.cc b/ssl/ssl_lib.cc
+index 117b9c9..0b5e1c0 100644
+--- a/ssl/ssl_lib.cc
++++ b/ssl/ssl_lib.cc
+@@ -396,6 +396,7 @@ ssl_ctx_st::ssl_ctx_st(const SSL_METHOD *ssl_method)
+       signed_cert_timestamps_enabled(false),
+       channel_id_enabled(false),
+       grease_enabled(false),
++      server_padding_request(-1),
+       permute_extensions(false),
+       disable_second_keyshare(false),
+       allow_unknown_alpn_protos(false),
+@@ -3152,6 +3153,10 @@ void SSL_CTX_set_grease_enabled(SSL_CTX *ctx, int enabled) {
+   ctx->grease_enabled = !!enabled;
+ }
+ 
++void SSL_CTX_set_server_padding_request(SSL_CTX *ctx, int value) {
++  ctx->server_padding_request = value < 0 ? -1 : (int16_t)value;
++}
++
+ void SSL_CTX_set_permute_extensions(SSL_CTX *ctx, int enabled) {
+   ctx->permute_extensions = !!enabled;
+ }
+diff --git a/ssl/ssl_privkey.cc b/ssl/ssl_privkey.cc
+index 926d2c0..f2ebbec 100644
+--- a/ssl/ssl_privkey.cc
++++ b/ssl/ssl_privkey.cc
+@@ -575,10 +575,11 @@ static bool set_sigalg_prefs(Array<uint16_t> *out, Span<const uint16_t> prefs) {
+       // abstraction.
+       continue;
+     }
+-    if (get_signature_algorithm(pref) == nullptr) {
+-      OPENSSL_PUT_ERROR(SSL, SSL_R_INVALID_SIGNATURE_ALGORITHM);
+-      return false;
+-    }
++    // Chromium sends signature algorithm codepoints BoringSSL does not
++    // implement (ML-DSA 0x0904/0x0905/0x0906) and a GREASE value. They are
++    // never used to sign here - the server selects from what it supports -
++    // but the peer must observe them in the extension, so keep any value
++    // other than the internal MD5_SHA1 marker.
+     filtered[added] = pref;
+     added++;
+   }

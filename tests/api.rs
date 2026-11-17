@@ -158,7 +158,14 @@ async fn caller_overrides_reach_the_tcp_and_quic_handshakes() {
 
     let tls = client.prepared().emulation().tls_options.as_ref().unwrap();
     assert_eq!(tls.cipher_list.as_deref(), Some(cipher.as_ref()));
-    assert_eq!(tls.sigalgs_list.as_deref(), Some("ecdsa_secp256r1_sha256"));
+    // The caller asked for ML-DSA + ECDSA. BoringSSL has no name for ML-DSA,
+    // so the whole list becomes raw codepoints in request order and the
+    // ClientHello can carry them.
+    assert_eq!(
+        tls.sigalgs_raw.as_deref(),
+        Some(&[0x0904u16, 0x0905, 0x0906, 0x0403][..])
+    );
+    assert!(tls.sigalgs_list.is_none());
     assert!(tls.alps_protocols.is_none());
     assert!(!tls.alps_use_new_codepoint);
     assert!(!tls.session_ticket);
@@ -201,7 +208,12 @@ async fn caller_overrides_reach_the_tcp_and_quic_handshakes() {
     );
 
     let quic = client.http3_endpoint().unwrap().quic_tls().clone();
-    assert_eq!(quic.sigalgs, "ecdsa_secp256r1_sha256");
+    // `sigalgs` reaches the QUIC handshake too, and ML-DSA survives.
+    assert_eq!(quic.sigalgs, "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256");
+    assert_eq!(
+        quic.sigalgs_codes.as_deref(),
+        Some(&[0x0904u16, 0x0905, 0x0906, 0x0403][..])
+    );
     assert!(!quic.alps);
     assert!(!quic.session_ticket);
     assert_eq!(quic.record_size_limit, Some(0));
@@ -301,6 +313,7 @@ async fn http3_tls_overrides_stay_on_the_quic_path() {
             .as_deref(),
         Some(tcp_curves.as_ref())
     );
+    // A name list becomes raw codepoints, so ML-DSA can ride along.
     assert_eq!(
         client
             .prepared()
@@ -308,9 +321,9 @@ async fn http3_tls_overrides_stay_on_the_quic_path() {
             .tls_options
             .as_ref()
             .unwrap()
-            .sigalgs_list
+            .sigalgs_raw
             .as_deref(),
-        Some("ecdsa_secp256r1_sha256")
+        Some(&[0x0403u16][..])
     );
     assert!(client
         .prepared()
@@ -324,8 +337,13 @@ async fn http3_tls_overrides_stay_on_the_quic_path() {
     let endpoint = client.http3_endpoint().unwrap();
     let quic = endpoint.quic_tls();
     assert_eq!(quic.curves, "X25519");
-    assert_eq!(quic.sigalgs, "rsa_pss_rsae_sha256");
-    assert!(!quic.sigalgs.contains("mldsa"));
+    // The caller asked for mldsa44 first; it now survives into the QUIC
+    // ClientHello instead of being dropped.
+    assert_eq!(quic.sigalgs, "mldsa44:rsa_pss_rsae_sha256");
+    assert_eq!(
+        quic.sigalgs_codes.as_deref(),
+        Some(&[0x0904u16, 0x0804][..])
+    );
     assert_eq!(
         quic.extension_permutation,
         vec![
@@ -958,30 +976,29 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
         chrome150.prepared().http3().unwrap().settings
     );
 
-    // The captured list already omits the three ML-DSA names. Putting them back
-    // around every algorithm that preset still exposes must install that same
-    // list and nothing else.
-    let preset_sigalgs = exposed_tls.sigalgs_list.as_deref().unwrap().to_string();
+    // The vendored BoringSSL carries Chromium's codepoints through, so putting
+    // the three ML-DSA names around the preset list must install exactly that
+    // list - ML-DSA included. A list made only of names is expressed as raw
+    // code points, which is how BoringSSL accepts them.
+    let preset_sigalgs = exposed_tls
+        .sigalgs_list
+        .as_deref()
+        .or_else(|| exposed_tls.sigalgs_raw.as_deref().map(|_| "preset"))
+        .unwrap()
+        .to_string();
     let with_mldsa = format!("mldsa44:{preset_sigalgs}:mldsa65:mldsa87");
     let resigned = Client::builder(Profile::find("chrome150").unwrap())
         .sigalgs(&with_mldsa)
         .build()
         .unwrap();
-    let installed = resigned
-        .prepared()
-        .emulation()
-        .tls_options
-        .as_ref()
-        .unwrap()
-        .sigalgs_list
+    let installed_emulation = resigned.prepared().emulation();
+    let installed_tls = installed_emulation.tls_options.as_ref().unwrap();
+    let codes = installed_tls
+        .sigalgs_raw
         .as_deref()
-        .unwrap();
-    assert_eq!(installed, preset_sigalgs);
-    for name in ["mldsa44", "mldsa65", "mldsa87"] {
-        assert!(
-            !installed.split(':').any(|part| part == name),
-            "{name} was installed"
-        );
+        .expect("ML-DSA forces the raw code point list");
+    for code in [0x0904u16, 0x0905, 0x0906] {
+        assert!(codes.contains(&code), "ML-DSA {code:#x} was not installed");
     }
     assert_eq!(
         resigned.prepared().cipher_list(),
@@ -995,15 +1012,15 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
         .build()
         .unwrap();
     let h3_endpoint = h3_resigned.http3_endpoint().unwrap();
-    assert_eq!(h3_endpoint.quic_tls().sigalgs, h3_sigalgs);
-    for name in ["mldsa44", "mldsa65", "mldsa87"] {
+    // Same rule on QUIC: the ML-DSA codepoints survive.
+    for code in [0x0904u16, 0x0905, 0x0906] {
         assert!(
-            !h3_endpoint
+            h3_endpoint
                 .quic_tls()
-                .sigalgs
-                .split(':')
-                .any(|part| part == name),
-            "{name} was installed on QUIC"
+                .sigalgs_codes
+                .as_deref()
+                .is_some_and(|codes| codes.contains(&code)),
+            "ML-DSA {code:#x} was not installed on QUIC"
         );
     }
     assert!(h3_endpoint.quic_tls().status_request);
@@ -1026,7 +1043,14 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
 
     let supplied_cipher = "TLS_AES_128_GCM_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256";
     let supplied_sigalgs = "mldsa44:ecdsa_secp256r1_sha256:mldsa65:rsa_pss_rsae_sha256:mldsa87";
-    let installed_sigalgs = "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256";
+    // ML-DSA survives now, so the list becomes raw codepoints in request order.
+    let installed_codes: &[u16] = &[
+        0x0904,
+        0x0403,
+        0x0905,
+        0x0804,
+        0x0906,
+    ];
     let profile = ProfileSpec::new("lab-chrome-next")
         .cipher_list(supplied_cipher)
         .sigalgs(supplied_sigalgs)
@@ -1051,16 +1075,11 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
     assert_eq!(tls.cipher_list.as_deref(), Some(supplied_cipher));
     assert_ne!(tls.cipher_list.as_deref(), Some(chrome150_cipher.as_str()));
     assert_ne!(http2.header_table_size, chrome150_table);
-    assert_eq!(tls.sigalgs_list.as_deref(), Some(installed_sigalgs));
-    for name in ["mldsa44", "mldsa65", "mldsa87"] {
-        assert!(
-            !tls.sigalgs_list
-                .as_deref()
-                .unwrap()
-                .split(':')
-                .any(|part| part == name),
-            "{name} was installed"
-        );
+    assert_eq!(tls.sigalgs_raw.as_deref(), Some(installed_codes));
+    assert!(tls.sigalgs_list.is_none());
+    // ML-DSA reaches the extension as its code points, in request order.
+    for code in [0x0904u16, 0x0905, 0x0906] {
+        assert!(installed_codes.contains(&code), "ML-DSA {code:#x} missing");
     }
     assert!(tls.curves_list.is_none());
     assert!(tls.grease_enabled.is_none());
@@ -1123,9 +1142,9 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
             .tls_options
             .as_ref()
             .unwrap()
-            .sigalgs_list
+            .sigalgs_raw
             .as_deref(),
-        Some(installed_sigalgs)
+        Some(installed_codes)
     );
     assert_eq!(
         overridden.prepared().extra_header("x-lab-future"),
