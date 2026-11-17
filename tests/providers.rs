@@ -677,6 +677,9 @@ fn a_provider_record_can_express_a_complete_browser_profile() {
     full.tls.ciphers =
         Some("TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256".to_string());
     full.tls.alpn = Some(vec!["h2".to_string(), "http/1.1".to_string()]);
+    // The QUIC handshake reuses the TLS key shares when the `http3` block does
+    // not name its own.
+    full.tls.key_shares = Some("X25519".to_string());
     full.form_boundary = Some("firefox".to_string());
     full.split_cookies = Some(true);
     full.http3 = Some(fingerprint::Http3Fingerprint {
@@ -708,6 +711,12 @@ fn a_provider_record_can_express_a_complete_browser_profile() {
         .any(|setting| matches!(setting, H3Setting::Grease)));
     assert_eq!(http3.initial_packet_number, Some(1));
     assert_eq!(prepared.http3_pseudo_order(), Some("m,a,s,p"));
+    // The QUIC ClientHello must carry a key share: the `http3` block leaves it
+    // unset, so it comes from the record's TLS key shares. An empty list makes
+    // BoringSSL send no share at all, which is not what any browser does.
+    let quic_tls = prepared.quic_tls().expect("the QUIC TLS inputs");
+    assert!(!quic_tls.key_shares.is_empty(), "QUIC key shares are empty");
+    assert_eq!(quic_tls.curves, "X25519");
     assert_eq!(prepared.form_boundary(), Some(FormBoundary::Firefox));
     assert!(prepared.splits_cookies());
 

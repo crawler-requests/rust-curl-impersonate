@@ -44,7 +44,24 @@ date: 2026-11-17
    override. The Firefox (8) / Safari (64) presets are the ones that need the
    queue resized; see h3-active-connection-id-limit.txt.
 
-5. note on the earlier probe attempts
+5. fix: library HTTP/3 profiles were losing the record's TLS handshake
+   Before this change `Fingerprint::http3_profile()` built every field from
+   the `http3` block alone and defaulted the rest: key_shares was hard-coded
+   to `&[]` (so BoringSSL sent no key share at all), and curves, grease,
+   alps, ech_grease, session_ticket, permute_extensions, extension order,
+   cert compression, delegated credentials and record_size_limit all fell to
+   "unset" instead of the record's TLS values. chrome160's profile was
+   therefore a QUIC ClientHello with no GREASE, no ALPS, no key share.
+   Now every knob falls back to `self.tls` (the same rule curl-impersonate
+   uses for http3_curves / http3_sig_hash_algs / http3_tls_extension_order),
+   and `Http3Fingerprint::key_shares` exists to override it per record.
+   After the fix chrome160's QUIC inputs are byte-identical in shape to the
+   chrome152 preset: curves X25519MLKEM768/X25519/P-256/P-384, 2 key
+   shares, GREASE on, ALPS on, 17 captured extensions.
+   Regression test: tests/fingerprints.rs
+   library_http3_profile_inherits_the_records_tls_handshake.
+
+6. note on the earlier probe attempts
    260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's
    per-source-IP application policy; identical requests succeed seconds later
    and the QUIC/TLS/H3 handshake completes every time.

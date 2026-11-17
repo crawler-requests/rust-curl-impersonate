@@ -1341,3 +1341,43 @@ fn preset_family_and_platform_are_inferred() {
     assert_eq!(chrome.deviation_note(), None);
     assert!(!chrome.http1_only());
 }
+
+#[test]
+fn library_http3_profile_inherits_the_records_tls_handshake() {
+    // A record's `http3` block only names what differs from its TLS handshake.
+    // If the rest fell back to defaults instead, the QUIC ClientHello would
+    // lose GREASE, ALPS, the key shares and the extension order the capture
+    // recorded - a fingerprint that is wrong in every field it stayed silent
+    // about. chrome160's block names only settings, pseudo order and transport
+    // parameters, so everything else has to come from its TLS record.
+    let client = Client::new(Profile::find("chrome160").unwrap()).unwrap();
+    let prepared = client.prepared();
+    let record = Profile::find("chrome160").unwrap().fingerprint().unwrap();
+
+    let http3 = prepared.http3().expect("chrome160 carries HTTP/3");
+    let quic = prepared.quic_tls().expect("chrome160 has QUIC TLS inputs");
+
+    assert_eq!(http3.settings.len(), 5, "settings: {:?}", http3.settings);
+    assert_eq!(http3.pseudo_order, "masp");
+    assert!(http3.transport_parameters.contains("12584:0x4f524947"));
+
+    assert_eq!(quic.curves, record.tls.curves.as_deref().unwrap());
+    assert_eq!(quic.grease, record.tls.grease);
+    assert_eq!(quic.permute_extensions, record.tls.permute_extensions);
+    assert_eq!(quic.session_ticket, record.tls.session_ticket);
+    assert_eq!(quic.ech_grease, record.tls.ech_grease);
+    assert_eq!(quic.alps, record.tls.new_alps_codepoint);
+    assert_eq!(
+        quic.extension_permutation.len(),
+        policy_extension_count(record.tls.extension_order.as_deref().unwrap())
+    );
+    assert!(
+        !quic.key_shares.is_empty(),
+        "the QUIC ClientHello must send a key share"
+    );
+    assert_eq!(quic.key_shares.len(), record.tls.key_shares.as_deref().unwrap().split(':').count());
+}
+
+fn policy_extension_count(order: &str) -> usize {
+    order.split('-').filter(|id| !id.is_empty()).count()
+}

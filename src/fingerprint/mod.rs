@@ -272,6 +272,10 @@ pub struct Http3Fingerprint {
     /// QUIC key-exchange groups, in ClientHello order.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub curves: Option<String>,
+    /// Groups a key share is generated for on the QUIC handshake. Unset falls
+    /// back to the record's TLS key shares.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub key_shares: Option<String>,
     /// HTTP/3 SETTINGS, `1:v;6:v` or `GREASE`.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub settings: Option<String>,
@@ -336,6 +340,7 @@ impl Http3Fingerprint {
     /// Whether any HTTP/3 field is set.
     pub fn wants_http3(&self) -> bool {
         self.curves.is_some()
+            || self.key_shares.is_some()
             || self.settings.is_some()
             || self.initial_packet_number.is_some()
             || self.sigalgs.is_some()
@@ -517,27 +522,47 @@ impl Fingerprint {
             .clone()
             .or_else(|| self.tls.ciphers.clone())
             .ok_or_else(|| "HTTP/3 needs the cipher list the record supplied".to_string())?;
-        let sigalgs = match http3.sigalgs.as_deref() {
+        let sigalgs = match http3.sigalgs.as_deref().or(self.tls.sigalgs.as_deref()) {
             Some(list) => policy::install_sigalgs(list),
             None => String::new(),
         };
+        let curves = http3
+            .curves
+            .as_deref()
+            .or(self.tls.curves.as_deref())
+            .unwrap_or("");
+        // Key shares are what the QUIC ClientHello actually generates a share
+        // for. A record whose `http3` block leaves them unset means "same as the
+        // TLS handshake", the way curl-impersonate falls back for http3_curves
+        // and http3_sig_hash_algs. Leaving them empty makes BoringSSL send no
+        // key share at all, which is not what the captured client does.
+        let key_shares: &'static [KeyShare] =
+            match http3.key_shares.as_deref().or(self.tls.key_shares.as_deref()) {
+                Some(spec) => Box::leak(key_shares(spec)?.into_boxed_slice()),
+                None => &[],
+            };
         let settings: &'static [H3Setting] = match http3.settings.as_deref() {
             Some(spec) => Box::leak(policy::http3_settings(spec)?.into_boxed_slice()),
             None => &[],
         };
-        let extension_permutation: &'static [ExtensionType] = match http3.extension_order.as_deref()
-        {
-            Some(spec) => Box::leak(extension_types(spec)?.into_boxed_slice()),
-            None => &[],
-        };
-        let cert_compression: &'static [&'static str] = match http3.cert_compression.as_deref() {
-            Some(spec) => {
-                let names = policy::cert_compression_names(spec)?;
-                let leaked: Vec<&'static str> = names.iter().map(|name| leak(name)).collect();
-                Box::leak(leaked.into_boxed_slice())
-            }
-            None => &[],
-        };
+        // Extension order and certificate compression follow the same rule:
+        // the HTTP/3 block wins, otherwise the record's TLS handshake decides.
+        // An empty permutation would send the extensions in BoringSSL's order,
+        // which is not the captured order.
+        let extension_permutation: &'static [ExtensionType] =
+            match http3.extension_order.as_deref().or(self.tls.extension_order.as_deref()) {
+                Some(spec) => Box::leak(extension_types(spec)?.into_boxed_slice()),
+                None => &[],
+            };
+        let cert_compression: &'static [&'static str] =
+            match http3.cert_compression.as_deref().or(self.tls.cert_compression.as_deref()) {
+                Some(spec) => {
+                    let names = policy::cert_compression_names(spec)?;
+                    let leaked: Vec<&'static str> = names.iter().map(|name| leak(name)).collect();
+                    Box::leak(leaked.into_boxed_slice())
+                }
+                None => &[],
+            };
         let pseudo_order = match http3.pseudo_order.as_deref() {
             Some(order) => {
                 policy::pseudo_letters(order)?;
@@ -558,20 +583,31 @@ impl Fingerprint {
                     .into_boxed_slice(),
             )
         };
+        // Every knob falls back to the record's TLS handshake. A `http3` block
+        // only has to name what differs, which is how curl-impersonate treats
+        // http3_curves / http3_sig_hash_algs / http3_tls_extension_order.
         Ok(Some(Http3Profile {
-            grease: http3.grease.unwrap_or(false),
-            signed_cert_timestamps: http3.signed_cert_timestamps.unwrap_or(false),
-            session_ticket: http3.session_ticket.unwrap_or(false),
-            curves: leak(http3.curves.as_deref().unwrap_or("")),
+            grease: http3.grease.unwrap_or(self.tls.grease),
+            signed_cert_timestamps: http3
+                .signed_cert_timestamps
+                .unwrap_or(self.tls.signed_cert_timestamps),
+            session_ticket: http3.session_ticket.unwrap_or(self.tls.session_ticket),
+            curves: leak(curves),
             sigalgs: leak(&sigalgs),
             ciphers: leak(&ciphers),
-            permute_extensions: http3.permute_extensions.unwrap_or(false),
-            ech_grease: http3.ech_grease.unwrap_or(false),
-            new_alps: http3.new_alps.unwrap_or(false),
-            delegated_credentials: http3.delegated_credentials.as_deref().map(leak),
-            record_size_limit: http3.record_size_limit,
+            permute_extensions: http3
+                .permute_extensions
+                .unwrap_or(self.tls.permute_extensions),
+            ech_grease: http3.ech_grease.unwrap_or(self.tls.ech_grease),
+            new_alps: http3.new_alps.unwrap_or(self.tls.new_alps_codepoint),
+            delegated_credentials: http3
+                .delegated_credentials
+                .as_deref()
+                .or(self.tls.delegated_credentials.as_deref())
+                .map(leak),
+            record_size_limit: http3.record_size_limit.or(self.tls.record_size_limit),
             extension_permutation,
-            key_shares: &[],
+            key_shares,
             cert_compression,
             settings,
             transport_parameters: match http3.transport_parameters.as_deref() {
