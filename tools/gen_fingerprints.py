@@ -379,7 +379,7 @@ PROFILES = [
         "name": "chrome160",
         "family": "chrome",
         "client": "Chrome for Testing Canary (headless)",
-        "version": "160.0.8158.0",
+        "version": "160.0.8166.0",
         "platform": "linux",
         "permute_extensions": True,
     },
