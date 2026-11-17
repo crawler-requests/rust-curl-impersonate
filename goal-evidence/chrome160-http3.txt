@@ -1,9 +1,9 @@
-Chrome 160 (Canary 160.0.8166.0) HTTP/3 — real NetLog capture and live echo
+Chrome 160 (Canary 160.0.8167.0) HTTP/3 — real NetLog capture and live echo
 date: 2026-11-17
 
 1. source of the HTTP/3 fields
-   binary: Google Chrome for Testing 160.0.8166.0 (linux64), official build
-           https://storage.googleapis.com/chrome-for-testing-public/160.0.8166.0/linux64/chrome-linux64.zip
+   binary: Google Chrome for Testing 160.0.8167.0 (linux64), official build
+           https://storage.googleapis.com/chrome-for-testing-public/160.0.8167.0/linux64/chrome-linux64.zip
    run:    chrome --headless=new --no-sandbox --disable-gpu --enable-quic \
              --log-net-log=netlog.json --net-log-capture-mode=IncludeSensitive \
              --dump-dom https://quic.nginx.org/

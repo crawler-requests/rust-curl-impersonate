@@ -1469,7 +1469,7 @@
       "name": "chrome160",
       "family": "chrome",
       "client": "Chrome for Testing Canary (headless)",
-      "version": "160.0.8166.0",
+      "version": "160.0.8167.0",
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome160.json",
       "fidelity": "close",
@@ -1483,7 +1483,7 @@
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
         "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
-        "extension_order": "17613-11-43-18-51-65037-16-51764-65281-0-35-5-10-23-45-13-27",
+        "extension_order": "5-45-43-35-27-10-0-65037-51-51764-23-13-16-18-65281-11-17613",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
         "permute_extensions": true,
@@ -1524,7 +1524,7 @@
         ],
         [
           "user-agent",
-          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/160.0.8166.0 Safari/537.36"
+          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/160.0.8167.0 Safari/537.36"
         ],
         [
           "accept",
