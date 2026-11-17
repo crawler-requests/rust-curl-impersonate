@@ -1161,21 +1161,22 @@
     {
       "name": "chromium157",
       "family": "chrome",
-      "client": "Chromium (headless)",
-      "version": "157.0.8103.38",
+      "client": "Chromium for Testing Stable (headless)",
+      "version": "157.0.8103.78",
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chromium157.json",
       "fidelity": "close",
       "deviations": [
         "BoringSSL cannot send 3 captured signature algorithms: mldsa44, mldsa65, mldsa87 (8 sent).",
         "BoringSSL does not put a GREASE value in signature_algorithms; it greases the cipher, group, version, key-share and extension lists.",
+        "BoringSSL never sends captured extension 4832 (unknown).",
         "BoringSSL appends a padding extension (21) when the ClientHello is between 256 and 511 bytes; the capture has none."
       ],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
         "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
-        "extension_order": "5-17613-45-10-11-27-16-51-35-43-0-65037-23-51764-13-65281-18",
+        "extension_order": "43-0-13-10-11-51-35-51764-5-45-65037-65281-23-18-17613-16-27",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": true,
         "permute_extensions": true,
@@ -1216,7 +1217,7 @@
         ],
         [
           "user-agent",
-          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Safari/537.36"
+          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.78 Safari/537.36"
         ],
         [
           "accept",

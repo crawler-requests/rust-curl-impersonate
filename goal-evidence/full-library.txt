@@ -45,8 +45,8 @@ rust_reqwest_rustls      close    differs    t13d1011h2_61a7ad8aa9b6_3fcd1a44f3e
     ciphers; ja4
 chromium156              close    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1516h2_8daaf6152771_d8a2da3f94cd
     extensions missing=[51764] extra=[]; sigalgs; ja4
-chromium157              close    differs    t13d1517h2_8daaf6152771_cb7bf5808d99 -> t13d1517h2_8daaf6152771_dcad5a053991
-    extension order; sigalgs; ja4
+chromium157              close    differs    t13d1518h2_8daaf6152771_4980c97edce0 -> t13d1517h2_8daaf6152771_dcad5a053991
+    extensions missing=[4832] extra=[]; sigalgs; ja4
 chrome158                close    differs    t13d1519h2_8daaf6152771_3d1b1b7bef36 -> t13d1517h2_8daaf6152771_dcad5a053991
     extensions missing=[41, 4832] extra=[]; sigalgs; ja4
 chrome159                close    differs    t13d1519h2_8daaf6152771_3d1b1b7bef36 -> t13d1517h2_8daaf6152771_dcad5a053991
