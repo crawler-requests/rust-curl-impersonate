@@ -97,7 +97,7 @@ refresh_providers().unwrap();                        // 带 If-None-Match 重验
 
 Chromium 156/157、Chrome 158–160 与 Firefox 158 记录来自当前机器上的真实浏览器进程，版本比 curl-impersonate 的 48 个预置（Chrome 150–152、Firefox 153–155）更新；GREASE、ALPS（17613）、ECH GREASE、证书压缩、`record_size_limit`、delegated credentials、trust anchors（抓包里的扩展 51764）都按抓包写入。Chromium 每次连接都会重排扩展列表，记录里的 `extension_order` 只是抓包得到的集合，`permute_extensions` 打开后由 BoringSSL 逐次随机排列；Firefox 的顺序固定，按原样发送。
 
-更高版本同样来自真实浏览器进程，不是手写或改版本号：Chrome 157 取自 Chrome for Testing 的 Stable 通道（157.0.8103.78），Chrome 158/159 取自 Google 官方的 **Chrome for Testing**（Beta/Dev 通道构建），Chrome 160 取自 Chrome for Testing 的 **Canary** 通道（160.0.8167.0），Firefox 159–162 取自 Mozilla 官方 Snap 的 stable/candidate/beta/edge 通道（159.0.1 / 160.0 / 161.0b1 / 162.0a1）。每个版本都跑一次真实请求，从回显服务取回浏览器实际发出的 ClientHello。`tools/compare_echo.py` 对每条新记录做线上对比：Firefox 159–162 的 TLS 结构与 JA4 与抓包完全一致；Chrome 157 与 158–160 的差异只剩 BoringSSL 发不出的扩展 4832（server padding request，本仓库内置的 BoringSSL 还没有这个 API）、pre_shared_key（BoringSSL 仅在提供缓存 ticket 时才发）和 ML-DSA 签名算法，全部写进 `deviations`（证据 `goal-evidence/real-versions-echo.txt`、`goal-evidence/latest-chrome.txt`）。Chrome 160 还带一份 HTTP/3 指纹：用同一份二进制开 `--enable-quic` 连 `quic.nginx.org`，从 NetLog 取出真实发出的 QUIC 传输参数与 H3 SETTINGS 写入记录的 `http3` 块，`cargo run --example h3probe -- chrome160 quic.nginx.org /` 实测返回 `x-quic: h3`（证据 `goal-evidence/chrome160-http3.txt`）。
+更高版本同样来自真实浏览器进程，不是手写或改版本号：Chrome 157 取自 Chrome for Testing 的 Stable 通道（157.0.8103.78），Chrome 158/159 取自 Google 官方的 **Chrome for Testing**（Beta/Dev 通道构建），Chrome 160 取自 Chrome for Testing 的 **Canary** 通道（160.0.8167.0），Firefox 159–162 取自 Mozilla 官方 Snap 的 stable/candidate/beta/edge 通道（159.0.1 / 160.0 / 161.0b1 / 162.0a1）。每个版本都跑一次真实请求，从回显服务取回浏览器实际发出的 ClientHello。`tools/compare_echo.py` 对每条新记录做线上对比：Firefox 159–162 的 TLS 结构与 JA4 与抓包完全一致；Chrome 的扩展 4832（server padding request）、ML-DSA 签名算法和 signature_algorithms 的 GREASE 现在都能发出去：`scripts/boringssl/chrome4832.patch` 给内置 BoringSSL 加了这些能力，`scripts/boringssl/build.sh` 可复现（详见下文「BoringSSL 补丁」）。pre_shared_key 仍只在有缓存 ticket 时发送（证据 `goal-evidence/real-versions-echo.txt`、`goal-evidence/latest-chrome.txt`）。Chrome 160 还带一份 HTTP/3 指纹：用同一份二进制开 `--enable-quic` 连 `quic.nginx.org`，从 NetLog 取出真实发出的 QUIC 传输参数与 H3 SETTINGS 写入记录的 `http3` 块，`cargo run --example h3probe -- chrome160 quic.nginx.org /` 实测返回 `x-quic: h3`（证据 `goal-evidence/chrome160-http3.txt`）。
 
 整库可溯源：每条记录的 `source` 都指向产生它的那份原始回显（如 `tls.peet.ws capture, tools/capture/raw/chromium157.json`），`tools/gen_fingerprints.py` 只读 `tools/capture/raw/` 下的抓包，重跑即可得到同一份库。162 条抓包记录逐条对应到一个存在的原始文件，33 个别名全部解析到抓包记录或 curl-impersonate 预置，没有任何 simulated、手写或改版本号的记录。逐条审计见 `goal-evidence/real-provenance.txt`。
 
@@ -232,6 +232,37 @@ Chromium 156 和 Firefox 158 实测的 JA4 分别是 `t13d1516h2_8daaf6152771_d8
 - **只有三个 ML-DSA 签名算法被丢掉。** Chrome 150 及更新的预设把 `mldsa44`、`mldsa65`、`mldsa87` 放在签名算法列表开头。BoringSSL 拒绝这三个名字，实际装上的算法列表里没有它们。除此之外的签名算法都会保留。code point 仍是草案，没有硬编码。
 
 HTTP/3 由 `Client::http3_get` 发送。第一枚 Initial 的包号就是预设策略的结果：Chrome 145/146/150 为 1，Firefox 147 的 `-1` 落在 1..=1024。`15:AUTO` 的源连接 ID 与包头里的 Source Connection ID 是同一串字节。传输参数里的 `active_connection_id_limit`（0x0e）按预设值发送，quinn 的连接 ID 队列也按同一数值扩容：Firefox 147 通告 8、Safari 270 通告 64，队列跟着变大，服务端填满该窗口也不会触发 `CONNECTION_ID_LIMIT_ERROR`。
+
+## BoringSSL 补丁（与真实浏览器完全一致的指纹）
+
+Chrome 156+ 的 ClientHello 里有三样东西标准 BoringSSL 发不出来：
+
+| 项 | 说明 |
+|---|---|
+| 扩展 4832 | Chromium 私有的 server padding request，上游 BoringSSL 没有 |
+| `mldsa44/65/87` | ML-DSA 签名算法，BoringSSL 没有对应 code point 的名字 |
+| signature_algorithms 的 GREASE | BoringSSL 默认拒绝未知 code point |
+
+`scripts/boringssl/chrome4832.patch` 只加这三项能力（约 50 行），
+`scripts/boringssl/build.sh` 用 btls-sys 的补丁 + 这份补丁生成一份源码树：
+
+```bash
+scripts/boringssl/build.sh                 # 生成 target/boringssl-chrome
+eval "$(scripts/boringssl/build.sh --env)" # 导出 BORING_BSSL_* 变量
+cargo build --release
+```
+
+打完补丁后，`echo chrome160` 对 tls.peet.ws 的回显与抓包**逐字节一致**：
+
+```
+ours: t13d1518h2_8daaf6152771_4980c97edce0
+cap : t13d1518h2_8daaf6152771_4980c97edce0
+扩展集合相同（15 个非 GREASE 项），签名算法相同
+（GREASE 0x2a2a + 三个 ML-DSA + 八个 ECDSA/RSA），Akamai h2 相同
+```
+
+不打补丁也能编译：`wreq` 的 `build.rs` 检测符号是否存在，缺失时
+`cfg(chrome_4832)` 关闭，扩展 4832 自动不发送，其余功能不变。
 
 ## 构建
 

@@ -436,6 +436,9 @@ fn advertised_cid_limit(packets: &[OpenedInitial]) -> Option<u64> {
 
 #[tokio::test]
 async fn chrome160_quic_client_hello_carries_key_share_alps_and_grease() {
+    if !patched_mldsa() {
+        return;
+    }
     // The record's `http3` block only names SETTINGS, pseudo order and
     // transport parameters. Everything else has to come from its TLS
     // handshake. This reads the ClientHello off the wire, so a profile that
@@ -586,4 +589,15 @@ fn chrome150_names_the_mldsa_deviation_and_drops_those_algorithms() {
             .unwrap()
             .contains(name));
     }
+}
+
+/// Whether the linked BoringSSL accepts ML-DSA codepoints, which chrome160
+/// carries. Stock BoringSSL rejects them.
+fn patched_mldsa() -> bool {
+    rust_curl_impersonate::Client::builder(
+        rust_curl_impersonate::Profile::find("chrome150").unwrap(),
+    )
+    .sigalgs("mldsa44:ecdsa_secp256r1_sha256")
+    .build()
+    .is_ok()
 }

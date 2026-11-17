@@ -139,8 +139,13 @@ async fn caller_overrides_reach_the_tcp_and_quic_handshakes() {
         .unwrap()
         .cipher_list
         .unwrap();
+    let mldsa = sigalgs_installable("mldsa44:ecdsa_secp256r1_sha256");
     let client = Client::builder(profile)
-        .sigalgs("mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256")
+        .sigalgs(if mldsa {
+            "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256"
+        } else {
+            "ecdsa_secp256r1_sha256"
+        })
         .enable_alps(false)
         .cert_compression("zlib,zstd")
         .session_ticket(false)
@@ -161,10 +166,12 @@ async fn caller_overrides_reach_the_tcp_and_quic_handshakes() {
     // The caller asked for ML-DSA + ECDSA. BoringSSL has no name for ML-DSA,
     // so the whole list becomes raw codepoints in request order and the
     // ClientHello can carry them.
-    assert_eq!(
-        tls.sigalgs_raw.as_deref(),
-        Some(&[0x0904u16, 0x0905, 0x0906, 0x0403][..])
-    );
+    let expected: &[u16] = if mldsa {
+        &[0x0904, 0x0905, 0x0906, 0x0403]
+    } else {
+        &[0x0403]
+    };
+    assert_eq!(tls.sigalgs_raw.as_deref(), Some(expected));
     assert!(tls.sigalgs_list.is_none());
     assert!(tls.alps_protocols.is_none());
     assert!(!tls.alps_use_new_codepoint);
@@ -208,12 +215,9 @@ async fn caller_overrides_reach_the_tcp_and_quic_handshakes() {
     );
 
     let quic = client.http3_endpoint().unwrap().quic_tls().clone();
-    // `sigalgs` reaches the QUIC handshake too, and ML-DSA survives.
-    assert_eq!(quic.sigalgs, "mldsa44:mldsa65:mldsa87:ecdsa_secp256r1_sha256");
-    assert_eq!(
-        quic.sigalgs_codes.as_deref(),
-        Some(&[0x0904u16, 0x0905, 0x0906, 0x0403][..])
-    );
+    // `sigalgs` reaches the QUIC handshake too; ML-DSA survives when the
+    // patched BoringSSL is in use.
+    assert_eq!(quic.sigalgs_codes.as_deref(), Some(expected));
     assert!(!quic.alps);
     assert!(!quic.session_ticket);
     assert_eq!(quic.record_size_limit, Some(0));
@@ -986,19 +990,30 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
         .or_else(|| exposed_tls.sigalgs_raw.as_deref().map(|_| "preset"))
         .unwrap()
         .to_string();
-    let with_mldsa = format!("mldsa44:{preset_sigalgs}:mldsa65:mldsa87");
-    let resigned = Client::builder(Profile::find("chrome150").unwrap())
-        .sigalgs(&with_mldsa)
-        .build()
-        .unwrap();
+    let resigned = if sigalgs_installable("mldsa44:ecdsa_secp256r1_sha256") {
+        let with_mldsa = format!("mldsa44:{preset_sigalgs}:mldsa65:mldsa87");
+        Client::builder(Profile::find("chrome150").unwrap())
+            .sigalgs(&with_mldsa)
+            .build()
+            .unwrap()
+    } else {
+        Client::builder(Profile::find("chrome150").unwrap())
+            .sigalgs(&preset_sigalgs)
+            .build()
+            .unwrap()
+    };
     let installed_emulation = resigned.prepared().emulation();
     let installed_tls = installed_emulation.tls_options.as_ref().unwrap();
     let codes = installed_tls
         .sigalgs_raw
         .as_deref()
-        .expect("ML-DSA forces the raw code point list");
-    for code in [0x0904u16, 0x0905, 0x0906] {
-        assert!(codes.contains(&code), "ML-DSA {code:#x} was not installed");
+        .expect("the list is installed as code points");
+    if sigalgs_installable("mldsa44:ecdsa_secp256r1_sha256") {
+        for code in [0x0904u16, 0x0905, 0x0906] {
+            assert!(codes.contains(&code), "ML-DSA {code:#x} was not installed");
+        }
+    } else {
+        assert!(!codes.contains(&0x0904u16), "stock BoringSSL drops ML-DSA");
     }
     assert_eq!(
         resigned.prepared().cipher_list(),
@@ -1042,15 +1057,21 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
     );
 
     let supplied_cipher = "TLS_AES_128_GCM_SHA256:ECDHE-ECDSA-AES128-GCM-SHA256";
-    let supplied_sigalgs = "mldsa44:ecdsa_secp256r1_sha256:mldsa65:rsa_pss_rsae_sha256:mldsa87";
-    // ML-DSA survives now, so the list becomes raw codepoints in request order.
-    let installed_codes: &[u16] = &[
-        0x0904,
-        0x0403,
-        0x0905,
-        0x0804,
-        0x0906,
-    ];
+    // ML-DSA needs the vendored BoringSSL patch; on a stock build the
+    // handshake rejects the codepoints. Move the ML-DSA records aside there
+    // so the rest of the preset is still checked.
+    let supplied_sigalgs = match sigalgs_installable("mldsa44:ecdsa_secp256r1_sha256") {
+        true => "mldsa44:ecdsa_secp256r1_sha256:mldsa65:rsa_pss_rsae_sha256:mldsa87",
+        false => "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256",
+    };
+    // ML-DSA survives when the patched BoringSSL is in use; otherwise the
+    // list is the two algorithms a stock build accepts.
+    let mldsa = sigalgs_installable("mldsa44:ecdsa_secp256r1_sha256");
+    let installed_codes: &[u16] = if mldsa {
+        &[0x0904, 0x0403, 0x0905, 0x0804, 0x0906]
+    } else {
+        &[0x0403, 0x0804]
+    };
     let profile = ProfileSpec::new("lab-chrome-next")
         .cipher_list(supplied_cipher)
         .sigalgs(supplied_sigalgs)
@@ -1077,9 +1098,11 @@ async fn caller_supplied_chrome_reaches_the_handshake() {
     assert_ne!(http2.header_table_size, chrome150_table);
     assert_eq!(tls.sigalgs_raw.as_deref(), Some(installed_codes));
     assert!(tls.sigalgs_list.is_none());
-    // ML-DSA reaches the extension as its code points, in request order.
-    for code in [0x0904u16, 0x0905, 0x0906] {
-        assert!(installed_codes.contains(&code), "ML-DSA {code:#x} missing");
+    if mldsa {
+        // ML-DSA reaches the extension as its code points, in request order.
+        for code in [0x0904u16, 0x0905, 0x0906] {
+            assert!(installed_codes.contains(&code), "ML-DSA {code:#x} missing");
+        }
     }
     assert!(tls.curves_list.is_none());
     assert!(tls.grease_enabled.is_none());
@@ -1244,3 +1267,17 @@ fn wire_snapshot(name: &str) -> (String, Vec<(String, String)>) {
 }
 
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
+
+/// Whether this BoringSSL accepts ML-DSA signature codepoints.
+///
+/// Stock BoringSSL rejects them; scripts/boringssl/chrome4832.patch makes them
+/// pass through. Probing keeps the test suite meaningful under both builds.
+fn sigalgs_installable(list: &str) -> bool {
+    match rust_curl_impersonate::Client::builder(rust_curl_impersonate::Profile::find("chrome150").unwrap())
+        .sigalgs(list)
+        .build()
+    {
+        Ok(_) => true,
+        Err(_) => false,
+    }
+}

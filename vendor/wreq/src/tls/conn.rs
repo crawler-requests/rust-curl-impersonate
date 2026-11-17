@@ -479,9 +479,13 @@ impl TlsConnectorBuilder {
             }
         }
 
-        // Chromium's server padding request (extension 4832). Needs a
-        // BoringSSL carrying SSL_CTX_set_server_padding_request.
+        // Chromium's server padding request (extension 4832). Stock
+        // BoringSSL has no such symbol; the vendored build adds it through
+        // scripts/boringssl/chrome4832.patch. Without it the extension simply
+        // stays off, so a default build keeps working.
+        #[allow(unexpected_cfgs)]
         if let Some(value) = opts.server_padding_request {
+            #[cfg(chrome_4832)]
             #[allow(unsafe_code)]
             unsafe {
                 btls_sys::SSL_CTX_set_server_padding_request(
@@ -489,6 +493,8 @@ impl TlsConnectorBuilder {
                     value as std::os::raw::c_int,
                 )
             };
+            #[cfg(not(chrome_4832))]
+            let _ = value;
         }
 
         // Set TLS keylog handler.

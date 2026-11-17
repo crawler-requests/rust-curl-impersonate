@@ -1349,6 +1349,10 @@ fn preset_family_and_platform_are_inferred() {
 
 #[test]
 fn library_http3_profile_inherits_the_records_tls_handshake() {
+    // chrome160 carries ML-DSA, which only the patched BoringSSL accepts.
+    if !mldsa_available() {
+        return;
+    }
     // A record's `http3` block only names what differs from its TLS handshake.
     // If the rest fell back to defaults instead, the QUIC ClientHello would
     // lose GREASE, ALPS, the key shares and the extension order the capture
@@ -1397,6 +1401,10 @@ fn policy_extension_count(order: &str) -> usize {
 
 #[test]
 fn library_records_send_their_headers_on_http3() {
+    // chrome160 carries ML-DSA, which only the patched BoringSSL accepts.
+    if !mldsa_available() {
+        return;
+    }
     // A record's `http3` block usually has no headers of its own. Building the
     // HTTP/3 request from an empty profile list used to drop every header, so
     // the request went out with no user-agent at all.
@@ -1415,6 +1423,9 @@ fn library_records_send_their_headers_on_http3() {
 
 #[tokio::test]
 async fn the_http3_request_uses_the_records_header_order() {
+    if !mldsa_available() {
+        return;
+    }
     // `assemble_headers` is exactly what the send path writes, so this checks
     // the wire order the server would see rather than an intermediate list.
     let client = Client::new(Profile::find("chrome160").unwrap()).unwrap();
@@ -1439,4 +1450,17 @@ async fn the_http3_request_uses_the_records_header_order() {
     assert_eq!(regular.get(2).copied(), Some("sec-ch-ua"));
     assert!(regular.contains(&"accept-language"), "{regular:?}");
     assert!(regular.contains(&"priority"), "{regular:?}");
+}
+
+/// Whether the linked BoringSSL accepts ML-DSA codepoints.
+///
+/// Stock BoringSSL rejects them; scripts/boringssl/chrome4832.patch lets them
+/// through. Records that carry ML-DSA can only be built on the patched one.
+fn mldsa_available() -> bool {
+    rust_curl_impersonate::Client::builder(
+        rust_curl_impersonate::Profile::find("chrome150").unwrap(),
+    )
+    .sigalgs("mldsa44:ecdsa_secp256r1_sha256")
+    .build()
+    .is_ok()
 }
