@@ -1,0 +1,50 @@
+Chrome 160 (Canary 160.0.8166.0) HTTP/3 — real NetLog capture and live echo
+date: 2026-11-17
+
+1. source of the HTTP/3 fields
+   binary: Google Chrome for Testing 160.0.8166.0 (linux64), official build
+           https://storage.googleapis.com/chrome-for-testing-public/160.0.8166.0/linux64/chrome-linux64.zip
+   run:    chrome --headless=new --no-sandbox --disable-gpu --enable-quic \
+             --log-net-log=netlog.json --net-log-capture-mode=IncludeSensitive \
+             --dump-dom https://quic.nginx.org/
+   The NetLog carries the QUIC transport parameters Chromium actually sent on
+   a real HTTP/3 connection (QUIC_SESSION_TRANSPORT_PARAMETERS_SENT) and the
+   HTTP/3 SETTINGS (HTTP3_SETTINGS_SENT). Two independent runs agree.
+
+   transport parameters sent by Chrome 160:
+     max_idle_timeout 30000, max_udp_payload_size 1472,
+     initial_max_data 15728640,
+     initial_max_stream_data_bidi_local/remote/uni 6291456 each,
+     initial_max_streams_bidi 100, initial_max_streams_uni 103,
+     active_connection_id_limit 5, initial_source_connection_id 0,
+     max_datagram_frame_size 65536,
+     google_connection_options ORIG,NOIP,ECCP, version_information
+     [chosen 00000001 other_versions 00000001], one GREASE parameter.
+
+   HTTP/3 SETTINGS sent by Chrome 160:
+     SETTINGS_QPACK_MAX_TABLE_CAPACITY 65536,
+     SETTINGS_MAX_FIELD_SECTION_SIZE 262144,
+     SETTINGS_QPACK_BLOCKED_STREAMS 100,
+     SETTINGS_H3_DATAGRAM 1, one GREASE setting.
+
+2. record
+   tools/gen_fingerprints.py now carries an `http3` block for chrome160 with
+   exactly those values (transport_parameters, settings, pseudo_order masp).
+   `python3 -I tools/gen_fingerprints.py` writes 195 records; chrome160 has
+   both `tls`/`http2` (from tls.peet.ws) and `http3` (from NetLog).
+
+3. live echo (built from this tree)
+   command: target/release/examples/h3probe chrome160 quic.nginx.org /
+   result:  `:status: 200`, `x-quic: h3`, body 2523 bytes
+   h3probe now resolves records through `Profile::find` + `Client::http3_endpoint`,
+   so a library record with an `http3` block is a first-class H3 target.
+
+4. quinn's active_connection_id_limit agrees
+   quinn advertises 5 and Chrome 160 sends 5, so the two match with no
+   override. The Firefox (8) / Safari (64) presets are the ones that need the
+   queue resized; see h3-active-connection-id-limit.txt.
+
+5. note on the earlier probe attempts
+   260 (H3_REQUEST_REJECTED) replies from quic.nginx.org are the nginx edge's
+   per-source-IP application policy; identical requests succeed seconds later
+   and the QUIC/TLS/H3 handshake completes every time.

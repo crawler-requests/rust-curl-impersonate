@@ -382,6 +382,19 @@ PROFILES = [
         "version": "160.0.8166.0",
         "platform": "linux",
         "permute_extensions": True,
+        # QUIC fields from the same binary's NetLog (--log-net-log
+        # --net-log-capture-mode=IncludeSensitive) over a real H3 connection to
+        # quic.nginx.org. Transport parameters and SETTINGS are what Chromium
+        # logged as sent; the record's h2 pseudo order and settings carry over.
+        "http3": {
+            "settings": "1:65536;6:262144;7:100;51:1;GREASE",
+            "pseudo_order": "masp",
+            "transport_parameters": (
+                "12584:0x4f524947;15:AUTO;GREASE;4:15728640;32:65536;"
+                "5:6291456;9:103;1:30000;6:6291456;7:6291456;"
+                "17:1@1,GREASE;3:1472;8:100"
+            ),
+        },
     },
     {
         "file": "firefox158.json",
@@ -2023,6 +2036,8 @@ def build_record(spec):
     }
     if http2 is not None:
         record["http2"] = http2
+    if spec.get("http3"):
+        record["http3"] = dict(spec["http3"])
     return record
 
 

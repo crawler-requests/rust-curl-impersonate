@@ -16,7 +16,7 @@
 | 缺失 | — | 无（参考项目的 47 个全部存在） |
 | 额外 | — | `okhttp4_android` |
 | HTTP/3 专用指纹 | 10 个：chrome145/146/150/151/151_macos/152/152_macos、firefox147、safari270/270_ios | 同名 10 个函数 `http3_profile_*`，完全对应 |
-| 指纹数据来源 | 浏览器实测签名库 | 48 个预置 + 162 条独立真实抓包（含 Chromium 157、Chrome 158/159/160、Firefox 159–162 等参考项目尚未收录的版本） |
+| 指纹数据来源 | 浏览器实测签名库 | 48 个预置 + 162 条独立真实抓包（含 Chromium 157、Chrome 158/159/160、Firefox 159–162 等参考项目尚未收录的版本）；Chrome 160 另有 NetLog 实测的 HTTP/3 传输参数与 SETTINGS |
 
 ## 2. 指纹字段
 

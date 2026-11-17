@@ -103,9 +103,12 @@ date: 2026-11-13
        SETTINGS 1:65536, 6:262144, 7:100, 51:1, GREASE.
      The chrome152 H3 preset in src/profile/generated.rs carries exactly these
      values, so Chrome 152–160 do not differ on the QUIC transport layer.
-   - the fresh chrome160 record is a TLS+HTTP/2 capture (tls.peet.ws did not
-     complete an H3 handshake from this network), so `http3("chrome160")` is
-     not defined; H3 for Chrome is available through the chrome152 preset.
+   - 2026-11-17: the chrome160 record now carries its own `http3` block taken
+     from the same binary's NetLog over a real H3 connection (transport
+     parameters and SETTINGS listed above), so `h3probe chrome160
+     quic.nginx.org /` returns `:status: 200` and `x-quic: h3`. Details in
+     goal-evidence/chrome160-http3.txt. (The tls.peet.ws capture is still
+     TLS+HTTP/2 only, which is why the QUIC fields come from NetLog instead.)
    - during this session quic.nginx.org began rejecting requests from this
      network with H3_REQUEST_REJECTED (260), including presets that succeeded
      minutes earlier (external/rate-limit behaviour, no QUIC code changed).
