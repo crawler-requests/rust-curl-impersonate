@@ -2259,6 +2259,7 @@ def build_record(spec):
     # which the capture may not have, so an explicit value is needed either
     # way. A Chrome ClientHello is never that long, so `None` is only right
     # for captures whose length is stable.
+    # Padding is tristate: absent (no opinion), 0 (empty extension), N.
     pad_entry = exts.get(21) or {}
     padding_len = pad_entry.get("padding_data_length")
 
@@ -2293,14 +2294,14 @@ def build_record(spec):
         tls_record["trust_anchors"] = trust_anchors
     if channel_id:
         tls_record["channel_id"] = True
-    if padding_len is not None:
-        tls_record["padding_len"] = padding_len
-    elif spec["family"] in ("chrome", "chromium"):
-        # Chrome never sends padding; pin it off so the automatic 256-511
-        # padding cannot appear.
-        tls_record["padding_len"] = 0
+    if 21 in exts:
+        # The capture carries the extension; keep its exact length (zero is a
+        # legal, distinct case: an empty padding extension).
+        tls_record["padding"] = {"send": {"len": padding_len or 0}}
     else:
-        tls_record["padding_len"] = 0
+        # No padding in the capture: suppress BoringSSL's automatic 256-511
+        # byte padding so the live ClientHello cannot grow one.
+        tls_record["padding"] = "omit"
     if resumed:
         tls_record["pre_shared_key"] = True
     # Chrome 156+ sends sigalg codepoints BoringSSL has no name for (ML-DSA, a

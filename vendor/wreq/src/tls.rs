@@ -315,7 +315,9 @@ pub struct TlsOptions {
     /// as Chrome 58-70 did.
     pub channel_id_offer: bool,
 
-    /// Send the padding extension (21) with exactly this payload length.
+    /// Padding control. `None` leaves BoringSSL's rule alone;
+    /// `Some(usize::MAX - 1)` suppresses the extension;
+    /// `Some(n)` emits it with an `n`-byte payload (zero is legal).
     pub force_padding_len: Option<usize>,
 
     /// `SSL_set_enforce_rsa_key_usage`. `Some(false)` is key-usage-no-check.
@@ -590,10 +592,14 @@ impl TlsOptionsBuilder {
         self
     }
 
-    /// Sends the padding extension with exactly `len` payload bytes.
+    /// Sends the padding extension with exactly `len` payload bytes, or
+    /// suppresses it when `len` is `None`.
+    ///
+    /// An empty padding extension (`Some(0)`) is different from no extension
+    /// at all, which matters for captures that carry one.
     #[inline]
-    pub fn force_padding_len(mut self, len: usize) -> Self {
-        self.config.force_padding_len = Some(len);
+    pub fn force_padding_len(mut self, len: Option<usize>) -> Self {
+        self.config.force_padding_len = Some(len.unwrap_or(usize::MAX - 1));
         self
     }
 

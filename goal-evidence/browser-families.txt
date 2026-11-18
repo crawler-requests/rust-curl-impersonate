@@ -1,0 +1,62 @@
+Browser families beyond Chrome — measured coverage, 2026-11-18
+
+question
+  "Chrome is fully supported now. What about Firefox, Edge, the other
+  mainstream browsers? Same idea, case by case?"
+
+answer
+  Yes for Chrome (ClientHello side, see below). For the others the answer
+  is mostly yes, with a short list of genuinely legacy gaps.
+
+how the families differ
+  Chrome is the only family where the browser ships its own BoringSSL, so
+  a Chromium-only extension is a BoringSSL change we can patch in. Firefox
+  uses NSS, Safari/Edge use their own stacks, and their signatures come
+  from tls-client / uTLS definitions plus real captures. Their extensions
+  are mostly IANA-registered and therefore already in BoringSSL.
+
+live census (one handshake per record, JA4 vs the record's own capture)
+  firefox   27 records   27 identical
+  edge       2           2  identical
+  safari    15          15  identical
+  opera      3           3  identical
+  brave      1           1  identical
+  android    6           6  identical  (android_confirmed2 fixed this pass)
+  ios        8           6  identical  (2 need NPN, see below)
+  okhttp     8           8  identical
+  360        2           1  identical  (7.5 needs RC4/DSA/NPN)
+  qq         1           1  identical
+  cloudflare 1           0  identical  (needs RC4-era TLS 1.2 pieces)
+  ------------------------------------------------
+  70 of 74 identical.
+
+what the 4 remaining are
+  All four are genuinely legacy, not a missing switch:
+
+  tlsclient_cloudflare  TLS_EMPTY_RENEGOTIATION_INFO cipher, RSA-PSS-PSS
+                        signatures, encrypt_then_mac (22)
+  utls_ios11/12         NPN (13172) - deprecated, removed from BoringSSL
+  utls_360_7_5          RC4 suites, DSA signatures, NPN, ChannelID 30031,
+                        and no extended_master_secret (BoringSSL always sends it)
+
+  RC4, DSA and NPN were removed from BoringSSL on security grounds. Adding
+  them back would mean carrying broken crypto, which is a different kind
+  of decision from adding an empty-extension writer.
+
+Chrome, precisely
+  72 records, 113-160 continuous. Extension registry says every one of the
+  22 extension ids Chrome sends is reproduced.
+  15 records still carry a note, all of them utls_ captures recorded over
+  HTTP/1.1: their ALPN list is the harness's, not the browser's. That is a
+  capture-methodology note, not a capability gap.
+
+new in this pass
+  padding (21) is tristate now: send with an exact length (zero included),
+  or suppress. That fixed android_confirmed2, whose capture carries an
+  empty padding extension - previously conflated with "no padding".
+
+so the model for other families is the same in spirit but the work is
+smaller: check each family's records against a live handshake, and only
+reach for a transport patch when a captured extension has no writer. For
+Firefox/Edge/Safari nothing needed patching; for Chrome three extensions
+did.

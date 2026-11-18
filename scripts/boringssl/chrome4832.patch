@@ -23,7 +23,7 @@ index dd81949..e8bd20d 100644
  // permute extensions. For now, this is only implemented for the ClientHello.
  OPENSSL_EXPORT void SSL_CTX_set_permute_extensions(SSL_CTX *ctx, int enabled);
 diff --git a/ssl/extensions.cc b/ssl/extensions.cc
-index 1240cc6..81dfc96 100644
+index 1240cc6..a5a7650 100644
 --- a/ssl/extensions.cc
 +++ b/ssl/extensions.cc
 @@ -1558,6 +1558,13 @@ static bool ext_channel_id_add_clienthello(const SSL_HANDSHAKE *hs, CBB *out,
@@ -81,25 +81,54 @@ index 1240cc6..81dfc96 100644
  };
  
  #define kNumExtensions (sizeof(kExtensions) / sizeof(struct tls_extension))
-@@ -4114,7 +4148,17 @@ bool ssl_add_clienthello_tlsext(SSL_HANDSHAKE *hs, CBB *out, CBB *out_encoded,
+@@ -4104,7 +4138,10 @@ bool ssl_add_clienthello_tlsext(SSL_HANDSHAKE *hs, CBB *out, CBB *out_encoded,
+     // The final extension must be non-empty. WebSphere Application
+     // Server 7.0 is intolerant to the last extension being zero-length. See
+     // https://crbug.com/363583.
+-    if (last_was_empty && psk_extension_len == 0) {
++    if (last_was_empty && psk_extension_len == 0 &&
++        hs->config->force_padding_len == SIZE_MAX) {
++      // Only when BoringSSL decides padding itself; a preset that states its
++      // own padding must get exactly that.
+       padding_len = 1;
+       // The addition of the padding extension may push us into the F5 bug.
+       header_len += 4 + padding_len;
+@@ -4114,7 +4151,21 @@ bool ssl_add_clienthello_tlsext(SSL_HANDSHAKE *hs, CBB *out, CBB *out_encoded,
      //
      // NB: because this code works out the length of all existing extensions
      // it MUST always appear last (save for any PSK extension).
 -    if (header_len > 0xff && header_len < 0x200) {
-+    if (hs->config->force_padding_len != SIZE_MAX) {
-+      // The capture states exactly what padding it had, so use it and skip
-+      // both the automatic empty-extension fix above and the F5 size rule
-+      // below. Zero means "no padding extension at all".
-+      padding_len = 0;
-+      if (hs->config->force_padding_len > 0) {
-+        // |force_padding_len| is the payload length; add the extension header.
++    bool emit_padding = false;
++    if (hs->config->force_padding_len != SIZE_MAX - 1) {
++      // Legacy emulation. |force_padding_len| holds the captured payload
++      // length; SIZE_MAX - 1 means the capture had no padding extension at
++      // all. Zero is a legal length (an empty padding extension).
++      if (hs->config->force_padding_len == SIZE_MAX) {
++        // Not overridden: fall through to BoringSSL's own rule below.
++        ;
++      } else {
 +        padding_len = hs->config->force_padding_len;
++        emit_padding = true;
 +      }
-+      header_len = 0;  // the size rule is not used on this path
-+    } else if (header_len > 0xff && header_len < 0x200) {
++    }
++    if (!emit_padding && hs->config->force_padding_len == SIZE_MAX &&
++        header_len > 0xff && header_len < 0x200) {
        // If our calculations already included a padding extension, remove that
        // factor because we're about to change its length.
        if (padding_len != 0) {
+@@ -4132,7 +4183,11 @@ bool ssl_add_clienthello_tlsext(SSL_HANDSHAKE *hs, CBB *out, CBB *out_encoded,
+       }
+     }
+ 
+-    if (padding_len != 0 &&
++    // Emit when the preset asked for it (|emit_padding|, where zero is a
++    // legal payload length), or when BoringSSL's own rule above produced a
++    // length.
++    if ((emit_padding || (hs->config->force_padding_len == SIZE_MAX &&
++                          padding_len != 0)) &&
+         !add_padding_extension(&extensions, TLSEXT_TYPE_padding, padding_len)) {
+       return false;
+     }
 diff --git a/ssl/internal.h b/ssl/internal.h
 index c80e565..b207283 100644
 --- a/ssl/internal.h

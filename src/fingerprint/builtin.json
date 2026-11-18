@@ -30,7 +30,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2052,
           1027,
@@ -99,7 +99,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 370,
+        "padding": {
+          "send": {
+            "len": 370
+          }
+        },
         "alpn": [
           "http/1.1"
         ],
@@ -153,7 +157,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 362,
+        "padding": {
+          "send": {
+            "len": 362
+          }
+        },
         "alpn": [
           "http/1.1"
         ],
@@ -203,7 +211,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 370,
+        "padding": {
+          "send": {
+            "len": 370
+          }
+        },
         "alpn": [
           "http/1.1"
         ],
@@ -257,7 +269,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 364,
+        "padding": {
+          "send": {
+            "len": 364
+          }
+        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -314,7 +330,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 370,
+        "padding": {
+          "send": {
+            "len": 370
+          }
+        },
         "alpn": [
           "http/1.1"
         ],
@@ -364,7 +384,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "h2",
           "http/1.1"
@@ -417,7 +437,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -465,7 +485,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -506,7 +526,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "h2"
         ],
@@ -551,7 +571,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "http/1.1"
         ],
@@ -612,7 +632,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2052,
           1027,
@@ -672,7 +692,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 308,
+        "padding": {
+          "send": {
+            "len": 308
+          }
+        },
         "alpn": [
           "http/1.1",
           "h2"
@@ -733,7 +757,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 362,
+        "padding": {
+          "send": {
+            "len": 362
+          }
+        },
         "alpn": [
           "http/1.1"
         ],
@@ -774,7 +802,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 474,
+        "padding": {
+          "send": {
+            "len": 474
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -839,7 +871,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 364,
+        "padding": {
+          "send": {
+            "len": 364
+          }
+        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -892,7 +928,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 224,
+        "padding": {
+          "send": {
+            "len": 224
+          }
+        },
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -931,7 +971,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -983,7 +1023,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 382,
+        "padding": {
+          "send": {
+            "len": 382
+          }
+        },
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -1031,7 +1075,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "http/1.1"
         ],
@@ -1069,7 +1113,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1283,
           1027,
@@ -1130,7 +1174,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df1302010582df1302060582df13020d0582df13020e0582df13020f0582df1302120582df1302130582df13021408839a648c9b2d010708839a648c9b2d010808839a648c9b2d010908839a648c9b2d010a08839a648c9b2d010b08839a648c9b2d010c08839a648c9b2d010d08839a648c9b2d011208839a648c9b2d011304d679090104d679090404d679090504d679090604d679090704d679090804d679090a04d679090b04d679090c04d679090d04d679090f",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           31354,
           2308,
@@ -1242,7 +1286,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df1302010582df1302060582df13020d0582df13020e0582df13020f0582df1302120582df1302130582df13021408839a648c9b2d010708839a648c9b2d010808839a648c9b2d010908839a648c9b2d010a08839a648c9b2d010b08839a648c9b2d010c08839a648c9b2d010d08839a648c9b2d011208839a648c9b2d011304d679090104d679090404d679090504d679090604d679090704d679090804d679090a04d679090b04d679090c04d679090d04d679090f",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           14906,
           2308,
@@ -1354,7 +1398,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -1457,7 +1501,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -1560,7 +1604,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -1663,7 +1707,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -1766,7 +1810,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -1873,7 +1917,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -1980,7 +2024,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2087,7 +2131,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2194,7 +2238,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2301,7 +2345,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2408,7 +2452,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2515,7 +2559,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2622,7 +2666,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2729,7 +2773,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2836,7 +2880,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -2943,7 +2987,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -3050,7 +3094,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -3158,7 +3202,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -3266,7 +3310,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -3374,7 +3418,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -3482,7 +3526,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -3590,7 +3634,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -3699,7 +3743,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -3807,7 +3851,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -3916,7 +3960,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -4025,7 +4069,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -4134,7 +4178,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           1027,
@@ -4243,7 +4287,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -4351,7 +4395,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2308,
           2309,
@@ -4462,7 +4506,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df13020d04d679090308839a648c9b2d010b04d679090d04d679090f0582df13020e08839a648c9b2d010a04d679090404d679090b0582df13020f04d679090c08839a648c9b2d01090582df13021208839a648c9b2d01080582df1302060582df13021304d679090204d679090e04d679090a04d679090704d679090608839a648c9b2d01070582df13020108839a648c9b2d010d04d67909010582df13021408839a648c9b2d010c04d679090904d679090808839a648c9b2d011304d679090508839a648c9b2d0112",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           39578,
           2308,
@@ -4575,7 +4619,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "08839a648c9b2d010b0582df13020f08839a648c9b2d010c04d679090b08839a648c9b2d010d08839a648c9b2d010a08839a648c9b2d01090582df13021308839a648c9b2d010708839a648c9b2d011308839a648c9b2d010804d679090604d679090c0582df13020d04d679090704d67909050582df13020104d679090a04d679090d04d67909010582df13020e04d679090408839a648c9b2d011204d679090f0582df13021204d67909080582df1302060582df130214",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           39578,
           2308,
@@ -4688,7 +4732,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df1302010582df1302060582df13020d0582df13020e0582df13020f0582df1302120582df1302130582df13021408839a648c9b2d010708839a648c9b2d010808839a648c9b2d010908839a648c9b2d010a08839a648c9b2d010b08839a648c9b2d010c08839a648c9b2d010d08839a648c9b2d011208839a648c9b2d011304d679090104d679090404d679090504d679090604d679090704d679090804d679090a04d679090b04d679090c04d679090d04d679090f",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           10794,
           2308,
@@ -4801,7 +4845,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df1302010582df1302060582df13020d0582df13020e0582df13020f0582df1302120582df1302130582df13021408839a648c9b2d010708839a648c9b2d010808839a648c9b2d010908839a648c9b2d010a08839a648c9b2d010b08839a648c9b2d010c08839a648c9b2d010d08839a648c9b2d011208839a648c9b2d011304d679090104d679090404d679090504d679090604d679090704d679090804d679090a04d679090b04d679090c04d679090d04d679090f",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           23130,
@@ -4915,7 +4959,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df1302010582df1302060582df13020d0582df13020e0582df13020f0582df1302120582df1302130582df13021408839a648c9b2d010708839a648c9b2d010808839a648c9b2d010908839a648c9b2d010a08839a648c9b2d010b08839a648c9b2d010c08839a648c9b2d010d08839a648c9b2d011208839a648c9b2d011304d679090104d679090404d679090504d679090604d679090704d679090804d679090a04d679090b04d679090c04d679090d04d679090f",
-        "padding_len": 0,
+        "padding": "omit",
         "pre_shared_key": true,
         "sigalg_codes": [
           2570,
@@ -5029,7 +5073,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "0582df1302010582df1302060582df13020d0582df13020e0582df13020f0582df1302120582df1302130582df13021408839a648c9b2d010708839a648c9b2d010808839a648c9b2d010908839a648c9b2d010a08839a648c9b2d010b08839a648c9b2d010c08839a648c9b2d010d08839a648c9b2d011208839a648c9b2d011304d679090104d679090404d679090504d679090604d679090704d679090804d679090a04d679090b04d679090c04d679090d04d679090f",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           10794,
           2308,
@@ -5149,7 +5193,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -5253,7 +5297,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -5357,7 +5401,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -5461,7 +5505,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -5565,7 +5609,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -5666,7 +5710,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -5733,7 +5777,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 484,
+        "padding": {
+          "send": {
+            "len": 484
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -5800,7 +5848,11 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": {
+          "send": {
+            "len": 0
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -5868,7 +5920,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 414,
+        "padding": {
+          "send": {
+            "len": 414
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -5934,7 +5990,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -5996,7 +6052,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1537,
           1539,
@@ -6064,7 +6120,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1025,
@@ -6129,7 +6185,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -6196,7 +6252,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 484,
+        "padding": {
+          "send": {
+            "len": 484
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6263,7 +6323,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 484,
+        "padding": {
+          "send": {
+            "len": 484
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6330,7 +6394,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 484,
+        "padding": {
+          "send": {
+            "len": 484
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6399,7 +6467,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 474,
+        "padding": {
+          "send": {
+            "len": 474
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6466,7 +6538,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 476,
+        "padding": {
+          "send": {
+            "len": 476
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6534,7 +6610,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 426,
+        "padding": {
+          "send": {
+            "len": 426
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6608,7 +6688,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 394,
+        "padding": {
+          "send": {
+            "len": 394
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6682,7 +6766,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -6756,7 +6840,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -6827,7 +6915,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -6901,7 +6989,7 @@
         "renegotiation": false,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "http/1.1"
         ],
@@ -6955,7 +7043,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7026,7 +7118,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7097,7 +7193,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7168,7 +7268,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7239,7 +7343,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7310,7 +7418,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7381,7 +7493,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7452,7 +7568,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7523,7 +7643,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7594,7 +7718,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7665,7 +7793,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7736,7 +7868,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -7807,7 +7939,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -7878,7 +8010,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -7949,7 +8081,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -8021,7 +8153,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -8093,7 +8225,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -8164,7 +8296,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2308,
           2309,
@@ -8239,7 +8371,7 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "trust_anchors": "08839a648c9b2d01070582df13020d04d67909060582df1302060582df13020108839a648c9b2d010804d679090104d679090d04d679090804d679090c04d679090a04d67909070582df1302120582df1302140582df13021308839a648c9b2d010c08839a648c9b2d010b0582df13020e04d679090f04d679090508839a648c9b2d010d04d679090b04d679090408839a648c9b2d010908839a648c9b2d011308839a648c9b2d011208839a648c9b2d010a0582df13020f",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           14906,
           2308,
@@ -8317,7 +8449,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 278,
+        "padding": {
+          "send": {
+            "len": 278
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -8394,7 +8530,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 278,
+        "padding": {
+          "send": {
+            "len": 278
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -8471,7 +8611,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 278,
+        "padding": {
+          "send": {
+            "len": 278
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -8548,7 +8692,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 278,
+        "padding": {
+          "send": {
+            "len": 278
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -8625,7 +8773,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 278,
+        "padding": {
+          "send": {
+            "len": 278
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -8702,7 +8854,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 298,
+        "padding": {
+          "send": {
+            "len": 298
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -8779,7 +8935,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 278,
+        "padding": {
+          "send": {
+            "len": 278
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -8856,7 +9016,7 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -8933,7 +9093,7 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -9009,7 +9169,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -9086,7 +9246,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -9162,7 +9322,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -9238,7 +9398,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -9313,7 +9473,7 @@
         "cert_compression": "zlib:brotli:zstd",
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -9387,7 +9547,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9458,7 +9622,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9529,7 +9697,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9603,7 +9775,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9677,7 +9853,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9750,7 +9930,7 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -9812,7 +9992,7 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -9875,7 +10055,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 430,
+        "padding": {
+          "send": {
+            "len": 430
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9948,7 +10132,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 426,
+        "padding": {
+          "send": {
+            "len": 426
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10022,7 +10210,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 410,
+        "padding": {
+          "send": {
+            "len": 410
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10096,7 +10288,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 426,
+        "padding": {
+          "send": {
+            "len": 426
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10170,7 +10366,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 426,
+        "padding": {
+          "send": {
+            "len": 426
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10244,7 +10444,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10318,7 +10522,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10392,7 +10600,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10466,7 +10678,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10540,7 +10756,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 390,
+        "padding": {
+          "send": {
+            "len": 390
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10618,7 +10838,7 @@
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
         "channel_id": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -10678,7 +10898,7 @@
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
         "channel_id": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -10738,7 +10958,11 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "channel_id": true,
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10797,7 +11021,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 416,
+        "padding": {
+          "send": {
+            "len": 416
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10856,7 +11084,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 424,
+        "padding": {
+          "send": {
+            "len": 424
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10914,7 +11146,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 424,
+        "padding": {
+          "send": {
+            "len": 424
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10972,7 +11208,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 406,
+        "padding": {
+          "send": {
+            "len": 406
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -11030,7 +11270,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 414,
+        "padding": {
+          "send": {
+            "len": 414
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -11088,7 +11332,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 414,
+        "padding": {
+          "send": {
+            "len": 414
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -11146,7 +11394,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 414,
+        "padding": {
+          "send": {
+            "len": 414
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -11204,7 +11456,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -11262,7 +11514,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 34,
+        "padding": {
+          "send": {
+            "len": 34
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -11320,7 +11576,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -11378,7 +11634,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -11436,7 +11692,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -11493,7 +11749,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -11553,7 +11809,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -11614,7 +11870,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
-        "padding_len": 300,
+        "padding": {
+          "send": {
+            "len": 300
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11675,7 +11935,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
-        "padding_len": 300,
+        "padding": {
+          "send": {
+            "len": 300
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11737,7 +12001,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 272,
+        "padding": {
+          "send": {
+            "len": 272
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11799,7 +12067,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 284,
+        "padding": {
+          "send": {
+            "len": 284
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11861,7 +12133,11 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 284,
+        "padding": {
+          "send": {
+            "len": 284
+          }
+        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11923,7 +12199,7 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           1283,
@@ -11984,7 +12260,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding_len": 396,
+        "padding": {
+          "send": {
+            "len": 396
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12045,7 +12325,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -12104,7 +12384,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -12164,7 +12444,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 426,
+        "padding": {
+          "send": {
+            "len": 426
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12224,7 +12508,11 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 386,
+        "padding": {
+          "send": {
+            "len": 386
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12284,7 +12572,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -12343,7 +12631,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 424,
+        "padding": {
+          "send": {
+            "len": 424
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12401,7 +12693,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 414,
+        "padding": {
+          "send": {
+            "len": 414
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12462,7 +12758,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1025,
           1281,
@@ -12521,7 +12817,11 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "channel_id": true,
-        "padding_len": 408,
+        "padding": {
+          "send": {
+            "len": 408
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12580,7 +12880,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 406,
+        "padding": {
+          "send": {
+            "len": 406
+          }
+        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12637,7 +12941,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2052,
           1027,
@@ -12705,7 +13009,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2052,
           1027,
@@ -12773,7 +13077,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2052,
           1027,
@@ -12841,7 +13145,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2052,
           1027,
@@ -12912,7 +13216,7 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -12953,7 +13257,7 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "h2"
         ],
@@ -12998,7 +13302,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 364,
+        "padding": {
+          "send": {
+            "len": 364
+          }
+        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -13055,7 +13363,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 370,
+        "padding": {
+          "send": {
+            "len": 370
+          }
+        },
         "alpn": [
           "http/1.1"
         ],
@@ -13105,7 +13417,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 352,
+        "padding": {
+          "send": {
+            "len": 352
+          }
+        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -13162,7 +13478,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 358,
+        "padding": {
+          "send": {
+            "len": 358
+          }
+        },
         "alpn": [
           "http/1.1"
         ],
@@ -13213,7 +13533,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib:zstd",
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -13261,7 +13581,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib:zstd",
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "http/1.1"
         ],
@@ -13311,7 +13631,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -13359,7 +13679,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "h2",
           "http/1.1"
@@ -13412,7 +13732,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -13460,7 +13780,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -13508,7 +13828,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "http/1.1"
         ],
@@ -13549,7 +13869,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "http/1.1"
         ],
@@ -13592,7 +13912,11 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
-        "padding_len": 248,
+        "padding": {
+          "send": {
+            "len": 248
+          }
+        },
         "alpn": [],
         "min_version": "1.0",
         "max_version": "1.3"
@@ -13644,7 +13968,7 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -13681,7 +14005,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           2052,
           1027,
@@ -13752,7 +14076,11 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 384,
+        "padding": {
+          "send": {
+            "len": 384
+          }
+        },
         "alpn": [],
         "min_version": "1.0",
         "max_version": "1.3"
@@ -13800,7 +14128,7 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -13849,7 +14177,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1283,
           1027,
@@ -13921,7 +14249,7 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -13982,7 +14310,7 @@
         "renegotiation": false,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -14026,7 +14354,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [],
         "min_version": "1.0",
         "max_version": "1.3"
@@ -14061,7 +14389,7 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding_len": 0,
+        "padding": "omit",
         "sigalg_codes": [
           1027,
           2052,
@@ -14168,7 +14496,7 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding_len": 0,
+        "padding": "omit",
         "alpn": [
           "h2"
         ],

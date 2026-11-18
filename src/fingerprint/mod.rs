@@ -219,13 +219,27 @@ pub struct TlsFingerprint {
     /// as Chrome 58-70 did.
     #[serde(default)]
     pub channel_id: bool,
-    /// Payload length of the RFC 7685 padding extension (21), as captured.
+    /// Padding extension (21) behaviour, from the capture.
+    ///
+    /// `None` leaves BoringSSL's size-dependent rule alone (its default).
+    /// `Some(Padding::Send { len })` sends the extension with `len` payload
+    /// bytes, zero included. `Some(Padding::Omit)` suppresses it.
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub padding_len: Option<usize>,
+    pub padding: Option<Padding>,
     /// The capture carries `pre_shared_key` from a resumed session. The record
     /// needs the session cache on to reproduce that ClientHello.
     #[serde(default)]
     pub pre_shared_key: bool,
+}
+
+/// What a capture did with the padding extension (21).
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum Padding {
+    /// The capture carries the extension with this payload length.
+    Send { len: usize },
+    /// The capture has no padding extension.
+    Omit,
 }
 
 fn yes() -> bool {
@@ -261,7 +275,7 @@ impl Default for TlsFingerprint {
             server_padding_request: None,
             sigalg_codes: None,
             channel_id: false,
-            padding_len: None,
+            padding: None,
             pre_shared_key: false,
         }
     }
@@ -719,7 +733,11 @@ impl Fingerprint {
         if tls.channel_id {
             builder = builder.channel_id_offer(true);
         }
-        if let Some(len) = tls.padding_len {
+        if let Some(padding) = tls.padding {
+            let len = match padding {
+                Padding::Send { len } => Some(len),
+                Padding::Omit => None,
+            };
             builder = builder.force_padding_len(len);
         }
         if tls.pre_shared_key {
