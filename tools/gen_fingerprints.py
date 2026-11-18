@@ -2432,14 +2432,12 @@ def build_record(spec):
         "headers": [[name, value] for name, value in headers],
         "http1_only": not http2_data,
     }
-    if grease_settings:
-        deviations.append(
-            "The capture carries a GREASE HTTP/2 setting; the transport's "
-            "setting ids are a closed set, so it is not sent. Chrome picks a "
-            "random id and value per connection, so the Akamai settings "
-            "segment differs by that one entry."
-        )
+    # A captured GREASE HTTP/2 setting means the browser greases its SETTINGS
+    # frame. The value is random per connection, so the record only says
+    # "send one", never a fixed id.
     if http2 is not None:
+        if grease_settings:
+            http2["grease_settings"] = True
         record["http2"] = http2
         # Standalone PRIORITY frames (Firefox 102-123 send six before the
         # first HEADERS). They are part of the Akamai fingerprint's third

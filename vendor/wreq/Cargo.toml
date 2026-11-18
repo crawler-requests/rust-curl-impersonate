@@ -179,7 +179,8 @@ version = "1.0.1"
 version = "0.1.4"
 
 [dependencies.http2]
-version = "0.5.17"
+path = "../http2"
+features = ["unstable"]
 
 [dependencies.httparse]
 version = "1.10.1"
@@ -277,11 +278,11 @@ version = "1.0.7"
 optional = true
 
 [dependencies.wreq-proto]
-version = "0.2.3"
+path = "../wreq-proto"
 default-features = false
 
 [dependencies.wreq-rt]
-version = "0.2.2-rc.2"
+path = "../wreq-rt"
 default-features = false
 
 [target.'cfg(target_os = "macos")'.dependencies.system-configuration]

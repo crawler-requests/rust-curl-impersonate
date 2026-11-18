@@ -351,8 +351,9 @@ pub mod http2 {
     //! HTTP/2 protocol implementation and utilities.
 
     pub use http2::frame::{
-        Priorities, PrioritiesBuilder, Priority, PseudoId, PseudoOrder, Setting, SettingId,
-        SettingsOrder, SettingsOrderBuilder, StreamDependency, StreamId,
+        ExperimentalSettings, ExperimentalSettingsBuilder, Priorities, PrioritiesBuilder,
+        Priority, PseudoId, PseudoOrder, Setting, SettingId, SettingsOrder, SettingsOrderBuilder,
+        StreamDependency, StreamId,
     };
     pub use wreq_proto::http2::{Http2Options, Http2OptionsBuilder};
 }

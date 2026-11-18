@@ -1379,9 +1379,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome114.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519:P-256:P-384",
@@ -1473,7 +1471,8 @@
         "settings": "1:65536;2:0;3:1000;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -1484,9 +1483,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome116_cft.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519:P-256:P-384",
@@ -1578,7 +1575,8 @@
         "settings": "1:65536;2:0;3:1000;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -1589,9 +1587,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome118.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519:P-256:P-384",
@@ -1683,7 +1679,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -1694,9 +1691,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome119_cft.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -1788,7 +1783,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -1799,9 +1795,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome121.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -1897,7 +1891,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -1908,9 +1903,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome122.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2006,7 +1999,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2017,9 +2011,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome123_cft.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2115,7 +2107,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2126,9 +2119,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome125.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2224,7 +2215,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2235,9 +2227,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome126.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2333,7 +2323,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2344,9 +2335,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome127.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2442,7 +2431,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2453,9 +2443,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome128.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2551,7 +2539,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2562,9 +2551,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome129.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2660,7 +2647,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2671,9 +2659,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome130.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519Kyber768Draft00:X25519:P-256:P-384",
@@ -2769,7 +2755,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2780,9 +2767,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome132.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -2878,7 +2863,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2889,9 +2875,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome134.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -2987,7 +2971,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -2998,9 +2983,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome135.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3096,7 +3079,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3107,9 +3091,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome136_cft.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3206,7 +3188,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3217,9 +3200,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome137.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3316,7 +3297,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3327,9 +3309,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome138.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3426,7 +3406,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3437,9 +3418,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome139.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3536,7 +3515,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3547,9 +3527,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome140.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3646,7 +3624,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3657,9 +3636,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome141.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3756,7 +3733,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3767,9 +3745,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome142_cft.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3866,7 +3842,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3877,9 +3854,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome143.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -3977,7 +3952,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -3988,9 +3964,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome145_cft.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -4088,7 +4062,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -4099,9 +4074,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome147.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -4199,7 +4172,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -4210,9 +4184,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome148.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384",
@@ -4310,7 +4282,8 @@
         "settings": "1:65536;2:0;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {
@@ -14766,9 +14739,7 @@
       "platform": "linux",
       "source": "tls.peet.ws capture, tools/capture/raw/chrome113.json",
       "fidelity": "exact",
-      "deviations": [
-        "The capture carries a GREASE HTTP/2 setting; the transport's setting ids are a closed set, so it is not sent. Chrome picks a random id and value per connection, so the Akamai settings segment differs by that one entry."
-      ],
+      "deviations": [],
       "tls": {
         "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
         "curves": "X25519:P-256:P-384",
@@ -14860,7 +14831,8 @@
         "settings": "1:65536;2:0;3:1000;4:6291456;6:262144",
         "pseudo_order": "masp",
         "window_update": 15663105,
-        "initial_window_size": 6291456
+        "initial_window_size": 6291456,
+        "grease_settings": true
       }
     },
     {

@@ -302,6 +302,12 @@ pub struct Http2Fingerprint {
     /// Standalone PRIORITY frames sent before the first request.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub priorities: Vec<PriorityFrame>,
+    /// Chrome 113-148 grease the SETTINGS frame with one random id/value
+    /// pair. Setting both makes a fresh random pair per connection, the way
+    /// the browser does; the exact value is never stable, even for Chrome
+    /// itself.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub grease_settings: bool,
 }
 
 /// One standalone PRIORITY frame, as captured.
@@ -866,6 +872,36 @@ impl Http2Fingerprint {
                 .unwrap_or(0);
             http2.initial_stream_id = Some(highest.saturating_add(2));
             http2.priorities = Some(builder.build());
+        }
+        if self.grease_settings {
+            // One random 16-bit id outside the RFC's set, with a random
+            // 32-bit value - what Chrome 113-148 send.
+            let mut bytes = [0u8; 6];
+            getrandom::fill(&mut bytes).map_err(|error| error.to_string())?;
+            let id = u16::from_be_bytes([bytes[0], bytes[1]]) | 0x0001;
+            let value = u32::from_be_bytes([bytes[2], bytes[3], bytes[4], bytes[5]]);
+            let setting = wreq::http2::Setting::from_id(id, value);
+            if let Some(setting) = setting {
+                http2.experimental_settings = Some(
+                    wreq::http2::ExperimentalSettings::builder()
+                        .push(setting)
+                        .build(),
+                );
+                // `Settings::for_each` only emits an unknown id that also
+                // appears in the order, so the order is rebuilt from the
+                // preset plus this id.
+                let mut order = wreq::http2::SettingsOrder::builder();
+                if let Ok(pairs) = policy::setting_pairs(
+                    self.settings.as_deref().unwrap_or(""),
+                ) {
+                    for pair in pairs {
+                        if let Some(known) = crate::prepare::setting_id(pair.id) {
+                            order = order.push(known);
+                        }
+                    }
+                }
+                http2.settings_order = Some(order.push(id.into()).build());
+            }
         }
         Ok(http2)
     }

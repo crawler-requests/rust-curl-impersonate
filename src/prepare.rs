@@ -464,6 +464,22 @@ fn apply_http2(emulation: &mut Emulation, overrides: &Overrides) -> Result<(), S
     Ok(())
 }
 
+/// The `SettingId` for an RFC 9113 setting number, when the transport has one.
+pub(crate) fn setting_id(id: u64) -> Option<wreq::http2::SettingId> {
+    use wreq::http2::SettingId;
+    match id {
+        1 => Some(SettingId::HeaderTableSize),
+        2 => Some(SettingId::EnablePush),
+        3 => Some(SettingId::MaxConcurrentStreams),
+        4 => Some(SettingId::InitialWindowSize),
+        5 => Some(SettingId::MaxFrameSize),
+        6 => Some(SettingId::MaxHeaderListSize),
+        8 => Some(SettingId::EnableConnectProtocol),
+        9 => Some(SettingId::NoRfc7540Priorities),
+        _ => None,
+    }
+}
+
 pub(crate) fn apply_http2_settings(
     http2: &mut wreq::http2::Http2Options,
     spec: &str,
