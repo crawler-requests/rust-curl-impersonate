@@ -1,0 +1,72 @@
+Firefox / Edge / Safari coverage — what is left and why
+date: 2026-11-19
+
+measured, one live handshake per record against tls.peet.ws,
+each compared with the record's own capture
+
+  family      records   JA4 same   Akamai same   both
+  firefox        27        26          18        18
+  edge            2         2           2         2
+  safari         15        15          13        13
+  opera           3         3           3         3
+  brave           1         1           1         1
+  android         6         6           6         6
+  ios             8         6           6         6
+  okhttp          8         8           8         8
+  360             2         1           1         1
+  qq              1         1           1         1
+  cloudflare      1         0           0         0
+
+Firefox: the TLS layer is right, the HTTP/2 layer is not
+  For all 9 tlsclient_firefox102-123 records the ClientHello matches its
+  capture exactly (compare_echo.py reports no TLS differences). What
+  differs is the Akamai fingerprint's third segment:
+
+    capture  3:0:0:201,5:0:0:101,7:0:0:1,9:0:7:1,11:0:3:1,13:0:0:241
+    live     0
+
+  Those six entries are six standalone PRIORITY frames Firefox 102-123
+  send before the first HEADERS frame. The h2 crate this crate builds on:
+
+    - parses incoming PRIORITY frames and ignores them
+      (proto/connection.rs "TODO: handle")
+    - has no API to emit a PRIORITY frame
+    - can only attach a StreamDependency to a HEADERS frame
+
+  So the frames that matter are not on any code path we control.
+
+what adding it would take
+  h2's write path is `Streams::poll_complete`, which flushes a
+  `Prioritized<B>` queue of per-stream frames. Emitting connection-level
+  PRIORITY frames means either:
+    - adding a connection-level frame queue to h2's proto layer (it is
+      per-stream today), or
+    - sending the frames outside h2 on the raw socket before the first
+      request, which races with h2's own writes.
+  Both are changes inside h2, not in this crate. The first is the honest
+  one; the second is fragile.
+
+why it is not done yet
+  A PRIORITY frame stream entry is a real distinguishing signal - Firefox
+  102-123 look different from Firefox 132+ because of it - so this is not
+  a cosmetic gap. But the fix belongs in h2, and h2's per-stream write
+  model would have to grow a connection-level queue. That is a fork-level
+  change with its own regression surface, so it should be a deliberate
+  decision rather than something slipped in with a capture update.
+
+what Firefox 132+ do instead
+  From firefox132 the PRIORITY frames are gone and the third segment is
+  "0", which this crate matches. 18 of 27 Firefox records are in that
+  group and fully match.
+
+Edge / Safari / Opera / Brave / iOS / Android / OkHttp / 360 / QQ
+  Edge and Safari's remaining differences are the same PRIORITY-frame
+  issue plus, for the oldest uTLS captures, NPN (13172) which BoringSSL
+  no longer implements. Neither is a TLS-extension gap: the extension
+  registry shows no unsupported id for these families.
+
+cloudflare and 360 7.5
+  Both need pieces removed from BoringSSL for security: RC4 cipher
+  suites, DSA signatures, SHA-224 signatures, TLS_EMPTY_RENEGOTIATION_INFO.
+  Reinstating them is a different kind of decision from adding an
+  extension writer, and is recorded here rather than silently patched.

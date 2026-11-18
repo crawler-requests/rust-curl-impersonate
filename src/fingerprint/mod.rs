@@ -37,7 +37,7 @@ use std::sync::OnceLock;
 
 use serde::{Deserialize, Serialize};
 use wreq::header::{HeaderMap, HeaderName, HeaderValue, OrigHeaderMap};
-use wreq::http2::Http2Options;
+use wreq::http2::{Http2Options, Priorities, Priority, StreamDependency};
 use wreq::tls::{AlpnProtocol, AlpsProtocol, ExtensionType, KeyShare, TlsOptions, TlsVersion};
 use wreq::Emulation;
 
@@ -299,6 +299,22 @@ pub struct Http2Fingerprint {
     /// `NO_RFC7540_PRIORITIES`.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub no_priority: Option<bool>,
+    /// Standalone PRIORITY frames sent before the first request.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub priorities: Vec<PriorityFrame>,
+}
+
+/// One standalone PRIORITY frame, as captured.
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
+pub struct PriorityFrame {
+    /// The stream this frame describes.
+    pub stream_id: u32,
+    /// The stream it depends on.
+    pub depends_on: u32,
+    /// RFC 7540 weight, 1-256.
+    pub weight: u16,
+    /// Whether the dependency is exclusive.
+    pub exclusive: bool,
 }
 
 /// HTTP/3 (QUIC) inputs for a record, in the same names [`ProfileSpec`] uses.
@@ -824,6 +840,32 @@ impl Http2Fingerprint {
         }
         if let Some(disabled) = self.no_priority {
             http2.no_rfc7540_priorities = Some(disabled);
+        }
+        if !self.priorities.is_empty() {
+            // Send the captured PRIORITY frames as part of the connection
+            // preface - they are the Akamai fingerprint's third segment.
+            let mut builder = Priorities::builder();
+            for frame in &self.priorities {
+                // The capture reports the decoded weight (1-256) while the
+                // wire stores it as weight-1, so subtract before handing it
+                // to the frame.
+                let weight = u8::try_from(frame.weight.saturating_sub(1)).unwrap_or(0);
+                builder = builder.push(Priority::new(
+                    frame.stream_id.into(),
+                    StreamDependency::new(frame.depends_on.into(), weight, frame.exclusive),
+                ));
+            }
+            // A PRIORITY frame claims a stream id. h2 starts the first
+            // request at the next odd id, so a capture whose ids are 3..13
+            // needs the request to start at 15.
+            let highest = self
+                .priorities
+                .iter()
+                .map(|frame| frame.stream_id)
+                .max()
+                .unwrap_or(0);
+            http2.initial_stream_id = Some(highest.saturating_add(2));
+            http2.priorities = Some(builder.build());
         }
         Ok(http2)
     }

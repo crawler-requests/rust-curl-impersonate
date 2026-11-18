@@ -2013,6 +2013,7 @@ def sigalg_code(name):
 
 
 def build_record(spec):
+    grease_settings = False
     path = os.path.join(RAW, spec["file"])
     with open(path, "r", encoding="utf-8") as handle:
         data = json.load(handle)
@@ -2346,6 +2347,12 @@ def build_record(spec):
                     name, _, value = setting.partition(" = ")
                     setting_id = SETTING_IDS.get(name)
                     if setting_id is None:
+                        # An unknown id in a capture is GREASE: Chrome picks a
+                        # random 16-bit id and value each connection. The h2
+                        # crate's SettingId is a closed enum, so it cannot be
+                        # sent; note it instead of inventing a value.
+                        if re.search(r"UNKNOWN_SETTING_\d+", name):
+                            grease_settings = True
                         continue
                     settings.append((setting_id, int(value)))
                     if setting_id == 4:
@@ -2425,8 +2432,31 @@ def build_record(spec):
         "headers": [[name, value] for name, value in headers],
         "http1_only": not http2_data,
     }
+    if grease_settings:
+        deviations.append(
+            "The capture carries a GREASE HTTP/2 setting; the transport's "
+            "setting ids are a closed set, so it is not sent. Chrome picks a "
+            "random id and value per connection, so the Akamai settings "
+            "segment differs by that one entry."
+        )
     if http2 is not None:
         record["http2"] = http2
+        # Standalone PRIORITY frames (Firefox 102-123 send six before the
+        # first HEADERS). They are part of the Akamai fingerprint's third
+        # segment, so they have to be reproduced.
+        frames = (http2_data.get("sent_frames") or []) if http2_data else []
+        priorities = [
+            {
+                "stream_id": frame["stream_id"],
+                "depends_on": frame["priority"]["depends_on"],
+                "weight": frame["priority"]["weight"],
+                "exclusive": bool(frame["priority"]["exclusive"]),
+            }
+            for frame in frames
+            if frame.get("frame_type") == "PRIORITY" and frame.get("priority")
+        ]
+        if priorities:
+            http2["priorities"] = priorities
     if spec.get("http3"):
         record["http3"] = dict(spec["http3"])
     return record
