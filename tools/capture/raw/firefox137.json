@@ -1,0 +1,129 @@
+{
+ "tls": {
+  "ja4": "t13d1717h2_5b57614c22b0_-",
+  "ciphers": [
+   "TLS_AES_128_GCM_SHA256",
+   "TLS_CHACHA20_POLY1305_SHA256",
+   "TLS_AES_256_GCM_SHA384",
+   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
+   "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+   "TLS_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_RSA_WITH_AES_256_CBC_SHA"
+  ],
+  "extensions": [
+   {
+    "name": "server_name (0)"
+   },
+   {
+    "name": "extended_master_secret (23)"
+   },
+   {
+    "name": "extensionRenegotiationInfo (boringssl) (65281)"
+   },
+   {
+    "name": "supported_groups (10)",
+    "supported_groups": [
+     "X25519MLKEM768",
+     "X25519",
+     "P-256",
+     "P-384",
+     "P-521",
+     "ffdhe2048",
+     "ffdhe3072"
+    ]
+   },
+   {
+    "name": "ec_point_formats (11)"
+   },
+   {
+    "name": "session_ticket (35)"
+   },
+   {
+    "name": "application_layer_protocol_negotiation (16)",
+    "protocols": [
+     "h2",
+     "http/1.1"
+    ]
+   },
+   {
+    "name": "status_request (5)"
+   },
+   {
+    "name": "delegated_credential (34)",
+    "signature_hash_algorithms": [
+     "ecdsa_secp256r1_sha256",
+     "ecdsa_secp384r1_sha384",
+     "ecdsa_secp521r1_sha512",
+     "ecdsa_sha1"
+    ]
+   },
+   {
+    "name": "signed_certificate_timestamp (18)"
+   },
+   {
+    "name": "key_share (51)",
+    "shared_keys": [
+     {
+      "X25519MLKEM768": 1216
+     },
+     {
+      "X25519": 32
+     },
+     {
+      "P-256": 65
+     }
+    ]
+   },
+   {
+    "name": "supported_versions (43)"
+   },
+   {
+    "name": "signature_algorithms (13)",
+    "signature_algorithms": [
+     "ecdsa_secp256r1_sha256",
+     "ecdsa_secp384r1_sha384",
+     "ecdsa_secp521r1_sha512",
+     "rsa_pss_rsae_sha256",
+     "rsa_pss_rsae_sha384",
+     "rsa_pss_rsae_sha512",
+     "rsa_pkcs1_sha256",
+     "rsa_pkcs1_sha384",
+     "rsa_pkcs1_sha512",
+     "ecdsa_sha1",
+     "rsa_pkcs1_sha1"
+    ]
+   },
+   {
+    "name": "psk_key_exchange_modes (45)"
+   },
+   {
+    "name": "record_size_limit (28)",
+    "data": "4001"
+   },
+   {
+    "name": "compress_certificate (27)",
+    "algorithms": [
+     "zlib",
+     "brotli",
+     "zstd"
+    ]
+   },
+   {
+    "name": "extensionEncryptedClientHello (boringssl) (65037)"
+   }
+  ]
+ },
+ "http2": {},
+ "http_version": "h2",
+ "user_agent": "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0"
+}

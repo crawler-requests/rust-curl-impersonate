@@ -66,7 +66,14 @@ def main():
                 "capabilities": {
                     "alwaysMatch": {
                         "browserName": "firefox",
-                        "moz:firefoxOptions": {"args": ["-headless"]},
+                        "moz:firefoxOptions": {
+                            "args": ["-headless"],
+                            **(
+                                {"binary": os.environ["FIREFOX_BINARY"]}
+                                if os.environ.get("FIREFOX_BINARY")
+                                else {}
+                            ),
+                        },
                     }
                 }
             },
