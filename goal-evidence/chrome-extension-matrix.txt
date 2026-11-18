@@ -1,0 +1,67 @@
+Chrome extension coverage - is it really "support every extension"?
+date: 2026-11-18
+
+yes, and here is the measured proof.
+
+Every extension id that appears in any Chrome/Chromium capture in the
+library (22 distinct across 73 captures):
+
+    0       73 captures
+    5       73 captures
+    10      73 captures
+    11      73 captures
+    13      73 captures
+    16      73 captures
+    18      73 captures
+    21      20 captures
+    23      73 captures
+    27      71 captures
+    35      73 captures
+    41      13 captures
+    43      71 captures
+    45      71 captures
+    51      71 captures
+    4832     8 captures
+    17513   32 captures
+    17613   35 captures
+    30032    3 captures
+    51764   18 captures
+    65037   51 captures
+    65281   73 captures
+
+Can we emit each of them?
+  21    padding            yes - SSL_CTX_set_force_padding_len (exact length or off)
+  41    pre_shared_key     yes - session cache; second connection
+  4832  server padding     yes - SSL_CTX_set_server_padding_request
+  30032 ChannelID          yes - SSL_CTX_set_channel_id_offer
+  51764 trust anchors      yes - SSL_CTX_set1_requested_trust_anchors
+  17513/17613 ALPS         yes - natively supported
+  65037 ECH grease         yes - natively supported
+  everything else          yes - natively supported
+
+verified live:
+  utls_chrome120 -> extension 21 present
+  utls_chrome58  -> extension 30032 present
+  utls_chrome70  -> extension 30032 present
+  chrome158 (2nd connection) -> extension 41 present
+
+so the answer to "the essence is supporting all the extension positions"
+is: yes for ClientHello extensions.
+
+what "all extension positions" does NOT cover
+  The ClientHello is not the whole fingerprint. Three other layers carry
+  their own knobs, and the library already handles them:
+
+    cipher list order      (record tls.ciphers)
+    curve / key share list (record tls.curves, tls.key_shares)
+    signature algorithms   (record tls.sigalgs, tls.sigalg_codes)
+    HTTP/2 SETTINGS, WINDOW_UPDATE, header order, Akamai hash
+    HTTP/3 SETTINGS, QUIC transport parameters, pseudo/header order
+
+  And two things are not about extension support at all:
+    - ALPN set (some uTLS captures were recorded over HTTP/1.1 only)
+    - GREASE scope (BoringSSL greases every list; a few captures grease
+      only some)
+
+  Those are the only deviations left on Chrome records: 15 alpn notes and
+  2 GREASE-scope notes, all on utls_ captures taken over raw HTTP/1.1.

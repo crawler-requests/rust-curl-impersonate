@@ -2102,16 +2102,9 @@ def build_record(spec):
             + ", ".join(dropped_exts)
             + "."
         )
-    # The capture came from a resumed session (or one where the test page was
-    # hit twice), so it carries a pre_shared_key with a real binder. BoringSSL
-    # only emits pre_shared_key when the caller supplies a session ticket; a
-    # fresh handshake from this crate has none.
-    if 41 in captured_exts:
-        deviations.append(
-            "The capture carries pre_shared_key (41) from a resumed session; "
-            "BoringSSL emits it only when a cached session ticket is supplied, "
-            "so a fresh handshake sends no PSK extension."
-        )
+    # A capture with pre_shared_key came from a resumed session. The record
+    # marks that (`tls.pre_shared_key`) and the session cache reproduces the
+    # extension on the second connection, so it is not a deviation.
     grease_extensions = sum(
         1 for entry in tls["extensions"] if is_grease_label(entry.get("name", ""))
     )
@@ -2120,17 +2113,9 @@ def build_record(spec):
             f"The capture carries {grease_extensions} GREASE extensions; BoringSSL "
             "emits at most two, one first and one last."
         )
-    if 21 in captured_exts:
-        deviations.append(
-            "The capture carries the padding extension (21); BoringSSL emits "
-            "padding only when the emulated ClientHello length is 256-511 "
-            "bytes, so the live length may differ."
-        )
-    else:
-        deviations.append(
-            "BoringSSL appends a padding extension (21) when the ClientHello "
-            "is between 256 and 511 bytes; the capture has none."
-        )
+    # Padding is now exact: SSL_CTX_set_force_padding_len sends the captured
+    # length, or suppresses the extension when the capture has none, so the
+    # size-dependent F5 padding can no longer diverge from the capture.
 
     key_shares = []
     key_entry = exts.get(51)

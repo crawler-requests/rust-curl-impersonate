@@ -294,12 +294,10 @@ fn browser_captures_keep_grease_alps_ech_and_compression() {
     );
     assert_eq!(http2.pseudo_order.as_deref(), Some("masp"));
     assert_eq!(http2.window_update, Some(15_663_105));
-    let note = chrome.deviation().unwrap();
-    // ML-DSA and trust anchors both reach the wire now, so neither may still
-    // be listed as something the transport cannot send.
-    assert!(!note.contains("mldsa44"), "ML-DSA is sent now: {note}");
-    assert!(!note.contains("51764"), "trust anchors are sent now");
-    assert!(!note.contains("4832"), "server padding request is sent now");
+    // Everything this capture sends is reproducible now - ML-DSA, trust
+    // anchors, the server padding request and the exact padding length - so
+    // the record carries no deviations at all.
+    assert!(chrome.deviation().is_none(), "{:?}", chrome.deviation());
 
     let tls = Profile::find("chromium156")
         .unwrap()
