@@ -1,0 +1,72 @@
+Android request stacks — what the library covers
+date: 2026-11-20
+
+question
+  "Can we emulate every Android request stack natively: the platform's own
+  HttpsURLConnection, WebView, and the common libraries, across versions?"
+
+what Android actually presents
+  Three TLS stacks, and they do not agree with each other:
+
+  HttpsURLConnection / OkHttp (4.x)   Conscrypt, or OkHttp's own BoringSSL
+                                      build. Version-dependent, and OkHttp's
+                                      bundled BoringSSL changes with the app.
+  WebView                             Chromium's stack, so it tracks Chrome
+                                      but not identically - an Android
+                                      WebView 125 sends 17 extensions with
+                                      the old ALPS codepoint (17513) and
+                                      padding, where desktop Chrome 125
+                                      sends 16 without either.
+  Native app libraries                Whatever they bundle: OkHttp, Cronet,
+                                      or a pinned BoringSSL.
+
+in the library today, 15 Android records
+  android_okhttp7..13     OkHttp 4 on Android 7, 8, 9, 10, 11, 12, 13
+  android_confirmed       Confirmed Android app (Conscrypt-era profile)
+  android_confirmed2      same app, second profile
+  android_mesh, mesh1     Mesh Android app, h2 and h1
+  android_nike            Nike Android app
+  android_zalando         Zalando Android app
+  utls_android11okhttp    OkHttp on Android 11 (uTLS ClientHello)
+  android_webview125      Android WebView 125 (new this pass)
+
+live verification, cipher list + extension set + Akamai fingerprint
+  against each record's own capture: 14 of 15 identical.
+  android_nike differs on the cipher list only: its capture greases the key
+  share alone, while BoringSSL's GREASE switch covers every list, so one
+  extra GREASE cipher appears. The JA4 is identical either way.
+
+new this pass: android_webview125
+  Captured from a real Android 13 runtime (redroid) at 192.168.1.90:5555.
+  WebView debugging is on in webview_shell, so its DevTools endpoint reads
+  the echo service's JSON straight out of the page:
+
+    ja4    t13d1517h2_8daaf6152771_b1ff8ab2d16f
+    akamai 1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p
+    17 extensions including application_settings_old (17513) and padding
+
+  Replaying it through `echo android_webview125` reproduces both, so a
+  WebView target can now be impersonated directly instead of standing in
+  with a desktop Chrome 125 record.
+
+  tools/capture/android_webview_capture.py automates that capture.
+
+gaps, stated plainly
+  - Android 14/15/16 and OkHttp 5 are not represented. Only one Android
+    runtime is reachable (redroid13, API 33), so a newer OkHttp profile
+    cannot be captured here; the versions present are whatever tls-client
+    defines plus what this device produced.
+  - HttpsURLConnection has no record of its own. On Android its ClientHello
+    comes from the same Conscrypt build that OkHttp uses when the app does
+    not bundle its own, so the OkHttp records cover the shape, but a
+    dedicated `android_native` record would need a device running an app
+    that uses the platform client directly.
+  - Apps that ship a pinned BoringSSL (Cronet) are not covered; each app
+    would need its own capture.
+
+device note
+  The redroid instance had two stale network settings that made every
+  capture fail: a global HTTP proxy at 192.168.1.23:8080 and an OUTPUT
+  DNAT rule redirecting tcp/443 to 192.168.1.23:8081. Both targets are
+  dead. They were cleared/removed to restore the device's own connectivity;
+  that change is local to the test device.

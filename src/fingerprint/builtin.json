@@ -4845,6 +4845,121 @@
       }
     },
     {
+      "name": "android_webview125",
+      "family": "android",
+      "client": "Android WebView (Chromium 125)",
+      "version": "125.0.6422.113",
+      "platform": "android",
+      "source": "tls.peet.ws capture, tools/capture/raw/android_webview125.json",
+      "fidelity": "exact",
+      "deviations": [],
+      "tls": {
+        "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
+        "curves": "X25519:P-256:P-384",
+        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "extension_order": "5-13-18-23-45-10-65037-27-51-35-17513-0-65281-11-43-16",
+        "key_shares": "X25519",
+        "grease": true,
+        "permute_extensions": true,
+        "session_ticket": true,
+        "ocsp_stapling": true,
+        "signed_cert_timestamps": true,
+        "ech_grease": true,
+        "alps": true,
+        "new_alps_codepoint": false,
+        "renegotiation": true,
+        "psk_dhe_ke": true,
+        "preserve_tls13_cipher_list": true,
+        "cert_compression": "brotli",
+        "padding": {
+          "send": {
+            "len": 28
+          }
+        },
+        "sigalg_codes": [
+          1027,
+          2052,
+          1025,
+          1283,
+          2053,
+          1281,
+          2054,
+          1537
+        ],
+        "alpn": [
+          "h2",
+          "http/1.1"
+        ],
+        "min_version": "1.2",
+        "max_version": "1.3"
+      },
+      "headers": [
+        [
+          "sec-ch-ua",
+          "\"Android WebView\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\""
+        ],
+        [
+          "sec-ch-ua-mobile",
+          "?1"
+        ],
+        [
+          "sec-ch-ua-platform",
+          "\"Android\""
+        ],
+        [
+          "upgrade-insecure-requests",
+          "1"
+        ],
+        [
+          "user-agent",
+          "Mozilla/5.0 (Linux; Android 13; redroid13_x86_64 Build/TQ3A.230805.001.S1; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/125.0.6422.113 Mobile Safari/537.36"
+        ],
+        [
+          "accept",
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+        ],
+        [
+          "x-requested-with",
+          "org.chromium.webview_shell"
+        ],
+        [
+          "sec-fetch-site",
+          "none"
+        ],
+        [
+          "sec-fetch-mode",
+          "navigate"
+        ],
+        [
+          "sec-fetch-user",
+          "?1"
+        ],
+        [
+          "sec-fetch-dest",
+          "document"
+        ],
+        [
+          "accept-encoding",
+          "gzip, deflate, br, zstd"
+        ],
+        [
+          "accept-language",
+          "en-US,en;q=0.9"
+        ],
+        [
+          "priority",
+          "u=0, i"
+        ]
+      ],
+      "http1_only": false,
+      "http2": {
+        "settings": "1:65536;2:0;4:6291456;6:262144",
+        "pseudo_order": "masp",
+        "window_update": 15663105,
+        "initial_window_size": 6291456
+      }
+    },
+    {
       "name": "chrome158",
       "family": "chrome",
       "client": "Chrome for Testing (headless)",

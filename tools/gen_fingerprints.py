@@ -662,6 +662,15 @@ PROFILES = [
         "permute_extensions": True,
     },
     {
+        "file": "android_webview125.json",
+        "name": "android_webview125",
+        "family": "android",
+        "client": "Android WebView (Chromium 125)",
+        "version": "125.0.6422.113",
+        "platform": "android",
+        "permute_extensions": True,
+    },
+    {
         "file": "chrome158.json",
         "name": "chrome158",
         "family": "chrome",
