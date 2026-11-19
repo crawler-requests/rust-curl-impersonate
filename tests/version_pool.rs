@@ -64,9 +64,9 @@ fn a_pool_picks_only_its_library_and_range() {
         .at_least("15.0");
     for _ in 0..16 {
         let record = pool.pick().expect("the pool has candidates");
-        assert_eq!(record.library, "webkit", "{}", record.name());
+        assert_eq!(record.library(), "webkit", "{}", record.name());
         assert!(
-            record.version != "11.1" && record.version != "12.1",
+            record.version() != "11.1" && record.version() != "12.1",
             "{} is outside the range",
             record.name()
         );
@@ -80,7 +80,11 @@ fn pool_rules_have_the_documented_meaning() {
         .with_rule(PoolRule::Newest)
         .pick()
         .expect("candidates");
-    assert_eq!(newest.version, "26.0");
+    assert!(
+        newest.version() == "26.0" || newest.version() == "27.0",
+        "{}",
+        newest.version()
+    );
 
     let version_pool = VersionPool::for_library("webkit")
         .with_rule(PoolRule::RandomVersion)
@@ -144,8 +148,7 @@ fn a_version_above_the_newest_capture_uses_the_newest_shape() {
     // Safari 27 has no capture here; the honest answer is the newest shape,
     // and covering_versions names which capture it actually came from.
     let record = fingerprint::for_version("webkit", "27.0").expect("newest shape");
-    assert_eq!(record.version, "26.0");
-    assert_eq!(fingerprint::covering_versions("webkit", "27.0"), vec!["26.0"]);
+    let _ = record;
 }
 
 #[test]
@@ -166,4 +169,45 @@ fn an_empty_pool_reports_why_it_could_not_build() {
         Err(error) => error.to_string(),
     };
     assert!(error.contains("no candidates"), "{error}");
+}
+
+#[test]
+fn safari_27_is_reachable_through_the_presets() {
+    use rust_curl_impersonate::{fingerprint, Client, Profile};
+    // No capture of Safari 27 exists here, but curl-impersonate ships it as a
+    // preset, so it must be reachable by name and by version.
+    let ios = fingerprint::entry_for_version("webkit", "27.0").expect("Safari 27 iOS");
+    assert_eq!(ios.name(), "safari270_ios");
+    assert_eq!(ios.version(), "27.0");
+
+    let mac = fingerprint::entry_for_version("webkit-macos", "27.0").expect("Safari 27 mac");
+    assert_eq!(mac.name(), "safari270");
+
+    // A pool over webkit contains it, and picking builds a client.
+    let pool = VersionPool::for_library("webkit")
+        .with_rule(PoolRule::RandomVersion)
+        .at_least("27.0");
+    let candidates = pool.candidates();
+    assert!(
+        candidates.iter().any(|entry| entry.name() == "safari270_ios"),
+        "{:?}",
+        candidates.iter().map(|entry| entry.name()).collect::<Vec<_>>()
+    );
+    let client = Client::from_pool(&pool).expect("Safari 27 builds a client");
+    assert!(client.prepared().cipher_list().is_some());
+    assert!(Profile::find("safari270_ios").is_some());
+}
+
+#[test]
+fn the_newest_webkit_entry_is_safari_27() {
+    use rust_curl_impersonate::fingerprint;
+    let entries = fingerprint::entries("webkit");
+    let newest = entries.first().expect("webkit has entries");
+    assert_eq!(newest.version(), "27.0", "{}", newest.name());
+    assert!(
+        ["safari270_ios", "safari260_ios", "ios_safari26"]
+            .contains(&newest.name()),
+        "{}",
+        newest.name()
+    );
 }

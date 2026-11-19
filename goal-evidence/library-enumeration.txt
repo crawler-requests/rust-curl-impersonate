@@ -23,6 +23,18 @@ what "every library" means on iOS
   "Alamofire" therefore means emulating `cfnetwork`, not a library
   named Alamofire.
 
+Safari 27.0 is covered, through the presets
+  The captures here stop at iOS 26.0, but curl-impersonate's preset table
+  ships Safari 26.0, 26.0.1 and 27.0 for both macOS and iOS. Those are now
+  library entries too, so the newest Safari is reachable:
+
+    entry_for_version("webkit", "27.0")       -> safari270_ios
+    entry_for_version("webkit-macos", "27.0") -> safari270
+
+  A pool over `webkit` contains them, and Client::from_pool builds from
+  them. Verified live: safari270 and safari270_ios both send
+  ja4 t13d2013h2_a09f3c656075_7f0f34a4126d with `Version/27.0` in the UA.
+
 the enumeration layer (new)
   fingerprint::libraries()            ["webview", "conscrypt",
                                        "cfnetwork", "webkit"]

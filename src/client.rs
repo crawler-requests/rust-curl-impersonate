@@ -54,11 +54,11 @@ impl Client {
     /// version": the pool supplies the record, `Profile::find` turns it into a
     /// profile, and the builder applies it.
     pub fn from_pool(pool: &crate::fingerprint::VersionPool) -> crate::Result<Self> {
-        let record = pool.pick().ok_or_else(|| {
+        let entry = pool.pick().ok_or_else(|| {
             arg_error(format!("version pool for {} has no candidates", pool.library()))
         })?;
-        let profile = Profile::find(record.name())
-            .ok_or_else(|| arg_error(format!("{} is not installed", record.name())))?;
+        let profile = Profile::find(entry.name())
+            .ok_or_else(|| arg_error(format!("{} is not installed", entry.name())))?;
         Self::builder(profile).build()
     }
 

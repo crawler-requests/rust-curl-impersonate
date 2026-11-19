@@ -1081,6 +1081,29 @@ pub fn by_family(family: &str) -> impl Iterator<Item = &'static Fingerprint> + '
         .filter(move |record| record.family == family)
 }
 
+/// Safari presets and the library/version each one represents.
+///
+/// The 48 curl-impersonate presets are not capture records, but they are real
+/// browser profiles and they include Safari 26.0 and 27.0 - newer than any
+/// capture taken here. The enumeration layer has to expose them or a caller
+/// could not name the newest Safari at all.
+const SAFARI_PRESETS: &[(&str, &str, &str)] = &[
+    // (target, library, version)
+    ("safari153", "webkit-macos", "15.3"),
+    ("safari155", "webkit-macos", "15.5"),
+    ("safari170", "webkit-macos", "17.0"),
+    ("safari172_ios", "webkit", "17.2"),
+    ("safari180", "webkit-macos", "18.0"),
+    ("safari180_ios", "webkit", "18.0"),
+    ("safari184", "webkit-macos", "18.4"),
+    ("safari184_ios", "webkit", "18.4"),
+    ("safari260", "webkit-macos", "26.0"),
+    ("safari2601", "webkit-macos", "26.0.1"),
+    ("safari260_ios", "webkit", "26.0"),
+    ("safari270", "webkit-macos", "27.0"),
+    ("safari270_ios", "webkit", "27.0"),
+];
+
 /// Every request-library name the library distinguishes, in record order.
 ///
 /// The list is the enumeration a caller filters by; a record without a
@@ -1093,6 +1116,69 @@ pub fn libraries() -> Vec<&'static str> {
             found.push(record.library.as_str());
         }
     }
+    found
+}
+
+/// One enumerable entry: either a capture record or a preset that stands in
+/// for a browser version no capture was taken at.
+#[derive(Debug, Clone, Copy)]
+pub enum LibraryEntry {
+    /// A capture record from the fingerprint library.
+    Capture(&'static Fingerprint),
+    /// A curl-impersonate preset, given by the name `Profile::find` accepts.
+    Preset(&'static str),
+}
+
+impl LibraryEntry {
+    /// The name `Profile::find` accepts.
+    pub fn name(&self) -> &'static str {
+        match self {
+            Self::Capture(record) => record.name(),
+            Self::Preset(target) => *target,
+        }
+    }
+
+    /// The version this entry represents.
+    pub fn version(&self) -> &'static str {
+        match self {
+            Self::Capture(record) => record.version.as_str(),
+            Self::Preset(target) => SAFARI_PRESETS
+                .iter()
+                .find(|(name, _, _)| *name == *target)
+                .map(|(_, _, version)| *version)
+                .unwrap_or(""),
+        }
+    }
+
+    /// The library this entry belongs to.
+    pub fn library(&self) -> &'static str {
+        match self {
+            Self::Capture(record) => record.library.as_str(),
+            Self::Preset(target) => SAFARI_PRESETS
+                .iter()
+                .find(|(name, _, _)| *name == *target)
+                .map(|(_, library, _)| *library)
+                .unwrap_or(""),
+        }
+    }
+}
+
+/// Every entry of one library: its captures plus its presets, newest first.
+///
+/// The presets matter for Safari: curl-impersonate ships 26.0 and 27.0,
+/// which are newer than every capture in this repository, so leaving them
+/// out would make "the newest version" unreachable.
+pub fn entries(library: &str) -> Vec<LibraryEntry> {
+    let mut found: Vec<LibraryEntry> = by_library(library)
+        .map(LibraryEntry::Capture)
+        .collect();
+    found.extend(
+        SAFARI_PRESETS
+            .iter()
+            .filter(|(_, preset_library, _)| *preset_library == library)
+            .map(|(target, _, _)| LibraryEntry::Preset(target)),
+    );
+    found.sort_by(|left, right| compare_versions(right.version(), left.version()));
     found
 }
 
@@ -1163,6 +1249,38 @@ pub fn for_version(library: &str, version: &str) -> Option<&'static Fingerprint>
         (Some(older_record), None) => Some(older_record),
         (None, None) => None,
     }
+}
+
+/// The entry (capture or preset) that covers `version`, newest preset included.
+///
+/// Prefer this over [`for_version`] when the caller may name a Safari version
+/// newer than any capture: the presets carry Safari 26.0 and 27.0.
+pub fn entry_for_version(library: &str, version: &str) -> Option<LibraryEntry> {
+    if let Some(exact) = entries(library)
+        .into_iter()
+        .find(|entry| entry.version() == version)
+    {
+        return Some(exact);
+    }
+    // `entries` sorts newest first. Walk it and keep the smallest entry that
+    // is still at or above `version`: that is the nearest one above.
+    let all = entries(library);
+    let mut nearest_above: Option<LibraryEntry> = None;
+    let mut largest_below: Option<LibraryEntry> = None;
+    for entry in &all {
+        match compare_versions(entry.version(), version) {
+            std::cmp::Ordering::Greater => nearest_above = Some(*entry),
+            std::cmp::Ordering::Less => {
+                if largest_below.is_none() {
+                    largest_below = Some(*entry);
+                }
+            }
+            std::cmp::Ordering::Equal => return Some(*entry),
+        }
+    }
+    // Above the newest entry (nothing below either): the newest is the
+    // closest thing the library can name.
+    nearest_above.or(largest_below)
 }
 
 /// The captured versions that share `version`'s ClientHello, oldest first.
@@ -1310,20 +1428,23 @@ impl VersionPool {
         &self.library
     }
 
-    /// Every record the pool can return, newest first.
-    pub fn candidates(&self) -> Vec<&'static Fingerprint> {
-        let mut found: Vec<&'static Fingerprint> = by_library(&self.library)
-            .filter(|record| self.in_range(&record.version))
+    /// Every entry the pool can return, newest first.
+    ///
+    /// Presets are included, so a pool over `webkit` offers Safari 27.0 even
+    /// though no capture of it exists.
+    pub fn candidates(&self) -> Vec<LibraryEntry> {
+        let mut found: Vec<LibraryEntry> = entries(&self.library)
+            .into_iter()
+            .filter(|entry| self.in_range(entry.version()))
             .collect();
-        found.sort_by(|left, right| compare_versions(&right.version, &left.version));
         if self.rule == PoolRule::RandomShape {
-            found = distinct_shapes_of(found);
+            found = self.distinct_shapes(found);
         }
         found
     }
 
-    /// One record chosen by the rule, or the newest when the rule is fixed.
-    pub fn pick(&self) -> Option<&'static Fingerprint> {
+    /// One entry chosen by the rule, or the newest when the rule is fixed.
+    pub fn pick(&self) -> Option<LibraryEntry> {
         let candidates = self.candidates();
         if candidates.is_empty() {
             return None;
@@ -1339,6 +1460,24 @@ impl VersionPool {
                 candidates.get(index as usize).copied()
             }
         }
+    }
+
+    /// Keep one entry per distinct ClientHello, newest first.
+    fn distinct_shapes(&self, candidates: Vec<LibraryEntry>) -> Vec<LibraryEntry> {
+        let mut seen: Vec<String> = Vec::new();
+        let mut shapes = Vec::new();
+        for entry in candidates {
+            let shape = match entry {
+                LibraryEntry::Capture(record) => record.wire_shape(),
+                LibraryEntry::Preset(target) => format!("preset:{target}"),
+            };
+            if seen.contains(&shape) {
+                continue;
+            }
+            seen.push(shape);
+            shapes.push(entry);
+        }
+        shapes
     }
 
     fn in_range(&self, version: &str) -> bool {
