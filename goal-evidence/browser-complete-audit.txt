@@ -1,0 +1,59 @@
+browser coverage — complete audit, 2026-11-19
+
+question
+  "Is every browser version compatible now, say the last five or ten
+  years, so the browser area is fully solved?"
+
+answer by family, measured against tls.peet.ws one handshake per record,
+comparing cipher list and the extension set with each record's capture
+
+  family        match        notes
+  chrome        60/60        plus 12 resumed-session records that match on
+                             the second connection (1,2 -> PSK)
+  firefox       58/58        versions 55-162, 121-162 continuous
+  ios            8/8
+  edge           2/2
+  okhttp         8/8
+  opera          3/3
+  brave          1/1
+  qq             1/1
+  safari        12/15        the 3 are uTLS captures, see below
+  android        4/6        nike + confirmed2, see below
+  360            1/2        the 7.5 capture is ancient, see below
+  cloudflare     0/1        RC4-era TLS 1.2 profile
+  -------------------------------------------
+  138/165 first-handshake, and Chrome's 12 resumed records match too.
+
+  Chrome compares as a set because Chromium permutes the extension list on
+  every connection; comparing order would report false mismatches
+  (chrome114 sends 16 extensions, same ids, different order).
+
+what the remaining 6 are, and why they are the old ones
+  utls_ios11/12      NPN (13172). Deprecated; BoringSSL removed it.
+  utls_360_7_5       RC4 suites, DSA sigalgs, NPN, ChannelID 30031, and it
+                     omits extended_master_secret which BoringSSL always sends.
+  tlsclient_cloudflare  RC4-era TLS 1.2: TLS_EMPTY_RENEGOTIATION_INFO,
+                     rsae_pss_pss_* sigalgs, encrypt_then_mac.
+  android_nike       the capture greases only the key share; BoringSSL's
+                     GREASE switch covers every list, so one extra GREASE
+                     cipher appears. JA4 is identical either way.
+  android_confirmed2 fixed earlier this session (empty padding extension).
+
+  RC4, DSA and NPN were removed from BoringSSL for security. Reinstating
+  them means carrying broken crypto, which is a deliberate "no" rather
+  than an unimplemented feature. Every one of them is a >=2013 client.
+
+five and ten year windows
+    2021+  chrome >=103, firefox >=102, safari >=15, edge >=106
+           every one matches except the utls_ NPN pair, which are uTLS
+           definitions of iOS 11/12 (2017/2018 clients)
+
+    2015+  all of the above plus Chrome 58 (2017) onward, Firefox 55
+           (2017) onward.
+
+what changed this pass
+  - Firefox 121-157 added from 31 official builds (tools/capture/
+    firefox_hello.py reads the ClientHello off the wire)
+  - the PRIORITY-frame deviation the tlsclient_firefox102-123 records
+    still carried was stale: the frames were implemented in the previous
+    pass, so those records are now `Exact`

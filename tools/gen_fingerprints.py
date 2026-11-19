@@ -2626,11 +2626,8 @@ def build_record(spec):
             for frame in http2_data.get("sent_frames") or []
             if frame.get("frame_type") == "PRIORITY"
         )
-        if priority_frames:
-            deviations.append(
-                f"The capture sends {priority_frames} RFC 7540 PRIORITY frames; the "
-                "transport sends none."
-            )
+        # PRIORITY frames are reproduced (http2.priorities), so they are
+        # not a deviation any more; `priority_frames` still drives the field.
         if authority and authority.endswith(":443"):
             deviations.append(
                 "The capture sends :authority with the default :443 port; "

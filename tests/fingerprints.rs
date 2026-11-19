@@ -612,14 +612,19 @@ fn tls_client_browser_and_ios_records_cover_more_versions() {
         .iter()
         .any(|note| note.contains("mldsa44")));
 
-    // Firefox 102-123 send six RFC 7540 PRIORITY frames before the headers;
-    // the transport sends none, so those records are `close`.
+    // Firefox 102-123 send six RFC 7540 PRIORITY frames before the headers.
+    // The transport sends them too now (`http2.priorities`), so the record is
+    // reproduced exactly and no longer declares a deviation.
     let firefox = fingerprint::find("tlsclient_firefox102").unwrap();
-    assert_eq!(firefox.fidelity, Some(Fidelity::Close));
-    assert!(firefox
+    assert_eq!(firefox.fidelity, Some(Fidelity::Exact));
+    assert!(!firefox
         .deviations
         .iter()
         .any(|note| note.contains("PRIORITY frames")));
+    assert!(firefox
+        .http2
+        .as_ref()
+        .is_some_and(|h2| h2.priorities.len() == 6));
     assert_eq!(
         fingerprint::find("tlsclient_firefox148").unwrap().fidelity,
         Some(Fidelity::Exact)
