@@ -1,0 +1,68 @@
+iOS request stacks — what they are and how each is reproduced
+date: 2026-11-20
+
+question
+  "What request libraries exist on iOS, and how do we emulate all their
+  versions?"
+
+the libraries, and why most of them share one fingerprint
+  iOS apps do not choose a TLS implementation the way Android apps do: the
+  platform hands them CFNetwork. So the library list collapses into two
+  actual stacks:
+
+  1. NSURLSession / CFNetwork       the system stack. Alamofire, AFNetworking,
+                                    Moya, SwiftNIO's URLs, Combine's
+                                    dataTaskPublisher and every hand-rolled
+                                    URLSession call end up here.
+  2. WebKit / WKWebView / Safari    WebKit's own stack (Network.framework
+                                    under it), so a WKWebView-shaped request
+                                    looks different from URLSession.
+  3. Third-party stacks that ship   Cronet (Chromium's stack),
+     their own TLS                   BoringSSL/OpenSSL builds and a few
+                                    SDKs. Each needs its own capture.
+
+  The captures prove 1 and 2 are distinct: a Safari 16 ClientHello offers
+  20 ciphers, an iOS app's offers 13, and the app set is a strict subset.
+  Five app records share one JA4 (t13d1314h2_f57a46bbacb6); the MMS app
+  uses an 18-cipher variant (t13d1810) because it pins an older CFNetwork
+  shape.
+
+records, 19 in total
+  ios_safari15_5 / 15_6 / 16 / 17 / 18 / 18_5 / 26   WebKit
+  ios_confirmed, ios_mms/2/3, ios_mesh/2, ios_nike, ios_zalando
+                                                     CFNetwork apps
+  utls_ios11 / 12 / 13 / 14                          WebKit, uTLS definitions
+
+live verification, cipher list + extension set + Akamai fingerprint
+against each record's own capture: 19 of 19 identical.
+
+new this pass: NPN
+  utls_ios11 and utls_ios12 were the only iOS records that could not match:
+  iOS 11/12 Safari offer NPN (extension 13172), and BoringSSL gates it
+  behind a callback nothing was setting. The vendored BoringSSL gained
+  `SSL_CTX_set_offer_npn`, records carry `tls.offer_npn`, and both now emit
+  13172. utls_360_7_5 benefits too - it was Partial and is Close now.
+
+what cannot be covered, and why
+  - Safari 27.x is out (27.1 and 27.2 shipped) and there is no profile for
+    it: tls-client v1.18.1 tops out at Safari_IOS_26_0, uTLS at iOS 14.
+    A real capture needs an iPhone or a macOS host, neither of which this
+    Linux machine can drive. The record set therefore stops at iOS 26.
+  - Cronet and apps shipping their own BoringSSL/OpenSSL are not
+    represented. Each is a distinct ClientHello and each needs its own
+    capture from a device.
+  - iOS 15-18 app shapes are not recorded separately from 11-14. The
+    captures available show the app stack has only two shapes (14 and 18
+    ciphers), both already present, so the gap is in version labels
+    rather than in wire bytes - but a per-version capture would need real
+    devices.
+  - utls_ios11/12 remain HTTP/1.1-only captures (their ALPN is the
+    harness's), which is a note on those records, not a missing
+    capability.
+
+how to add more iOS versions
+  An iOS ClientHello is reachable three ways, in increasing order of
+  fidelity: a tls-client or uTLS profile (no device), a WKWebView on a
+  macOS host pointed at the echo service, or a real iPhone with a proxy.
+  This machine is Linux, so only the first is available here; the records
+  above are from that route plus the profile definitions' own captures.

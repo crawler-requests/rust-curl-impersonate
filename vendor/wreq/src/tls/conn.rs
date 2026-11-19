@@ -409,6 +409,15 @@ impl TlsConnectorBuilder {
             };
         }
 
+        #[allow(unexpected_cfgs)]
+        if opts.offer_npn {
+            #[cfg(chrome_4832)]
+            #[allow(unsafe_code)]
+            unsafe {
+                btls_sys::SSL_CTX_set_offer_npn(connector.as_ptr(), 1)
+            };
+        }
+
         // Set TLS permute extensions options
         set_option!(opts, permute_extensions, connector, set_permute_extensions);
 

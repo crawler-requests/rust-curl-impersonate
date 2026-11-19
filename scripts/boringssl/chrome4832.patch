@@ -1,14 +1,18 @@
 diff --git a/include/openssl/ssl.h b/include/openssl/ssl.h
-index dd81949..1b72e49 100644
+index dd81949..e2574c4 100644
 --- a/include/openssl/ssl.h
 +++ b/include/openssl/ssl.h
-@@ -5267,6 +5267,23 @@ OPENSSL_EXPORT void SSL_CTX_set_retain_only_sha256_of_client_certs(SSL_CTX *ctx,
+@@ -5267,6 +5267,27 @@ OPENSSL_EXPORT void SSL_CTX_set_retain_only_sha256_of_client_certs(SSL_CTX *ctx,
  // GREASE. See RFC 8701.
  OPENSSL_EXPORT void SSL_CTX_set_grease_enabled(SSL_CTX *ctx, int enabled);
  
 +// SSL_CTX_set_grease_skip_ciphers keeps GREASE out of the cipher list while
 +// leaving it in the other lists. Some clients grease only the key share.
 +OPENSSL_EXPORT void SSL_CTX_set_grease_skip_ciphers(SSL_CTX *ctx, int skip);
++
++// SSL_CTX_set_offer_npn makes ClientHellos carry the deprecated NPN extension
++// (13172) at TLS 1.2, the way iOS 11/12 Safari did. No protocol is negotiated.
++OPENSSL_EXPORT void SSL_CTX_set_offer_npn(SSL_CTX *ctx, int enabled);
 +
 +// SSL_CTX_set_server_padding_request configures the value sent in Chromium's
 +// server padding request extension (4832). A negative |value| disables the
@@ -27,9 +31,24 @@ index dd81949..1b72e49 100644
  // permute extensions. For now, this is only implemented for the ClientHello.
  OPENSSL_EXPORT void SSL_CTX_set_permute_extensions(SSL_CTX *ctx, int enabled);
 diff --git a/ssl/extensions.cc b/ssl/extensions.cc
-index 1240cc6..a5a7650 100644
+index 1240cc6..af466d3 100644
 --- a/ssl/extensions.cc
 +++ b/ssl/extensions.cc
+@@ -1113,12 +1113,12 @@ static bool ext_npn_add_clienthello(const SSL_HANDSHAKE *hs, CBB *out,
+                                     CBB *out_compressible,
+                                     ssl_client_hello_type_t type) {
+   const SSL *const ssl = hs->ssl;
+-  if (ssl->ctx->next_proto_select_cb == nullptr ||
++  if (!ssl->config->offer_npn && (ssl->ctx->next_proto_select_cb == nullptr ||
+       // Do not allow NPN to change on renegotiation.
+       ssl->s3->initial_handshake_complete ||
+       // NPN is not defined in DTLS or TLS 1.3.
+       SSL_is_dtls(ssl) || hs->min_version >= TLS1_3_VERSION ||
+-      type == ssl_client_hello_inner) {
++      type == ssl_client_hello_inner)) {
+     return true;
+   }
+ 
 @@ -1558,6 +1558,13 @@ static bool ext_channel_id_add_clienthello(const SSL_HANDSHAKE *hs, CBB *out,
                                             CBB *out_compressible,
                                             ssl_client_hello_type_t type) {
@@ -147,10 +166,10 @@ index 1380bea..98ae7ba 100644
      return false;
    }
 diff --git a/ssl/internal.h b/ssl/internal.h
-index c80e565..66e3dd9 100644
+index c80e565..534733c 100644
 --- a/ssl/internal.h
 +++ b/ssl/internal.h
-@@ -3374,6 +3374,17 @@ struct SSL_CONFIG {
+@@ -3374,6 +3374,21 @@ struct SSL_CONFIG {
    // that we'll accept Channel IDs from clients. It is ignored on the client.
    bool channel_id_enabled : 1;
  
@@ -165,10 +184,14 @@ index c80e565..66e3dd9 100644
 +  // cipher list while the other lists still carry it.
 +  bool grease_skip_ciphers : 1;
 +
++  // offer_npn sends the deprecated NPN extension (13172) the way iOS 11/12
++  // Safari did, even though no protocol can be negotiated through it.
++  bool offer_npn : 1;
++
    // If enforce_rsa_key_usage is true, the handshake will fail if the
    // keyUsage extension is present and incompatible with the TLS usage.
    // This field is not read until after certificate verification.
-@@ -4043,9 +4054,27 @@ struct ssl_ctx_st : public bssl::RefCounted<ssl_ctx_st> {
+@@ -4043,9 +4058,31 @@ struct ssl_ctx_st : public bssl::RefCounted<ssl_ctx_st> {
    // advertise support.
    bool channel_id_enabled : 1;
  
@@ -185,6 +208,10 @@ index c80e565..66e3dd9 100644
 +  // cannot express.
 +  bool grease_skip_ciphers : 1;
 +
++  // offer_npn sends the deprecated NPN extension (13172) at TLS 1.2, the way
++  // iOS 11/12 Safari did.
++  bool offer_npn : 1;
++
 +  // force_padding_len sends the RFC 7685 padding extension with exactly this
 +  // payload length, regardless of the ClientHello size. `SIZE_MAX` disables it.
 +  size_t force_padding_len;
@@ -197,33 +224,35 @@ index c80e565..66e3dd9 100644
    bool permute_extensions : 1;
  
 diff --git a/ssl/ssl_lib.cc b/ssl/ssl_lib.cc
-index 117b9c9..4fbc608 100644
+index 117b9c9..98e6a3b 100644
 --- a/ssl/ssl_lib.cc
 +++ b/ssl/ssl_lib.cc
-@@ -395,7 +395,12 @@ ssl_ctx_st::ssl_ctx_st(const SSL_METHOD *ssl_method)
+@@ -395,7 +395,13 @@ ssl_ctx_st::ssl_ctx_st(const SSL_METHOD *ssl_method)
        ocsp_stapling_enabled(false),
        signed_cert_timestamps_enabled(false),
        channel_id_enabled(false),
 +      channel_id_offer(false),
        grease_enabled(false),
 +      grease_skip_ciphers(false),
++      offer_npn(false),
 +      force_padding_len(SIZE_MAX),
 +      server_padding_request(-1),
 +
        permute_extensions(false),
        disable_second_keyshare(false),
        allow_unknown_alpn_protos(false),
-@@ -561,6 +566,9 @@ SSL *SSL_new(SSL_CTX *ctx) {
+@@ -561,6 +567,10 @@ SSL *SSL_new(SSL_CTX *ctx) {
    ssl->config->psk_server_callback = ctx->psk_server_callback;
  
    ssl->config->channel_id_enabled = ctx->channel_id_enabled;
 +  ssl->config->channel_id_offer = ctx->channel_id_offer;
 +  ssl->config->force_padding_len = ctx->force_padding_len;
 +  ssl->config->grease_skip_ciphers = ctx->grease_skip_ciphers;
++  ssl->config->offer_npn = ctx->offer_npn;
    ssl->config->channel_id_private = UpRef(ctx->channel_id_private);
  
    ssl->config->signed_cert_timestamps_enabled =
-@@ -585,6 +593,9 @@ SSL_CONFIG::SSL_CONFIG(SSL *ssl_arg)
+@@ -585,6 +595,9 @@ SSL_CONFIG::SSL_CONFIG(SSL *ssl_arg)
        signed_cert_timestamps_enabled(false),
        ocsp_stapling_enabled(false),
        channel_id_enabled(false),
@@ -233,12 +262,16 @@ index 117b9c9..4fbc608 100644
        enforce_rsa_key_usage(true),
        retain_only_sha256_of_client_certs(false),
        handoff(false),
-@@ -3152,6 +3163,22 @@ void SSL_CTX_set_grease_enabled(SSL_CTX *ctx, int enabled) {
+@@ -3152,6 +3165,26 @@ void SSL_CTX_set_grease_enabled(SSL_CTX *ctx, int enabled) {
    ctx->grease_enabled = !!enabled;
  }
  
 +void SSL_CTX_set_grease_skip_ciphers(SSL_CTX *ctx, int skip) {
 +  ctx->grease_skip_ciphers = !!skip;
++}
++
++void SSL_CTX_set_offer_npn(SSL_CTX *ctx, int enabled) {
++  ctx->offer_npn = !!enabled;
 +}
 +
 +void SSL_CTX_set_server_padding_request(SSL_CTX *ctx, int value) {

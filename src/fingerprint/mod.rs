@@ -164,6 +164,10 @@ pub struct TlsFingerprint {
     /// Keep GREASE out of the cipher list only (some captures do).
     #[serde(default)]
     pub grease_skip_ciphers: bool,
+
+    /// Offer the deprecated NPN extension (13172), as iOS 11/12 Safari did.
+    #[serde(default)]
+    pub offer_npn: bool,
     /// Shuffle the extension list on every connection, as Chrome does. The
     /// recorded `extension_order` is then the captured set, not the wire order.
     #[serde(default)]
@@ -263,6 +267,7 @@ impl Default for TlsFingerprint {
             max_version: None,
             grease: false,
             grease_skip_ciphers: false,
+            offer_npn: false,
             permute_extensions: false,
             session_ticket: false,
             ocsp_stapling: false,
@@ -716,6 +721,9 @@ impl Fingerprint {
         if tls.grease_skip_ciphers {
             // Some captures (Nike's Android app) grease only the key share.
             builder = builder.grease_skip_ciphers(true);
+        }
+        if tls.offer_npn {
+            builder = builder.offer_npn(true);
         }
         if let Some(list) = &tls.ciphers {
             builder = builder.cipher_list(list.clone());

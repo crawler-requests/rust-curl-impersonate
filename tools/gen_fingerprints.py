@@ -137,6 +137,8 @@ SUPPORTED_EXTENSIONS = {
     51, 57, 65037, 65281, 17513, 17613, 65445,
     # draft-ietf-tls-trust-anchors, sent when the caller supplies identifiers.
     51764,
+    # Deprecated NPN, offered on request (same patch).
+    13172,
     # Chromium's server padding request, added by scripts/boringssl/chrome4832.patch.
     4832,
     # Deprecated ChannelID, offered empty by Chrome 58-70 (same patch).
@@ -2554,6 +2556,10 @@ def build_record(spec):
         tls_record["delegated_credentials"] = ":".join(delegated_credentials)
     if skip_cipher_grease:
         tls_record["grease_skip_ciphers"] = True
+    # NPN (13172) is deprecated; only the oldest iOS captures carry it, and
+    # the vendored BoringSSL can emit it on request.
+    if 13172 in exts:
+        tls_record["offer_npn"] = True
     if trust_anchors is not None:
         tls_record["trust_anchors"] = trust_anchors
     if channel_id:

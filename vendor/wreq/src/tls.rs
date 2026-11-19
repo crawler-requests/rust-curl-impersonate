@@ -208,6 +208,9 @@ pub struct TlsOptions {
     /// Keep GREASE out of the cipher list while the other lists keep it.
     pub grease_skip_ciphers: bool,
 
+    /// Offer the deprecated NPN extension (13172) at TLS 1.2.
+    pub offer_npn: bool,
+
     /// Enables OCSP stapling for the connection.
     ///
     /// **Default:** `false`
@@ -602,6 +605,13 @@ impl TlsOptionsBuilder {
         self
     }
 
+    /// Offers the deprecated NPN extension (13172).
+    #[inline]
+    pub fn offer_npn(mut self, enabled: bool) -> Self {
+        self.config.offer_npn = enabled;
+        self
+    }
+
     /// Sends the padding extension with exactly `len` payload bytes, or
     /// suppresses it when `len` is `None`.
     ///
@@ -650,6 +660,7 @@ impl Default for TlsOptions {
             permute_extensions: None,
             grease_enabled: None,
             grease_skip_ciphers: false,
+            offer_npn: false,
             enable_ocsp_stapling: false,
             enable_signed_cert_timestamps: false,
             record_size_limit: None,

@@ -14339,16 +14339,15 @@
       "version": "11.1",
       "platform": "ios",
       "source": "tls.peet.ws capture, tools/capture/raw/utls_ios11.json",
-      "fidelity": "close",
+      "fidelity": "exact",
       "deviations": [
-        "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
-        "BoringSSL never sends captured extension 13172 (unknown)."
+        "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
       ],
       "tls": {
         "ciphers": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-384:P-521",
         "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
-        "extension_order": "65281-0-23-13-5-18-16-11-10",
+        "extension_order": "65281-0-23-13-5-13172-18-16-11-10",
         "key_shares": "",
         "grease": false,
         "permute_extensions": false,
@@ -14361,6 +14360,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
+        "offer_npn": true,
         "padding": "omit",
         "sigalg_codes": [
           1027,
@@ -14398,16 +14398,15 @@
       "version": "12.1",
       "platform": "ios",
       "source": "tls.peet.ws capture, tools/capture/raw/utls_ios12.json",
-      "fidelity": "close",
+      "fidelity": "exact",
       "deviations": [
-        "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
-        "BoringSSL never sends captured extension 13172 (unknown)."
+        "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
       ],
       "tls": {
         "ciphers": "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA:TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA:TLS_RSA_WITH_3DES_EDE_CBC_SHA",
         "curves": "X25519:P-256:P-384:P-521",
         "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:ecdsa_sha1:rsa_pss_rsae_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
-        "extension_order": "65281-0-23-13-5-18-16-11-10",
+        "extension_order": "65281-0-23-13-5-13172-18-16-11-10",
         "key_shares": "",
         "grease": false,
         "permute_extensions": false,
@@ -14420,6 +14419,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
+        "offer_npn": true,
         "padding": "omit",
         "sigalg_codes": [
           1027,
@@ -14769,19 +14769,19 @@
       "version": "7.5",
       "platform": "windows",
       "source": "tls.peet.ws capture, tools/capture/raw/utls_360_7_5.json",
-      "fidelity": "partial",
+      "fidelity": "close",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
         "BoringSSL cannot send 5 captured cipher suites: TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_RC4_128_SHA and 1 more (15 sent).",
         "BoringSSL cannot send 2 captured signature algorithms: dsa_sha256, 0x202 (6 sent).",
-        "BoringSSL never sends captured extension 13172 (unknown), 30031 (unknown).",
+        "BoringSSL never sends captured extension 30031 (unknown).",
         "BoringSSL always sends extended_master_secret (23); the capture omits it."
       ],
       "tls": {
         "ciphers": "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_3DES_EDE_CBC_SHA",
         "curves": "P-256:P-384:P-521",
         "sigalgs": "rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha1:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_sha1",
-        "extension_order": "0-65281-10-11-35-16-5-13",
+        "extension_order": "0-65281-10-11-35-13172-16-5-13",
         "key_shares": "",
         "grease": false,
         "permute_extensions": false,
@@ -14794,6 +14794,7 @@
         "renegotiation": true,
         "psk_dhe_ke": false,
         "preserve_tls13_cipher_list": true,
+        "offer_npn": true,
         "padding": "omit",
         "sigalg_codes": [
           1025,

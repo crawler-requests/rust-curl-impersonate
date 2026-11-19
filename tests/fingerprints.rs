@@ -760,7 +760,11 @@ fn utls_records_cover_legacy_browsers_and_http1_chrome() {
     assert!(qq.tls.alps);
     let browser360 = fingerprint::find("utls_360_7_5").unwrap();
     assert_eq!(browser360.family, "360");
-    assert_eq!(browser360.fidelity, Some(Fidelity::Partial));
+    // NPN is emitted now (the vendored BoringSSL has an offer switch), so the
+    // only gaps left are the RC4 suites, DSA sigalgs, ChannelID 30031 and the
+    // always-on extended_master_secret.
+    assert_eq!(browser360.fidelity, Some(Fidelity::Close));
+    assert!(browser360.tls.offer_npn, "NPN is offered from the capture");
     assert!(browser360
         .deviations
         .iter()
