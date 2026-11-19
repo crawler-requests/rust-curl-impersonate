@@ -1294,10 +1294,20 @@ impl VersionPool {
         self
     }
 
+    /// The rule this pool applies.
+    pub fn rule(&self) -> PoolRule {
+        self.rule
+    }
+
     /// Chooses the rule.
     pub fn with_rule(mut self, rule: PoolRule) -> Self {
         self.rule = rule;
         self
+    }
+
+    /// The library this pool draws from.
+    pub fn library(&self) -> &str {
+        &self.library
     }
 
     /// Every record the pool can return, newest first.

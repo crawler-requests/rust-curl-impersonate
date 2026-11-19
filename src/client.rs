@@ -48,6 +48,20 @@ impl Client {
         Self::builder(profile).build()
     }
 
+    /// Build a client from a version pool, taking the record the pool picks.
+    ///
+    /// This is the one-call form of "name a library, let the library choose a
+    /// version": the pool supplies the record, `Profile::find` turns it into a
+    /// profile, and the builder applies it.
+    pub fn from_pool(pool: &crate::fingerprint::VersionPool) -> crate::Result<Self> {
+        let record = pool.pick().ok_or_else(|| {
+            arg_error(format!("version pool for {} has no candidates", pool.library()))
+        })?;
+        let profile = Profile::find(record.name())
+            .ok_or_else(|| arg_error(format!("{} is not installed", record.name())))?;
+        Self::builder(profile).build()
+    }
+
     /// `name[:yes|no]`. `yes` installs the preset's base headers.
     pub fn impersonate(spec: &str) -> crate::Result<Self> {
         let parsed = policy::parse_impersonate(spec).map_err(arg_error)?;

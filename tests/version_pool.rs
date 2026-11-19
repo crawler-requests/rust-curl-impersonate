@@ -147,3 +147,23 @@ fn a_version_above_the_newest_capture_uses_the_newest_shape() {
     assert_eq!(record.version, "26.0");
     assert_eq!(fingerprint::covering_versions("webkit", "27.0"), vec!["26.0"]);
 }
+
+#[test]
+fn one_call_builds_a_client_from_a_pool() {
+    use rust_curl_impersonate::Client;
+    // The caller names a library and a rule; no record name is needed.
+    let pool = VersionPool::for_library("cfnetwork").with_rule(PoolRule::Newest);
+    let client = Client::from_pool(&pool).expect("a pool picks a usable record");
+    assert!(client.prepared().cipher_list().is_some());
+}
+
+#[test]
+fn an_empty_pool_reports_why_it_could_not_build() {
+    use rust_curl_impersonate::Client;
+    let pool = VersionPool::for_library("does-not-exist");
+    let error = match Client::from_pool(&pool) {
+        Ok(_) => panic!("an empty pool should not build a client"),
+        Err(error) => error.to_string(),
+    };
+    assert!(error.contains("no candidates"), "{error}");
+}

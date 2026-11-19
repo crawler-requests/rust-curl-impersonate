@@ -69,6 +69,15 @@ version resolution (new)
     11.1 exact, 16.2/17.3 -> 15.5-18.0 shape, 18.5 exact, 26.0/26.4/27.0
     -> the 26.0 shape, 12.5/13.4/15.0/18.2 -> None (gap between shapes).
 
+one-call form (new)
+  Client::from_pool(&pool) builds a client straight from a pool, so a caller
+  writes neither a record name nor a Profile::find call:
+
+    let pool = VersionPool::for_library("cfnetwork").with_rule(PoolRule::Newest);
+    let client = Client::from_pool(&pool)?;
+
+  An empty pool returns an error naming the reason ("no candidates").
+
 the pool layer (new)
   VersionPool::for_library(lib)
       .with_rule(PoolRule::RandomShape | RandomVersion | Newest)
