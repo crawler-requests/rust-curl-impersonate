@@ -1118,6 +1118,72 @@ pub fn versions(library: &str) -> Vec<&'static str> {
     found
 }
 
+/// The record whose capture covers `version` of `library`.
+///
+/// A version is covered when the library has a capture at that version, or
+/// when it has captures on both sides of it whose ClientHello is the same
+/// shape - Safari 15.5 through 18.0 send one ClientHello, so a lookup for
+/// 16.2 returns that shape (with the newest covered version named in
+/// [`covering_versions`]).
+pub fn for_version(library: &str, version: &str) -> Option<&'static Fingerprint> {
+    if let Some(exact) = by_library(library).find(|record| record.version == version) {
+        return Some(exact);
+    }
+    // Walk every capture, not just the distinct shapes: two records that
+    // share a shape can bracket a version even though the shape list has
+    // already collapsed them into one entry.
+    let mut records: Vec<&'static Fingerprint> = by_library(library).collect();
+    records.sort_by(|left, right| compare_versions(&left.version, &right.version));
+    let mut older: Option<&'static Fingerprint> = None;
+    let mut newer: Option<&'static Fingerprint> = None;
+    for record in records.iter() {
+        match compare_versions(&record.version, version) {
+            std::cmp::Ordering::Less => older = Some(record),
+            std::cmp::Ordering::Greater => {
+                if newer.is_none() {
+                    newer = Some(record);
+                }
+            }
+            std::cmp::Ordering::Equal => return Some(record),
+        }
+    }
+    match (older, newer) {
+        // Both neighbours exist: they bracket the version, so it is covered
+        // only when both sides send the same shape (Safari 15.5-18.0 do).
+        (Some(older_record), Some(newer_record)) => {
+            if older_record.wire_shape() == newer_record.wire_shape() {
+                Some(newer_record)
+            } else {
+                None
+            }
+        }
+        // Below the oldest capture: the oldest shape is the closest answer.
+        (None, Some(newer_record)) => Some(newer_record),
+        // Above the newest: the newest shape is the closest answer.
+        (Some(older_record), None) => Some(older_record),
+        (None, None) => None,
+    }
+}
+
+/// The captured versions that share `version`'s ClientHello, oldest first.
+///
+/// Returns just the exact version when its shape is unique. A caller that
+/// asks for 16.2 learns that 15.5-18.0 are the captures behind that shape.
+pub fn covering_versions(library: &str, version: &str) -> Vec<&'static str> {
+    let Some(record) = for_version(library, version) else {
+        return Vec::new();
+    };
+    let shape = record.wire_shape();
+    let mut found: Vec<&'static str> = by_library(library)
+        .filter(|candidate| candidate.wire_shape() == shape)
+        .map(|candidate| candidate.version.as_str())
+        .filter(|candidate| !candidate.is_empty())
+        .collect();
+    found.sort_by(|left, right| compare_versions(left, right));
+    found.dedup();
+    found
+}
+
 /// The newest record for a library.
 pub fn newest(library: &str) -> Option<&'static Fingerprint> {
     by_library(library).max_by(|left, right| compare_versions(&left.version, &right.version))

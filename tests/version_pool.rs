@@ -110,3 +110,40 @@ fn pool_names_can_be_installed_and_used() {
     let client = Client::new(profile).expect("the record builds a client");
     assert!(!client.prepared().cipher_list().is_none());
 }
+
+#[test]
+fn a_version_inside_a_stable_range_resolves_to_that_shape() {
+    use rust_curl_impersonate::fingerprint;
+    // Safari 15.5 through 18.0 send one ClientHello; a caller asking for
+    // 16.2 gets that shape and learns the captures behind it.
+    let record = fingerprint::for_version("webkit", "16.2").expect("covered range");
+    assert_eq!(record.library, "webkit");
+    let covers = fingerprint::covering_versions("webkit", "16.2");
+    assert!(covers.contains(&"15.5"), "{covers:?}");
+    assert!(covers.contains(&"18.0"), "{covers:?}");
+    // Every version in the range resolves to the same shape.
+    for version in ["15.5", "16.0", "17.0", "18.0"] {
+        let exact = fingerprint::for_version("webkit", version).expect(version);
+        assert_eq!(exact.wire_shape(), record.wire_shape(), "{version}");
+    }
+}
+
+#[test]
+fn a_version_between_different_shapes_is_not_guessed() {
+    use rust_curl_impersonate::fingerprint;
+    // 18.2 sits between 18.0 and 18.5, which send different ClientHellos, so
+    // no capture describes it and the lookup must not pretend one does.
+    assert!(fingerprint::for_version("webkit", "18.2").is_none());
+    // 12.5 likewise sits between 12.1 and 13.0, which differ.
+    assert!(fingerprint::for_version("webkit", "12.5").is_none());
+}
+
+#[test]
+fn a_version_above_the_newest_capture_uses_the_newest_shape() {
+    use rust_curl_impersonate::fingerprint;
+    // Safari 27 has no capture here; the honest answer is the newest shape,
+    // and covering_versions names which capture it actually came from.
+    let record = fingerprint::for_version("webkit", "27.0").expect("newest shape");
+    assert_eq!(record.version, "26.0");
+    assert_eq!(fingerprint::covering_versions("webkit", "27.0"), vec!["26.0"]);
+}

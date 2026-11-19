@@ -49,6 +49,26 @@ why "distinct shapes" is the right unit
   looks. distinct_shapes keeps the newest representative of each shape,
   so 18.0 stands for the 15.5-18.0 group.
 
+version resolution (new)
+  fingerprint::for_version(lib, version)  -> the capture covering it
+  fingerprint::covering_versions(lib, v)  -> which captures that shape came from
+
+  A version is covered in three ways:
+    1. an exact capture exists                       -> that record
+    2. it sits between two captures of one shape     -> that shape
+       (15.5-18.0 share one ClientHello, so 16.2 resolves to it and
+        covering_versions() names 15.5,15.6,16.0,17.0,18.0)
+    3. it is above the newest capture                -> the newest shape
+       (27.0 resolves to the 26.0 record, and covering_versions() says so)
+
+  A version between two DIFFERENT shapes (18.2 between 18.0 and 18.5,
+  12.5 between 12.1 and 13.0) returns None. No capture describes it and
+  the library will not invent one.
+
+  Measured against the current set:
+    11.1 exact, 16.2/17.3 -> 15.5-18.0 shape, 18.5 exact, 26.0/26.4/27.0
+    -> the 26.0 shape, 12.5/13.4/15.0/18.2 -> None (gap between shapes).
+
 the pool layer (new)
   VersionPool::for_library(lib)
       .with_rule(PoolRule::RandomShape | RandomVersion | Newest)
