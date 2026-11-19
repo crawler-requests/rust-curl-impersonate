@@ -36,7 +36,9 @@ the enumeration layer (new)
   `version` rather than a profile name.
 
   Numbers today:
-    webkit      11 versions (11.1 .. 26.0)   7 distinct shapes
+    webkit      12 versions (11.1 .. 26.0)   7 distinct shapes
+                (includes Safari on iPad 15.6)
+    webkit-macos 2 versions (15.6.1, 16.0)    2 distinct shapes
     cfnetwork    3 versions (13.0 .. 17.0)   5 distinct shapes
     conscrypt    7 versions (7 .. 13)        8 distinct shapes
     webview      1 version (125.0.6422.113)

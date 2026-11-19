@@ -1465,6 +1465,7 @@ PROFILES = [
     {
         "file": "tlsclient_safari15_6_1.json",
         "name": "tlsclient_safari15_6_1",
+        "library": "webkit-macos",
         "family": "safari",
         "client": "Safari on macOS (tls-client profile)",
         "version": "15.6.1",
@@ -1473,6 +1474,7 @@ PROFILES = [
     {
         "file": "tlsclient_safari16.json",
         "name": "tlsclient_safari16",
+        "library": "webkit-macos",
         "family": "safari",
         "client": "Safari on macOS (tls-client profile)",
         "version": "16.0",
@@ -1481,6 +1483,7 @@ PROFILES = [
     {
         "file": "tlsclient_safari_ipad15_6.json",
         "name": "tlsclient_safari_ipad15_6",
+        "library": "webkit",
         "family": "safari",
         "client": "Safari on iPad (tls-client profile)",
         "version": "15.6",
@@ -1805,6 +1808,7 @@ PROFILES = [
     {
         "file": "utls_safari16.json",
         "name": "utls_safari16",
+        "library": "webkit-macos",
         "family": "safari",
         "client": "Safari 16.0 (uTLS ClientHello)",
         "version": "16.0",
