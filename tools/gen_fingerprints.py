@@ -674,6 +674,15 @@ PROFILES = [
         "permute_extensions": True,
     },
     {
+        "file": "webkitgtk26_4.json",
+        "name": "webkitgtk26_4",
+        "family": "safari",
+        "library": "webkitgtk",
+        "client": "WebKitGTK 2.52 (Linux)",
+        "version": "26.4",
+        "platform": "linux",
+    },
+    {
         "file": "chrome158.json",
         "name": "chrome158",
         "family": "chrome",
@@ -2630,6 +2639,17 @@ def build_record(spec):
             tls_record["server_padding_request"] = int.from_bytes(payload, "big")
     if spec.get("server_padding_request") is not None:
         tls_record["server_padding_request"] = spec["server_padding_request"]
+    # ALPN: BoringSSL can only offer h2, http/1.1 and h3. A capture may also
+    # list http/1.0 (WebKitGTK does); it is dropped and recorded, because the
+    # transport would reject it.
+    if alpn:
+        unsendable = [p for p in alpn if p not in ("h2", "http/1.1", "h3")]
+        if unsendable:
+            deviations.append(
+                "The capture lists ALPN " + ", ".join(unsendable) +
+                ", which BoringSSL cannot offer; those entries are dropped."
+            )
+            alpn = [p for p in alpn if p in ("h2", "http/1.1", "h3")]
     # Always record ALPN. An empty list means the client sends no ALPN
     # extension, which is different from "the transport decides".
     tls_record["alpn"] = alpn or []
