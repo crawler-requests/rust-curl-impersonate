@@ -205,6 +205,9 @@ pub struct TlsOptions {
     /// **Default:** `None` (implementation default)
     pub grease_enabled: Option<bool>,
 
+    /// Keep GREASE out of the cipher list while the other lists keep it.
+    pub grease_skip_ciphers: bool,
+
     /// Enables OCSP stapling for the connection.
     ///
     /// **Default:** `false`
@@ -592,6 +595,13 @@ impl TlsOptionsBuilder {
         self
     }
 
+    /// Keeps GREASE out of the cipher list only.
+    #[inline]
+    pub fn grease_skip_ciphers(mut self, skip: bool) -> Self {
+        self.config.grease_skip_ciphers = skip;
+        self
+    }
+
     /// Sends the padding extension with exactly `len` payload bytes, or
     /// suppresses it when `len` is `None`.
     ///
@@ -639,6 +649,7 @@ impl Default for TlsOptions {
             enable_ech_grease: false,
             permute_extensions: None,
             grease_enabled: None,
+            grease_skip_ciphers: false,
             enable_ocsp_stapling: false,
             enable_signed_cert_timestamps: false,
             record_size_limit: None,

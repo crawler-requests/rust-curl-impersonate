@@ -160,6 +160,10 @@ pub struct TlsFingerprint {
     /// GREASE values in the ClientHello.
     #[serde(default)]
     pub grease: bool,
+
+    /// Keep GREASE out of the cipher list only (some captures do).
+    #[serde(default)]
+    pub grease_skip_ciphers: bool,
     /// Shuffle the extension list on every connection, as Chrome does. The
     /// recorded `extension_order` is then the captured set, not the wire order.
     #[serde(default)]
@@ -258,6 +262,7 @@ impl Default for TlsFingerprint {
             min_version: None,
             max_version: None,
             grease: false,
+            grease_skip_ciphers: false,
             permute_extensions: false,
             session_ticket: false,
             ocsp_stapling: false,
@@ -707,6 +712,10 @@ impl Fingerprint {
             .preserve_tls13_cipher_list(tls.preserve_tls13_cipher_list);
         if tls.alps {
             builder = builder.alps_protocols([AlpsProtocol::HTTP2]);
+        }
+        if tls.grease_skip_ciphers {
+            // Some captures (Nike's Android app) grease only the key share.
+            builder = builder.grease_skip_ciphers(true);
         }
         if let Some(list) = &tls.ciphers {
             builder = builder.cipher_list(list.clone());

@@ -2411,7 +2411,11 @@ def build_record(spec):
         for label in share
     ):
         greased_lists.append("key share")
-    if grease and len(greased_lists) < 5:
+    # A capture that greases some lists but not the cipher list can be
+    # reproduced exactly now: the vendored BoringSSL has a switch that keeps
+    # GREASE out of the cipher list while the others still carry it.
+    skip_cipher_grease = grease and "cipher suite" not in greased_lists
+    if grease and len(greased_lists) < 5 and not skip_cipher_grease:
         deviations.append(
             "The capture greases only the "
             + (", ".join(greased_lists) if greased_lists else "nothing")
@@ -2548,6 +2552,8 @@ def build_record(spec):
         tls_record["record_size_limit"] = record_size_limit
     if delegated_credentials:
         tls_record["delegated_credentials"] = ":".join(delegated_credentials)
+    if skip_cipher_grease:
+        tls_record["grease_skip_ciphers"] = True
     if trust_anchors is not None:
         tls_record["trust_anchors"] = trust_anchors
     if channel_id:

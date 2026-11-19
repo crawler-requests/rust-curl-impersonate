@@ -400,6 +400,14 @@ impl TlsConnectorBuilder {
 
         // Set TLS grease options
         set_option!(opts, grease_enabled, connector, set_grease_enabled);
+        #[allow(unexpected_cfgs)]
+        if opts.grease_skip_ciphers {
+            #[cfg(chrome_4832)]
+            #[allow(unsafe_code)]
+            unsafe {
+                btls_sys::SSL_CTX_set_grease_skip_ciphers(connector.as_ptr(), 1)
+            };
+        }
 
         // Set TLS permute extensions options
         set_option!(opts, permute_extensions, connector, set_permute_extensions);

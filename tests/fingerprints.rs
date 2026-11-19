@@ -492,16 +492,19 @@ fn mobile_and_opera_records_cover_android_and_ios() {
 
     // App-specific Android shapes share OkHttp's TLS 1.3 list but differ on
     // HTTP/2: Nike sends OkHttp's SETTINGS, Zalando adds a signed certificate
-    // timestamp extension. Nike greases only its key share, which BoringSSL's
-    // single GREASE switch cannot reproduce, so it is `close`.
+    // timestamp extension. Nike greases only its key share; the vendored
+    // BoringSSL can now skip GREASE in the cipher list alone, so the record
+    // is reproduced exactly.
     let nike = fingerprint::find("android_nike").unwrap();
     assert_eq!(nike.family, "android");
-    assert_eq!(nike.fidelity, Some(Fidelity::Close));
+    assert_eq!(nike.fidelity, Some(Fidelity::Exact));
     assert_eq!(
         nike.http2.as_ref().unwrap().settings.as_deref(),
         Some("1:4096;3:4294967295;4:16777216;5:16384;6:4294967295")
     );
-    assert!(nike
+    assert!(nike.tls.grease, "Nike still greases the key share");
+    assert!(nike.tls.grease_skip_ciphers, "and not the cipher list");
+    assert!(!nike
         .deviations
         .iter()
         .any(|note| note.contains("greases only the key share")));
