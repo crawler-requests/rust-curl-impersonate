@@ -1,0 +1,79 @@
+iOS (and Android) request libraries — enumeration and version pools
+date: 2026-11-20
+
+the requirement
+  "Cover every request library on iOS at every version, especially the
+  newest, so a caller only names a library and the library picks.
+  Then, one level up, support choosing versions by rule, e.g. a version
+  pool that randomises."
+
+what "every library" means on iOS
+  iOS does not let an app choose a TLS implementation the way Android
+  does; the platform gives it CFNetwork. So the library list collapses
+  into stacks, not libraries:
+
+    cfnetwork   NSURLSession, and Alamofire / AFNetworking / Moya /
+                Combine / any hand-rolled URLSession call - all one
+                ClientHello shape.
+    webkit      WKWebView and Safari.
+    cronet      Chromium's stack, only when an app ships it.
+
+  The captures confirm two distinct shapes: Safari 16 offers 20 ciphers,
+  an iOS app offers 13, and the app set is a strict subset. Emulating
+  "Alamofire" therefore means emulating `cfnetwork`, not a library
+  named Alamofire.
+
+the enumeration layer (new)
+  fingerprint::libraries()            ["webview", "conscrypt",
+                                       "cfnetwork", "webkit"]
+  fingerprint::versions(lib)          newest first, numeric ordering
+                                      ("26.0" ahead of "18.5")
+  fingerprint::newest(lib)            the newest record
+  fingerprint::by_library(lib)        all records of one stack
+  fingerprint::distinct_shapes(lib)   one record per distinct ClientHello
+
+  A record now carries `library`, and iOS/Android records carry a real
+  `version` rather than a profile name.
+
+  Numbers today:
+    webkit      11 versions (11.1 .. 26.0)   7 distinct shapes
+    cfnetwork    3 versions (13.0 .. 17.0)   5 distinct shapes
+    conscrypt    7 versions (7 .. 13)        8 distinct shapes
+    webview      1 version (125.0.6422.113)
+
+why "distinct shapes" is the right unit
+  Several Safari releases send byte-identical ClientHellos: 15.5, 15.6,
+  16.0, 17.0 and 18.0 are one shape (t13d2014h2_a09f3c656075_14788d8d241b).
+  A pool that randomly picks a captured record would therefore weight
+  those years by how many captures were taken, not by how the browser
+  looks. distinct_shapes keeps the newest representative of each shape,
+  so 18.0 stands for the 15.5-18.0 group.
+
+the pool layer (new)
+  VersionPool::for_library(lib)
+      .with_rule(PoolRule::RandomShape | RandomVersion | Newest)
+      .at_least("15.0").at_most("18.5")
+      .pick()            -> Option<&Fingerprint>, usable as
+                            Client::new(Profile::find(record.name())?)
+  RandomShape   uniform over distinct shapes (default)
+  RandomVersion uniform over captured records
+  Newest        the newest capture
+
+  tests/version_pool.rs covers enumeration, range filtering, shape
+  collapsing, rule semantics and that a pool name resolves to a working
+  Client.
+
+honest gaps
+  - There is no iOS 27 record. Safari 27.1/27.2 shipped, but tls-client
+    v1.18.1 tops out at Safari_IOS_26_0 and uTLS at iOS 14; a real
+    capture needs an iPhone or macOS host and this machine is Linux.
+  - Intermediate Safari releases (15.0-15.4, 16.1-16.6, 17.1-17.5,
+    18.1-18.4, 26.1-26.5) have no upstream profile. They are NOT
+    invented: within 15.5-18.0 the shape is stable, so the covered
+    shapes describe those years, but a version that changed its hello
+    (as 18.5 and 26.0 did) is only represented where a profile exists.
+  - tls-client's app profiles (ConfirmedAndroid, NikeAndroidMobile,
+    ...) carry no OS version upstream (`Version: "1"`), so those
+    records have an empty `version` and are addressed by shape instead
+    of by a fabricated number.
+  - Cronet remains uncovered; it needs a device capture.

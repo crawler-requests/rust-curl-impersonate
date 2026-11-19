@@ -86,6 +86,12 @@ pub struct Fingerprint {
     /// `linux`, `windows`, `macos`, `android`, `ios`, or empty when unknown.
     #[serde(default)]
     pub platform: String,
+    /// Which request stack the capture came from, when that is known:
+    /// `cfnetwork` (NSURLSession and everything built on it), `webkit`
+    /// (WKWebView/Safari), `cronet`, or empty for a client without a
+    /// meaningful stack distinction.
+    #[serde(default)]
+    pub library: String,
     /// How the record was captured.
     #[serde(default)]
     pub source: String,
@@ -436,6 +442,29 @@ impl Http3Fingerprint {
 }
 
 impl Fingerprint {
+    /// A string that is equal for two records that send the same
+    /// ClientHello: the cipher list, groups, sigalgs, ALPN and the extension
+    /// set. Extension order is left out because Chromium permutes it per
+    /// connection, and values BoringSSL cannot send are left out because
+    /// they never reach the wire.
+    pub fn wire_shape(&self) -> String {
+        let mut extensions: Vec<&str> = self
+            .tls
+            .extension_order
+            .as_deref()
+            .map(|order| order.split('-').collect())
+            .unwrap_or_default();
+        extensions.sort_unstable();
+        format!(
+            "c={}|g={}|s={}|a={}|e={}",
+            self.tls.ciphers.as_deref().unwrap_or(""),
+            self.tls.curves.as_deref().unwrap_or(""),
+            self.tls.sigalgs.as_deref().unwrap_or(""),
+            self.tls.alpn.as_deref().unwrap_or_default().join(","),
+            extensions.join(","),
+        )
+    }
+
     /// The name this record is selected by.
     pub fn name(&self) -> &str {
         &self.name
@@ -1050,6 +1079,222 @@ pub fn by_family(family: &str) -> impl Iterator<Item = &'static Fingerprint> + '
         .iter()
         .copied()
         .filter(move |record| record.family == family)
+}
+
+/// Every request-library name the library distinguishes, in record order.
+///
+/// The list is the enumeration a caller filters by; a record without a
+/// `library` field is one whose stack is not meaningful (a command-line
+/// client, a runtime without a platform TLS stack).
+pub fn libraries() -> Vec<&'static str> {
+    let mut found = Vec::new();
+    for record in records() {
+        if !record.library.is_empty() && !found.contains(&record.library.as_str()) {
+            found.push(record.library.as_str());
+        }
+    }
+    found
+}
+
+/// Records that came from one request library, in record order.
+pub fn by_library(library: &str) -> impl Iterator<Item = &'static Fingerprint> + '_ {
+    records()
+        .iter()
+        .copied()
+        .filter(move |record| record.library == library)
+}
+
+/// Every version a library was captured at, newest first.
+///
+/// Versions are compared as dot-separated numbers, so `"26.0"` sorts ahead
+/// of `"18.5"` and `"15.10"` ahead of `"15.9"`.
+pub fn versions(library: &str) -> Vec<&'static str> {
+    let mut found: Vec<&'static str> = by_library(library)
+        .map(|record| record.version.as_str())
+        .filter(|version| !version.is_empty())
+        .collect();
+    found.sort_by(|left, right| compare_versions(right, left));
+    found.dedup();
+    found
+}
+
+/// The newest record for a library.
+pub fn newest(library: &str) -> Option<&'static Fingerprint> {
+    by_library(library).max_by(|left, right| compare_versions(&left.version, &right.version))
+}
+
+/// One record per distinct wire fingerprint in a library, newest first.
+///
+/// Several versions often send byte-identical ClientHellos (Safari 15.5
+/// through 18.0 are one fingerprint), so a version pool that randomly picks
+/// a record would weight those years by how many captures happened to be
+/// taken. This returns the distinct shapes instead, which is what a
+/// version pool wants when the point is "look like some version of this
+/// library" rather than "look like the specific version I named".
+pub fn distinct_shapes(library: &str) -> Vec<&'static Fingerprint> {
+    // Sort newest first, then keep the first of each shape, so the
+    // representative of a shape shared by several releases is their newest
+    // (Safari 15.5-18.0 share one shape; 18.0 is the right name for it).
+    let mut records: Vec<&'static Fingerprint> = by_library(library).collect();
+    records.sort_by(|left, right| compare_versions(&right.version, &left.version));
+    distinct_shapes_of(records)
+}
+
+/// Compare two version strings numerically, component by component.
+fn compare_versions(left: &str, right: &str) -> std::cmp::Ordering {
+    let mut left_parts = left.split('.');
+    let mut right_parts = right.split('.');
+    loop {
+        match (left_parts.next(), right_parts.next()) {
+            (None, None) => return std::cmp::Ordering::Equal,
+            (None, Some(_)) => return std::cmp::Ordering::Less,
+            (Some(_), None) => return std::cmp::Ordering::Greater,
+            (Some(a), Some(b)) => {
+                let a_num: u64 = a.parse().unwrap_or(0);
+                let b_num: u64 = b.parse().unwrap_or(0);
+                match a_num.cmp(&b_num) {
+                    std::cmp::Ordering::Equal => continue,
+                    other => return other,
+                }
+            }
+        }
+    }
+}
+
+/// A rule for picking one record out of a library's versions.
+///
+/// The enumeration layer is name-based: `Client::new(pool.pick()?)` after a
+/// `VersionPool` chooses. Supported rules cover the common cases without
+/// pulling in a random-number dependency at the call site.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PoolRule {
+    /// Uniform over the distinct wire shapes, so years that reuse one
+    /// ClientHello do not outweigh the others.
+    RandomShape,
+    /// Uniform over every captured record, so every captured version is
+    /// equally likely.
+    RandomVersion,
+    /// The newest captured version.
+    Newest,
+    /// A version picked by `Selector` rather than by chance.
+    Fixed,
+}
+
+impl Default for PoolRule {
+    fn default() -> Self {
+        Self::RandomShape
+    }
+}
+
+/// A pool of records for one library, optionally narrowed to a version range.
+///
+/// ```
+/// use rust_curl_impersonate::fingerprint::{self, PoolRule, VersionPool};
+/// let pool = VersionPool::for_library("webkit")
+///     .with_rule(PoolRule::RandomShape)
+///     .at_least("15.0");
+/// if let Some(record) = pool.pick() {
+///     let _ = record.name();
+/// }
+/// ```
+#[derive(Debug, Clone)]
+pub struct VersionPool {
+    library: String,
+    rule: PoolRule,
+    minimum: Option<String>,
+    maximum: Option<String>,
+}
+
+impl VersionPool {
+    /// A pool over one library's records.
+    pub fn for_library(library: impl Into<String>) -> Self {
+        Self {
+            library: library.into(),
+            rule: PoolRule::RandomShape,
+            minimum: None,
+            maximum: None,
+        }
+    }
+
+    /// Restricts the pool to versions at or above `version`.
+    pub fn at_least(mut self, version: impl Into<String>) -> Self {
+        self.minimum = Some(version.into());
+        self
+    }
+
+    /// Restricts the pool to versions at or below `version`.
+    pub fn at_most(mut self, version: impl Into<String>) -> Self {
+        self.maximum = Some(version.into());
+        self
+    }
+
+    /// Chooses the rule.
+    pub fn with_rule(mut self, rule: PoolRule) -> Self {
+        self.rule = rule;
+        self
+    }
+
+    /// Every record the pool can return, newest first.
+    pub fn candidates(&self) -> Vec<&'static Fingerprint> {
+        let mut found: Vec<&'static Fingerprint> = by_library(&self.library)
+            .filter(|record| self.in_range(&record.version))
+            .collect();
+        found.sort_by(|left, right| compare_versions(&right.version, &left.version));
+        if self.rule == PoolRule::RandomShape {
+            found = distinct_shapes_of(found);
+        }
+        found
+    }
+
+    /// One record chosen by the rule, or the newest when the rule is fixed.
+    pub fn pick(&self) -> Option<&'static Fingerprint> {
+        let candidates = self.candidates();
+        if candidates.is_empty() {
+            return None;
+        }
+        match self.rule {
+            PoolRule::Newest | PoolRule::Fixed => candidates.first().copied(),
+            PoolRule::RandomShape | PoolRule::RandomVersion => {
+                let mut bytes = [0u8; 8];
+                if getrandom::fill(&mut bytes).is_err() {
+                    return candidates.first().copied();
+                }
+                let index = u64::from_be_bytes(bytes) % candidates.len() as u64;
+                candidates.get(index as usize).copied()
+            }
+        }
+    }
+
+    fn in_range(&self, version: &str) -> bool {
+        if let Some(minimum) = self.minimum.as_deref() {
+            if compare_versions(version, minimum) == std::cmp::Ordering::Less {
+                return false;
+            }
+        }
+        if let Some(maximum) = self.maximum.as_deref() {
+            if compare_versions(version, maximum) == std::cmp::Ordering::Greater {
+                return false;
+            }
+        }
+        true
+    }
+}
+
+/// Distinct wire shapes out of an already sorted record list.
+fn distinct_shapes_of(
+    records: Vec<&'static Fingerprint>,
+) -> Vec<&'static Fingerprint> {
+    let mut seen = Vec::new();
+    let mut shapes = Vec::new();
+    for record in records {
+        let shape = record.wire_shape();
+        if seen.contains(&shape) {
+            continue;
+        }
+        seen.push(shape);
+        shapes.push(record);
+    }
+    shapes
 }
 
 /// Parse a JSON document containing one record or a list of records.
