@@ -5045,6 +5045,79 @@
       }
     },
     {
+      "name": "swiftnio_ssl",
+      "family": "ios",
+      "client": "SwiftNIO / NIOSSL 2.36 (AsyncHTTPClient stack)",
+      "version": "2.36",
+      "platform": "ios",
+      "library": "swiftnio",
+      "source": "ClientHello and HTTP/2 frames recorded off the wire from a swift-nio-ssl 2.36 + swift-nio-http2 client (tools/capture/swiftnio_capture.py), tools/capture/raw/swiftnio_ssl.json",
+      "fidelity": "exact",
+      "deviations": [],
+      "tls": {
+        "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
+        "curves": "X25519:P-256:P-384",
+        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        "extension_order": "0-23-65281-10-11-35-16-13-51-45-43",
+        "key_shares": "X25519",
+        "grease": false,
+        "permute_extensions": false,
+        "session_ticket": true,
+        "ocsp_stapling": false,
+        "signed_cert_timestamps": false,
+        "ech_grease": false,
+        "alps": false,
+        "new_alps_codepoint": false,
+        "renegotiation": true,
+        "psk_dhe_ke": true,
+        "preserve_tls13_cipher_list": true,
+        "padding": {
+          "send": {
+            "len": 243
+          }
+        },
+        "sigalg_codes": [
+          1027,
+          2052,
+          1025,
+          1283,
+          2053,
+          1281,
+          2054,
+          1537,
+          513
+        ],
+        "alpn": [
+          "h2",
+          "http/1.1"
+        ]
+      },
+      "headers": [
+        [
+          "user-agent",
+          "CFNetwork/1474 Darwin/23.0.0"
+        ],
+        [
+          "accept",
+          "*/*"
+        ],
+        [
+          "accept-encoding",
+          "gzip, deflate, br"
+        ],
+        [
+          "accept-language",
+          "en-US,en;q=0.9"
+        ]
+      ],
+      "http1_only": false,
+      "http2": {
+        "settings": "3:100;6:16384",
+        "pseudo_order": "msap",
+        "window_update": 983041
+      }
+    },
+    {
       "name": "chrome158",
       "family": "chrome",
       "client": "Chrome for Testing (headless)",
@@ -8397,7 +8470,7 @@
       "name": "ios_confirmed",
       "family": "ios",
       "client": "NSURLSession app (Confirmed profile)",
-      "version": "14.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/ios_confirmed.json",
@@ -12048,7 +12121,7 @@
       "name": "tlsclient_ios_mms",
       "family": "ios",
       "client": "NSURLSession app (MMS profile)",
-      "version": "13.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mms.json",
@@ -12111,7 +12184,7 @@
       "name": "tlsclient_ios_mms2",
       "family": "ios",
       "client": "NSURLSession app (MMS profile 2)",
-      "version": "13.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mms2.json",
@@ -12174,7 +12247,7 @@
       "name": "tlsclient_ios_mms3",
       "family": "ios",
       "client": "NSURLSession app (MMS profile 3)",
-      "version": "14.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mms3.json",
@@ -12252,7 +12325,7 @@
       "name": "tlsclient_ios_mesh",
       "family": "ios",
       "client": "NSURLSession app (Mesh profile)",
-      "version": "14.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mesh.json",
@@ -12331,7 +12404,7 @@
       "name": "tlsclient_ios_mesh2",
       "family": "ios",
       "client": "NSURLSession app (Mesh profile 2)",
-      "version": "17.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mesh2.json",
@@ -12410,7 +12483,7 @@
       "name": "tlsclient_ios_nike",
       "family": "ios",
       "client": "NSURLSession app (Nike profile)",
-      "version": "14.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_nike.json",
@@ -12489,7 +12562,7 @@
       "name": "tlsclient_ios_zalando",
       "family": "ios",
       "client": "NSURLSession app (Zalando profile)",
-      "version": "14.0",
+      "version": "",
       "platform": "ios",
       "library": "cfnetwork",
       "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_zalando.json",

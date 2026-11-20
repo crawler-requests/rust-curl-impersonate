@@ -252,6 +252,19 @@ impl Prepared {
         })
     }
 
+    /// The HTTP/2 SETTINGS parameters sent, in wire order.
+    ///
+    /// This is the capture's own list, not the transport's defaults: a client
+    /// whose SETTINGS frame carries only `3` and `6` returns exactly those.
+    pub fn http2_settings_order(&self) -> Option<Vec<wreq::http2::SettingId>> {
+        self.emulation.http2_options.as_ref().and_then(|http2| {
+            http2
+                .settings_order
+                .as_ref()
+                .map(|order| order.into_iter().copied().collect())
+        })
+    }
+
     /// HTTP/2 initial stream window after overrides.
     pub fn http2_initial_window_size(&self) -> Option<u32> {
         self.emulation
@@ -524,7 +537,10 @@ pub(crate) fn apply_http2_settings(
         };
         order = order.push(id);
     }
-    http2.settings_order = Some(order.build());
+    // The order is the captured list, so it must not be padded with the
+    // default ids: a client whose SETTINGS frame carries only `3` and `6`
+    // would otherwise also advertise `4`, changing its Akamai fingerprint.
+    http2.settings_order = Some(order.build_exact());
     Ok(())
 }
 

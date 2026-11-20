@@ -248,9 +248,21 @@ where
         let mut builder = http2::client::Builder::default();
         builder
             .initial_max_send_streams(self.opts.initial_max_send_streams)
-            .initial_window_size(self.opts.initial_window_size)
             .initial_connection_window_size(self.opts.initial_conn_window_size)
             .max_send_buffer_size(self.opts.max_send_buffer_size);
+        // The captured SETTINGS order is the whole list of parameters the
+        // client sends. Setting `initial_window_size` unconditionally put a
+        // `4:` entry in every frame, even for clients whose capture has none
+        // (SwiftNIO sends only 3 and 6). The value is the stream flow-control
+        // window, so only send it when the captured order names it.
+        let order_names_window_size = self.opts.settings_order.as_ref().is_none_or(|order| {
+            order
+                .into_iter()
+                .any(|id| matches!(id, http2::frame::SettingId::InitialWindowSize))
+        });
+        if order_names_window_size {
+            builder.initial_window_size(self.opts.initial_window_size);
+        }
         if let Some(id) = self.opts.initial_stream_id {
             builder.initial_stream_id(id);
         }

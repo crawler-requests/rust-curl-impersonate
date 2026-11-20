@@ -1194,6 +1194,12 @@ pub fn by_library(library: &str) -> impl Iterator<Item = &'static Fingerprint> +
 ///
 /// Versions are compared as dot-separated numbers, so `"26.0"` sorts ahead
 /// of `"18.5"` and `"15.10"` ahead of `"15.9"`.
+///
+/// An empty result means the library's captures name no version, not that it
+/// has no records: `cfnetwork` is built from app profiles that upstream files
+/// with `Version: "1"` and whose requests only carry
+/// `CFNetwork/1474 Darwin/23.0.0`. Address those libraries by shape with
+/// [`distinct_shapes`] or a [`VersionPool`].
 pub fn versions(library: &str) -> Vec<&'static str> {
     let mut found: Vec<&'static str> = by_library(library)
         .map(|record| record.version.as_str())

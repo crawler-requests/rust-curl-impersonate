@@ -13,8 +13,17 @@ fn every_ios_library_is_enumerable() {
     assert!(libraries.contains(&"webkit"), "{libraries:?}");
 
     for library in &libraries {
+        // A library is addressable either by version (WebKit, where the
+        // capture names an OS release) or by shape (CFNetwork, where the
+        // capture is an app profile upstream files with `Version: "1"` and
+        // the request only carries `CFNetwork/1474 Darwin/23.0.0`). Every
+        // library must be reachable one way or the other.
         let versions = fingerprint::versions(library);
-        assert!(!versions.is_empty(), "{library} has no versions");
+        let shapes = fingerprint::distinct_shapes(library);
+        assert!(
+            !versions.is_empty() || !shapes.is_empty(),
+            "{library} has neither versions nor shapes"
+        );
         // Versions are sorted newest first: compare the first two numerically.
         if versions.len() >= 2 {
             let first: f64 = versions[0].parse().unwrap_or(0.0);
@@ -22,6 +31,23 @@ fn every_ios_library_is_enumerable() {
             assert!(first >= second, "{library}: {versions:?} is not newest-first");
         }
     }
+}
+
+#[test]
+fn cfnetwork_records_do_not_invent_an_os_version() {
+    // tls-client files these app profiles as `Version: "1"` and the captures
+    // all send `CFNetwork/1474 Darwin/23.0.0`, so no iOS release is named
+    // anywhere upstream. An empty version is the honest value: a number here
+    // would be a guess dressed up as a capture.
+    let versions = fingerprint::versions("cfnetwork");
+    assert!(versions.is_empty(), "{versions:?}");
+    // The shapes still distinguish the apps, and the pool still picks from
+    // them, so the library remains fully addressable.
+    let shapes = fingerprint::distinct_shapes("cfnetwork");
+    assert!(shapes.len() >= 5, "{:?}", shapes.iter().map(|r| r.name()).collect::<Vec<_>>());
+    let pool = VersionPool::for_library("cfnetwork").with_rule(PoolRule::RandomShape);
+    assert!(!pool.candidates().is_empty());
+    assert!(pool.pick().is_some());
 }
 
 #[test]

@@ -131,6 +131,7 @@ Chromium 156/157、Chrome 158–160 与 Firefox 158 记录来自当前机器上�
 | `android_nike` | Nike Android 应用（只 GREASE key share） | close |
 | `android_zalando` | Zalando Android 应用（带 SCT 扩展） | exact |
 | `ios_confirmed` | iOS 应用（tls-client） | exact |
+| `swiftnio_ssl` | SwiftNIO / NIOSSL 2.36（AsyncHTTPClient 走的 BoringSSL 栈，非 CFNetwork） | exact |
 | `ios_safari18_5` / `ios_safari26` | Safari on iOS（tls-client） | exact |
 | `opera91` | Opera 91（tls-client） | exact |
 | `tlsclient_chrome103` … `_chrome152` | Chrome 103–152（tls-client，19 条） | exact 为主 |
@@ -205,7 +206,7 @@ Chromium 156 和 Firefox 158 实测的 JA4 分别是 `t13d1516h2_8daaf6152771_d8
 
 全库实测汇总：162 条抓包记录里 94 条的 cipher、曲线、签名算法、扩展集合与顺序、ALPN 和 JA4 与抓包完全一致，98 条 JA4 相同；`tools/check_subset.py` 对 162/162 条确认「BoringSSL 能发的那部分字段、顺序与抓包完全一致」——OpenSSL/GnuTLS 系的 X448、ffdhe4096+、brainpool、ML-DSA、CCM、DHE-DSS 和 `encrypt_then_mac` 发不出，属能力边界而不是映射错误。新增 34 条 uTLS 与 28 条 Docker 记录的子集检查同样全部通过（34/34、28/28）。逐条表格由 `tools/library_report.py` 重新生成（`goal-evidence/full-library.txt`）。新增 7 条最新版本记录（Chromium 157、Chrome 158/159、Firefox 159–162）的线上验证见 `goal-evidence/real-versions-echo.txt`。2026-11-13 加入 Chrome 160（Canary）后重新跑这 8 条：Firefox 159–162 仍与抓包完全一致；Chromium 157 的扩展集合也一致（51764 现在通过 trust anchors 发出）；Chrome 158/159/160 的差异只剩 4832、pre_shared_key 与 ML-DSA，Chrome 160 的线上 JA4 为 `t13d1517h2_8daaf6152771_dcad5a053991`（抓包 `t13d1518h2_8daaf6152771_4980c97edce0`）。证据 `goal-evidence/latest-chrome.txt`、`goal-evidence/echo-latest/`。
 
-新增的 34 条 `utls_` 记录全部实测：23 条的扩展集合/顺序、cipher、曲线、签名算法和 JA4 与抓包逐项相同（`utls_chrome106shuffle` 是随机重排，集合相同；`utls_chrome120` 的 padding 21 随 ClientHello 长度变化，因此偶尔出现或消失）。其余差异都在 `deviations` 里：Chrome 58/62/70 与 360 11.0 的 BoringSSL ChannelID 扩展 30032 发不出；iOS 11/12 与 360 7.5 的 NPN（13172）发不出；360 7.5 还带旧 ChannelID 30031、RC4/DHE-DSS cipher 和 DSA 签名算法，且抓包没有 BoringSSL 必发的 extended_master_secret（23），记录为 `partial`；Chrome 115/120 PQ 的 X25519Kyber768 key share 发不出，记录为 `close`。
+新增的 34 条 `utls_` 记录全部实测：23 条的扩展集合/顺序、cipher、曲线、签名算法和 JA4 与抓包逐项相同（`utls_chrome106shuffle` 是随机重排，集合相同；`utls_chrome120` 的 padding 21 随 ClientHello 长度变化，因此偶尔出现或消失）。其余差异都在 `deviations` 里：Chrome 58/62/70 与 360 11.0 的 BoringSSL ChannelID 扩展 30032 发不出；360 7.5 还带旧 ChannelID 30031、RC4/DHE-DSS cipher 和 DSA 签名算法，且抓包没有 BoringSSL 必发的 extended_master_secret（23），记录为 `partial`；Chrome 115/120 PQ 的 X25519Kyber768 key share 发不出，记录为 `close`。
 
 新增的 52 条 `tlsclient_` 记录中，48 条的实测 JA4 与抓包完全相同，cipher、扩展集合、HTTP/2 SETTINGS 和伪头顺序也逐项一致。4 条不同：`tlsclient_chrome146/150/152` 发出的扩展 51764 与 ML-DSA 签名算法 BoringSSL 不支持；`tlsclient_cloudflare` 的 TLS 1.2 cipher 与 `encrypt_then_mac` 扩展发不出，记录是 `partial`。`tlsclient_firefox102/104/105/106/108/110/117/120/123` 的 JA4 相同，但抓包带 6 个 PRIORITY 帧，实测没有，fidelity 因此是 `close`。
 

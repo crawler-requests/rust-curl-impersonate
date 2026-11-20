@@ -601,3 +601,95 @@ fn patched_mldsa() -> bool {
     .build()
     .is_ok()
 }
+
+/// Read one TLS record off a local socket: the raw ClientHello, or a panic
+/// naming the first bytes when the peer sent something else.
+async fn read_client_hello_extension_ids(client: &Client) -> Vec<u16> {
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let port = listener.local_addr().unwrap().port();
+    let server = tokio::spawn(async move {
+        let (mut socket, _) = listener.accept().await.unwrap();
+        let mut head = [0u8; 5];
+        tokio::io::AsyncReadExt::read_exact(&mut socket, &mut head)
+            .await
+            .unwrap();
+        assert_eq!(head[0], 0x16, "not a handshake record: {:02x?}", head);
+        let length = u16::from_be_bytes([head[3], head[4]]) as usize;
+        let mut body = vec![0u8; length];
+        tokio::io::AsyncReadExt::read_exact(&mut socket, &mut body)
+            .await
+            .unwrap();
+        body
+    });
+
+    let url = format!("https://localhost:{port}/");
+    let _ = tokio::time::timeout(
+        Duration::from_secs(3),
+        client.get(&url).send(),
+    )
+    .await;
+
+    let body = server.await.unwrap();
+    // TLS record body -> handshake (1) -> 3-byte length -> ClientHello body.
+    let hello = &body[4..];
+    let mut pos = 2 + 32;
+    pos += 1 + hello[pos] as usize; // session id
+    let ciphers = u16::from_be_bytes([hello[pos], hello[pos + 1]]) as usize;
+    pos += 2 + ciphers;
+    pos += 1 + hello[pos] as usize; // compression methods
+    let total = u16::from_be_bytes([hello[pos], hello[pos + 1]]) as usize;
+    pos += 2;
+    let end = pos + total;
+    let mut ids = Vec::new();
+    while pos + 4 <= end {
+        let kind = u16::from_be_bytes([hello[pos], hello[pos + 1]]);
+        let len = u16::from_be_bytes([hello[pos + 2], hello[pos + 3]]) as usize;
+        ids.push(kind);
+        pos += 4 + len;
+    }
+    ids
+}
+
+#[tokio::test]
+async fn ios_11_and_12_carry_the_deprecated_npn_extension() {
+    // iOS 11/12 Safari offer NPN (13172) and nothing else on the transport
+    // does. BoringSSL gates the extension on a client-side NPN callback, so
+    // this asserts the callback path works in a stock build - the previous
+    // implementation called a symbol only a rebuilt BoringSSL had and
+    // silently sent no extension otherwise.
+    for target in ["utls_ios11", "utls_ios12"] {
+        let client = client(target);
+        let ids = read_client_hello_extension_ids(&client).await;
+        assert!(
+            ids.contains(&13172),
+            "{target} did not offer NPN: {ids:?}"
+        );
+    }
+    // A TLS 1.3 preset must not gain NPN as a side effect.
+    let ids = read_client_hello_extension_ids(&client("ios_safari26")).await;
+    assert!(!ids.contains(&13172), "ios_safari26 gained NPN: {ids:?}");
+}
+
+#[test]
+fn a_captured_settings_order_is_not_padded_with_default_ids() {
+    // The SettingsOrder builder used to append every default id, so a client
+    // whose capture carries only `3` and `6` advertised `4` as well and its
+    // Akamai fingerprint never matched. The record's order is now sent
+    // verbatim.
+    let swiftnio = client("swiftnio_ssl");
+    let order = swiftnio
+        .prepared()
+        .http2_settings_order()
+        .expect("the record names a SETTINGS order");
+    let sent: Vec<u16> = order.iter().map(|id| u16::from(*id)).collect();
+    assert_eq!(sent, vec![3, 6], "unexpected SETTINGS order: {sent:?}");
+
+    // A record that does name `4` keeps it, so the fix is not a blanket drop.
+    let safari = client("ios_safari26");
+    let order = safari
+        .prepared()
+        .http2_settings_order()
+        .expect("ios_safari26 names a SETTINGS order");
+    let sent: Vec<u16> = order.iter().map(|id| u16::from(*id)).collect();
+    assert!(sent.contains(&4), "{sent:?}");
+}

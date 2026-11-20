@@ -78,11 +78,19 @@ def compare(raw, live):
     live_ciphers = strip_grease(names(live_tls.get("ciphers")))
     if raw_ciphers != live_ciphers:
         diffs.append("ciphers")
+    # The echo service labels a group as `X25519 (29)`, while a local capture
+    # that names the group itself writes `X25519`. Compare the name only.
+    def group_names(values):
+        return [re.sub(r" \(\d+\)$", "", str(value)) for value in values]
+
     for label, wanted in (("groups", 10), ("sigalgs", 13)):
         raw_values = strip_grease(names(payload(raw_tls, wanted).get(
             "supported_groups" if wanted == 10 else "signature_algorithms")))
         live_values = strip_grease(names(payload(live_tls, wanted).get(
             "supported_groups" if wanted == 10 else "signature_algorithms")))
+        if label == "groups":
+            raw_values = group_names(raw_values)
+            live_values = group_names(live_values)
         if raw_values != live_values:
             diffs.append(label)
     raw_alpn = payload(raw_tls, 16).get("protocols")

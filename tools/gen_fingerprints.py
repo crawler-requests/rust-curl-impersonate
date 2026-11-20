@@ -683,6 +683,21 @@ PROFILES = [
         "platform": "linux",
     },
     {
+        "file": "swiftnio_ssl.json",
+        "name": "swiftnio_ssl",
+        "family": "ios",
+        "library": "swiftnio",
+        "client": "SwiftNIO / NIOSSL 2.36 (AsyncHTTPClient stack)",
+        "version": "2.36",
+        "source": (
+            "ClientHello and HTTP/2 frames recorded off the wire from a "
+            "swift-nio-ssl 2.36 + swift-nio-http2 client "
+            "(tools/capture/swiftnio_capture.py), "
+            "tools/capture/raw/swiftnio_ssl.json"
+        ),
+        "platform": "ios",
+    },
+    {
         "file": "chrome158.json",
         "name": "chrome158",
         "family": "chrome",
@@ -1146,7 +1161,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (Confirmed profile)",
-        "version": "14.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -1504,7 +1519,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (MMS profile)",
-        "version": "13.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -1513,7 +1528,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (MMS profile 2)",
-        "version": "13.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -1522,7 +1537,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (MMS profile 3)",
-        "version": "14.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -1531,7 +1546,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (Mesh profile)",
-        "version": "14.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -1540,7 +1555,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (Mesh profile 2)",
-        "version": "17.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -1549,7 +1564,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (Nike profile)",
-        "version": "14.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -1558,7 +1573,7 @@ PROFILES = [
         "family": "ios",
         "library": "cfnetwork",
         "client": "NSURLSession app (Zalando profile)",
-        "version": "14.0",
+        "version": "",
         "platform": "ios",
     },
     {
@@ -2325,7 +2340,7 @@ def build_record(spec):
         data = json.load(handle)
     tls = data["tls"]
     exts = extension_map(tls)
-    deviations = []
+    deviations = list(spec.get("deviations") or [])
     if spec.get("http1_capture"):
         # The uTLS harness narrows ALPN so it can speak HTTP/1.1 on the raw
         # socket; the TLS shape is still the library's own ClientHello.
@@ -2744,7 +2759,10 @@ def build_record(spec):
         "version": spec["version"],
         "platform": spec["platform"],
         **({"library": spec["library"]} if spec.get("library") else {}),
-        "source": "tls.peet.ws capture, tools/capture/raw/" + spec["file"],
+        "source": spec.get(
+            "source",
+            "tls.peet.ws capture, tools/capture/raw/" + spec["file"],
+        ),
         "fidelity": fidelity(
             len(dropped_ciphers),
             len(dropped_groups),

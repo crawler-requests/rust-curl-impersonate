@@ -42,6 +42,32 @@ fn key_index() -> Result<Index<Ssl, Key>, ErrorStack> {
     IDX.clone()
 }
 
+/// NPN selection callback. Offering the extension is the whole point: the
+/// fingerprint is in the ClientHello, and iOS 11/12 apps never completed an
+/// NPN handshake anyway. Naming `http/1.1` keeps the connection usable if a
+/// server does answer with NPN.
+#[allow(unsafe_code)]
+unsafe extern "C" fn select_next_proto(
+    _ssl: *mut btls_sys::SSL,
+    out: *mut *mut u8,
+    out_len: *mut u8,
+    _in: *const u8,
+    _in_len: std::os::raw::c_uint,
+    _arg: *mut std::os::raw::c_void,
+) -> std::os::raw::c_int {
+    static HTTP_1_1: &[u8] = b"\x08http/1.1";
+    #[allow(unsafe_code)]
+    unsafe {
+        if !out.is_null() {
+            *out = HTTP_1_1.as_ptr().cast_mut();
+        }
+        if !out_len.is_null() {
+            *out_len = HTTP_1_1.len() as u8;
+        }
+    }
+    btls_sys::SSL_TLSEXT_ERR_OK
+}
+
 /// Settings for [`TlsConnector`]
 #[derive(Clone)]
 pub struct HandshakeSettings {
@@ -409,12 +435,20 @@ impl TlsConnectorBuilder {
             };
         }
 
-        #[allow(unexpected_cfgs)]
+        // NPN (13172) is gated on `next_proto_select_cb` being non-null in
+        // stock BoringSSL, so a callback is enough to offer it - no rebuild
+        // of BoringSSL is needed. The patched build's
+        // `SSL_CTX_set_offer_npn` bypasses the callback requirement, but it
+        // also bypasses the "no NPN at TLS 1.3" rule, so the callback path is
+        // the one taken everywhere: it is spec-correct and portable.
         if opts.offer_npn {
-            #[cfg(chrome_4832)]
             #[allow(unsafe_code)]
             unsafe {
-                btls_sys::SSL_CTX_set_offer_npn(connector.as_ptr(), 1)
+                btls_sys::SSL_CTX_set_next_proto_select_cb(
+                    connector.as_ptr(),
+                    Some(select_next_proto),
+                    std::ptr::null_mut(),
+                )
             };
         }
 

@@ -130,6 +130,17 @@ impl SettingsOrderBuilder {
         self
     }
 
+    /// The order exactly as pushed: no default ids are appended.
+    ///
+    /// `build` appends [`SettingId::DEFAULT_IDS`] so a partially specified
+    /// order still describes every parameter the client has a value for. That
+    /// is the wrong behaviour when the caller is reproducing a captured
+    /// SETTINGS frame: a client that sends only `3` and `6` must not gain the
+    /// other parameters. A fingerprint record uses this method instead.
+    pub fn build_exact(self) -> SettingsOrder {
+        SettingsOrder { ids: self.ids }
+    }
+
     pub fn build(mut self) -> SettingsOrder {
         self = self.extend(SettingId::DEFAULT_IDS);
         SettingsOrder { ids: self.ids }

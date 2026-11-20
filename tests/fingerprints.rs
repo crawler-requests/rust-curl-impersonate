@@ -1475,3 +1475,29 @@ fn mldsa_available() -> bool {
     .build()
     .is_ok()
 }
+
+#[test]
+fn swiftnio_is_its_own_ios_stack() {
+    // AsyncHTTPClient and every other TLS-using Swift package ride on
+    // swift-nio-ssl, which links CNIOBorrowSSL rather than CFNetwork. Its
+    // ClientHello is therefore a third iOS stack, not a variant of an app.
+    let record = fingerprint::find("swiftnio_ssl").expect("swiftnio_ssl exists");
+    assert_eq!(record.platform, "ios");
+    assert_eq!(record.library, "swiftnio");
+    assert_eq!(record.fidelity, Some(Fidelity::Exact));
+
+    // The shape that makes it distinct from CFNetwork: 17 ciphers, no GREASE,
+    // and a session_ticket extension.
+    let ciphers = ids(record.tls.ciphers.as_deref().unwrap());
+    assert_eq!(ciphers.len(), 17, "{ciphers:?}");
+    assert!(!record.tls.grease, "NIOSSL does not grease");
+    assert!(record.tls.session_ticket);
+
+    // Its HTTP/2 SETTINGS carry only ids 3 and 6. A transport that appends a
+    // default `4:` entry changes the Akamai fingerprint, so the record is the
+    // regression guard for that too.
+    let http2 = record.http2.as_ref().expect("swiftnio_ssl has HTTP/2");
+    assert_eq!(http2.settings.as_deref(), Some("3:100;6:16384"));
+    assert_eq!(http2.window_update, Some(983_041));
+    assert_eq!(http2.pseudo_order.as_deref(), Some("msap"));
+}

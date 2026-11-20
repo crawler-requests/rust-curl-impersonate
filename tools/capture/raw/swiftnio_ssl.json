@@ -1,0 +1,127 @@
+{
+ "http_version": "h2",
+ "method": "GET",
+ "user_agent": "CFNetwork/1474 Darwin/23.0.0",
+ "tls": {
+  "ja4": "t13d1712h2_5b57614c22b0_ef7df7f74e48",
+  "ciphers": [
+   "TLS_AES_128_GCM_SHA256",
+   "TLS_AES_256_GCM_SHA384",
+   "TLS_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+   "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_RSA_WITH_AES_256_CBC_SHA"
+  ],
+  "extensions": [
+   {
+    "name": "server_name (0)"
+   },
+   {
+    "name": "extended_master_secret (23)"
+   },
+   {
+    "name": "extensionRenegotiationInfo (boringssl) (65281)"
+   },
+   {
+    "name": "supported_groups (10)",
+    "supported_groups": [
+     "X25519",
+     "P-256",
+     "P-384"
+    ]
+   },
+   {
+    "name": "ec_point_formats (11)"
+   },
+   {
+    "name": "session_ticket (35)"
+   },
+   {
+    "name": "application_layer_protocol_negotiation (16)",
+    "protocols": [
+     "h2",
+     "http/1.1"
+    ]
+   },
+   {
+    "name": "signature_algorithms (13)",
+    "signature_algorithms": [
+     "ecdsa_secp256r1_sha256",
+     "rsa_pss_rsae_sha256",
+     "rsa_pkcs1_sha256",
+     "ecdsa_secp384r1_sha384",
+     "rsa_pss_rsae_sha384",
+     "rsa_pkcs1_sha384",
+     "rsa_pss_rsae_sha512",
+     "rsa_pkcs1_sha512",
+     "rsa_pkcs1_sha1"
+    ]
+   },
+   {
+    "name": "key_share (51)",
+    "shared_keys": [
+     {
+      "X25519": 32
+     }
+    ]
+   },
+   {
+    "name": "psk_key_exchange_modes (45)"
+   },
+   {
+    "name": "supported_versions (43)"
+   },
+   {
+    "name": "padding (21)",
+    "padding_data_length": 243
+   }
+  ]
+ },
+ "http2": {
+  "sent_frames": [
+   {
+    "frame_type": "SETTINGS",
+    "length": 12,
+    "settings": [
+     "MAX_CONCURRENT_STREAMS = 100",
+     "MAX_HEADER_LIST_SIZE = 16384"
+    ]
+   },
+   {
+    "frame_type": "WINDOW_UPDATE",
+    "length": 4,
+    "increment": 983041
+   },
+   {
+    "frame_type": "HEADERS",
+    "stream_id": 1,
+    "length": 76,
+    "headers": [
+     ":method: GET",
+     ":scheme: https",
+     ":authority: tls.peet.ws",
+     ":path: /api/all",
+     "user-agent: CFNetwork/1474 Darwin/23.0.0",
+     "accept: */*",
+     "accept-encoding: gzip, deflate, br",
+     "accept-language: en-US,en;q=0.9"
+    ],
+    "flags": [
+     "EndStream (0x1)",
+     "EndHeaders (0x4)"
+    ]
+   }
+  ]
+ }
+}
