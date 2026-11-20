@@ -1,0 +1,32 @@
+Third-party iOS stacks and the newest Safari — live verification
+date: 2026-11-21
+
+Each record was echoed against tls.peet.ws and compared with its own capture.
+
+record                    ja4 live == capture            h2 live == capture
+cronet_android100         yes except GREASE position    yes, byte-identical
+swiftnio_ssl              yes                           yes, byte-identical
+tlsclient_safari27_2      yes                           yes, byte-identical
+
+cronet_android100
+  The JA4 differs only in its last segment, and that is the reason the record
+  is `close`: Cronet greases its cipher, group and extension lists, while
+  BoringSSL's GREASE switch greases five lists together, so a GREASE value
+  lands in a different position on each connection. The extension set, the
+  cipher list minus GREASE, and the HTTP/2 fingerprint all match exactly.
+
+swiftnio_ssl
+  Full match, including the HTTP/2 SETTINGS a BoringSSL-based Swift client
+  sends (`3:100;6:16384`) rather than a browser's.
+
+tlsclient_safari27_2
+  Full match. This is macOS Safari 27.2, captured with tls-client's master
+  profile; iOS 27 still has no capture.
+
+how each was produced
+  cronet_android100      Cronet 100.0.4891.0 engine in a real Android 13 app
+                         (redroid); tools/capture/cronet_capture.py +
+                         a local TLS terminator for the HTTP/2 frames.
+  swiftnio_ssl           swift-nio-ssl 2.36 + swift-nio-http2 client built
+                         here; tools/capture/swiftnio_capture.py.
+  tlsclient_safari27_2   tls-client master profile against the echo service.
