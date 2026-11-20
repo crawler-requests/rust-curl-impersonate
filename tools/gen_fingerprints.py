@@ -683,6 +683,15 @@ PROFILES = [
         "platform": "linux",
     },
     {
+        "file": "tlsclient_safari27_2.json",
+        "name": "tlsclient_safari27_2",
+        "family": "safari",
+        "library": "webkit-macos",
+        "client": "Safari 27.2 (tls-client master profile)",
+        "version": "27.2",
+        "platform": "macos",
+    },
+    {
         "file": "cronet_android100.json",
         "name": "cronet_android100",
         "family": "android",

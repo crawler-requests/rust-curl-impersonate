@@ -133,6 +133,7 @@ Chromium 156/157、Chrome 158–160 与 Firefox 158 记录来自当前机器上�
 | `ios_confirmed` | iOS 应用（tls-client） | exact |
 | `swiftnio_ssl` | SwiftNIO / NIOSSL 2.36（AsyncHTTPClient 走的 BoringSSL 栈，非 CFNetwork） | exact |
 | `cronet_android100` | Cronet 100.0.4891.0（App 自带 Chromium 网络栈，Android 13 实测） | close |
+| `tlsclient_safari27_2` | Safari 27.2（tls-client master，真实抓包） | exact |
 | `ios_safari18_5` / `ios_safari26` | Safari on iOS（tls-client） | exact |
 | `opera91` | Opera 91（tls-client） | exact |
 | `tlsclient_chrome103` … `_chrome152` | Chrome 103–152（tls-client，19 条） | exact 为主 |

@@ -237,3 +237,43 @@ fn the_newest_webkit_entry_is_safari_27() {
         newest.name()
     );
 }
+
+#[test]
+fn the_third_party_ios_stacks_are_enumerable_too() {
+    // CFNetwork and WebKit are the platform stacks. swiftnio and cronet are
+    // what an app gets when it brings its own TLS instead, and both are
+    // first-class libraries to enumerate.
+    let libraries = fingerprint::libraries();
+    for library in ["swiftnio", "cronet"] {
+        assert!(libraries.contains(&library), "{library} missing: {libraries:?}");
+        assert!(
+            !fingerprint::versions(library).is_empty(),
+            "{library} exposes no version"
+        );
+        let pool = VersionPool::for_library(library);
+        let entry = pool.pick().expect(library);
+        assert_eq!(entry.library(), library);
+        assert!(Profile::find(entry.name()).is_some(), "{}", entry.name());
+    }
+}
+
+#[test]
+fn safari_27_2_is_the_newest_webkit_macos_capture() {
+    // tls-client's master branch added a Safari 27.2 profile after v1.18.1.
+    // It was captured for real, and its ClientHello is byte-identical to
+    // Safari 27.0's, so both versions describe one shape.
+    assert_eq!(fingerprint::newest("webkit-macos").unwrap().name(), "tlsclient_safari27_2");
+    assert_eq!(fingerprint::versions("webkit-macos")[0], "27.2");
+
+    let record = fingerprint::for_version("webkit-macos", "27.2").expect("27.2 is captured");
+    assert_eq!(record.name(), "tlsclient_safari27_2");
+    // 27.0 is a preset, not a capture, so the capture-only lookup returns None
+    // and the entry lookup is what resolves it.
+    assert!(fingerprint::for_version("webkit-macos", "27.0").is_none());
+    assert_eq!(
+        fingerprint::entry_for_version("webkit-macos", "27.0").map(|e| e.name()),
+        Some("safari270")
+    );
+    // A version above the newest capture still resolves, to the newest shape.
+    assert!(fingerprint::for_version("webkit-macos", "27.5").is_some());
+}

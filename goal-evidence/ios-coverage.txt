@@ -118,6 +118,17 @@ iOS 27 is reachable, and measured live
     safari260_ios   ja4 t13d2015h2_a09f3c656075_c258b721e490  h2 2:0;3:100;4:2097152;9:1
     safari270_ios   ja4 t13d2013h2_a09f3c656075_7f0f34a4126d  h2 2:0;3:100;4:2097152;9:1
 
+  A real capture now goes one step further: tls-client's master branch added
+  `Safari_27_2` after v1.18.1, so it was captured for real with the master
+  profile (tools/capture/raw/tlsclient_safari27_2.json):
+
+    tlsclient_safari27_2  ja4 t13d2013h2_a09f3c656075_7f0f34a4126d
+                          h2  2:0;3:100;4:2097152;9:1 | 10420225 | 0 | m,s,a,p
+
+  That JA4 is the same one safari270 sends, so Safari 27.0 through 27.2 is a
+  single ClientHello - which is why `for_version("webkit-macos", "27.2")`
+  returns the capture and 27.0 still resolves through the preset.
+
   Two things worth noting in that list. safari180_ios and safari184_ios send
   the same ClientHello, which matches upstream's own definition (both are
   the 18.0 shape; 18.5 is the release that changed it). safari260_ios is
