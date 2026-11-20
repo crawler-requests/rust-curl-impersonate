@@ -683,6 +683,21 @@ PROFILES = [
         "platform": "linux",
     },
     {
+        "file": "cronet_android100.json",
+        "name": "cronet_android100",
+        "family": "android",
+        "library": "cronet",
+        "client": "Cronet 100.0.4891.0 (Chromium network stack in an Android app)",
+        "version": "100",
+        "platform": "android",
+        "source": (
+            "ClientHello recorded off the wire from a Cronet 100.0.4891.0 "
+            "engine running on Android 13 (redroid), "
+            "tools/capture/cronet_capture.py, "
+            "tools/capture/raw/cronet_android100.json"
+        ),
+    },
+    {
         "file": "swiftnio_ssl.json",
         "name": "swiftnio_ssl",
         "family": "ios",

@@ -1501,3 +1501,39 @@ fn swiftnio_is_its_own_ios_stack() {
     assert_eq!(http2.window_update, Some(983_041));
     assert_eq!(http2.pseudo_order.as_deref(), Some("msap"));
 }
+
+#[test]
+fn cronet_is_its_own_stack_next_to_the_platform_client() {
+    // Cronet is Chromium's network stack shipped inside an Android or iOS app.
+    // It is not the platform client and not WebView: an app that bundles it
+    // sends Chrome's ClientHello and Chrome's HTTP/2 SETTINGS regardless of
+    // the OS it runs on.
+    let record = fingerprint::find("cronet_android100").expect("cronet record exists");
+    assert_eq!(record.library, "cronet");
+    assert_eq!(record.platform, "android");
+    assert_eq!(record.fidelity, Some(Fidelity::Close));
+
+    // What makes it Chrome-shaped: GREASE, ALPS (old codepoint), certificate
+    // compression, and the padding extension.
+    assert!(record.tls.grease);
+    assert!(record.tls.alps);
+    assert!(!record.tls.new_alps_codepoint, "Cronet 100 predates 17613");
+    // The captured compress_certificate list is brotli, not zlib.
+    assert_eq!(record.tls.cert_compression.as_deref(), Some("brotli"));
+    let extensions = record.tls.extension_order.as_deref().unwrap();
+    assert!(extensions.contains("17513"), "{extensions}");
+    assert!(extensions.contains("27"), "{extensions}");
+
+    // The one thing the transport cannot do: Cronet greases three lists, and
+    // BoringSSL's switch greases five together.
+    assert!(record
+        .deviations
+        .iter()
+        .any(|note| note.contains("greases only")));
+
+    // Real HTTP/2 parameters, recorded from the same client.
+    let http2 = record.http2.as_ref().expect("cronet record has HTTP/2");
+    assert_eq!(http2.settings.as_deref(), Some("1:65536;3:1000;4:6291456;6:262144"));
+    assert_eq!(http2.pseudo_order.as_deref(), Some("masp"));
+    assert_eq!(http2.window_update, Some(15_663_105));
+}

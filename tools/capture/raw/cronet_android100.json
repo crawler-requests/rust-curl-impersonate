@@ -1,0 +1,157 @@
+{
+ "tls": {
+  "ja4": "t13d1516h2_8daaf6152771_6d807ffa2a79",
+  "ciphers": [
+   "TLS_GREASE (0x5A5A)",
+   "TLS_AES_128_GCM_SHA256",
+   "TLS_AES_256_GCM_SHA384",
+   "TLS_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+   "TLS_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_RSA_WITH_AES_256_CBC_SHA"
+  ],
+  "extensions": [
+   {
+    "name": "TLS_GREASE (0x2a2a)"
+   },
+   {
+    "name": "server_name (0)"
+   },
+   {
+    "name": "extended_master_secret (23)"
+   },
+   {
+    "name": "extensionRenegotiationInfo (boringssl) (65281)"
+   },
+   {
+    "name": "supported_groups (10)",
+    "supported_groups": [
+     "GREASE (0x2a2a)",
+     "X25519",
+     "P-256",
+     "P-384"
+    ]
+   },
+   {
+    "name": "ec_point_formats (11)"
+   },
+   {
+    "name": "session_ticket (35)"
+   },
+   {
+    "name": "application_layer_protocol_negotiation (16)",
+    "protocols": [
+     "h2",
+     "http/1.1"
+    ]
+   },
+   {
+    "name": "status_request (5)"
+   },
+   {
+    "name": "signature_algorithms (13)",
+    "signature_algorithms": [
+     "ecdsa_secp256r1_sha256",
+     "rsa_pss_rsae_sha256",
+     "rsa_pkcs1_sha256",
+     "ecdsa_secp384r1_sha384",
+     "rsa_pss_rsae_sha384",
+     "rsa_pkcs1_sha384",
+     "rsa_pss_rsae_sha512",
+     "rsa_pkcs1_sha512"
+    ]
+   },
+   {
+    "name": "signed_certificate_timestamp (18)"
+   },
+   {
+    "name": "key_share (51)",
+    "shared_keys": [
+     {
+      "0x2a2a": 1
+     },
+     {
+      "X25519": 32
+     }
+    ]
+   },
+   {
+    "name": "psk_key_exchange_modes (45)"
+   },
+   {
+    "name": "supported_versions (43)"
+   },
+   {
+    "name": "compress_certificate (27)",
+    "algorithms": [
+     "brotli"
+    ]
+   },
+   {
+    "name": "application_settings (17513)",
+    "data": "0003026832"
+   },
+   {
+    "name": "TLS_GREASE (0x7a7a)"
+   },
+   {
+    "name": "padding (21)",
+    "padding_data_length": 204
+   }
+  ]
+ },
+ "http_version": "h2",
+ "method": "GET",
+ "user_agent": "Cronet/100.0.4891.0 (Android 13)",
+ "captured": "ClientHello from a local listener; HTTP/2 frames from a local TLS terminator the same client connected to",
+ "captured_at": "2026-11-20T19:04:31Z",
+ "http2": {
+  "settings": "1:65536;3:1000;4:6291456;6:262144",
+  "pseudo_order": "masp",
+  "window_update": 15663105,
+  "sent_frames": [
+   {
+    "frame_type": "SETTINGS",
+    "length": 24,
+    "settings": [
+     "HEADER_TABLE_SIZE = 65536",
+     "MAX_CONCURRENT_STREAMS = 1000",
+     "INITIAL_WINDOW_SIZE = 6291456",
+     "MAX_HEADER_LIST_SIZE = 262144"
+    ]
+   },
+   {
+    "frame_type": "WINDOW_UPDATE",
+    "length": 4,
+    "increment": 15663105
+   },
+   {
+    "frame_type": "HEADERS",
+    "stream_id": 1,
+    "length": 52,
+    "headers": [
+     ":method: GET",
+     ":authority: tls.peet.ws",
+     ":scheme: https",
+     ":path: /api/all",
+     "user-agent: Cronet/100.0.4891.0 (Android 13)",
+     "accept-encoding: gzip, deflate"
+    ],
+    "flags": [
+     "Priority (0x20)",
+     "EndStream (0x1)",
+     "EndHeaders (0x4)"
+    ]
+   }
+  ]
+ }
+}

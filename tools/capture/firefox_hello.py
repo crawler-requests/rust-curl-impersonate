@@ -140,8 +140,10 @@ def describe(kind, payload):
         groups = [struct.unpack(">H", payload[i:i + 2])[0]
                   for i in range(2, 2 + struct.unpack(">H", payload[:2])[0], 2)]
         entry["name"] = "supported_groups (10)"
+        # A GREASE group has to keep the label the record generator looks
+        # for; `0x5a5a` would be read as an algorithm BoringSSL cannot send.
         entry["supported_groups"] = [
-            GROUP_NAMES.get(g, f"0x{g:x}") if not is_grease(g) else f"0x{g:x}"
+            f"GREASE (0x{g:04x})" if is_grease(g) else GROUP_NAMES.get(g, f"0x{g:04x}")
             for g in groups
         ]
     elif kind == 13:

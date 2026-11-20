@@ -21,8 +21,10 @@ the libraries, and why most of them share one fingerprint
                                     CNIOBoringSSL, so they never touch
                                     CFNetwork. A distinct ClientHello and a
                                     distinct HTTP/2 fingerprint.
-  4. Cronet (Chromium's stack), OpenSSL builds and a few SDKs. Each needs its
-     own capture; none is here yet.
+  4. Cronet                         Chromium's stack when an app bundles it.
+                                    Captured: `cronet_android100` below.
+  5. Apps shipping their own OpenSSL build. Each needs its own capture; none
+     is here yet.
 
   "SwiftNIO's URLs" is not CFNetwork, which an earlier revision of this file
   said. NIOSSL links CNIOBorrowSSL (`@_implementationOnly import
@@ -35,6 +37,7 @@ records, 21 in total
   ios_confirmed, ios_mms/2/3, ios_mesh/2, ios_nike, ios_zalando
                                                      CFNetwork apps
   swiftnio_ssl                                       NIOSSL 2.36 (AsyncHTTPClient)
+  cronet_android100                                  Cronet 100 on Android 13
 
 the CFNetwork app records carry no OS version
   tls-client files these profiles as `Version: "1"` and every capture's
@@ -69,6 +72,21 @@ new this pass
       Live-verified against tls.peet.ws: TLS JA4 and extension list are
       identical, HTTP/2 Akamai fingerprint is identical.
 
+  cronet_android100
+      Chromium's network stack, running in a real Android 13 app built here
+      (redroid13 on the LAN host). Cronet's Java layer needs an Android
+      Context - its network-change monitor calls ConnectivityManager - so the
+      harness is a small APK, not app_process: `adb shell am start`.
+      tools/capture/cronet_capture.py records the ClientHello off a local
+      listener; a local TLS terminator records the HTTP/2 frames.
+        ja4    t13d1516h2_8daaf6152771
+        16 ciphers, 18 extensions, GREASE + ALPS 17513 + compress_certificate
+        h2     1:65536;3:1000;4:6291456;6:262144 | 15663105 | 0 | m,a,s,p
+      Live-verified: the HTTP/2 Akamai fingerprint is byte-identical and the
+      extension list matches item for item. The one deviation is real:
+      Cronet greases only its cipher/group/extension lists, while BoringSSL's
+      GREASE switch greases five lists together.
+
   NPN works in a stock build
       utls_ios11/utls_ios12 offer NPN (13172). The previous fix added
       `SSL_CTX_set_offer_npn`, which only exists when BoringSSL is rebuilt
@@ -88,14 +106,33 @@ new this pass
       name `4` are unchanged. Regression test:
       tests/wire.rs::a_captured_settings_order_is_not_padded_with_default_ids.
 
+iOS 27 is reachable, and measured live
+  No capture of iOS 27 exists here - tls-client v1.18.1 (and master) tops out
+  at Safari_IOS_26_0 and uTLS at iOS 14 - but curl-impersonate carries an iOS
+  27 preset, and the preset's wire bytes are verifiable. Every iOS preset
+  was echoed against tls.peet.ws (goal-evidence/ios-echo2/ and the runs
+  below):
+
+    safari180_ios   ja4 t13d2014h2_a09f3c656075_e42f34c56612  h2 2:0;3:100;4:2097152;8:1;9:1
+    safari184_ios   ja4 t13d2014h2_a09f3c656075_e42f34c56612  h2 2:0;3:100;4:2097152;9:1
+    safari260_ios   ja4 t13d2015h2_a09f3c656075_c258b721e490  h2 2:0;3:100;4:2097152;9:1
+    safari270_ios   ja4 t13d2013h2_a09f3c656075_7f0f34a4126d  h2 2:0;3:100;4:2097152;9:1
+
+  Two things worth noting in that list. safari180_ios and safari184_ios send
+  the same ClientHello, which matches upstream's own definition (both are
+  the 18.0 shape; 18.5 is the release that changed it). safari260_ios is
+  the only one of the four that carries session_ticket, which is why its
+  extension count is 17 rather than 15. These are presets, not captures, so
+  their `source` says so and they are not in `by_library` - but they are
+  what makes the newest Safari nameable through `entry_for_version`.
+
 what cannot be covered, and why
-  - There is no iOS 27 capture. tls-client v1.18.1 (and master) tops out at
-    Safari_IOS_26_0 and uTLS at iOS 14. A real capture needs an iPhone or a
-    macOS host, neither of which this Linux machine can drive. curl-impersonate
-    presets do carry Safari 27 for iOS, so `entry_for_version("webkit", "27.0")`
-    still resolves - but that is a preset, not a capture.
-  - Cronet and apps shipping their own OpenSSL are not represented. Each is
-    a distinct ClientHello and each needs a capture from a device.
+  - Cronet on iOS specifically: the Android slice is captured (above), and
+    the ClientHello is Chromium's, so an iOS app bundling Cronet sends the
+    same stack. Chromium also publishes iOS Cronet builds (newest
+    108.0.5325.0), but they are iphonesimulator slices, which need a macOS
+    host with Xcode to run. The record is named `cronet_android100` and is
+    tagged `android` for that reason rather than pretending to be iOS.
   - iOS 15-18 app shapes are not recorded separately from 11-14. The
     captures available show the app stack has two shapes (14 and 18
     ciphers), both present; a per-version capture would need real devices.
