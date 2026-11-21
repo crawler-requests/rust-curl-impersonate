@@ -2357,6 +2357,31 @@ def sigalg_code(name):
     return SIGALG_NAME_TO_CODE.get(text)
 
 
+
+def capture_source(name, filename):
+    """Say what kind of client produced a capture, not just where the file is.
+
+    The `utls_` and `tlsclient_` records are a library's ClientHello definition
+    sent by a Go harness. That is a real handshake against tls.peet.ws - the
+    bytes are genuine - but the client is the profile, not a browser process,
+    and the source line should not read as if a browser had been run.
+    """
+    path = "tools/capture/raw/" + filename
+    if name.startswith("utls_"):
+        return (
+            "tls.peet.ws capture of the uTLS ClientHelloID for "
+            + name[len("utls_"):] + " (refraction-networking/utls, sent by "
+            "its Go harness), " + path
+        )
+    if name.startswith("tlsclient_"):
+        return (
+            "tls.peet.ws capture of the tls-client profile "
+            + name[len("tlsclient_"):] + " (bogdanfinn/tls-client, sent by "
+            "its Go harness), " + path
+        )
+    return "tls.peet.ws capture, " + path
+
+
 def build_record(spec):
     grease_settings = False
     path = os.path.join(RAW, spec["file"])
@@ -2783,10 +2808,7 @@ def build_record(spec):
         "version": spec["version"],
         "platform": spec["platform"],
         **({"library": spec["library"]} if spec.get("library") else {}),
-        "source": spec.get(
-            "source",
-            "tls.peet.ws capture, tools/capture/raw/" + spec["file"],
-        ),
+        "source": spec.get("source") or capture_source(spec["name"], spec["file"]),
         "fidelity": fidelity(
             len(dropped_ciphers),
             len(dropped_groups),

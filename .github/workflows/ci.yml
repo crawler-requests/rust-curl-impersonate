@@ -27,6 +27,11 @@ jobs:
           shared-key: ci-test
       - name: Test
         run: cargo test --workspace
+      # Every record must come from a capture. This fails the build if one
+      # names a raw file that does not exist, has no ClientHello, or claims a
+      # header or HTTP/2 parameter the capture never contained.
+      - name: Audit capture provenance
+        run: python3 -I tools/audit_provenance.py
 
   consumer:
     name: downstream consumer without patches

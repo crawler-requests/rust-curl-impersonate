@@ -5051,7 +5051,7 @@
       "version": "27.2",
       "platform": "macos",
       "library": "webkit-macos",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_safari27_2.json",
+      "source": "tls.peet.ws capture of the tls-client profile safari27_2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari27_2.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -8898,7 +8898,7 @@
       "client": "Brave (tls-client profile)",
       "version": "146",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_brave146.json",
+      "source": "tls.peet.ws capture of the tls-client profile brave146 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_brave146.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -8969,7 +8969,7 @@
       "client": "Cloudflare custom profile (tls-client)",
       "version": "custom",
       "platform": "linux",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_cloudflare.json",
+      "source": "tls.peet.ws capture of the tls-client profile cloudflare (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_cloudflare.json",
       "fidelity": "partial",
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (4 sent).",
@@ -9026,7 +9026,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "103",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome103.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome103 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome103.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9101,7 +9101,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "104",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome104.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome104 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome104.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9176,7 +9176,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "105",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome105.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome105 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome105.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9251,7 +9251,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "106",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome106.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome106 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome106.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9326,7 +9326,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "107",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome107.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome107 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome107.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9401,7 +9401,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "108",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome108.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome108 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome108.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9476,7 +9476,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "109",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome109.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome109 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome109.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9551,7 +9551,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "110",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome110.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome110 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome110.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9626,7 +9626,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "111",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome111.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome111 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome111.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9701,7 +9701,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "112",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome112.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome112 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome112.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9776,7 +9776,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "117",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome117.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome117 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome117.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9851,7 +9851,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "120",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome120.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome120 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome120.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9922,7 +9922,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "124",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome124.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome124 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome124.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -9993,7 +9993,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "131",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome131.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome131 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome131.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10064,7 +10064,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "133",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome133.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome133 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome133.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10136,7 +10136,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "144",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome144.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome144 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome144.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10207,7 +10207,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "146",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome146.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome146 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome146.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10279,7 +10279,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "150",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome150.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome150 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome150.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10353,7 +10353,7 @@
       "client": "Chrome (tls-client profile)",
       "version": "152",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_chrome152.json",
+      "source": "tls.peet.ws capture of the tls-client profile chrome152 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome152.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10429,7 +10429,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "102",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox102.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox102 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox102.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10546,7 +10546,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "104",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox104.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox104 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox104.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10663,7 +10663,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "105",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox105.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox105 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox105.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10780,7 +10780,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "106",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox106.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox106 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox106.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -10897,7 +10897,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "108",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox108.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox108 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox108.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11014,7 +11014,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "110",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox110.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox110 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox110.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11131,7 +11131,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "117",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox117.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox117 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox117.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11248,7 +11248,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "120",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox120.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox120 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox120.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11361,7 +11361,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "123",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox123.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox123 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox123.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11474,7 +11474,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "132",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox132.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox132 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox132.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11551,7 +11551,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "133",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox133.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox133 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox133.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11627,7 +11627,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "135",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox135.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox135 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox135.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11703,7 +11703,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "147",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox147.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox147 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox147.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11778,7 +11778,7 @@
       "client": "Firefox (tls-client profile)",
       "version": "148",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_firefox148.json",
+      "source": "tls.peet.ws capture of the tls-client profile firefox148 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox148.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11854,7 +11854,7 @@
       "client": "Opera (tls-client profile)",
       "version": "89",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_opera89.json",
+      "source": "tls.peet.ws capture of the tls-client profile opera89 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_opera89.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -11929,7 +11929,7 @@
       "client": "Opera (tls-client profile)",
       "version": "90",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_opera90.json",
+      "source": "tls.peet.ws capture of the tls-client profile opera90 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_opera90.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12005,7 +12005,7 @@
       "version": "15.6.1",
       "platform": "macos",
       "library": "webkit-macos",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_safari15_6_1.json",
+      "source": "tls.peet.ws capture of the tls-client profile safari15_6_1 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari15_6_1.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12084,7 +12084,7 @@
       "version": "16.0",
       "platform": "macos",
       "library": "webkit-macos",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_safari16.json",
+      "source": "tls.peet.ws capture of the tls-client profile safari16 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari16.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12163,7 +12163,7 @@
       "version": "15.6",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_safari_ipad15_6.json",
+      "source": "tls.peet.ws capture of the tls-client profile safari_ipad15_6 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari_ipad15_6.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12242,7 +12242,7 @@
       "version": "",
       "platform": "ios",
       "library": "cfnetwork",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mms.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_mms (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12305,7 +12305,7 @@
       "version": "",
       "platform": "ios",
       "library": "cfnetwork",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mms2.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_mms2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms2.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12368,7 +12368,7 @@
       "version": "",
       "platform": "ios",
       "library": "cfnetwork",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mms3.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_mms3 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms3.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12446,7 +12446,7 @@
       "version": "",
       "platform": "ios",
       "library": "cfnetwork",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mesh.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_mesh (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mesh.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12525,7 +12525,7 @@
       "version": "",
       "platform": "ios",
       "library": "cfnetwork",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_mesh2.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_mesh2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mesh2.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12604,7 +12604,7 @@
       "version": "",
       "platform": "ios",
       "library": "cfnetwork",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_nike.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_nike (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_nike.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12683,7 +12683,7 @@
       "version": "",
       "platform": "ios",
       "library": "cfnetwork",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_zalando.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_zalando (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_zalando.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12762,7 +12762,7 @@
       "version": "15.5",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_safari15_5.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_safari15_5 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari15_5.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12841,7 +12841,7 @@
       "version": "15.6",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_safari15_6.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_safari15_6 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari15_6.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12920,7 +12920,7 @@
       "version": "16.0",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_safari16.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_safari16 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari16.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -12999,7 +12999,7 @@
       "version": "17.0",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_safari17.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_safari17 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari17.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -13078,7 +13078,7 @@
       "version": "18.0",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/tlsclient_ios_safari18.json",
+      "source": "tls.peet.ws capture of the tls-client profile ios_safari18 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari18.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -13157,7 +13157,7 @@
       "client": "Chrome 58 (uTLS ClientHello)",
       "version": "58",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome58.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome58 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome58.json",
       "fidelity": "close",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
@@ -13217,7 +13217,7 @@
       "client": "Chrome 62 (uTLS ClientHello)",
       "version": "62",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome62.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome62 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome62.json",
       "fidelity": "close",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
@@ -13277,7 +13277,7 @@
       "client": "Chrome 70 (uTLS ClientHello)",
       "version": "70",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome70.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome70 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome70.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13341,7 +13341,7 @@
       "client": "Chrome 72 (uTLS ClientHello)",
       "version": "72",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome72.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome72 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome72.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13404,7 +13404,7 @@
       "client": "Chrome 83 (uTLS ClientHello)",
       "version": "83",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome83.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome83 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome83.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13466,7 +13466,7 @@
       "client": "Chrome 87 (uTLS ClientHello)",
       "version": "87",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome87.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome87 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome87.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13528,7 +13528,7 @@
       "client": "Chrome 96 (uTLS ClientHello)",
       "version": "96",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome96.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome96 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome96.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13590,7 +13590,7 @@
       "client": "Chrome 100 (uTLS ClientHello)",
       "version": "100",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome100.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome100 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome100.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13652,7 +13652,7 @@
       "client": "Chrome 102 (uTLS ClientHello)",
       "version": "102",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome102.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome102 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome102.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13714,7 +13714,7 @@
       "client": "Chrome 106 with shuffled extensions (uTLS)",
       "version": "106 shuffled",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome106shuffle.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome106shuffle (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome106shuffle.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13776,7 +13776,7 @@
       "client": "Chrome 115 with PQ key share (uTLS)",
       "version": "115 PQ",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome115pq.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome115pq (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome115pq.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13834,7 +13834,7 @@
       "client": "Chrome 120 (uTLS ClientHello)",
       "version": "120",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome120.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome120 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome120.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13896,7 +13896,7 @@
       "client": "Chrome 120 with PQ key share (uTLS)",
       "version": "120 PQ",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome120pq.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome120pq (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome120pq.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -13954,7 +13954,7 @@
       "client": "Chrome 131 (uTLS ClientHello)",
       "version": "131",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome131.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome131 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome131.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14012,7 +14012,7 @@
       "client": "Chrome 133 (uTLS ClientHello)",
       "version": "133",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_chrome133.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome133 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome133.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14070,7 +14070,7 @@
       "client": "Firefox 55 (uTLS ClientHello)",
       "version": "55",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox55.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox55 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox55.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14130,7 +14130,7 @@
       "client": "Firefox 56 (uTLS ClientHello)",
       "version": "56",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox56.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox56 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox56.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14190,7 +14190,7 @@
       "client": "Firefox 63 (uTLS ClientHello)",
       "version": "63",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox63.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox63 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox63.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14255,7 +14255,7 @@
       "client": "Firefox 65 (uTLS ClientHello)",
       "version": "65",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox65.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox65 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox65.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14320,7 +14320,7 @@
       "client": "Firefox 99 (uTLS ClientHello)",
       "version": "99",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox99.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox99 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox99.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14386,7 +14386,7 @@
       "client": "Firefox 102 (uTLS ClientHello)",
       "version": "102",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox102.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox102 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox102.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14452,7 +14452,7 @@
       "client": "Firefox 105 (uTLS ClientHello)",
       "version": "105",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox105.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox105 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox105.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14518,7 +14518,7 @@
       "client": "Firefox 120 (uTLS ClientHello)",
       "version": "120",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_firefox120.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox120 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox120.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14581,7 +14581,7 @@
       "version": "16.0",
       "platform": "macos",
       "library": "webkit-macos",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_safari16.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for safari16 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_safari16.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14647,7 +14647,7 @@
       "version": "11.1",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_ios11.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios11 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios11.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14707,7 +14707,7 @@
       "version": "12.1",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_ios12.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios12 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios12.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14769,7 +14769,7 @@
       "version": "13.0",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_ios13.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios13 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios13.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14834,7 +14834,7 @@
       "version": "14.0",
       "platform": "ios",
       "library": "webkit",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_ios14.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios14 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios14.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14899,7 +14899,7 @@
       "version": "11",
       "platform": "android",
       "library": "conscrypt",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_android11okhttp.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for android11okhttp (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_android11okhttp.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -14957,7 +14957,7 @@
       "client": "Edge 85 (uTLS ClientHello)",
       "version": "85",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_edge85.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for edge85 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_edge85.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -15019,7 +15019,7 @@
       "client": "Edge 106 (uTLS ClientHello)",
       "version": "106",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_edge106.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for edge106 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_edge106.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -15081,7 +15081,7 @@
       "client": "360 Browser 7.5 (uTLS ClientHello)",
       "version": "7.5",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_360_7_5.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for 360_7_5 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_360_7_5.json",
       "fidelity": "close",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
@@ -15143,7 +15143,7 @@
       "client": "360 Browser 11.0 (uTLS ClientHello)",
       "version": "11.0",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_360_11_0.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for 360_11_0 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_360_11_0.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
@@ -15207,7 +15207,7 @@
       "client": "QQ Browser 11.1 (uTLS ClientHello)",
       "version": "11.1",
       "platform": "windows",
-      "source": "tls.peet.ws capture, tools/capture/raw/utls_qq11_1.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for qq11_1 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_qq11_1.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
