@@ -69,3 +69,21 @@ Two things this round settled:
 
 Negative test: pointing the Snap build at chrome160's record correctly fails
 (27 extensions vs 18, different JA4), so the verifier is not a rubber stamp.
+
+--- round 3: Android OkHttp on a real device (2026-11-22) ---
+
+The android_okhttp* records came from tls-client's OkHttp profiles. That is a
+profile definition, not a device, so the stronger check is to run OkHttp
+itself. Built a small APK against okhttp 4.12.0 and ran it on the redroid
+Android 13 device with /system/bin/tcpdump watching:
+
+  live OkHttp 4.12, Android 13, to tls.peet.ws
+    15 ciphers, 13 extensions, ja4 a-segment t13d1513h2
+    server_name, extended_master_secret, renegotiation_info, supported_groups,
+    ec_point_formats, session_ticket, ALPN, status_request, sig_algs,
+    key_share, psk_key_exchange_modes, supported_versions, padding
+
+  android_okhttp12 / android_okhttp13 records
+    ja4 t13d1513h2_8daaf6152771_eca864cca44a, 13 extensions, same set
+
+Identical. The packet capture is kept as okhttp_android13.pcap.
