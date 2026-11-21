@@ -38,3 +38,34 @@ Also in this pass:
   16 ciphers, 19-20 extensions including trust_anchors 51764, ALPS, ECH
   GREASE. It is not in the library (that build was never recorded), but it
   confirms the Chromium capture path produces real wire bytes.
+
+--- round 2: re-captured from the exact builds (2026-11-22) ---
+
+Every Chrome record whose build could still be downloaded was re-captured
+with that exact version and compared:
+
+  record          build            state       result
+  chromium157     157.0.8103.78   first       ja4 t13d1518h2_... identical
+  chrome158       158.0.8127.18   resumed     ja4 t13d1519h2_... identical
+  chrome159       159.8144.0      resumed     ja4 t13d1519h2_... identical
+  chrome160       160.0.8167.0    first       ja4 t13d1518h2_... identical
+
+All four came back byte-identical on cipher list, extension list and JA4.
+
+Two things this round settled:
+
+  1. A Chromium ClientHello has two states - a first connection and a resumed
+     one with `pre_shared_key` - and they differ by one extension and by the
+     JA4 a-segment that counts it. chrome158/159 were captured resumed,
+     chromium157/chrome160 first-connection. tools/capture/verify_chromium.py
+     drives one browser process over CDP (so it can reach the resumed state)
+     and reports which state it saw.
+
+  2. The local Snap Chromium is 157.0.8103.38, and it does NOT send extension
+     4832, while the Chrome for Testing Stable build 157.0.8103.78 does. The
+     library's chromium157 is the CfT build, which is why a Snap re-run looks
+     like a mismatch. This was already recorded when the record was moved to
+     the CfT build; the re-capture confirms it.
+
+Negative test: pointing the Snap build at chrome160's record correctly fails
+(27 extensions vs 18, different JA4), so the verifier is not a rubber stamp.
