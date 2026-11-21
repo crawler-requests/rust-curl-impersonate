@@ -672,6 +672,13 @@ PROFILES = [
         "version": "125.0.6422.113",
         "platform": "android",
         "permute_extensions": True,
+        # The capture happened to be 256-511 bytes long, so BoringSSL padded
+        # it. The padding length is a function of the hello's size, not a
+        # fixed property of the client: re-capturing the same WebView on a
+        # later run produced a hello outside that window with no padding at
+        # all. Leaving it to the transport's size rule is what the client
+        # actually does.
+        "padding": "size",
     },
     {
         "file": "webkitgtk26_4.json",
@@ -2675,7 +2682,13 @@ def build_record(spec):
         tls_record["trust_anchors"] = trust_anchors
     if channel_id:
         tls_record["channel_id"] = True
-    if 21 in exts:
+    if spec.get("padding") == "size":
+        # The capture's padding came from BoringSSL's size rule, not from the
+        # client: leave the extension's presence to the transport. Writing the
+        # captured length down as a fixed value would make the record wrong
+        # the moment the hello's length changes - which it did.
+        tls_record.pop("padding", None)
+    elif 21 in exts:
         # The capture carries the extension; keep its exact length (zero is a
         # legal, distinct case: an empty padding extension).
         tls_record["padding"] = {"send": {"len": padding_len or 0}}

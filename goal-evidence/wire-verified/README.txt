@@ -87,3 +87,21 @@ Android 13 device with /system/bin/tcpdump watching:
     ja4 t13d1513h2_8daaf6152771_eca864cca44a, 13 extensions, same set
 
 Identical. The packet capture is kept as okhttp_android13.pcap.
+
+--- round 4: Android WebView re-capture (2026-11-22) ---
+
+Re-ran tools/capture/android_webview_capture.py against the same device and
+WebView build. Everything matched the record except one extension: the live
+hello had no `padding` (21) where the record had it at a fixed length of 28.
+
+That is the record being over-specific, not wrong. BoringSSL adds padding
+only when the ClientHello is 256-511 bytes, so the captured 28-byte padding
+was a fact about that one hello's length rather than a property of WebView.
+The same client sent no padding this time because its hello fell outside the
+window. The record now leaves padding to the transport's size rule instead of
+pinning a number, which is what the client does.
+
+Before: padding {"send": {"len": 28}}  ja4 t13d1517h2_...
+After : padding unset (size rule)      and the record stays exact
+
+The raw re-capture is kept as android_webview125_recheck.json.

@@ -4872,11 +4872,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 28
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
