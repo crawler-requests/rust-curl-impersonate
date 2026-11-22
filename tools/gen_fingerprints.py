@@ -672,13 +672,60 @@ PROFILES = [
         "version": "125.0.6422.113",
         "platform": "android",
         "permute_extensions": True,
-        # The capture happened to be 256-511 bytes long, so BoringSSL padded
-        # it. The padding length is a function of the hello's size, not a
-        # fixed property of the client: re-capturing the same WebView on a
-        # later run produced a hello outside that window with no padding at
-        # all. Leaving it to the transport's size rule is what the client
-        # actually does.
-        "padding": "size",
+        # The phone that supplied android_webview103 was updated to this
+        # WebView between two capture runs, so both shapes are real: this
+        # record's capture carries the padding extension; the device hello
+        # did not, because random-length ECH GREASE made it longer than the
+        # 256-511 byte padding window. Dropping extension 21 from this
+        # record's fields gives c = 02713d6af862, exactly what the device
+        # sent (t13d1516h2_8daaf6152771_02713d6af862).
+        "source": (
+            "tls.peet.ws capture of WebView 125.0.6422.113, confirmed on a "
+            "OnePlus 9R running Android 13: the device's own WebView sends "
+            "the same extension set and signature algorithms, and its JA4 "
+            "differs only by the padding extension the transport adds when "
+            "the hello fits the 256-511 byte window "
+            "(t13d1516h2_8daaf6152771_02713d6af862 on the device), "
+            "tools/capture/phone_capture.py, "
+            "tools/capture/raw/android_webview125.json"
+        ),
+    },
+    {
+        # Recorded off a real OnePlus 9R on Android 13: the system WebView's
+        # own ClientHello, not an impersonation profile. The same device's
+        # WebView matches android_mesh's JA4 exactly.
+        "file": "android_webview103.json",
+        "name": "android_webview103",
+        "library": "webview",
+        "family": "android",
+        "client": "Android WebView 103.0.5060.129 (Chromium)",
+        "version": "103.0.5060.129",
+        "platform": "android",
+        "permute_extensions": True,
+        "source": (
+            "ClientHello recorded off the wire from the system WebView "
+            "103.0.5060.129 on a OnePlus 9R running Android 13, "
+            "tools/capture/phone_capture.py, "
+            "tools/capture/raw/android_webview103.json"
+        ),
+    },
+    {
+        # The platform stack reached through HttpsURLConnection: 17 ciphers
+        # (the extra ECDSA CBC suites) and ALPN that offers only http/1.1.
+        "file": "android_conscrypt13.json",
+        "name": "android_conscrypt13",
+        "library": "conscrypt",
+        "family": "android",
+        "client": "Android 13 platform TLS (HttpsURLConnection / Conscrypt)",
+        "version": "13",
+        "platform": "android",
+        "source": (
+            "ClientHello recorded off the wire from HttpsURLConnection on a "
+            "OnePlus 9R running Android 13, confirmed by the tls.peet.ws "
+            "report for the same connection (t13d1713h1_5b57614c22b0_"
+            "eca864cca44a), tools/capture/phone_capture.py, "
+            "tools/capture/raw/android_conscrypt13.json"
+        ),
     },
     {
         "file": "webkitgtk26_4.json",
@@ -1083,9 +1130,16 @@ PROFILES = [
         "name": "android_okhttp13",
         "library": "conscrypt",
         "family": "okhttp",
-        "client": "OkHttp 4 on Android 13 (tls-client profile)",
+        "client": "OkHttp 4.12 on Android 13 (tls-client profile, verified on a device)",
         "version": "13",
         "platform": "android",
+        "source": (
+            "tls.peet.ws capture of the profile, matched byte for byte by a "
+            "real OkHttp 4.12 client on a OnePlus 9R running Android 13 - same "
+            "JA4, same server-side ja4_r, same HTTP/2 fingerprint "
+            "(tools/capture/phone_capture.py --echo), "
+            "tools/capture/raw/android_okhttp13.json"
+        ),
     },
     {
         "file": "android_confirmed2.json",
@@ -1099,9 +1153,13 @@ PROFILES = [
     {
         "file": "android_mesh.json",
         "name": "android_mesh",
-        "library": "conscrypt",
+        # A Chromium-shaped hello (GREASE, SCT, old ALPS, compress_certificate)
+        # whose JA4 and extension order are exactly those of the system WebView
+        # recorded on a real Android 13 phone: the app renders in a WebView,
+        # not in Conscrypt.
+        "library": "webview",
         "family": "android",
-        "client": "Mesh Android app (tls-client profile)",
+        "client": "Mesh Android app, system WebView (tls-client profile)",
         "version": "",
         "platform": "android",
     },
@@ -2634,16 +2692,20 @@ def build_record(spec):
     # record needs the session cache on to reproduce that ClientHello.
     resumed = 41 in exts
 
-    # The capture's padding length (RFC 7685). BoringSSL derives padding from
-    # the ClientHello size, so a recorded length is applied explicitly.
-    # Padding: record the captured length, or 0 when the capture has none.
-    # BoringSSL adds padding on its own when the ClientHello is 256-511 bytes,
-    # which the capture may not have, so an explicit value is needed either
-    # way. A Chrome ClientHello is never that long, so `None` is only right
-    # for captures whose length is stable.
-    # Padding is tristate: absent (no opinion), 0 (empty extension), N.
+    # The capture's padding length (RFC 7685). Padding is a consequence of
+    # the ClientHello size: BoringSSL, OpenSSL and Go all pad a hello that is
+    # 256-511 bytes long into a 508-byte handshake, and every padded capture
+    # in this corpus lands exactly there once the reported length is halved.
+    #
+    # tls.peet.ws reports `padding_data_length` as the length of the padding's
+    # hex string, i.e. twice the byte count: a real Android hello whose
+    # extension carries 242 bytes arrives from the echo as 484. Verified by
+    # recording the same hello on the wire (tools/capture/phone_capture.py)
+    # and comparing it with the echo of that same connection.
     pad_entry = exts.get(21) or {}
     padding_len = pad_entry.get("padding_data_length")
+    if padding_len and "peetprint" in tls:
+        padding_len //= 2
 
     alps_old = 17513 in exts
     alps_new = 17613 in exts
@@ -2682,16 +2744,18 @@ def build_record(spec):
         tls_record["trust_anchors"] = trust_anchors
     if channel_id:
         tls_record["channel_id"] = True
-    if spec.get("padding") == "size":
-        # The capture's padding came from BoringSSL's size rule, not from the
-        # client: leave the extension's presence to the transport. Writing the
-        # captured length down as a fixed value would make the record wrong
-        # the moment the hello's length changes - which it did.
-        tls_record.pop("padding", None)
+    if 21 in exts and not padding_len:
+        # An empty padding extension is a legal, distinct case: the client
+        # sent the extension with no payload. Keep it so extension 21 stays
+        # in the hello (it is part of the JA4 c hash).
+        tls_record["padding"] = {"send": {"len": 0}}
     elif 21 in exts:
-        # The capture carries the extension; keep its exact length (zero is a
-        # legal, distinct case: an empty padding extension).
-        tls_record["padding"] = {"send": {"len": padding_len or 0}}
+        # The capture's padding came from the transport's size rule, not from
+        # the client: leave the extension's presence to the transport. Writing
+        # the captured length down as a fixed value would make the record
+        # wrong the moment the hello's length changes - which it does for
+        # every different SNI.
+        tls_record.pop("padding", None)
     else:
         # No padding in the capture: suppress BoringSSL's automatic 256-511
         # byte padding so the live ClientHello cannot grow one.

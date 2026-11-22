@@ -92,7 +92,7 @@
           "ecdsa_secp384r1_sha384",
           "ecdsa_secp521r1_sha512",
           "ed25519",
-          "ed25519",
+          "ed448",
           "rsa_pss_pss_sha256",
           "rsa_pss_pss_sha384",
           "rsa_pss_pss_sha512",
@@ -199,5 +199,6 @@
       "packet_len": 60
     },
     "p0f": "4:51+?:0:1400:42340,11:mss,sok,ts,nop,ws:df,id+:0"
-  }
+  },
+  "corrected": "tls.peet.ws labels code 0x0808 as ed25519; each list below had a second ed25519 where the same capture's ja4_r says ed448, so that entry was changed to ed448."
 }

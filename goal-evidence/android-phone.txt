@@ -1,0 +1,133 @@
+Android phone capture, 2026-11-22
+
+question
+  Until now the Android records were either tls.peet.ws captures of someone
+  else's device or fingerprints rebuilt from them. This pass recorded the
+  ClientHellos of a real phone directly off the wire, so the platform
+  stack, OkHttp and WebView could be checked against what the library
+  claims, and so the records that had a capture but no local proof got one.
+
+device
+  OnePlus 9R (LE2100), Android 13 (SDK 33), arm64-v8a, not rooted, attached
+  through adb. The system WebView updated itself between the two runs:
+  103.0.5060.129 first, 125.0.6422.113 second. Both versions were captured,
+  which is why the note has two WebView results.
+
+method
+  - tools/capture/android_phone is a small activity that makes one request
+    per stack: conscrypt.<name>, okhttp.<name> and webview.<name> on an
+    sslip.io host, so the SNI names the stack and no /etc/hosts edit (which
+    needs root) is involved.
+  - adb reverse tcp:PORT tcp:PORT keeps the phone on its own loopback; every
+    capture therefore shows 127-0-0-1.sslip.io and no LAN address has to be
+    written down. The new --reverse flag does this in one step.
+  - tools/capture/phone_capture.py listens, never answers the handshake, and
+    writes each record to disk with a JSON description. --echo additionally
+    relays a CONNECT tunnel to the real tls.peet.ws, so the service's own
+    report (ja4, ja4_r, http version, Akamai fingerprint) arrives for the
+    very same hello - an independent second opinion, not our parser's.
+  - Nothing in the repository contains a LAN address, a device serial or the
+    phone's public egress address (the echo log does, and is not committed).
+
+results, run 1 (WebView 103)
+  stack                             JA4                                       record
+  HttpsURLConnection / Conscrypt    t13d1713h1_5b57614c22b0_eca864cca44a h1   517 B
+  OkHttp 4.12 (app-bundled)         t13d1513h2_8daaf6152771_eca864cca44a h2   517 B
+  system WebView 103, first hello   t13d1516h2_8daaf6152771_e5627efa2ab1 h2   517 B
+  system WebView 103, retry         t13d1516h2_8daaf6152771_ef90417dd72d h2   517 B
+
+  The retry hello differs by one signature algorithm, rsa_pkcs1_sha1, which
+  Chromium adds after a failed handshake; it is the only difference and it
+  moves the c segment. The record keeps the first hello.
+
+server confirmation
+  tls.peet.ws saw both relayed connections: status 200, http_version h2 for
+  OkHttp and HTTP/1.1 for Conscrypt, and its own ja4 equal to the
+  listener's for both (t13d1513h2_..._eca864cca44a and
+  t13d1713h1_..._eca864cca44a, ja4_r lists included). So the bytes on the
+  wire and an independent server's classification agree.
+
+padding, measured
+  All six run-1 hellos were 517-byte records, i.e. a 508-byte handshake
+  body. The padding extension bodies were 220 (Conscrypt), 228 (OkHttp),
+  242 (OkHttp via relay), 237 (Conscrypt via relay) and 189/187 (WebView):
+  all reach the same 508-byte total, so padding is the transport's size
+  rule, not a client property. The relay hellos were also reported by
+  tls.peet.ws as padding_data_length 484 and 474 - exactly twice 242 and
+  237, because peet counts the hex string. That is the proof behind the
+  library change: the old records stored peet's doubled number as a fixed
+  byte count.
+
+results, run 2 (WebView 125, rebuilt APK)
+  The rebuilt app reproduced Conscrypt and OkHttp byte-shape-for-shape
+  (same JA4s), which shows the harness and captures are stable. The now
+  updated WebView 125 sent two hellos,
+  t13d1516h2_8daaf6152771_02713d6af862, as 578- and 546-byte records with
+  ECH GREASE and no padding extension (569/537-byte bodies, above the
+  256-511 byte padding window).
+  android_webview125's stored record has 17 extensions because its capture
+  included padding; drop extension 21 and its c segment becomes
+  02713d6af862 with b unchanged at 8daaf6152771, exactly the device's hash.
+  The record is therefore confirmed on real hardware, and leaving padding
+  to the transport reproduces both shapes.
+
+library changes
+  new  android_conscrypt13   raw android_conscrypt13.json. The platform
+                             stack on its own: 17 ciphers (the ECDSA CBC
+                             suites) and ALPN with http/1.1 only.
+  new  android_webview103    raw android_webview103.json. The WebView whose
+                             c segment equals android_mesh's, which had been
+                             captured from the same app; android_mesh is now
+                             filed under library "webview", not "conscrypt".
+  upd  android_okhttp13      source says it was matched by a real OkHttp
+                             4.12 client on this phone.
+  upd  android_webview125    source names the device confirmation and the
+                             device's JA4.
+  The generator now takes padding from the size rule for every capture that
+  has extension 21; the fixed lengths (peet's doubled numbers) are gone.
+  266 records regenerated.
+
+ed448 naming bug, found by the same audit
+  tls.peet.ws names code 0x0808 "ed25519" as well as 0x0807, so 47 raw
+  files listed ed25519 twice and ed448 never. Comparing each capture's name
+  list, position by position, with its own ja4_r showed which entry was
+  really ed448; the raws were corrected and the library regenerated.
+  Records now offer ed25519 once, and the deviation notes ed448 as a drop
+  BoringSSL cannot send. tools/audit_provenance.py checks name-to-code
+  agreement with ja4_r, so a mislabelled name can no longer slip in.
+
+cronet_capture.py
+  Its ja4() hashed only the sorted extension list and left the signature
+  algorithms out of the c segment, so a capture compared against the
+  server's ja4 could never match. It now appends the signature algorithms
+  in wire order, as JA4 defines, and the Android Cronet 100 capture agrees
+  with its server report.
+
+provenance audit
+  233 base records, 0 problems. 202 stored JA4s recomputed from their
+  capture, 233 records checked against their capture; 31 records are
+  listed as local-socket-only (firefox121-157).
+
+wire tests
+  cargo test --workspace: 32 + 10 + 24 + 15 + 17 + 20 + 0 unit/integration
+  tests and 3 doc tests, all pass. New:
+    padding_is_a_size_rule_not_a_stored_length    python3.12 request and
+                                                   urllib hellos are 508-byte
+                                                   bodies with extension 21
+    a_hello_below_the_padding_floor_is_left_alone dotnet8_http1 stays under
+                                                   256 bytes with no padding
+    ed25519_is_offered_once_and_ed448_is_the_documented_drop
+
+harness fixes made while running it
+  - `am start ... --es proxy ""` loses the empty value in adb's argument
+    handling and aborts with "Argument expected after proxy"; the flag is
+    now only passed when --echo is set.
+  - The phone's DNS took about 23 s for the sslip.io name on one run, longer
+    than a 25 s window: the app ran, every hello arrived late, and the run
+    looked empty. Capture with --seconds 70.
+  - 8443 and 8888 were already taken on this host, so the documented command
+    uses another port; adb reverse makes the choice free.
+
+reproduce
+  python3 -I tools/capture/phone_capture.py --serial <serial> \
+      --out /tmp/phone-capture --reverse --port 28443 --seconds 70 [--echo]

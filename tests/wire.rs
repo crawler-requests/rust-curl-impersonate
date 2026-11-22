@@ -602,9 +602,9 @@ fn patched_mldsa() -> bool {
     .is_ok()
 }
 
-/// Read one TLS record off a local socket: the raw ClientHello, or a panic
-/// naming the first bytes when the peer sent something else.
-async fn read_client_hello_extension_ids(client: &Client) -> Vec<u16> {
+/// Read one TLS record off a local socket: the record body (a handshake
+/// message), or a panic when the peer sent something else.
+async fn read_client_hello_record(client: &Client) -> Vec<u8> {
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let port = listener.local_addr().unwrap().port();
     let server = tokio::spawn(async move {
@@ -629,25 +629,68 @@ async fn read_client_hello_extension_ids(client: &Client) -> Vec<u16> {
     )
     .await;
 
-    let body = server.await.unwrap();
-    // TLS record body -> handshake (1) -> 3-byte length -> ClientHello body.
-    let hello = &body[4..];
+    server.await.unwrap()
+}
+
+/// The parts of a captured ClientHello these tests compare. Positions follow
+/// RFC 8446 4.1.2.
+struct ClientHello {
+    /// Handshake body length, which padding tunes.
+    length: usize,
+    ciphers: Vec<u16>,
+    extensions: Vec<u16>,
+    /// Extension 13 payload in wire order, as code points.
+    sigalgs: Vec<u16>,
+}
+
+fn parse_client_hello(record: &[u8]) -> ClientHello {
+    // Record body begins with the handshake header: type and 3-byte length.
+    assert_eq!(record[0], 1, "not a ClientHello: {:02x?}", &record[..8]);
+    let length = (record[1] as usize) << 16 | (record[2] as usize) << 8
+        | record[3] as usize;
+    let hello = &record[4..];
     let mut pos = 2 + 32;
     pos += 1 + hello[pos] as usize; // session id
-    let ciphers = u16::from_be_bytes([hello[pos], hello[pos + 1]]) as usize;
-    pos += 2 + ciphers;
+    let size = u16::from_be_bytes([hello[pos], hello[pos + 1]]) as usize;
+    pos += 2;
+    let mut ciphers = Vec::new();
+    for chunk in hello[pos..pos + size].chunks_exact(2) {
+        ciphers.push(u16::from_be_bytes([chunk[0], chunk[1]]));
+    }
+    pos += size;
     pos += 1 + hello[pos] as usize; // compression methods
     let total = u16::from_be_bytes([hello[pos], hello[pos + 1]]) as usize;
     pos += 2;
     let end = pos + total;
-    let mut ids = Vec::new();
+    let mut extensions = Vec::new();
+    let mut sigalgs = Vec::new();
     while pos + 4 <= end {
         let kind = u16::from_be_bytes([hello[pos], hello[pos + 1]]);
         let len = u16::from_be_bytes([hello[pos + 2], hello[pos + 3]]) as usize;
-        ids.push(kind);
+        let payload = &hello[pos + 4..pos + 4 + len];
+        extensions.push(kind);
+        if kind == 13 && payload.len() >= 2 {
+            let size = u16::from_be_bytes([payload[0], payload[1]]) as usize;
+            for chunk in payload[2..2 + size].chunks_exact(2) {
+                sigalgs.push(u16::from_be_bytes([chunk[0], chunk[1]]));
+            }
+        }
         pos += 4 + len;
     }
-    ids
+    ClientHello {
+        length,
+        ciphers,
+        extensions,
+        sigalgs,
+    }
+}
+
+async fn read_client_hello(client: &Client) -> ClientHello {
+    parse_client_hello(&read_client_hello_record(client).await)
+}
+
+async fn read_client_hello_extension_ids(client: &Client) -> Vec<u16> {
+    read_client_hello(client).await.extensions
 }
 
 #[tokio::test]
@@ -692,4 +735,50 @@ fn a_captured_settings_order_is_not_padded_with_default_ids() {
         .expect("ios_safari26 names a SETTINGS order");
     let sent: Vec<u16> = order.iter().map(|id| u16::from(*id)).collect();
     assert!(sent.contains(&4), "{sent:?}");
+}
+
+#[tokio::test]
+async fn padding_is_a_size_rule_not_a_stored_length() {
+    // tls.peet.ws reports the padding extension as a hex string, so a capture
+    // of 181 padding bytes arrives as `padding_data_length: 362`. The records
+    // used to store that number and send it, which made the hello about twice
+    // as long as the client's. BoringSSL's own rule - pad a 256..511 byte
+    // hello so the handshake body is 508 bytes - is what the captures show,
+    // so the records now leave padding to the transport.
+    for name in ["python3.12_requests", "python3.12_urllib"] {
+        let hello = read_client_hello(&client(name)).await;
+        assert_eq!(hello.length, 508, "{name}: handshake {}", hello.length);
+        assert!(hello.ciphers.contains(&0x1301), "{name}: no TLS 1.3 cipher");
+        assert!(
+            hello.extensions.contains(&21),
+            "{name} did not pad: {:?}",
+            hello.extensions
+        );
+    }
+}
+
+#[tokio::test]
+async fn a_hello_below_the_padding_floor_is_left_alone() {
+    // The capture had no padding because the hello was already under 256
+    // bytes, and the record says `omit`; the transport must not pad it either.
+    let hello = read_client_hello(&client("dotnet8_http1")).await;
+    assert!(hello.length < 256, "handshake {}", hello.length);
+    assert!(
+        !hello.extensions.contains(&21),
+        "dotnet8_http1 was padded: {:?}",
+        hello.extensions
+    );
+}
+
+#[tokio::test]
+async fn ed25519_is_offered_once_and_ed448_is_the_documented_drop() {
+    // tls.peet.ws names code 0x0808 as ed25519 too, so its JSON carried
+    // ed25519 twice and no ed448, and the records sent ed25519 twice -
+    // btls patches out BoringSSL's duplicate check, so it went on the wire.
+    // The captures are corrected to ed448, which BoringSSL cannot sign with,
+    // so the record offers ed25519 once and records the drop.
+    let hello = read_client_hello(&client("python3.12_requests")).await;
+    let ed25519 = hello.sigalgs.iter().filter(|&&id| id == 0x0807).count();
+    assert_eq!(ed25519, 1, "signature algorithms: {:04x?}", hello.sigalgs);
+    assert!(!hello.sigalgs.contains(&0x0808), "{:04x?}", hello.sigalgs);
 }

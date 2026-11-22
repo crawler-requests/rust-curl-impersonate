@@ -79,13 +79,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -99,11 +99,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 370
-          }
-        },
         "alpn": [
           "http/1.1"
         ],
@@ -137,13 +132,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -157,11 +152,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 362
-          }
-        },
         "alpn": [
           "http/1.1"
         ],
@@ -191,13 +181,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -211,11 +201,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 370
-          }
-        },
         "alpn": [
           "http/1.1"
         ],
@@ -249,13 +234,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -269,11 +254,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 364
-          }
-        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -310,13 +290,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -330,11 +310,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 370
-          }
-        },
         "alpn": [
           "http/1.1"
         ],
@@ -364,13 +339,13 @@
       "deviations": [
         "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 7 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, dsa_sha256 and 3 more (11 sent).",
+        "BoringSSL cannot send 8 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 4 more (10 sent).",
         "BoringSSL never sends captured extension 17 (status_request_v2), 50 (signature_algorithms_cert)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-5-10-11-16-23-35-13-43-45-51",
         "key_shares": "X25519:P-256",
         "grease": false,
@@ -417,13 +392,13 @@
       "deviations": [
         "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 7 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, dsa_sha256 and 3 more (11 sent).",
+        "BoringSSL cannot send 8 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 4 more (10 sent).",
         "BoringSSL never sends captured extension 17 (status_request_v2), 50 (signature_algorithms_cert)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-5-10-11-23-35-13-43-45-51",
         "key_shares": "X25519:P-256",
         "grease": false,
@@ -465,13 +440,13 @@
       "deviations": [
         "BoringSSL cannot send 30 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 26 more (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -504,7 +479,7 @@
       "deviations": [
         "BoringSSL cannot send 30 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 26 more (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac).",
         "The capture sends :authority with the default :443 port; the transport omits the default port.",
         "The transport cannot send an empty HTTP/2 SETTINGS frame; INITIAL_WINDOW_SIZE=65535 is sent instead."
@@ -512,7 +487,7 @@
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -551,13 +526,13 @@
       "deviations": [
         "BoringSSL cannot send 30 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 26 more (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -672,13 +647,13 @@
       "deviations": [
         "BoringSSL cannot send 14 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 and 10 more (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -692,11 +667,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 308
-          }
-        },
         "alpn": [
           "http/1.1",
           "h2"
@@ -737,13 +707,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -757,11 +727,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 362
-          }
-        },
         "alpn": [
           "http/1.1"
         ],
@@ -802,11 +767,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 474
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -851,13 +811,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -871,11 +831,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 364
-          }
-        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -908,13 +863,13 @@
       "deviations": [
         "BoringSSL cannot send 46 captured cipher suites: TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA and 42 more (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -928,11 +883,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 224
-          }
-        },
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -951,13 +901,13 @@
       "deviations": [
         "BoringSSL cannot send 46 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 42 more (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -1003,13 +953,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-5-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -1023,11 +973,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 382
-          }
-        },
         "alpn": [],
         "min_version": "1.2",
         "max_version": "1.3"
@@ -1055,13 +1000,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -4851,7 +4796,7 @@
       "version": "125.0.6422.113",
       "platform": "android",
       "library": "webview",
-      "source": "tls.peet.ws capture, tools/capture/raw/android_webview125.json",
+      "source": "tls.peet.ws capture of WebView 125.0.6422.113, confirmed on a OnePlus 9R running Android 13: the device's own WebView sends the same extension set and signature algorithms, and its JA4 differs only by the padding extension the transport adds when the hello fits the 256-511 byte window (t13d1516h2_8daaf6152771_02713d6af862 on the device), tools/capture/phone_capture.py, tools/capture/raw/android_webview125.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -4956,6 +4901,103 @@
       }
     },
     {
+      "name": "android_webview103",
+      "family": "android",
+      "client": "Android WebView 103.0.5060.129 (Chromium)",
+      "version": "103.0.5060.129",
+      "platform": "android",
+      "library": "webview",
+      "source": "ClientHello recorded off the wire from the system WebView 103.0.5060.129 on a OnePlus 9R running Android 13, tools/capture/phone_capture.py, tools/capture/raw/android_webview103.json",
+      "fidelity": "close",
+      "deviations": [
+        "The capture greases only the cipher suite, extension, group, version; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+      ],
+      "tls": {
+        "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
+        "curves": "X25519:P-256:P-384",
+        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512",
+        "extension_order": "0-23-65281-10-11-35-16-5-13-18-51-45-43-27-17513",
+        "key_shares": "X25519",
+        "grease": true,
+        "permute_extensions": true,
+        "session_ticket": true,
+        "ocsp_stapling": true,
+        "signed_cert_timestamps": true,
+        "ech_grease": false,
+        "alps": true,
+        "new_alps_codepoint": false,
+        "renegotiation": true,
+        "psk_dhe_ke": true,
+        "preserve_tls13_cipher_list": true,
+        "cert_compression": "brotli",
+        "sigalg_codes": [
+          1027,
+          2052,
+          1025,
+          1283,
+          2053,
+          1281,
+          2054,
+          1537
+        ],
+        "alpn": [
+          "h2",
+          "http/1.1"
+        ],
+        "min_version": "1.2",
+        "max_version": "1.3"
+      },
+      "headers": [],
+      "http1_only": true
+    },
+    {
+      "name": "android_conscrypt13",
+      "family": "android",
+      "client": "Android 13 platform TLS (HttpsURLConnection / Conscrypt)",
+      "version": "13",
+      "platform": "android",
+      "library": "conscrypt",
+      "source": "ClientHello recorded off the wire from HttpsURLConnection on a OnePlus 9R running Android 13, confirmed by the tls.peet.ws report for the same connection (t13d1713h1_5b57614c22b0_eca864cca44a), tools/capture/phone_capture.py, tools/capture/raw/android_conscrypt13.json",
+      "fidelity": "exact",
+      "deviations": [],
+      "tls": {
+        "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA",
+        "curves": "X25519:P-256:P-384",
+        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        "extension_order": "0-23-65281-10-11-35-16-5-13-51-45-43",
+        "key_shares": "X25519",
+        "grease": false,
+        "permute_extensions": false,
+        "session_ticket": true,
+        "ocsp_stapling": true,
+        "signed_cert_timestamps": false,
+        "ech_grease": false,
+        "alps": false,
+        "new_alps_codepoint": false,
+        "renegotiation": true,
+        "psk_dhe_ke": true,
+        "preserve_tls13_cipher_list": true,
+        "sigalg_codes": [
+          1027,
+          2052,
+          1025,
+          1283,
+          2053,
+          1281,
+          2054,
+          1537,
+          513
+        ],
+        "alpn": [
+          "http/1.1"
+        ],
+        "min_version": "1.0",
+        "max_version": "1.3"
+      },
+      "headers": [],
+      "http1_only": true
+    },
+    {
       "name": "webkitgtk26_4",
       "family": "safari",
       "client": "WebKitGTK 2.52 (Linux)",
@@ -4967,14 +5009,14 @@
       "deviations": [
         "BoringSSL cannot send 8 captured cipher suites: TLS_AES_128_CCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_ECDHE_ECDSA_WITH_AES_128_CCM, TLS_RSA_WITH_AES_256_CCM and 4 more (21 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 3 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 (13 sent).",
+        "BoringSSL cannot send 4 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, ed448, rsa_pss_pss_sha512 (12 sent).",
         "BoringSSL always sends extended_master_secret (23); the capture omits it.",
         "The capture lists ALPN http/1.0, which BoringSSL cannot offer; those entries are dropped."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
         "curves": "P-256:P-384:P-521:X25519:ffdhe2048:ffdhe3072",
-        "sigalgs": "rsa_pkcs1_sha256:rsa_pss_rsae_sha256:ecdsa_secp256r1_sha256:ed25519:rsa_pkcs1_sha384:rsa_pss_rsae_sha384:ecdsa_secp384r1_sha384:ed25519:rsa_pkcs1_sha512:rsa_pss_rsae_sha512:ecdsa_secp521r1_sha512:rsa_pkcs1_sha1:ecdsa_sha1",
+        "sigalgs": "rsa_pkcs1_sha256:rsa_pss_rsae_sha256:ecdsa_secp256r1_sha256:ed25519:rsa_pkcs1_sha384:rsa_pss_rsae_sha384:ecdsa_secp384r1_sha384:rsa_pkcs1_sha512:rsa_pss_rsae_sha512:ecdsa_secp521r1_sha512:rsa_pkcs1_sha1:ecdsa_sha1",
         "extension_order": "16-5-0-11-13-45-35-51-65281-10-43-28",
         "key_shares": "P-256:X25519",
         "grease": false,
@@ -4989,11 +5031,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
-        "padding": {
-          "send": {
-            "len": 210
-          }
-        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -5136,11 +5173,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 204
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -5201,11 +5233,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 243
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7739,11 +7766,11 @@
     {
       "name": "android_okhttp13",
       "family": "okhttp",
-      "client": "OkHttp 4 on Android 13 (tls-client profile)",
+      "client": "OkHttp 4.12 on Android 13 (tls-client profile, verified on a device)",
       "version": "13",
       "platform": "android",
       "library": "conscrypt",
-      "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp13.json",
+      "source": "tls.peet.ws capture of the profile, matched byte for byte by a real OkHttp 4.12 client on a OnePlus 9R running Android 13 - same JA4, same server-side ja4_r, same HTTP/2 fingerprint (tools/capture/phone_capture.py --echo), tools/capture/raw/android_okhttp13.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -7763,11 +7790,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 484
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -7883,10 +7905,10 @@
     {
       "name": "android_mesh",
       "family": "android",
-      "client": "Mesh Android app (tls-client profile)",
+      "client": "Mesh Android app, system WebView (tls-client profile)",
       "version": "",
       "platform": "android",
-      "library": "conscrypt",
+      "library": "webview",
       "source": "tls.peet.ws capture, tools/capture/raw/android_mesh.json",
       "fidelity": "exact",
       "deviations": [],
@@ -7908,11 +7930,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 414
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8245,11 +8262,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 484
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8317,11 +8329,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 484
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8389,11 +8396,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 484
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8462,11 +8464,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "grease_skip_ciphers": true,
-        "padding": {
-          "send": {
-            "len": 474
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8534,11 +8531,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 476
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8607,11 +8599,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 426
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8686,11 +8673,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 394
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8839,11 +8821,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -8968,13 +8945,13 @@
       "fidelity": "partial",
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (4 sent).",
-        "BoringSSL cannot send 10 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 6 more (13 sent).",
+        "BoringSSL cannot send 11 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 7 more (12 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
         "curves": "P-256",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
         "extension_order": "0-11-10-35-16-23-13",
         "key_shares": "",
         "grease": false,
@@ -9042,11 +9019,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9117,11 +9089,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9192,11 +9159,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9267,11 +9229,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9342,11 +9299,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9417,11 +9369,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9492,11 +9439,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9567,11 +9509,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9642,11 +9579,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9717,11 +9649,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -9792,11 +9719,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -10446,11 +10368,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 278
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -10563,11 +10480,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 278
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -10680,11 +10592,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 278
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -10797,11 +10704,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 278
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -10914,11 +10816,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 278
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11031,11 +10928,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 298
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11148,11 +11040,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 278
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -11870,11 +11757,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -11945,11 +11827,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12021,11 +11898,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12100,11 +11972,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12179,11 +12046,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12384,11 +12246,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 430
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12462,11 +12319,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 426
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12541,11 +12393,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 410
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12620,11 +12467,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 426
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12699,11 +12541,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 426
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12778,11 +12615,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12857,11 +12689,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -12936,11 +12763,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13015,11 +12837,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13094,11 +12911,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 390
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13296,11 +13108,6 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "channel_id": true,
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13359,11 +13166,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 416
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13422,11 +13224,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 424
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13484,11 +13281,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 424
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13546,11 +13338,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 406
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13608,11 +13395,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 414
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13670,11 +13452,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 414
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13732,11 +13509,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 414
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -13852,11 +13624,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 34
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -14208,11 +13975,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
-        "padding": {
-          "send": {
-            "len": 300
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -14273,11 +14035,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
-        "padding": {
-          "send": {
-            "len": 300
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -14339,11 +14096,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 272
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -14405,11 +14157,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 284
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -14471,11 +14218,6 @@
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
         "delegated_credentials": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ecdsa_sha1",
-        "padding": {
-          "send": {
-            "len": 284
-          }
-        },
         "sigalg_codes": [
           1027,
           1283,
@@ -14599,11 +14341,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "zlib",
-        "padding": {
-          "send": {
-            "len": 396
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -14786,11 +14523,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 426
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -14851,11 +14583,6 @@
         "renegotiation": true,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 386
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -14975,11 +14702,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 424
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -15037,11 +14759,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 414
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -15162,11 +14879,6 @@
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
         "channel_id": true,
-        "padding": {
-          "send": {
-            "len": 408
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -15225,11 +14937,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "cert_compression": "brotli",
-        "padding": {
-          "send": {
-            "len": 406
-          }
-        },
         "sigalg_codes": [
           1027,
           2052,
@@ -15541,13 +15248,13 @@
       "deviations": [
         "BoringSSL cannot send 23 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_DHE_RSA_WITH_AES_256_CCM and 19 more (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (13 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -15580,7 +15287,7 @@
       "deviations": [
         "BoringSSL cannot send 23 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_DHE_RSA_WITH_AES_256_CCM and 19 more (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (13 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac).",
         "The capture sends :authority with the default :443 port; the transport omits the default port.",
         "The transport cannot send an empty HTTP/2 SETTINGS frame; INITIAL_WINDOW_SIZE=65535 is sent instead."
@@ -15588,7 +15295,7 @@
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -15627,13 +15334,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (4 sent).",
-        "BoringSSL cannot send 10 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 6 more (13 sent).",
+        "BoringSSL cannot send 11 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 7 more (12 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -15647,11 +15354,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 364
-          }
-        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -15688,13 +15390,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (4 sent).",
-        "BoringSSL cannot send 10 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 6 more (13 sent).",
+        "BoringSSL cannot send 11 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 7 more (12 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -15708,11 +15410,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 370
-          }
-        },
         "alpn": [
           "http/1.1"
         ],
@@ -15742,13 +15439,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (11 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -15762,11 +15459,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 352
-          }
-        },
         "alpn": [
           "h2",
           "http/1.1"
@@ -15803,13 +15495,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (11 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -15823,11 +15515,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 358
-          }
-        },
         "alpn": [
           "http/1.1"
         ],
@@ -15857,13 +15544,13 @@
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (13 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51-27",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -15905,13 +15592,13 @@
       "fidelity": "partial",
       "deviations": [
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (13 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-16-23-13-43-45-51-27",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -16105,13 +15792,13 @@
       "deviations": [
         "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 7 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, dsa_sha256 and 3 more (11 sent).",
+        "BoringSSL cannot send 8 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 4 more (10 sent).",
         "BoringSSL never sends captured extension 17 (status_request_v2), 50 (signature_algorithms_cert)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-5-10-11-23-35-13-43-45-51",
         "key_shares": "X25519:P-256",
         "grease": false,
@@ -16153,13 +15840,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (4 sent).",
-        "BoringSSL cannot send 10 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 6 more (13 sent).",
+        "BoringSSL cannot send 11 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 7 more (12 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512:ecdsa_sha1:rsa_pkcs1_sha1",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -16194,13 +15881,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (11 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -16235,14 +15922,14 @@
       "deviations": [
         "BoringSSL cannot send 8 captured cipher suites: TLS_AES_128_CCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_ECDHE_ECDSA_WITH_AES_128_CCM, TLS_RSA_WITH_AES_256_CCM and 4 more (21 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 3 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 (13 sent).",
+        "BoringSSL cannot send 4 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, ed448, rsa_pss_pss_sha512 (12 sent).",
         "BoringSSL never sends captured extension 49 (post_handshake_auth).",
         "BoringSSL always sends extended_master_secret (23); the capture omits it."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
         "curves": "P-256:P-384:P-521:X25519:ffdhe2048:ffdhe3072",
-        "sigalgs": "rsa_pkcs1_sha256:rsa_pss_rsae_sha256:ecdsa_secp256r1_sha256:ed25519:rsa_pkcs1_sha384:rsa_pss_rsae_sha384:ecdsa_secp384r1_sha384:ed25519:rsa_pkcs1_sha512:rsa_pss_rsae_sha512:ecdsa_secp521r1_sha512:rsa_pkcs1_sha1:ecdsa_sha1",
+        "sigalgs": "rsa_pkcs1_sha256:rsa_pss_rsae_sha256:ecdsa_secp256r1_sha256:ed25519:rsa_pkcs1_sha384:rsa_pss_rsae_sha384:ecdsa_secp384r1_sha384:rsa_pkcs1_sha512:rsa_pss_rsae_sha512:ecdsa_secp521r1_sha512:rsa_pkcs1_sha1:ecdsa_sha1",
         "extension_order": "5-10-11-13-35-51-43-65281-0-45-28",
         "key_shares": "P-256:X25519",
         "grease": false,
@@ -16257,11 +15944,6 @@
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
         "record_size_limit": 16385,
-        "padding": {
-          "send": {
-            "len": 248
-          }
-        },
         "alpn": [],
         "min_version": "1.0",
         "max_version": "1.3"
@@ -16293,13 +15975,13 @@
       "deviations": [
         "BoringSSL cannot send 39 captured cipher suites: TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA and 35 more (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (13 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -16401,13 +16083,13 @@
       "deviations": [
         "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -16421,11 +16103,6 @@
         "renegotiation": false,
         "psk_dhe_ke": true,
         "preserve_tls13_cipher_list": true,
-        "padding": {
-          "send": {
-            "len": 384
-          }
-        },
         "alpn": [],
         "min_version": "1.0",
         "max_version": "1.3"
@@ -16453,13 +16130,13 @@
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (29 sent).",
         "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
-        "BoringSSL cannot send 12 captured signature algorithms: ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512, rsa_pss_pss_sha256 and 8 more (14 sent).",
+        "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (13 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac), 49 (post_handshake_auth)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_DHE_RSA_WITH_AES_256_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256:TLS_DHE_RSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_DHE_RSA_WITH_AES_256_CBC_SHA:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_DHE_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA256:TLS_RSA_WITH_AES_128_CBC_SHA256:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_CBC_SHA",
         "curves": "X25519MLKEM768:X25519:P-256:P-384:P-521:ffdhe2048:ffdhe3072",
-        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "mldsa65:mldsa87:mldsa44:ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "65281-0-11-10-35-23-13-43-45-51",
         "key_shares": "X25519MLKEM768:X25519",
         "grease": false,
@@ -16634,14 +16311,14 @@
         "BoringSSL cannot send 14 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO, TLS_AES_128_CCM_SHA256, TLS_AES_128_CCM_8_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 10 more (11 sent).",
         "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites.",
         "BoringSSL cannot send 4 captured groups: X448 (30), P521r1tls13 (33), P384r1tls13 (32), P256r1tls13 (31) (4 sent).",
-        "BoringSSL cannot send 6 captured signature algorithms: ecdsa_brainpoolP512r1tls13_sha512, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP256r1tls13_sha256, rsa_pss_pss_sha512 and 2 more (14 sent).",
+        "BoringSSL cannot send 7 captured signature algorithms: ed448, ecdsa_brainpoolP512r1tls13_sha512, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP256r1tls13_sha256 and 3 more (13 sent).",
         "BoringSSL never sends captured extension 50 (signature_algorithms_cert).",
         "BoringSSL always sends extended_master_secret (23); the capture omits it."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_DHE_RSA_WITH_AES_256_GCM_SHA384:TLS_DHE_RSA_WITH_AES_128_GCM_SHA256",
         "curves": "X25519:P-521:P-384:P-256",
-        "sigalgs": "ed25519:ed25519:ecdsa_secp521r1_sha512:ecdsa_secp384r1_sha384:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha512:rsa_pss_rsae_sha384:rsa_pss_rsae_sha256:rsa_pkcs1_sha512:rsa_pkcs1_sha384:rsa_pkcs1_sha256:ecdsa_secp521r1_sha512:ecdsa_secp384r1_sha384:ecdsa_secp256r1_sha256",
+        "sigalgs": "ed25519:ecdsa_secp521r1_sha512:ecdsa_secp384r1_sha384:ecdsa_secp256r1_sha256:rsa_pss_rsae_sha512:rsa_pss_rsae_sha384:rsa_pss_rsae_sha256:rsa_pkcs1_sha512:rsa_pkcs1_sha384:rsa_pkcs1_sha256:ecdsa_secp521r1_sha512:ecdsa_secp384r1_sha384:ecdsa_secp256r1_sha256",
         "extension_order": "51-11-0-43-10-13",
         "key_shares": "X25519",
         "grease": false,
@@ -16679,13 +16356,13 @@
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (11 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-5-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,
@@ -16822,13 +16499,13 @@
       "deviations": [
         "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (11 sent).",
         "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent).",
-        "BoringSSL cannot send 9 captured signature algorithms: rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, ecdsa_sha224 and 5 more (11 sent).",
+        "BoringSSL cannot send 10 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 6 more (10 sent).",
         "BoringSSL never sends captured extension 22 (encrypt_then_mac)."
       ],
       "tls": {
         "ciphers": "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
         "curves": "X25519:P-256:P-521:P-384:ffdhe2048:ffdhe3072",
-        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
+        "sigalgs": "ecdsa_secp256r1_sha256:ecdsa_secp384r1_sha384:ecdsa_secp521r1_sha512:ed25519:rsa_pss_rsae_sha256:rsa_pss_rsae_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha256:rsa_pkcs1_sha384:rsa_pkcs1_sha512",
         "extension_order": "0-11-10-35-5-16-23-13-43-45-51",
         "key_shares": "X25519",
         "grease": false,

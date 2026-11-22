@@ -1,197 +1,198 @@
 {
- "tls": {
-  "ciphers": [
-   "TLS_AES_256_GCM_SHA384",
-   "TLS_CHACHA20_POLY1305_SHA256",
-   "TLS_AES_128_GCM_SHA256",
-   "TLS_AES_128_CCM_SHA256",
-   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
-   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
-   "TLS_ECDHE_ECDSA_WITH_AES_256_CCM",
-   "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
-   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
-   "TLS_ECDHE_ECDSA_WITH_AES_128_CCM",
-   "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
-   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
-   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
-   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
-   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
-   "TLS_RSA_WITH_AES_256_GCM_SHA384",
-   "TLS_RSA_WITH_AES_256_CCM",
-   "TLS_RSA_WITH_AES_256_CBC_SHA",
-   "TLS_RSA_WITH_AES_128_GCM_SHA256",
-   "TLS_RSA_WITH_AES_128_CCM",
-   "TLS_RSA_WITH_AES_128_CBC_SHA",
-   "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384",
-   "TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
-   "TLS_DHE_RSA_WITH_AES_256_CCM",
-   "TLS_DHE_RSA_WITH_AES_256_CBC_SHA",
-   "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256",
-   "TLS_DHE_RSA_WITH_AES_128_CCM",
-   "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
-  ],
-  "extensions": [
-   {
-    "name": "application_layer_protocol_negotiation (16)",
-    "protocols": [
-     "h2",
-     "http/1.1",
-     "http/1.0"
-    ]
-   },
-   {
-    "name": "status_request (5)",
-    "status_request": {
-     "certificate_status_type": "OSCP (1)",
-     "responder_id_list_length": 0,
-     "request_extensions_length": 0
-    }
-   },
-   {
-    "name": "server_name (0)",
-    "server_name": "tls.peet.ws"
-   },
-   {
-    "name": "ec_point_formats (11)",
-    "elliptic_curves_point_formats": [
-     "0x00"
-    ]
-   },
-   {
-    "name": "signature_algorithms (13)",
-    "signature_algorithms": [
-     "rsa_pkcs1_sha256",
-     "rsa_pss_pss_sha256",
-     "rsa_pss_rsae_sha256",
-     "ecdsa_secp256r1_sha256",
-     "ed25519",
-     "rsa_pkcs1_sha384",
-     "rsa_pss_pss_sha384",
-     "rsa_pss_rsae_sha384",
-     "ecdsa_secp384r1_sha384",
-     "ed25519",
-     "rsa_pkcs1_sha512",
-     "rsa_pss_pss_sha512",
-     "rsa_pss_rsae_sha512",
-     "ecdsa_secp521r1_sha512",
-     "rsa_pkcs1_sha1",
-     "ecdsa_sha1"
-    ]
-   },
-   {
-    "name": "psk_key_exchange_modes (45)",
-    "PSK_Key_Exchange_Mode": "PSK with (EC)DHE key establishment (psk_dhe_ke) (1)"
-   },
-   {
-    "name": "session_ticket (35)",
-    "data": ""
-   },
-   {
-    "name": "key_share (51)",
-    "shared_keys": [
-     {
-      "P-256 (23)": "044a86c6db4c4314c3c7da29939f04933ebdba9df1974dc24d0d7637835361cfe8ee607d19a96082f82fa8e2cb182fb9d10c37d7c23acf8f317fbe4e4ce5fae163"
-     },
-     {
-      "X25519 (29)": "c8436b29631647d7a6564c3cce6f8158bd87cf792721fbf1646e7ecdf9a2542e"
-     }
-    ]
-   },
-   {
-    "name": "extensionRenegotiationInfo (boringssl) (65281)",
-    "data": "00"
-   },
-   {
-    "name": "supported_groups (10)",
-    "supported_groups": [
-     "P-256 (23)",
-     "P-384 (24)",
-     "P-521 (25)",
-     "X25519 (29)",
-     "X448 (30)",
-     "ffdhe2048 (256)",
-     "ffdhe3072 (257)",
-     "ffdhe4096 (258)",
-     "ffdhe6144 (259)",
-     "ffdhe8192 (260)"
-    ]
-   },
-   {
-    "name": "supported_versions (43)",
-    "versions": [
-     "TLS 1.3",
-     "TLS 1.2"
-    ]
-   },
-   {
-    "name": "record_size_limit (28)",
-    "data": "4001"
-   },
-   {
-    "name": "padding (21)",
-    "padding_data_length": 210
-   }
-  ],
-  "tls_version_record": "771",
-  "tls_version_negotiated": "772",
-  "ja3": "771,4866-4867-4865-4868-49196-52393-49325-49162-49195-49324-49161-49200-52392-49172-49199-49171-157-49309-53-156-49308-47-159-52394-49311-57-158-49310-51,16-5-0-11-13-45-35-51-65281-10-43-28-21,23-24-25-29-30-256-257-258-259-260,0",
-  "ja3_hash": "7db923f01f3defed7cd7adfff84b4b73",
-  "ja4": "t13d2913h2_723694b0fccc_5671b5df5029",
-  "ja4_r": "t13d2913h2_002f,0033,0035,0039,009c,009d,009e,009f,1301,1302,1303,1304,c009,c00a,c013,c014,c02b,c02c,c02f,c030,c09c,c09d,c09e,c09f,c0ac,c0ad,cca8,cca9,ccaa_0005,000a,000b,000d,0015,001c,0023,002b,002d,0033,ff01_0401,0809,0804,0403,0807,0501,080a,0805,0503,0808,0601,080b,0806,0603,0201,0203",
-  "peetprint": "772-771|2-1.1-1.0|23-24-25-29-30-256-257-258-259-260|1025-2057-2052-1027-2055-1281-2058-2053-1283-2056-1537-2059-2054-1539-513-515|1||4866-4867-4865-4868-49196-52393-49325-49162-49195-49324-49161-49200-52392-49172-49199-49171-157-49309-53-156-49308-47-159-52394-49311-57-158-49310-51|0-10-11-13-16-21-28-35-43-45-5-51-65281",
-  "peetprint_hash": "91d029dfe5a604d5191e854146dc7b53",
-  "client_random": "792da8832c4aa9a2e18711fb23f7d184572b35ee1087f409e45f80554d424a6a",
-  "session_id": "ecab4c40bbcec2ed7842f789215c5f669c28b979cd8b301a3218874492af1e9e"
- },
- "http2": {
-  "akamai_fingerprint": "4:6291456;1:65536;2:0|15663105|0|m,s,a,p",
-  "akamai_fingerprint_hash": "d718679a0777ff3d3f1e14c356423f0b",
-  "sent_frames": [
-   {
-    "frame_type": "SETTINGS",
-    "length": 18,
-    "settings": [
-     "INITIAL_WINDOW_SIZE = 6291456",
-     "HEADER_TABLE_SIZE = 65536",
-     "ENABLE_PUSH = 0"
-    ]
-   },
-   {
-    "frame_type": "WINDOW_UPDATE",
-    "length": 4,
-    "increment": 15663105
-   },
-   {
-    "frame_type": "HEADERS",
-    "stream_id": 1,
-    "length": 240,
-    "headers": [
-     ":method: GET",
-     ":scheme: https",
-     ":authority: tls.peet.ws",
-     ":path: /api/all",
-     "accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-     "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
-     "accept-encoding: gzip, deflate, br",
-     "accept-language: en-US",
-     "sec-fetch-dest: document",
-     "sec-fetch-mode: navigate",
-     "sec-fetch-site: none"
+  "tls": {
+    "ciphers": [
+      "TLS_AES_256_GCM_SHA384",
+      "TLS_CHACHA20_POLY1305_SHA256",
+      "TLS_AES_128_GCM_SHA256",
+      "TLS_AES_128_CCM_SHA256",
+      "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+      "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+      "TLS_ECDHE_ECDSA_WITH_AES_256_CCM",
+      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
+      "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+      "TLS_ECDHE_ECDSA_WITH_AES_128_CCM",
+      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+      "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+      "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+      "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+      "TLS_RSA_WITH_AES_256_GCM_SHA384",
+      "TLS_RSA_WITH_AES_256_CCM",
+      "TLS_RSA_WITH_AES_256_CBC_SHA",
+      "TLS_RSA_WITH_AES_128_GCM_SHA256",
+      "TLS_RSA_WITH_AES_128_CCM",
+      "TLS_RSA_WITH_AES_128_CBC_SHA",
+      "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384",
+      "TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+      "TLS_DHE_RSA_WITH_AES_256_CCM",
+      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA",
+      "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256",
+      "TLS_DHE_RSA_WITH_AES_128_CCM",
+      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"
     ],
-    "flags": [
-     "EndStream (0x1)",
-     "EndHeaders (0x4)",
-     "Priority (0x20)"
+    "extensions": [
+      {
+        "name": "application_layer_protocol_negotiation (16)",
+        "protocols": [
+          "h2",
+          "http/1.1",
+          "http/1.0"
+        ]
+      },
+      {
+        "name": "status_request (5)",
+        "status_request": {
+          "certificate_status_type": "OSCP (1)",
+          "responder_id_list_length": 0,
+          "request_extensions_length": 0
+        }
+      },
+      {
+        "name": "server_name (0)",
+        "server_name": "tls.peet.ws"
+      },
+      {
+        "name": "ec_point_formats (11)",
+        "elliptic_curves_point_formats": [
+          "0x00"
+        ]
+      },
+      {
+        "name": "signature_algorithms (13)",
+        "signature_algorithms": [
+          "rsa_pkcs1_sha256",
+          "rsa_pss_pss_sha256",
+          "rsa_pss_rsae_sha256",
+          "ecdsa_secp256r1_sha256",
+          "ed25519",
+          "rsa_pkcs1_sha384",
+          "rsa_pss_pss_sha384",
+          "rsa_pss_rsae_sha384",
+          "ecdsa_secp384r1_sha384",
+          "ed448",
+          "rsa_pkcs1_sha512",
+          "rsa_pss_pss_sha512",
+          "rsa_pss_rsae_sha512",
+          "ecdsa_secp521r1_sha512",
+          "rsa_pkcs1_sha1",
+          "ecdsa_sha1"
+        ]
+      },
+      {
+        "name": "psk_key_exchange_modes (45)",
+        "PSK_Key_Exchange_Mode": "PSK with (EC)DHE key establishment (psk_dhe_ke) (1)"
+      },
+      {
+        "name": "session_ticket (35)",
+        "data": ""
+      },
+      {
+        "name": "key_share (51)",
+        "shared_keys": [
+          {
+            "P-256 (23)": "044a86c6db4c4314c3c7da29939f04933ebdba9df1974dc24d0d7637835361cfe8ee607d19a96082f82fa8e2cb182fb9d10c37d7c23acf8f317fbe4e4ce5fae163"
+          },
+          {
+            "X25519 (29)": "c8436b29631647d7a6564c3cce6f8158bd87cf792721fbf1646e7ecdf9a2542e"
+          }
+        ]
+      },
+      {
+        "name": "extensionRenegotiationInfo (boringssl) (65281)",
+        "data": "00"
+      },
+      {
+        "name": "supported_groups (10)",
+        "supported_groups": [
+          "P-256 (23)",
+          "P-384 (24)",
+          "P-521 (25)",
+          "X25519 (29)",
+          "X448 (30)",
+          "ffdhe2048 (256)",
+          "ffdhe3072 (257)",
+          "ffdhe4096 (258)",
+          "ffdhe6144 (259)",
+          "ffdhe8192 (260)"
+        ]
+      },
+      {
+        "name": "supported_versions (43)",
+        "versions": [
+          "TLS 1.3",
+          "TLS 1.2"
+        ]
+      },
+      {
+        "name": "record_size_limit (28)",
+        "data": "4001"
+      },
+      {
+        "name": "padding (21)",
+        "padding_data_length": 210
+      }
     ],
-    "priority": {
-     "weight": 256,
-     "depends_on": 0,
-     "exclusive": 0
-    }
-   }
-  ]
- },
- "http_version": "h2",
- "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15"
+    "tls_version_record": "771",
+    "tls_version_negotiated": "772",
+    "ja3": "771,4866-4867-4865-4868-49196-52393-49325-49162-49195-49324-49161-49200-52392-49172-49199-49171-157-49309-53-156-49308-47-159-52394-49311-57-158-49310-51,16-5-0-11-13-45-35-51-65281-10-43-28-21,23-24-25-29-30-256-257-258-259-260,0",
+    "ja3_hash": "7db923f01f3defed7cd7adfff84b4b73",
+    "ja4": "t13d2913h2_723694b0fccc_5671b5df5029",
+    "ja4_r": "t13d2913h2_002f,0033,0035,0039,009c,009d,009e,009f,1301,1302,1303,1304,c009,c00a,c013,c014,c02b,c02c,c02f,c030,c09c,c09d,c09e,c09f,c0ac,c0ad,cca8,cca9,ccaa_0005,000a,000b,000d,0015,001c,0023,002b,002d,0033,ff01_0401,0809,0804,0403,0807,0501,080a,0805,0503,0808,0601,080b,0806,0603,0201,0203",
+    "peetprint": "772-771|2-1.1-1.0|23-24-25-29-30-256-257-258-259-260|1025-2057-2052-1027-2055-1281-2058-2053-1283-2056-1537-2059-2054-1539-513-515|1||4866-4867-4865-4868-49196-52393-49325-49162-49195-49324-49161-49200-52392-49172-49199-49171-157-49309-53-156-49308-47-159-52394-49311-57-158-49310-51|0-10-11-13-16-21-28-35-43-45-5-51-65281",
+    "peetprint_hash": "91d029dfe5a604d5191e854146dc7b53",
+    "client_random": "792da8832c4aa9a2e18711fb23f7d184572b35ee1087f409e45f80554d424a6a",
+    "session_id": "ecab4c40bbcec2ed7842f789215c5f669c28b979cd8b301a3218874492af1e9e"
+  },
+  "http2": {
+    "akamai_fingerprint": "4:6291456;1:65536;2:0|15663105|0|m,s,a,p",
+    "akamai_fingerprint_hash": "d718679a0777ff3d3f1e14c356423f0b",
+    "sent_frames": [
+      {
+        "frame_type": "SETTINGS",
+        "length": 18,
+        "settings": [
+          "INITIAL_WINDOW_SIZE = 6291456",
+          "HEADER_TABLE_SIZE = 65536",
+          "ENABLE_PUSH = 0"
+        ]
+      },
+      {
+        "frame_type": "WINDOW_UPDATE",
+        "length": 4,
+        "increment": 15663105
+      },
+      {
+        "frame_type": "HEADERS",
+        "stream_id": 1,
+        "length": 240,
+        "headers": [
+          ":method: GET",
+          ":scheme: https",
+          ":authority: tls.peet.ws",
+          ":path: /api/all",
+          "accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+          "accept-encoding: gzip, deflate, br",
+          "accept-language: en-US",
+          "sec-fetch-dest: document",
+          "sec-fetch-mode: navigate",
+          "sec-fetch-site: none"
+        ],
+        "flags": [
+          "EndStream (0x1)",
+          "EndHeaders (0x4)",
+          "Priority (0x20)"
+        ],
+        "priority": {
+          "weight": 256,
+          "depends_on": 0,
+          "exclusive": 0
+        }
+      }
+    ]
+  },
+  "http_version": "h2",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Safari/605.1.15",
+  "corrected": "tls.peet.ws labels code 0x0808 as ed25519; each list below had a second ed25519 where the same capture's ja4_r says ed448, so that entry was changed to ed448."
 }
