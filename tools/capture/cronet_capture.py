@@ -30,6 +30,7 @@ import hashlib
 import json
 import os
 import socket
+import struct
 import sys
 import time
 
@@ -43,19 +44,38 @@ def is_grease(value):
     return (value & 0x0F0F) == 0x0A0A
 
 
+def sigalgs_of(extensions):
+    """Signature algorithm codes from extension 13, in wire order."""
+    for kind, payload in extensions:
+        if kind == 13 and len(payload) >= 2:
+            size = struct.unpack(">H", payload[:2])[0]
+            return [struct.unpack(">H", payload[2 + i:4 + i])[0]
+                    for i in range(0, min(size, len(payload) - 2), 2)]
+    return []
+
+
 def ja4(ciphers, extensions):
     """The full JA4: a-segment from the shape, b/c from the sorted lists."""
     head = hello.ja4(ciphers, extensions).split("_")[0]
     cipher_list = sorted(f"{c:04x}" for c in ciphers if not is_grease(c))
     # JA4 excludes SNI and ALPN from the extension hash; those carry no
-    # fingerprint value of their own.
+    # fingerprint value of their own. The signature algorithms follow the
+    # extension list in wire order (not sorted) - leaving them out changes
+    # the hash for every hello that carries extension 13.
     ext_list = sorted(
         f"{kind:04x}"
         for kind, _ in extensions
         if not is_grease(kind) and kind not in (0, 16)
     )
-    digest = lambda values: hashlib.sha256(",".join(values).encode()).hexdigest()[:12]
-    return f"{head}_{digest(cipher_list)}_{digest(ext_list)}"
+    text = ",".join(ext_list)
+    sigalgs = sigalgs_of(extensions)
+    if sigalgs:
+        text += "_" + ",".join(f"{code:04x}" for code in sigalgs)
+
+    def digest(values):
+        return hashlib.sha256(values.encode()).hexdigest()[:12]
+
+    return f"{head}_{digest(','.join(cipher_list))}_{digest(text)}"
 
 
 def main():
