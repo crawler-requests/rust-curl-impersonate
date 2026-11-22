@@ -109,7 +109,7 @@ provenance audit
   listed as local-socket-only (firefox121-157).
 
 wire tests
-  cargo test --workspace: 32 + 10 + 24 + 15 + 17 + 20 + 0 unit/integration
+  cargo test --workspace: 32 + 10 + 24 + 15 + 17 + 22 + 0 unit/integration
   tests and 3 doc tests, all pass. New:
     padding_is_a_size_rule_not_a_stored_length    python3.12 request and
                                                    urllib hellos are 508-byte
@@ -117,6 +117,17 @@ wire tests
     a_hello_below_the_padding_floor_is_left_alone dotnet8_http1 stays under
                                                    256 bytes with no padding
     ed25519_is_offered_once_and_ed448_is_the_documented_drop
+    android_records_reproduce_the_phone_captures  live hellos of
+                                                   android_conscrypt13,
+                                                   android_okhttp13,
+                                                   android_webview103 and
+                                                   android_mesh hash to the
+                                                   captures' b and c segments
+    android_webview125_matches_the_phone_with_or_without_padding
+                                                   without extension 21 the
+                                                   live hello is the phone's
+                                                   c = 02713d6af862; padded it
+                                                   is the stored b1ff8ab2d16f
 
 harness fixes made while running it
   - `am start ... --es proxy ""` loses the empty value in adb's argument
@@ -127,6 +138,15 @@ harness fixes made while running it
     looked empty. Capture with --seconds 70.
   - 8443 and 8888 were already taken on this host, so the documented command
     uses another port; adb reverse makes the choice free.
+
+live record check
+  The same harness can compare a run with a record: `--record
+  android_conscrypt13` re-captured the phone and reported
+
+      OK: android_conscrypt13 matches conscrypt.127-0-0-1.sslip.io
+
+  so the record's cipher list and extension order are what the platform
+  stack sends, not just what its raw file describes.
 
 reproduce
   python3 -I tools/capture/phone_capture.py --serial <serial> \

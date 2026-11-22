@@ -782,3 +782,113 @@ async fn ed25519_is_offered_once_and_ed448_is_the_documented_drop() {
     assert_eq!(ed25519, 1, "signature algorithms: {:04x?}", hello.sigalgs);
     assert!(!hello.sigalgs.contains(&0x0808), "{:04x?}", hello.sigalgs);
 }
+
+fn is_grease(value: u16) -> bool {
+    value & 0x0f0f == 0x0a0a
+}
+
+/// JA4's b and c segments for a live hello. b hashes the sorted non-GREASE
+/// cipher ids; c hashes the sorted extension ids (SNI and ALPN excluded)
+/// followed by the signature algorithms in wire order.
+fn ja4_b_c(hello: &ClientHello) -> (String, String) {
+    let mut ciphers: Vec<String> = hello
+        .ciphers
+        .iter()
+        .filter(|id| !is_grease(**id))
+        .map(|id| format!("{id:04x}"))
+        .collect();
+    ciphers.sort();
+    let b = sha256_prefix(&ciphers.join(","));
+
+    let mut extensions: Vec<String> = hello
+        .extensions
+        .iter()
+        .filter(|id| !is_grease(**id) && **id != 0 && **id != 16)
+        .map(|id| format!("{id:04x}"))
+        .collect();
+    extensions.sort();
+    let mut text = extensions.join(",");
+    let sigalgs: Vec<String> = hello
+        .sigalgs
+        .iter()
+        .filter(|id| !is_grease(**id))
+        .map(|id| format!("{id:04x}"))
+        .collect();
+    if !sigalgs.is_empty() {
+        text.push('_');
+        text.push_str(&sigalgs.join(","));
+    }
+    (b, sha256_prefix(&text))
+}
+
+fn sha256_prefix(text: &str) -> String {
+    let mut hasher =
+        btls::hash::Hasher::new(btls::hash::MessageDigest::sha256()).expect("sha256");
+    hasher.update(text.as_bytes()).expect("update");
+    hasher
+        .finish()
+        .expect("finish")
+        .iter()
+        .take(6)
+        .map(|byte| format!("{byte:02x}"))
+        .collect()
+}
+
+#[tokio::test]
+async fn android_records_reproduce_the_phone_captures() {
+    // JA4s from the captures taken off a OnePlus 9R running Android 13
+    // (tools/capture/raw/android_*.json): the platform stack through
+    // HttpsURLConnection, OkHttp 4.12, and the system WebView that the Mesh
+    // app also renders in. The records must put the same ciphers, extensions
+    // and signature algorithms on the wire; the padding in the captures is
+    // part of the c hash, so a record that stops padding would fail here.
+    for (name, expected) in [
+        ("android_conscrypt13", ("5b57614c22b0", "eca864cca44a")),
+        ("android_okhttp13", ("8daaf6152771", "eca864cca44a")),
+        ("android_webview103", ("8daaf6152771", "e5627efa2ab1")),
+        ("android_mesh", ("8daaf6152771", "e5627efa2ab1")),
+    ] {
+        let hello = read_client_hello(&client(name)).await;
+        let (b, c) = ja4_b_c(&hello);
+        assert_eq!(
+            (b.as_str(), c.as_str()),
+            expected,
+            "{name} no longer speaks what the phone sent"
+        );
+    }
+}
+
+#[tokio::test]
+async fn android_webview125_matches_the_phone_with_or_without_padding() {
+    // WebView 125 randomises the length of its ECH GREASE payload. When the
+    // hello lands in the 256..511 byte window BoringSSL pads it to a 508-byte
+    // body - that is the stored capture, c = b1ff8ab2d16f. On the phone the
+    // payload pushed it past 511, so no padding was sent and the same client
+    // hashed to c = 02713d6af862. Both shapes are the record's own fields
+    // with only extension 21 added or left out.
+    let hello = read_client_hello(&client("android_webview125")).await;
+    let unpadded = ClientHello {
+        length: hello.length,
+        ciphers: hello.ciphers.clone(),
+        extensions: hello
+            .extensions
+            .iter()
+            .copied()
+            .filter(|id| *id != 21)
+            .collect(),
+        sigalgs: hello.sigalgs.clone(),
+    };
+    let (b, c) = ja4_b_c(&unpadded);
+    assert_eq!(
+        (b.as_str(), c.as_str()),
+        ("8daaf6152771", "02713d6af862"),
+        "android_webview125 without extension 21"
+    );
+    let (_, actual) = ja4_b_c(&hello);
+    assert!(
+        actual == "02713d6af862" || actual == "b1ff8ab2d16f",
+        "android_webview125 hashed to c = {actual}: {:?}, {} bytes",
+        hello.extensions,
+        hello.length
+    );
+}

@@ -37,3 +37,6 @@ serde_json = "1"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "io-util", "time"] }
+# The wire tests hash a live ClientHello the way JA4 does, to compare it with
+# a capture. btls is already a dependency, so this adds no build work.
+btls = "0.5.6"
