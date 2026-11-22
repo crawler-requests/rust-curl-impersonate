@@ -125,6 +125,11 @@ class Recorder:
         self.outdir = outdir
         self.lock = threading.Lock()
         self.entries = []
+        # Filled in from the device itself before listening starts.
+        self.device = ""
+        self.fingerprint = ""
+        self.label = ""
+        self.stacks = ""
         os.makedirs(outdir, exist_ok=True)
 
     def add(self, record, meta):
@@ -154,6 +159,11 @@ class Recorder:
                 "sni": sni_of(extensions),
                 "captured": "ClientHello only (a local listener recorded it)",
                 "captured_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "device": self.device,
+                "build_fingerprint": self.fingerprint,
+                "build_label": self.label,
+                "stacks": self.stacks,
+                "harness": "tools/capture/phone_capture.py + tools/capture/android_phone",
                 "peer": meta.get("peer", ""),
                 "via": meta.get("via", ""),
             }
@@ -309,6 +319,33 @@ def adb(serial, *args, **kwargs):
                           timeout=kwargs.get("timeout", 120))
 
 
+def device_facts(serial):
+    """What the device says it is, so a capture never has to be described
+    from memory. A container reports redroid* and its own fingerprint."""
+    props = {
+        "release": "ro.build.version.release",
+        "sdk": "ro.build.version.sdk",
+        "model": "ro.product.model",
+        "abi": "ro.product.cpu.abi",
+        "fingerprint": "ro.build.fingerprint",
+    }
+    facts = {}
+    for key, prop in props.items():
+        result = adb(serial, "shell", "getprop", prop)
+        facts[key] = result.stdout.strip()
+    webview = adb(serial, "shell", "dumpsys", "webviewupdate")
+    match = re.search(r"Current WebView package \(name, version\): \((\S+), (\S+)\)",
+                      webview.stdout)
+    facts["webview"] = match.group(2) if match else ""
+    return facts
+
+
+def describe_device(facts):
+    return "%s, Android %s (SDK %s), %s, WebView %s" % (
+        facts["model"], facts["release"], facts["sdk"], facts["abi"],
+        facts["webview"] or "unknown")
+
+
 def host_ip():
     """The address the phone can reach us on, from the default route."""
     for args in (["route", "-n", "get", "default"], ["ip", "route", "get", "1.1.1.1"]):
@@ -350,9 +387,18 @@ def main():
     parser.add_argument("--echo", action="store_true",
                         help="also fetch tls.peet.ws through the CONNECT proxy")
     parser.add_argument("--seconds", type=int, default=45)
+    parser.add_argument("--label", default="capture",
+                        help="SNI label prefix, e.g. okhttp-4-12-0")
+    parser.add_argument("--mode", default="urlconn,webview",
+                        help="comma-separated stacks: urlconn, webview, "
+                             "okhttp, conscrypt, cronet")
     parser.add_argument("--record", help="compare with this library record")
     parser.add_argument("--no-install", action="store_true")
     args = parser.parse_args()
+    # A label becomes a DNS name, so keep it to what sslip.io accepts.
+    args.label = re.sub(r"[^A-Za-z0-9-]+", "-", args.label).strip("-")
+    if not args.label:
+        raise SystemExit("empty --label")
 
     if args.reverse:
         # The phone sees only its own loopback, and adb carries the
@@ -369,9 +415,18 @@ def main():
         address = args.host_ip or host_ip()
     # sslip.io turns the dotted address into a name that resolves back to it.
     base = address.replace(".", "-") + ".sslip.io"
-    print("host %s, phone will use *.%s" % (address, base))
+    print("host %s, phone will use %s-*.<base>" % (address, args.label))
+    print("mode: %s" % args.mode)
+
+    facts = device_facts(args.serial)
+    print("device: %s" % describe_device(facts))
+    print("        %s" % facts["fingerprint"])
 
     recorder = Recorder(args.out)
+    recorder.device = describe_device(facts)
+    recorder.fingerprint = facts["fingerprint"]
+    recorder.label = args.label
+    recorder.stacks = args.mode
     direct = DirectListener(args.port, recorder)
     direct.start()
     proxy = None
@@ -389,7 +444,8 @@ def main():
         adb(args.serial, "logcat", "-c")
         adb(args.serial, "shell", "am", "force-stop", PACKAGE)
         start_args = ["shell", "am", "start", "-n", ACTIVITY,
-                      "--es", "base", base, "--ei", "port", str(args.port)]
+                      "--es", "base", base, "--ei", "port", str(args.port),
+                      "--es", "label", args.label, "--es", "mode", args.mode]
         # An empty `--es proxy ""` loses its value in adb's shell quoting,
         # and `am` then fails with "Argument expected after proxy".
         if args.echo:
