@@ -691,6 +691,65 @@ PROFILES = [
         ),
     },
     {
+        # WebView 139 ships on the Android 10 redroid image. Its extension
+        # set is WebView 125's, but it advertises ALPS at the newer
+        # codepoint 17613, which moves the c hash.
+        "file": "android_webview139_report.json",
+        "name": "android_webview139",
+        "library": "webview",
+        "family": "android",
+        "client": "Android WebView 139.0.7258.143",
+        "version": "139.0.7258.143",
+        "platform": "android",
+        "permute_extensions": True,
+        "source": (
+            "ClientHello recorded off the wire from the system WebView "
+            "139.0.7258.143 on a redroid Android 10 device (x86_64), "
+            "tools/capture/android_matrix.py, "
+            "tools/capture/raw/android_webview139_report.json"
+        ),
+    },
+    {
+        # Cronet 101 and 119, linked as the only network stack in a probe
+        # APK: the two Chromium versions send the same 16 ciphers and 16
+        # extensions as WebView 125/139, with the padding extension.
+        "file": "android_cronet101_echo.json",
+        "name": "android_cronet101",
+        "library": "cronet",
+        "family": "android",
+        "client": "Cronet 101.0.4951.41 (embedded)",
+        "version": "101.0.4951.41",
+        "platform": "android",
+        "permute_extensions": True,
+        "source": (
+            "ClientHello recorded off the wire from an APK that links "
+            "cronet-embedded 101.0.4951.41, on redroid Android 8.1 through "
+            "14 devices (x86_64), tools/capture/android_matrix.py, "
+            "tools/capture/raw/android_cronet101_echo.json"
+        ),
+    },
+    {
+        "file": "android_cronet119_echo.json",
+        "name": "android_cronet119",
+        # The listener saw this client padded (the hello was inside the
+        # 256-511 byte window) and the echo did not (random-length ECH
+        # GREASE made it longer), so the two shapes are c = b1ff8ab2d16f
+        # and c = 02713d6af862 for one client. The record reproduces the
+        # second, and the first needs extension 21 - see the wire test.
+        "library": "cronet",
+        "family": "android",
+        "client": "Cronet 119.0.6045.31 (embedded)",
+        "version": "119.0.6045.31",
+        "platform": "android",
+        "permute_extensions": True,
+        "source": (
+            "ClientHello recorded off the wire from an APK that links "
+            "cronet-embedded 119.0.6045.31, on redroid Android 8.1 through "
+            "14 devices (x86_64), tools/capture/android_matrix.py, "
+            "tools/capture/raw/android_cronet119_echo.json"
+        ),
+    },
+    {
         # Recorded off a real OnePlus 9R on Android 13: the system WebView's
         # own ClientHello, not an impersonation profile. The same device's
         # WebView matches android_mesh's JA4 exactly.
@@ -725,6 +784,46 @@ PROFILES = [
             "report for the same connection (t13d1713h1_5b57614c22b0_"
             "eca864cca44a), tools/capture/phone_capture.py, "
             "tools/capture/raw/android_conscrypt13.json"
+        ),
+    },
+    {
+        # OkHttp 5 changed its TLS shape: the same 15 ciphers and signature
+        # algorithms as 4.x but only 12 extensions (no session_ticket), hence
+        # the a-segment t13d1512. Captured through the real service, so the
+        # HTTP/2 settings are the server's record of what OkHttp 5 sent.
+        "file": "android_okhttp5_sdk33.json",
+        "name": "android_okhttp5",
+        "library": "conscrypt",
+        "family": "okhttp",
+        "client": "OkHttp 5.0.0 on Android 13",
+        "version": "5.0.0",
+        "platform": "android",
+        "source": (
+            "ClientHello recorded by a listener on a redroid Android 13 "
+            "(SDK 33, x86_64) device running an APK that links OkHttp 5.0.0, "
+            "then relayed to tls.peet.ws whose report (ja4, ja4_r, HTTP/2 "
+            "frames, Akamai fingerprint) is stored here; "
+            "tools/capture/phone_capture.py --echo, "
+            "tools/capture/raw/android_okhttp5_sdk33.json"
+        ),
+    },
+    {
+        # OkHttp 3.14.9 sends what OkHttp 4 sends on the same TLS provider -
+        # the difference between them is the Kotlin layer, not the hello.
+        "file": "android_okhttp3_14_9_sdk33.json",
+        "name": "android_okhttp3_14_9",
+        "library": "conscrypt",
+        "family": "okhttp",
+        "client": "OkHttp 3.14.9 on Android 13",
+        "version": "3.14.9",
+        "platform": "android",
+        "source": (
+            "ClientHello recorded by a listener on a redroid Android 13 "
+            "(SDK 33, x86_64) device running an APK that links OkHttp 3.14.9, "
+            "then relayed to tls.peet.ws whose report is stored here; the "
+            "same hello OkHttp 4 sends on this platform; "
+            "tools/capture/phone_capture.py --echo, "
+            "tools/capture/raw/android_okhttp3_14_9_sdk33.json"
         ),
     },
     {
@@ -1186,18 +1285,40 @@ PROFILES = [
         "name": "android_okhttp8",
         "library": "conscrypt",
         "family": "okhttp",
-        "client": "OkHttp 4 on Android 8 (tls-client profile)",
+        "client": "OkHttp 4 on Android 8 (confirmed on a device)",
         "version": "8",
         "platform": "android",
+        # The tls.peet.ws capture of this profile printed the extension
+        # count as one digit; the ciphers, extensions, signature algorithms
+        # and both hashes match the hello an APK linking OkHttp 4.12 sent on
+        # a redroid Android 8.1 device (tools/capture/android_matrix.py).
+        "source": (
+            "tls.peet.ws capture of the profile, matched off the wire by "
+            "OkHttp 4.12 on a redroid Android 8.1 device - same ciphers, "
+            "extensions, signature algorithms and JA4; the capture's "
+            "a-segment had a one-digit extension count, corrected here; "
+            "tools/capture/raw/android_okhttp8.json"
+        ),
     },
     {
         "file": "android_okhttp9.json",
         "name": "android_okhttp9",
         "library": "conscrypt",
         "family": "okhttp",
-        "client": "OkHttp 4 on Android 9 (tls-client profile)",
+        "client": "OkHttp 4 on Android 9 (confirmed on a device)",
         "version": "9",
         "platform": "android",
+        # The tls.peet.ws capture of this profile printed the extension
+        # count as one digit; the ciphers, extensions, signature algorithms
+        # and both hashes match the hello an APK linking OkHttp 4.12 sent on
+        # a redroid Android 9 device (tools/capture/android_matrix.py).
+        "source": (
+            "tls.peet.ws capture of the profile, matched off the wire by "
+            "OkHttp 4.12 on a redroid Android 9 device - same ciphers, "
+            "extensions, signature algorithms and JA4; the capture's "
+            "a-segment had a one-digit extension count, corrected here; "
+            "tools/capture/raw/android_okhttp9.json"
+        ),
     },
     {
         "file": "android_okhttp10.json",

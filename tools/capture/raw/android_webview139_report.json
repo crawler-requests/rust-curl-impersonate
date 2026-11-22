@@ -1,0 +1,180 @@
+{
+ "tls": {
+  "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+  "ciphers": [
+   "TLS_GREASE (0x2A2A)",
+   "TLS_AES_128_GCM_SHA256",
+   "TLS_AES_256_GCM_SHA384",
+   "TLS_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+   "TLS_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_RSA_WITH_AES_256_CBC_SHA"
+  ],
+  "extensions": [
+   {
+    "name": "TLS_GREASE (0xeaea)"
+   },
+   {
+    "name": "compress_certificate (27)",
+    "algorithms": [
+     "brotli"
+    ]
+   },
+   {
+    "name": "status_request (5)"
+   },
+   {
+    "name": "application_layer_protocol_negotiation (16)",
+    "protocols": [
+     "h2",
+     "http/1.1"
+    ]
+   },
+   {
+    "name": "extensionEncryptedClientHello (boringssl) (65037)"
+   },
+   {
+    "name": "session_ticket (35)"
+   },
+   {
+    "name": "extended_master_secret (23)"
+   },
+   {
+    "name": "signed_certificate_timestamp (18)"
+   },
+   {
+    "name": "application_settings (17613)",
+    "data": "0003026832"
+   },
+   {
+    "name": "supported_groups (10)",
+    "supported_groups": [
+     "GREASE (0xeaea)",
+     "X25519MLKEM768",
+     "X25519",
+     "P-256",
+     "P-384"
+    ]
+   },
+   {
+    "name": "key_share (51)",
+    "shared_keys": [
+     {
+      "0xeaea": 1
+     },
+     {
+      "X25519MLKEM768": 1216
+     },
+     {
+      "X25519": 32
+     }
+    ]
+   },
+   {
+    "name": "supported_versions (43)"
+   },
+   {
+    "name": "server_name (0)"
+   },
+   {
+    "name": "ec_point_formats (11)"
+   },
+   {
+    "name": "extensionRenegotiationInfo (boringssl) (65281)"
+   },
+   {
+    "name": "psk_key_exchange_modes (45)"
+   },
+   {
+    "name": "signature_algorithms (13)",
+    "signature_algorithms": [
+     "ecdsa_secp256r1_sha256",
+     "rsa_pss_rsae_sha256",
+     "rsa_pkcs1_sha256",
+     "ecdsa_secp384r1_sha384",
+     "rsa_pss_rsae_sha384",
+     "rsa_pkcs1_sha384",
+     "rsa_pss_rsae_sha512",
+     "rsa_pkcs1_sha512"
+    ]
+   },
+   {
+    "name": "TLS_GREASE (0xbaba)"
+   }
+  ]
+ },
+ "http2": {
+  "akamai_fingerprint": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p",
+  "akamai_fingerprint_hash": "52d84b11737d980aef856699f885ca86",
+  "sent_frames": [
+   {
+    "frame_type": "SETTINGS",
+    "length": 24,
+    "settings": [
+     "HEADER_TABLE_SIZE = 65536",
+     "ENABLE_PUSH = 0",
+     "INITIAL_WINDOW_SIZE = 6291456",
+     "MAX_HEADER_LIST_SIZE = 262144"
+    ]
+   },
+   {
+    "frame_type": "WINDOW_UPDATE",
+    "length": 4,
+    "increment": 15663105
+   },
+   {
+    "frame_type": "HEADERS",
+    "stream_id": 1,
+    "length": 530,
+    "headers": [
+     ":method: GET",
+     ":authority: tls.peet.ws",
+     ":scheme: https",
+     ":path: /api/all",
+     "sec-ch-ua: \"Not;A=Brand\";v=\"99\", \"Android WebView\";v=\"139\", \"Chromium\";v=\"139\"",
+     "sec-ch-ua-mobile: ?1",
+     "sec-ch-ua-platform: \"Android\"",
+     "upgrade-insecure-requests: 1",
+     "user-agent: Mozilla/5.0 (Linux; Android 10; redroid10_x86_64 Build/QP1A.190711.019; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/139.0.7258.143 Mobile Safari/537.36",
+     "accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+     "x-requested-with: io.capture.phone",
+     "sec-fetch-site: none",
+     "sec-fetch-mode: navigate",
+     "sec-fetch-user: ?1",
+     "sec-fetch-dest: document",
+     "accept-encoding: gzip, deflate, br, zstd",
+     "accept-language: en-US,en;q=0.9",
+     "priority: u=0, i"
+    ],
+    "flags": [
+     "EndStream (0x1)",
+     "EndHeaders (0x4)",
+     "Priority (0x20)"
+    ],
+    "priority": {
+     "weight": 256,
+     "depends_on": 0,
+     "exclusive": 1
+    }
+   }
+  ]
+ },
+ "http_version": "h2",
+ "sni": "a29-platform-webview.127-0-0-1.sslip.io",
+ "captured": "ClientHello from the listener in this run; HTTP/2 fingerprint from tls.peet.ws's report of the same WebView build, read out of the page",
+ "device": "redroid10_x86_64, Android 10 (SDK 29), x86_64, WebView 139.0.7258.143",
+ "android_sdks": [
+  29
+ ],
+ "harness": "tools/capture/android_phone (webview-url mode) + tools/capture/phone_capture.py",
+ "via": "https://tls.peet.ws/api/all loaded in the system WebView"
+}

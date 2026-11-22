@@ -847,15 +847,86 @@ async fn android_records_reproduce_the_phone_captures() {
         ("android_okhttp13", ("8daaf6152771", "eca864cca44a")),
         ("android_webview103", ("8daaf6152771", "e5627efa2ab1")),
         ("android_mesh", ("8daaf6152771", "e5627efa2ab1")),
+        // The versions captured across Android 8.1 to 14; the shape follows
+        // the TLS provider, not the OS release.
+        ("android_okhttp3_14_9", ("8daaf6152771", "eca864cca44a")),
+        ("android_okhttp5", ("8daaf6152771", "3f5d972527c0")),
+        ("android_cronet101", ("8daaf6152771", "e5627efa2ab1")),
+        ("android_webview139", ("8daaf6152771", "d8a2da3f94cd")),
     ] {
         let hello = read_client_hello(&client(name)).await;
         let (b, c) = ja4_b_c(&hello);
         assert_eq!(
             (b.as_str(), c.as_str()),
             expected,
-            "{name} no longer speaks what the phone sent"
+            "{name} no longer speaks what the device sent"
         );
     }
+}
+
+#[tokio::test]
+async fn android_okhttp8_and_9_put_back_the_hello_a_device_sent() {
+    // These two records came from tls.peet.ws captures of a tls-client
+    // profile whose a-segment printed the extension count as one digit
+    // (t12d129); JA4 always writes two. A real OkHttp 4.12 on Android 8.1
+    // and 9 sends t12d1209 with the same ciphers, extensions, signature
+    // algorithms and c hashes, so the records are the device's hello - and
+    // the a-segment has to say so.
+    for (name, ext_count) in [("android_okhttp8", 9), ("android_okhttp9", 9)] {
+        let hello = read_client_hello(&client(name)).await;
+        assert_eq!(hello.ciphers.len(), 12, "{name}");
+        assert_eq!(hello.extensions.len(), ext_count, "{name}");
+        let (b, c) = ja4_b_c(&hello);
+        let expected = if name == "android_okhttp8" {
+            ("d34a8e72043a", "e08eabe7240f")
+        } else {
+            ("d34a8e72043a", "b39be8c56a14")
+        };
+        assert_eq!((b.as_str(), c.as_str()), expected, "{name}");
+    }
+}
+
+#[tokio::test]
+async fn okhttp5_is_a_distinct_shape_from_okhttp4() {
+    // The a-segment is where the difference shows: OkHttp 5 drops
+    // session_ticket, so it sends 12 extensions where OkHttp 4 sends 13.
+    let five = read_client_hello(&client("android_okhttp5")).await;
+    let four = read_client_hello(&client("android_okhttp13")).await;
+    assert_eq!(five.extensions.len(), 12, "{:?}", five.extensions);
+    assert_eq!(four.extensions.len(), 13, "{:?}", four.extensions);
+    assert!(!five.extensions.contains(&35), "OkHttp 5 sent session_ticket");
+    assert!(four.extensions.contains(&35), "OkHttp 4 lost session_ticket");
+}
+
+#[tokio::test]
+async fn cronet119_is_the_same_client_with_or_without_padding() {
+    // Cronet 119 randomises the ECH GREASE payload length. The echo hello
+    // cleared the 511-byte window (c = 02713d6af862); the listener hello
+    // fell inside it and was padded (c = b1ff8ab2d16f). One client, two
+    // c hashes, and the record's own fields give the first.
+    let hello = read_client_hello(&client("android_cronet119")).await;
+    let unpadded = ClientHello {
+        length: hello.length,
+        ciphers: hello.ciphers.clone(),
+        extensions: hello
+            .extensions
+            .iter()
+            .copied()
+            .filter(|id| *id != 21)
+            .collect(),
+        sigalgs: hello.sigalgs.clone(),
+    };
+    let (b, c) = ja4_b_c(&unpadded);
+    assert_eq!(
+        (b.as_str(), c.as_str()),
+        ("8daaf6152771", "02713d6af862"),
+        "android_cronet119 without extension 21"
+    );
+    let (_, actual) = ja4_b_c(&hello);
+    assert!(
+        actual == "02713d6af862" || actual == "b1ff8ab2d16f",
+        "android_cronet119 hashed to c = {actual}"
+    );
 }
 
 #[tokio::test]
