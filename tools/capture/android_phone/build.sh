@@ -1,12 +1,20 @@
 #!/bin/bash
-# Build the probe APK for a real phone.
+# Build the probe APK for a device.
 #
-# Needs a JDK, an Android SDK (android.jar + build-tools) and the OkHttp 4.12
-# jar with its kotlin/okio dependencies. Paths can be overridden:
+#   ./build.sh                      platform-only build -> app.apk
+#   ./build.sh --variant DIR        link the version in variants/DIR
+#                                   -> out/DIR.apk
 #
-#   ANDROID_JAR=... OKHTTP_JAR=... KOTLIN_JAR=... OKIO_JAR=... ./build.sh
+# d8 cannot link two copies of the same package, so each variant is its own
+# APK. That is deliberate: a hello captured under the `okhttp-4-12-0` label
+# came from OkHttp 4.12.0, with nothing in the path that could substitute
+# another client.
 #
-# Output: app.apk next to this script.
+# A variant directory holds Variant.java, an optional lib/ with every jar to
+# link, and an optional jni/<abi>/*.so for native code. Needs a JDK and an
+# Android SDK; paths can be overridden:
+#
+#   ANDROID_SDK=... ANDROID_JAR=... BUILD_TOOLS=... KEYSTORE=... ./build.sh
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -14,30 +22,74 @@ cd "$(dirname "$0")"
 SDK="${ANDROID_SDK:-$HOME/Android/Sdk}"
 ANDROID_JAR="${ANDROID_JAR:-$SDK/platforms/android-33/android.jar}"
 BUILD_TOOLS="${BUILD_TOOLS:-$SDK/build-tools/30.0.3}"
-OKHTTP_JAR="${OKHTTP_JAR:-$HOME/.m2/repository/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar}"
-KOTLIN_JAR="${KOTLIN_JAR:-$HOME/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.9.25/kotlin-stdlib-1.9.25.jar}"
-OKIO_JAR="${OKIO_JAR:-$HOME/.m2/repository/com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar}"
 KEYSTORE="${KEYSTORE:-$HOME/.android/debug.keystore}"
+MIN_API="${MIN_API:-21}"
 
-rm -rf classes dex
-mkdir -p classes dex
+VARIANT=""
+if [ "${1:-}" = "--variant" ]; then
+    VARIANT="${2:?--variant needs a directory name}"
+fi
 
-javac -source 8 -target 8 -bootclasspath "$ANDROID_JAR" \
-    -cp "$OKHTTP_JAR:$KOTLIN_JAR:$OKIO_JAR" \
-    -d classes Main.java RunStacks.java WebViewLoader.java RequestThread.java \
-    2>&1 | grep -v "bootstrap class path" || true
+if [ -n "$VARIANT" ]; then
+    SRC="variants/$VARIANT"
+    OUT="out/$VARIANT.apk"
+else
+    SRC=""
+    OUT="app.apk"
+fi
 
-"$BUILD_TOOLS/d8" --release --min-api 30 --lib "$ANDROID_JAR" \
-    --output dex \
-    $(find classes -name '*.class') \
-    "$OKHTTP_JAR" "$KOTLIN_JAR" "$OKIO_JAR"
+WORK="$(mktemp -d)"
+trap 'rm -rf "$WORK"' EXIT
+mkdir -p "$WORK/classes" "$WORK/dex" "$WORK/apk/lib" "$(dirname "$OUT")"
 
-rm -f app-unsigned.apk app.apk
+cp common/*.java "$WORK/"
+cp "${SRC:-variant}/Variant.java" "$WORK/Main.java.tmp" 2>/dev/null || true
+# Only the variant's own Variant.java is compiled; the template stays out.
+if [ -n "$SRC" ]; then
+    cp "$SRC/Variant.java" "$WORK/"
+else
+    cp variant/Variant.java "$WORK/"
+fi
+rm -f "$WORK/Main.java.tmp"
+
+JARS=()
+if [ -n "$SRC" ] && [ -d "$SRC/lib" ]; then
+    while IFS= read -r -d '' jar; do JARS+=("$jar"); done \
+        < <(find "$SRC/lib" -name '*.jar' -print0 | sort -z)
+fi
+
+CP="$(IFS=:; echo "${JARS[*]:-}")"
+javac -nowarn -source 8 -target 8 -bootclasspath "$ANDROID_JAR" \
+    ${CP:+-cp "$CP"} -d "$WORK/classes" "$WORK"/*.java
+
+# --debug keeps every class name: Cronet finds its own providers by
+# reflection on hard-coded class names, and shrinking renames them.
+"$BUILD_TOOLS/d8" --debug --min-api "$MIN_API" --lib "$ANDROID_JAR" \
+    --output "$WORK/dex" \
+    $(find "$WORK/classes" -name '*.class') \
+    ${JARS[@]+"${JARS[@]}"}
+
+rm -f "$WORK/unsigned.apk"
 "$BUILD_TOOLS/aapt" package -f -M AndroidManifest.xml -I "$ANDROID_JAR" \
-    -F app-unsigned.apk
-(cd dex && "$BUILD_TOOLS/aapt" add ../app-unsigned.apk classes.dex >/dev/null)
-"$BUILD_TOOLS/zipalign" -f 4 app-unsigned.apk app.apk
-"$BUILD_TOOLS/apksigner" sign --ks "$KEYSTORE" --ks-pass pass:android \
-    --key-pass pass:android app.apk
+    -F "$WORK/unsigned.apk"
+(cd "$WORK/dex" && "$BUILD_TOOLS/aapt" add "../unsigned.apk" classes.dex >/dev/null)
 
-echo "built $(pwd)/app.apk"
+# Native code, when the variant ships any (Conscrypt, Cronet): aapt stores
+# each file at the path it is given, so copy them under lib/<abi>/ first.
+if [ -n "$SRC" ] && [ -d "$SRC/jni" ]; then
+    for abi in "$SRC"/jni/*/; do
+        abi_name="$(basename "$abi")"
+        mkdir -p "$WORK/apk/lib/$abi_name"
+        cp "$abi"* "$WORK/apk/lib/$abi_name/" 2>/dev/null || true
+    done
+    (cd "$WORK/apk" && for so in lib/*/*.so; do
+        [ -e "$so" ] || continue
+        "$BUILD_TOOLS/aapt" add "$WORK/unsigned.apk" "$so" >/dev/null
+    done)
+fi
+
+"$BUILD_TOOLS/zipalign" -f 4 "$WORK/unsigned.apk" "$WORK/aligned.apk"
+"$BUILD_TOOLS/apksigner" sign --ks "$KEYSTORE" --ks-pass pass:android \
+    --key-pass pass:android --out "$OUT" "$WORK/aligned.apk"
+
+echo "built $(pwd)/$OUT"

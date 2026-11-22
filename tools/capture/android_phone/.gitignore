@@ -1,6 +1,11 @@
 # build.sh output that is not worth keeping; app.apk itself is committed so
-# the capture can be re-run without an Android SDK.
+# the platform capture can be re-run without an Android SDK. Variant APKs and
+# the third-party jars they link are rebuilt from Maven artifacts listed in
+# variants/*/lib (see build.sh); neither belongs in the repository.
 /classes/
 /dex/
 /app-unsigned.apk
 /app.apk.idsig
+/out/
+**/lib/*.jar
+**/jni/
