@@ -40,6 +40,9 @@ public final class Main extends Activity {
         if (maxVersion != null) {
             Stacks.maxVersion = maxVersion;
         }
+        if (getIntent().getBooleanExtra("include-sct", false)) {
+            CappedSocketFactory.includeSct = true;
+        }
         int port = getIntent().getIntExtra("port", 8443);
         if (base == null) {
             // With `adb reverse tcp:8443 tcp:8443` the device's own loopback

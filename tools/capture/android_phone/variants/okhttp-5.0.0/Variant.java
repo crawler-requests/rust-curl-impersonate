@@ -35,7 +35,12 @@ final class Variant {
         // A TLS 1.2-only OkHttp is how Android 8/9 talk: keep OkHttp's own
         // cipher list and disable the TLS 1.3 protocol, which removes the
         // TLS 1.3 suites and supported_versions from the hello.
-        if ("1.2".equals(io.capture.phone.Stacks.maxVersion)) {
+        if (io.capture.phone.CappedSocketFactory.includeSct
+                || "1.2".equals(io.capture.phone.Stacks.maxVersion)) {
+            // An empty protocol keeps the release's own default, which is
+            // what an app asking only for SCT would get.
+            String proto = "1.2".equals(io.capture.phone.Stacks.maxVersion)
+                    ? "TLSv1.2" : "";
             // Wrap the factory OkHttp built for itself, so its ALPN callback
             // survives; only the protocol list is narrowed.
             // OkHttp installs its ALPN and session-ticket behaviour through
@@ -44,7 +49,7 @@ final class Variant {
             OkHttpClient assembled = builder.build();
             builder.sslSocketFactory(
                     io.capture.phone.CappedSocketFactory
-                            .wrappingOkHttpAlpn(assembled, "TLSv1.2"),
+                            .wrappingOkHttpAlpn(assembled, proto),
                     io.capture.phone.CappedSocketFactory.permissive());
         }
         Request request = new Request.Builder().url(url).build();

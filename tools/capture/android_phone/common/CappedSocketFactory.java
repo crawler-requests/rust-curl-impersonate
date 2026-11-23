@@ -83,10 +83,28 @@ final class CappedSocketFactory extends SSLSocketFactory {
         };
     }
 
+    /** Ask for a signed_certificate_timestamp extension, as an app can. */
+    static boolean includeSct = false;
+
     private Socket cap(Socket socket) {
         if (socket instanceof SSLSocket) {
             SSLSocket ssl = (SSLSocket) socket;
-            ssl.setEnabledProtocols(new String[] {protocol});
+            if (protocol.length() > 0) {
+                ssl.setEnabledProtocols(new String[] {protocol});
+            }
+            if (includeSct) {
+                // Android 9+ exposes this through SSLParameters; on older
+                // releases it is absent and the call is skipped.
+                try {
+                    javax.net.ssl.SSLParameters parameters = ssl.getSSLParameters();
+                    java.lang.reflect.Method m = parameters.getClass()
+                            .getMethod("setIncludeSCTList", boolean.class);
+                    m.invoke(parameters, true);
+                    ssl.setSSLParameters(parameters);
+                } catch (Throwable absentOnThisRelease) {
+                    // The extension cannot be requested here.
+                }
+            }
         }
         return socket;
     }
