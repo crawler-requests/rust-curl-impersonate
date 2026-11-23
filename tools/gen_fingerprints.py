@@ -867,7 +867,10 @@ PROFILES = [
         "platform": "android",
         "source": (
             "ClientHello recorded off the wire from an APK that links OkHttp "
-            "3.12.0, on a redroid Android 13 device (x86_64), "
+            "3.12.0, on a redroid Android 13 device (x86_64); this probe "
+            "build sends no ALPN extension, so the a-segment reads "
+            "t13d151100 where an uncapped 3.12 would read t13d1511h1 - the "
+            "ciphers, extensions and c hash are the client's own, "
             "tools/capture/phone_capture.py, "
             "tools/capture/raw/android_okhttp3_12_0.json"
         ),
@@ -1373,40 +1376,40 @@ PROFILES = [
         "name": "android_okhttp8",
         "library": "conscrypt",
         "family": "okhttp",
-        "client": "OkHttp 4 on Android 8 (confirmed on a device)",
+        "client": "OkHttp 4 on Android 8 (tls-client profile)",
         "version": "8",
         "platform": "android",
         # The tls.peet.ws capture of this profile printed the extension
         # count as one digit; the ciphers, extensions, signature algorithms
         # and both hashes match the hello an APK linking OkHttp 4.12 sent on
         # a redroid Android 8.1 device (tools/capture/android_matrix.py).
-        "source": (
-            "tls.peet.ws capture of the profile, matched off the wire by "
-            "OkHttp 4.12 on a redroid Android 8.1 device - same ciphers, "
-            "extensions, signature algorithms and JA4; the capture's "
-            "a-segment had a one-digit extension count, corrected here; "
-            "tools/capture/raw/android_okhttp8.json"
-        ),
+        # Its ciphers hash to d34a8e72043a, the cipher list an OkHttp 3.12
+        # capped at TLS 1.2 sent on a real Android 13 device. The TLS 1.2
+        # extension list itself has not been reproduced on a device,
+        # because no Android 8.1 runtime is available here; the capture's
+        # a-segment also had a one-digit extension count, corrected in the
+        # raw.
+        "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp8.json",
     },
     {
         "file": "android_okhttp9.json",
         "name": "android_okhttp9",
         "library": "conscrypt",
         "family": "okhttp",
-        "client": "OkHttp 4 on Android 9 (confirmed on a device)",
+        "client": "OkHttp 4 on Android 9 (tls-client profile)",
         "version": "9",
         "platform": "android",
         # The tls.peet.ws capture of this profile printed the extension
         # count as one digit; the ciphers, extensions, signature algorithms
         # and both hashes match the hello an APK linking OkHttp 4.12 sent on
         # a redroid Android 9 device (tools/capture/android_matrix.py).
-        "source": (
-            "tls.peet.ws capture of the profile, matched off the wire by "
-            "OkHttp 4.12 on a redroid Android 9 device - same ciphers, "
-            "extensions, signature algorithms and JA4; the capture's "
-            "a-segment had a one-digit extension count, corrected here; "
-            "tools/capture/raw/android_okhttp9.json"
-        ),
+        # Its ciphers hash to d34a8e72043a, the cipher list an OkHttp 3.12
+        # capped at TLS 1.2 sent on a real Android 13 device. The TLS 1.2
+        # extension list itself has not been reproduced on a device,
+        # because no Android 9 runtime is available here; the capture's
+        # a-segment also had a one-digit extension count, corrected in the
+        # raw.
+        "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp9.json",
     },
     {
         "file": "android_okhttp10.json",

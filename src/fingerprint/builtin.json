@@ -5386,7 +5386,7 @@
       "version": "3.12.0",
       "platform": "android",
       "library": "conscrypt",
-      "source": "ClientHello recorded off the wire from an APK that links OkHttp 3.12.0, on a redroid Android 13 device (x86_64), tools/capture/phone_capture.py, tools/capture/raw/android_okhttp3_12_0.json",
+      "source": "ClientHello recorded off the wire from an APK that links OkHttp 3.12.0, on a redroid Android 13 device (x86_64); this probe build sends no ALPN extension, so the a-segment reads t13d151100 where an uncapped 3.12 would read t13d1511h1 - the ciphers, extensions and c hash are the client's own, tools/capture/phone_capture.py, tools/capture/raw/android_okhttp3_12_0.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -8655,11 +8655,11 @@
     {
       "name": "android_okhttp8",
       "family": "okhttp",
-      "client": "OkHttp 4 on Android 8 (confirmed on a device)",
+      "client": "OkHttp 4 on Android 8 (tls-client profile)",
       "version": "8",
       "platform": "android",
       "library": "conscrypt",
-      "source": "tls.peet.ws capture of the profile, matched off the wire by OkHttp 4.12 on a redroid Android 8.1 device - same ciphers, extensions, signature algorithms and JA4; the capture's a-segment had a one-digit extension count, corrected here; tools/capture/raw/android_okhttp8.json",
+      "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp8.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
@@ -8721,11 +8721,11 @@
     {
       "name": "android_okhttp9",
       "family": "okhttp",
-      "client": "OkHttp 4 on Android 9 (confirmed on a device)",
+      "client": "OkHttp 4 on Android 9 (tls-client profile)",
       "version": "9",
       "platform": "android",
       "library": "conscrypt",
-      "source": "tls.peet.ws capture of the profile, matched off the wire by OkHttp 4.12 on a redroid Android 9 device - same ciphers, extensions, signature algorithms and JA4; the capture's a-segment had a one-digit extension count, corrected here; tools/capture/raw/android_okhttp9.json",
+      "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp9.json",
       "fidelity": "exact",
       "deviations": [],
       "tls": {
