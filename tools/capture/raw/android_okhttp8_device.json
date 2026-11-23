@@ -1,0 +1,75 @@
+{
+ "tls": {
+  "ja4": "t12d1209h2_d34a8e72043a_e08eabe7240f",
+  "ciphers": [
+   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+   "TLS_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_RSA_WITH_AES_256_CBC_SHA"
+  ],
+  "extensions": [
+   {
+    "name": "extensionRenegotiationInfo (boringssl) (65281)"
+   },
+   {
+    "name": "server_name (0)"
+   },
+   {
+    "name": "extended_master_secret (23)"
+   },
+   {
+    "name": "session_ticket (35)"
+   },
+   {
+    "name": "signature_algorithms (13)",
+    "signature_algorithms": [
+     "ecdsa_secp256r1_sha256",
+     "rsa_pkcs1_sha256",
+     "ecdsa_secp384r1_sha384",
+     "rsa_pkcs1_sha384",
+     "ecdsa_secp521r1_sha512",
+     "rsa_pkcs1_sha512",
+     "rsa_pkcs1_sha1"
+    ]
+   },
+   {
+    "name": "status_request (5)"
+   },
+   {
+    "name": "application_layer_protocol_negotiation (16)",
+    "protocols": [
+     "h2",
+     "http/1.1"
+    ]
+   },
+   {
+    "name": "ec_point_formats (11)"
+   },
+   {
+    "name": "supported_groups (10)",
+    "supported_groups": [
+     "X25519",
+     "P-256",
+     "P-384"
+    ]
+   }
+  ]
+ },
+ "sni": "a8ok-okhttp.127-0-0-1.sslip.io",
+ "captured": "ClientHello only, recorded off the wire by a listener the client connected to; the handshake was never answered",
+ "captured_at": "2026-11-23T18:35:28Z",
+ "device": "redroid8_x86_64, Android 8.1.0 (SDK 27), x86_64, WebView 125.0.6422.113",
+ "build_fingerprint": "redroid/redroid_x86_64/redroid_x86_64:8.1.0/OC/frank05271330:userdebug/test-keys",
+ "via": "direct",
+ "build_label": "a8ok",
+ "harness": "tools/capture/phone_capture.py + tools/capture/android_phone (max-version 1.2)",
+ "note": "OkHttp 3.12 capped at TLS 1.2 on an Android 8.1 container: t12d1209h2_d34a8e72043a_e08eabe7240f, byte for byte the android_okhttp8 record. On Android 13 the same build sends the same ciphers and extension set but without ALPN, so this capture is the one that confirms the record."
+}

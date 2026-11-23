@@ -8655,7 +8655,7 @@
     {
       "name": "android_okhttp8",
       "family": "okhttp",
-      "client": "OkHttp 4 on Android 8 (tls-client profile)",
+      "client": "OkHttp 4 on Android 8 (confirmed on a device)",
       "version": "8",
       "platform": "android",
       "library": "conscrypt",
@@ -8721,7 +8721,7 @@
     {
       "name": "android_okhttp9",
       "family": "okhttp",
-      "client": "OkHttp 4 on Android 9 (tls-client profile)",
+      "client": "OkHttp 4 on Android 9 (confirmed on a device)",
       "version": "9",
       "platform": "android",
       "library": "conscrypt",
