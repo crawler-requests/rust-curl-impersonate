@@ -137,3 +137,18 @@ cronet versions beyond the first pair
   So 66-98 share one shape, 98-143 share another, and two builds in
   between cannot run here at all. That is the honest coverage of the
   library, not a pretence that every patch level was tested.
+
+okhttp versions beyond the first five
+  3.12.0  Runs. On Android 13 it offers no ALPN and no session_ticket:
+          t13d1511 (ALPN 00), against OkHttp 4's t13d1513. Added as
+          android_okhttp3_12. Relayed through the CONNECT proxy it shows
+          t13d1510, because the proxy strips ALPN - so the direct capture is
+          the evidence, and the record leaves padding to the transport
+          (the capture's padded shape is 3f5d972527c0).
+  3.0.0   Will not build against the probe: its Response has no close().
+          Not a shape question, an API one.
+  4.0.0   Refuses to start on Android 11+: "Expected Android API level 21+
+          but was 33" - the same bug as 3.14.4, fixed later in 4.x.
+  4.7.2, 4.11.0  Identical to 4.12 on this platform (t13d1513).
+  So OkHttp's shape changes at 3.x-versus-4.x (ALPN and session_ticket) and
+  at 5 (session_ticket only); patch levels within 4.x do not move it.

@@ -339,7 +339,9 @@ def ja4(ciphers, extensions):
             break
     without_grease = [c for c in ciphers if not is_grease(c)]
     exts = [k for k, _ in extensions if not is_grease(k)]
-    head = f"t{version}{sni}{len(without_grease):02d}{len(exts):02d}{alpn}"
+    # JA4 always writes the ALPN label as two characters; a hello with no
+    # ALPN extension is "00", not an empty string.
+    head = f"t{version}{sni}{len(without_grease):02d}{len(exts):02d}{alpn or '00'}"
     cipher_hash = hashed([f"{c:04x}" for c in sorted(without_grease)])
     return f"{head}_{cipher_hash}_-"
 

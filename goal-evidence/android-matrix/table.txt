@@ -85,3 +85,8 @@ Columns: Android SDK, variant, JA4 b/c from the listener.
 33  cronet-105.5195.68    (native library aborts before any hello)
 33  cronet-113.5672.61    (native library aborts before any hello)
 33  cronet-141.7340.3     (NoClassDefFoundError before any hello)
+33  okhttp-3.12.0       t13d151100_8daaf6152771_3f5d972527c0
+33  okhttp-4.7.2        t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-4.11.0       t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-4.0.0        (refuses to start: API level check)
+—   okhttp-3.0.0        (no close() on Response; does not build)

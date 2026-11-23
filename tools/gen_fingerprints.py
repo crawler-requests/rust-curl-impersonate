@@ -808,6 +808,25 @@ PROFILES = [
         ),
     },
     {
+        # OkHttp 3.12 on Android 13 offers no ALPN and no session_ticket:
+        # t13d1511 (ALPN 00), against OkHttp 4's t13d1513. The relayed
+        # connection to tls.peet.ws came back t13d1510 because the CONNECT
+        # proxy strips ALPN, so the direct listener capture is the evidence.
+        "file": "android_okhttp3_12_0.json",
+        "name": "android_okhttp3_12",
+        "library": "conscrypt",
+        "family": "okhttp",
+        "client": "OkHttp 3.12.0 on Android 13",
+        "version": "3.12.0",
+        "platform": "android",
+        "source": (
+            "ClientHello recorded off the wire from an APK that links OkHttp "
+            "3.12.0, on a redroid Android 13 device (x86_64), "
+            "tools/capture/phone_capture.py, "
+            "tools/capture/raw/android_okhttp3_12_0.json"
+        ),
+    },
+    {
         # OkHttp 5 changed its TLS shape: the same 15 ciphers and signature
         # algorithms as 4.x but only 12 extensions (no session_ticket), hence
         # the a-segment t13d1512. Captured through the real service, so the

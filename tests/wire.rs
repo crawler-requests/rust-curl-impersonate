@@ -900,6 +900,35 @@ async fn okhttp5_is_a_distinct_shape_from_okhttp4() {
 }
 
 #[tokio::test]
+async fn okhttp3_12_is_the_same_client_with_or_without_padding() {
+    // OkHttp 3.12 offers no ALPN, so its hello is short. The capture had the
+    // padding extension (the hello was inside the 256-511 byte window);
+    // whether the live hello gets it depends on the SNI length, so the
+    // record leaves it to the transport. With extension 21 it is the
+    // capture's c = 3f5d972527c0.
+    let hello = read_client_hello(&client("android_okhttp3_12")).await;
+    assert!(!hello.extensions.contains(&16), "OkHttp 3.12 offered ALPN");
+    let padded = ClientHello {
+        length: hello.length,
+        ciphers: hello.ciphers.clone(),
+        extensions: hello
+            .extensions
+            .iter()
+            .copied()
+            .chain(std::iter::once(21))
+            .collect(),
+        sigalgs: hello.sigalgs.clone(),
+    };
+    let (b, c) = ja4_b_c(&padded);
+    assert_eq!((b.as_str(), c.as_str()), ("8daaf6152771", "3f5d972527c0"));
+    let (_, actual) = ja4_b_c(&hello);
+    assert!(
+        actual == "3f5d972527c0" || actual == "86dd91ae2a36",
+        "android_okhttp3_12 hashed to c = {actual}"
+    );
+}
+
+#[tokio::test]
 async fn cronet119_is_the_same_client_with_or_without_padding() {
     // Cronet 119 randomises the ECH GREASE payload length. The echo hello
     // cleared the 511-byte window (c = 02713d6af862); the listener hello
