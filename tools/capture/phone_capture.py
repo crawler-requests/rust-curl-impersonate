@@ -411,6 +411,9 @@ def main():
                         help="comma-separated stacks: urlconn, webview, "
                              "okhttp, conscrypt, cronet")
     parser.add_argument("--record", help="compare with this library record")
+    parser.add_argument("--max-version", default="",
+                        help="cap the platform stack at this TLS version, "
+                             "e.g. 1.2, to reproduce an older Android hello")
     parser.add_argument("--no-install", action="store_true")
     args = parser.parse_args()
     # A label becomes a DNS name, so keep it to what sslip.io accepts.
@@ -468,6 +471,8 @@ def main():
         # and `am` then fails with "Argument expected after proxy".
         if args.echo:
             start_args += ["--es", "proxy", "%s:%d" % (address, args.proxy_port)]
+        if args.max_version:
+            start_args += ["--es", "max-version", args.max_version]
         start = adb(args.serial, *start_args)
         if start.returncode != 0:
             raise SystemExit("launch failed: " + start.stderr.strip())

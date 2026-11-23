@@ -1,0 +1,132 @@
+package io.capture.phone;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
+/**
+ * Forces one fixed TLS protocol on every socket, so a request speaks the
+ * version an older Android release would. The platform's own socket factory
+ * is kept for everything else; only the protocol list is replaced.
+ */
+final class CappedSocketFactory extends SSLSocketFactory {
+    private final SSLSocketFactory inner;
+    private final String protocol;
+
+    private CappedSocketFactory(SSLSocketFactory inner, String protocol) {
+        this.inner = inner;
+        this.protocol = protocol;
+    }
+
+    static SSLSocketFactory of(javax.net.ssl.HttpsURLConnection connection,
+                               String protocol) {
+        return new CappedSocketFactory(connection.getSSLSocketFactory(),
+                protocol);
+    }
+
+    /** Wraps an existing factory, e.g. the one a library built for itself. */
+    static SSLSocketFactory of(SSLSocketFactory factory, String protocol) {
+        return new CappedSocketFactory(factory, protocol);
+    }
+
+    /**
+     * Wraps the factory a built client uses, narrowing its protocol list
+     * while leaving everything else - ALPN, session tickets - in its hands.
+     * The client object is asked for its factory through the only accessor
+     * every OkHttp version has.
+     */
+    static SSLSocketFactory wrappingOkHttpAlpn(Object builtClient,
+                                               String protocol) {
+        try {
+            java.lang.reflect.Method m =
+                    builtClient.getClass().getMethod("sslSocketFactory");
+            return new CappedSocketFactory(
+                    (SSLSocketFactory) m.invoke(builtClient), protocol);
+        } catch (Exception error) {
+            throw new IllegalStateException("no sslSocketFactory()", error);
+        }
+    }
+
+    /** The platform's default TLS factory, for libraries that want one. */
+    static SSLSocketFactory platformFactory() {
+        try {
+            return javax.net.ssl.SSLContext.getDefault().getSocketFactory();
+        } catch (java.security.NoSuchAlgorithmException unreachable) {
+            throw new IllegalStateException("TLS is always available", unreachable);
+        }
+    }
+
+    /**
+     * Accepts every certificate. The listener never answers the handshake,
+     * so trust is never exercised; this exists only because a custom socket
+     * factory has to be paired with a trust manager.
+     */
+    static javax.net.ssl.X509TrustManager permissive() {
+        return new javax.net.ssl.X509TrustManager() {
+            @Override
+            public void checkClientTrusted(
+                    java.security.cert.X509Certificate[] chain, String auth) {
+            }
+
+            @Override
+            public void checkServerTrusted(
+                    java.security.cert.X509Certificate[] chain, String auth) {
+            }
+
+            @Override
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[0];
+            }
+        };
+    }
+
+    private Socket cap(Socket socket) {
+        if (socket instanceof SSLSocket) {
+            SSLSocket ssl = (SSLSocket) socket;
+            ssl.setEnabledProtocols(new String[] {protocol});
+        }
+        return socket;
+    }
+
+    @Override
+    public Socket createSocket(Socket s, String host, int port, boolean autoClose)
+            throws IOException {
+        return cap(inner.createSocket(s, host, port, autoClose));
+    }
+
+    @Override
+    public String[] getDefaultCipherSuites() {
+        return inner.getDefaultCipherSuites();
+    }
+
+    @Override
+    public String[] getSupportedCipherSuites() {
+        return inner.getSupportedCipherSuites();
+    }
+
+    @Override
+    public Socket createSocket(String host, int port) throws IOException {
+        return cap(inner.createSocket(host, port));
+    }
+
+    @Override
+    public Socket createSocket(String host, int port, InetAddress localHost,
+                               int localPort) throws IOException {
+        return cap(inner.createSocket(host, port, localHost, localPort));
+    }
+
+    @Override
+    public Socket createSocket(InetAddress host, int port) throws IOException {
+        return cap(inner.createSocket(host, port));
+    }
+
+    @Override
+    public Socket createSocket(InetAddress address, int port,
+                               InetAddress localAddress, int localPort)
+            throws IOException {
+        return cap(inner.createSocket(address, port, localAddress, localPort));
+    }
+}

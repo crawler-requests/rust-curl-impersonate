@@ -23,6 +23,9 @@ final class Stacks {
     private Stacks() {
     }
 
+    /** Cap the platform stack's TLS version, e.g. "1.2"; empty means default. */
+    static String maxVersion = "";
+
     static void run(String label, String kind, String url, String proxyValue)
             throws Exception {
         Log.i(TAG, "begin " + label + " " + url);
@@ -59,8 +62,17 @@ final class Stacks {
         URLConnection connection = proxy == null
                 ? target.openConnection()
                 : target.openConnection(proxy);
-        connection.setConnectTimeout(6000);
-        connection.setReadTimeout(6000);
+        // A TLS 1.2-only client is how older Android releases talk; capping
+        // the platform stack reproduces that without an older image.
+        if (connection instanceof javax.net.ssl.HttpsURLConnection
+                && maxVersion.length() > 0) {
+            javax.net.ssl.HttpsURLConnection https =
+                    (javax.net.ssl.HttpsURLConnection) connection;
+            String protocol = "1.3".equals(maxVersion) ? "TLSv1.3" : "TLSv1.2";
+            https.setSSLSocketFactory(CappedSocketFactory.of(https, protocol));
+        }
+        connection.setConnectTimeout(60000);
+        connection.setReadTimeout(60000);
         try (InputStream in = connection.getInputStream()) {
             byte[] buffer = new byte[8192];
             while (in.read(buffer) > 0) {

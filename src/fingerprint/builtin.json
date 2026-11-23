@@ -15172,7 +15172,7 @@
       "version": "11",
       "platform": "android",
       "library": "conscrypt",
-      "source": "tls.peet.ws capture of the uTLS ClientHelloID for android11okhttp (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_android11okhttp.json",
+      "source": "tls.peet.ws capture of the uTLS ClientHelloID for android11okhttp (refraction-networking/utls, sent by its Go harness); the shape is confirmed on real hardware by OkHttp 3.12 with TLS 1.2 capped on an Android 13 device - same ciphers, extensions, signature algorithms and c hash (036209cd1ead), tools/capture/raw/utls_android11okhttp.json",
       "fidelity": "exact",
       "deviations": [
         "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."

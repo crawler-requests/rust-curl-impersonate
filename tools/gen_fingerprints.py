@@ -2186,6 +2186,20 @@ PROFILES = [
         "version": "11",
         "platform": "android",
         "http1_capture": True,
+        # The profile was defined by the uTLS library, but the hello it
+        # defines is the one OkHttp sends on Android 8-11: OkHttp 3.12
+        # capped at TLS 1.2 on a real Android 13 device produced the same
+        # c hash (036209cd1ead) with the same 12 ciphers, extensions and
+        # signature algorithms. Only the ALPN label differs, because that
+        # capture went through the capped socket factory.
+        "source": (
+            "tls.peet.ws capture of the uTLS ClientHelloID for "
+            "android11okhttp (refraction-networking/utls, sent by its Go "
+            "harness); the shape is confirmed on real hardware by OkHttp "
+            "3.12 with TLS 1.2 capped on an Android 13 device - same "
+            "ciphers, extensions, signature algorithms and c hash "
+            "(036209cd1ead), tools/capture/raw/utls_android11okhttp.json"
+        ),
     },
     {
         "file": "utls_edge85.json",

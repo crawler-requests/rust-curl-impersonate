@@ -36,6 +36,10 @@ public final class Main extends Activity {
         String mode = getIntent().getStringExtra("mode");
         String label = getIntent().getStringExtra("label");
         String proxy = getIntent().getStringExtra("proxy");
+        String maxVersion = getIntent().getStringExtra("max-version");
+        if (maxVersion != null) {
+            Stacks.maxVersion = maxVersion;
+        }
         int port = getIntent().getIntExtra("port", 8443);
         if (base == null) {
             // With `adb reverse tcp:8443 tcp:8443` the device's own loopback
