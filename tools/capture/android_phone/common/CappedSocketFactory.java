@@ -16,6 +16,15 @@ final class CappedSocketFactory extends SSLSocketFactory {
     private final SSLSocketFactory inner;
     private final String protocol;
 
+    CappedSocketFactory(SSLSocketFactory inner) {
+        this(inner, "");
+    }
+
+    CappedSocketFactory withSct() {
+        includeSct = true;
+        return this;
+    }
+
     private CappedSocketFactory(SSLSocketFactory inner, String protocol) {
         this.inner = inner;
         this.protocol = protocol;

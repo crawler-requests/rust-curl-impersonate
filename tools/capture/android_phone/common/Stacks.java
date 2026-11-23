@@ -73,6 +73,14 @@ final class Stacks {
         }
         connection.setConnectTimeout(60000);
         connection.setReadTimeout(60000);
+        if (CappedSocketFactory.includeSct
+                && connection instanceof javax.net.ssl.HttpsURLConnection) {
+            javax.net.ssl.HttpsURLConnection https =
+                    (javax.net.ssl.HttpsURLConnection) connection;
+            https.setSSLSocketFactory(
+                    new CappedSocketFactory(https.getSSLSocketFactory())
+                            .withSct());
+        }
         try (InputStream in = connection.getInputStream()) {
             byte[] buffer = new byte[8192];
             while (in.read(buffer) > 0) {
