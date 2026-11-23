@@ -8,12 +8,14 @@ byte for byte, and android_webview125 and android_webview139 were captured
 (one of them server-classified) on real hardware. Two have no backing:
 
 android_okhttp7   t12d1208h2_d34a8e72043a_31a7e1922da8
-  OkHttp on Android 7: TLS 1.2, 8 extensions, no session_ticket, no
-  status_request, and signature algorithms without the rsa_pss family.
-  No Android 7 runtime can be booted here (no redroid image for it; the
-  OnePlus 9R is Android 13). The record stays a peet capture with
-  fidelity "close" because BoringSSL cannot send two of its signature
-  algorithms either.
+  OkHttp on Android 7: TLS 1.2, 8 extensions, no status_request, and
+  signature algorithms in sha512-first order - a generation older than
+  every modern OkHttp build. Tried to reproduce it on Android 8.1 by
+  disabling OkHttp's TLS extensions: the ciphers matched (d34a8e72043a)
+  but the signature list stayed sha256-first and the ALPN and
+  session_ticket extensions went missing instead. redroid publishes no
+  Android 7 image (its oldest is 8.1), so this record stays a tls.peet.ws
+  capture and is the one Android record no device here can reproduce.
 
 android_okhttp8   t12d1209h2_d34a8e72043a_e08eabe7240f   NOW CONFIRMED
   Reproduced byte for byte: OkHttp 3.12 capped to TLS 1.2 on an Android 8.1
