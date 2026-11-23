@@ -2383,6 +2383,20 @@ ALIASES = [
     ("chrome_android", "chrome131_android", "chrome", "Chrome for Android", "android"),
     ("safari_ios", "safari270_ios", "safari", "Safari on iOS", "ios"),
     ("okhttp_android", "okhttp4_android", "okhttp", "OkHttp on Android", "android"),
+    # One alias per library version the grid actually captured, so a caller
+    # can ask for the version rather than for the base record. Each points
+    # at a record built from a real ClientHello; the name says which build
+    # produced it.
+    ("okhttp_4_9_3_android", "android_okhttp13", "okhttp",
+     "OkHttp 4.9.3 on Android (captured on SDK 29-34)", "android"),
+    ("okhttp_4_10_0_android", "android_okhttp13", "okhttp",
+     "OkHttp 4.10.0 on Android (captured on SDK 29-34)", "android"),
+    ("okhttp_4_12_0_android", "android_okhttp13", "okhttp",
+     "OkHttp 4.12.0 on Android (captured on SDK 29-34)", "android"),
+    ("conscrypt_2_1_0_android", "android_conscrypt13", "conscrypt",
+     "Conscrypt 2.1.0 on Android 13 runtime (SDK 27-34)", "android"),
+    ("conscrypt_2_5_2_android", "android_conscrypt13", "conscrypt",
+     "Conscrypt 2.5.2 on Android 13 runtime (SDK 27-34)", "android"),
     ("golang", "go1.26", "go", "Go net/http", "linux"),
     ("python", "python3.12_requests", "python", "Python requests", "linux"),
     ("curl", "curl8.5_h2", "curl", "libcurl with OpenSSL", "linux"),

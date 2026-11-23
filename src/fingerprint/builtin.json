@@ -16925,6 +16925,51 @@
       "extends": "okhttp4_android"
     },
     {
+      "name": "okhttp_4_9_3_android",
+      "family": "okhttp",
+      "client": "OkHttp 4.9.3 on Android (captured on SDK 29-34)",
+      "platform": "android",
+      "source": "alias of android_okhttp13",
+      "extends": "android_okhttp13",
+      "fidelity": "exact"
+    },
+    {
+      "name": "okhttp_4_10_0_android",
+      "family": "okhttp",
+      "client": "OkHttp 4.10.0 on Android (captured on SDK 29-34)",
+      "platform": "android",
+      "source": "alias of android_okhttp13",
+      "extends": "android_okhttp13",
+      "fidelity": "exact"
+    },
+    {
+      "name": "okhttp_4_12_0_android",
+      "family": "okhttp",
+      "client": "OkHttp 4.12.0 on Android (captured on SDK 29-34)",
+      "platform": "android",
+      "source": "alias of android_okhttp13",
+      "extends": "android_okhttp13",
+      "fidelity": "exact"
+    },
+    {
+      "name": "conscrypt_2_1_0_android",
+      "family": "conscrypt",
+      "client": "Conscrypt 2.1.0 on Android 13 runtime (SDK 27-34)",
+      "platform": "android",
+      "source": "alias of android_conscrypt13",
+      "extends": "android_conscrypt13",
+      "fidelity": "exact"
+    },
+    {
+      "name": "conscrypt_2_5_2_android",
+      "family": "conscrypt",
+      "client": "Conscrypt 2.5.2 on Android 13 runtime (SDK 27-34)",
+      "platform": "android",
+      "source": "alias of android_conscrypt13",
+      "extends": "android_conscrypt13",
+      "fidelity": "exact"
+    },
+    {
       "name": "golang",
       "family": "go",
       "client": "Go net/http",
