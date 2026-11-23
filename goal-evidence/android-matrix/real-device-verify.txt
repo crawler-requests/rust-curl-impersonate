@@ -1,0 +1,42 @@
+Real-device verification of the built-in Android records, 2026-11-24
+
+Device: the Android cloud phone (adb 192.168.1.90:5555), redroid Android 13,
+x86_64, with its own internet route. Each row installs an APK that links
+exactly that library build, captures the ClientHello off the wire, and
+compares it with the record the library ships.
+
+captured 28 of 33 builds
+
+conscrypt-1.4.2        t12d1409h1_c866b44c5a26_b39be8c56a14  matches android_conscrypt1_4_2
+conscrypt-2.0.0        t13d1713h1_5b57614c22b0_eca864cca44a  matches android_conscrypt13
+conscrypt-2.1.0        t13d1713h1_5b57614c22b0_eca864cca44a  matches android_conscrypt13
+conscrypt-2.2.1        t13d1713h1_5b57614c22b0_eca864cca44a  matches android_conscrypt13
+conscrypt-2.5.2        t13d1713h1_5b57614c22b0_eca864cca44a  matches android_conscrypt13
+conscrypt-2.5.3        t13d1713h1_5b57614c22b0_eca864cca44a  matches android_conscrypt13
+conscrypt-2.7.0        t13d1712h1_5b57614c22b0_40271e0a5736  matches android_conscrypt2_7
+conscrypt-2.9.0        t13d1712h1_5b57614c22b0_40271e0a5736  matches android_conscrypt2_7
+cronet-101.4951.41     t13d1516h2_8daaf6152771_e5627efa2ab1  matches android_cronet101
+cronet-102.5005.125    t13d1516h2_8daaf6152771_e5627efa2ab1  matches android_cronet101
+cronet-105.5195.68     does not run on this device (see cloud-phone.txt)
+cronet-108.5359.79     t13d1516h2_8daaf6152771_e5627efa2ab1  matches android_cronet101
+cronet-113.5672.61     does not run on this device (see cloud-phone.txt)
+cronet-119.6045.31     t13d1516h2_8daaf6152771_02713d6af862  matches android_cronet119
+cronet-141.7340.3      does not run on this device (see cloud-phone.txt)
+cronet-76.3809.111     t13d1615h2_46e7e9700bed_45f260be83e2  matches android_cronet76
+cronet-98.4758.87      t13d1516h2_8daaf6152771_e5627efa2ab1  matches android_cronet101
+okhttp-3.12.0          t13d151100_8daaf6152771_3f5d972527c0  matches android_okhttp3_12
+okhttp-3.14.4          does not run on this device (see cloud-phone.txt)
+okhttp-3.14.9          t13d1513h2_8daaf6152771_eca864cca44a  matches android_okhttp3_14_9
+okhttp-4.0.0           does not run on this device (see cloud-phone.txt)
+okhttp-4.10.0          t13d1513h2_8daaf6152771_eca864cca44a  matches android_okhttp13
+okhttp-4.11.0          t13d1513h2_8daaf6152771_eca864cca44a  matches android_okhttp13
+okhttp-4.12.0          t13d1513h2_8daaf6152771_eca864cca44a  matches android_okhttp13
+okhttp-4.7.2           t13d1513h2_8daaf6152771_eca864cca44a  matches android_okhttp13
+okhttp-4.9.3           t13d1513h2_8daaf6152771_eca864cca44a  matches android_okhttp13
+okhttp-5.0.0           t13d1512h2_8daaf6152771_3f5d972527c0  matches android_okhttp5
+okhttp-5.1.0           t13d1512h2_8daaf6152771_3f5d972527c0  matches android_okhttp5
+okhttp-5.2.2           t13d1512h2_8daaf6152771_3f5d972527c0  matches android_okhttp5
+okhttp-5.3.2           t13d1512h2_8daaf6152771_3f5d972527c0  matches android_okhttp5
+okhttp-5.4.0           t13d1512h2_8daaf6152771_3f5d972527c0  matches android_okhttp5
+okhttp-5.5.1           t13d1512h2_8daaf6152771_3f5d972527c0  matches android_okhttp5
+platform               t13d1713h1_5b57614c22b0_eca864cca44a  matches android_conscrypt13

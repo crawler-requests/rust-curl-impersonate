@@ -196,3 +196,19 @@ okhttp 5.x beyond 5.0.0
   t13d1512, 12 extensions - so nothing inside 5.x moves the shape; the
   change is 4 to 5 (session_ticket goes). They name the base record through
   aliases rather than becoming five identical records.
+
+real-device verification of the built-in records, 2026-11-24
+  The cloud phone is a real Android runtime with a real internet route, so
+  it can stand in for a handset for every question the TLS provider
+  decides. The 33-build grid was rerun on it and each captured JA4 was
+  compared with the record the library ships: 28 of 33 captured, and every
+  one matched its record exactly - Conscrypt 1.4.2/2.5/2.7, Cronet
+  76/98/101/102/108/119, OkHttp 3.12/3.14.9/4.7-4.12/5.0-5.5, and the
+  platform stack. The five that produced nothing are the builds that fail
+  before sending a byte on any Android 13 device (Cronet 105/113 native
+  abort, Cronet 141 missing class, OkHttp 3.14.4/4.0.0 refuse API 33).
+  real-device-verify.txt is the row-by-row table.
+
+  What this does not cover is the ARM build of each client: a handset or an
+  ARM cloud phone is needed for that, and the OnePlus 9R on the WireGuard
+  Mac is still unreachable (no handshake since 2026-11-23).
