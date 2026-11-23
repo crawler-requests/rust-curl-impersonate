@@ -36,14 +36,17 @@ public final class RunStacks implements Runnable {
                 if (name.length() == 0) {
                     continue;
                 }
+                // With no base the label is the whole hostname; a trailing
+                // dot would make OkHttp reject the URL.
+                String suffix = base.length() == 0 ? "" : "." + base;
                 if ("webview".equals(name)) {
                     Log.i(Main.TAG, "webview goes to the UI thread");
                     activity.runOnUiThread(new WebViewLoader(activity,
-                            "https://" + label + "-webview." + base + ":"
+                            "https://" + label + "-webview" + suffix + ":"
                                     + port + "/"));
                 } else {
                     Stacks.run(label + "-" + name, name,
-                            "https://" + label + "-" + name + "." + base + ":"
+                            "https://" + label + "-" + name + suffix + ":"
                                     + port + "/", proxy);
                 }
                 sleep(GAP_MS);

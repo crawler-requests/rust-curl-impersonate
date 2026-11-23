@@ -46,6 +46,12 @@ public final class Main extends Activity {
             // reaches the listener; the label still tells the stacks apart.
             base = "127-0-0-1.sslip.io";
         }
+        if (".".equals(base)) {
+            // "-" from the harness: the label alone is the hostname, as
+            // listed in the device's /etc/hosts. Used when the name is too
+            // long for a DNS label.
+            base = "";
+        }
         if (mode == null) {
             mode = "all";
         }

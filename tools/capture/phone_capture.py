@@ -421,7 +421,7 @@ def main():
     if not args.label:
         raise SystemExit("empty --label")
 
-    if args.reverse:
+    if args.reverse and args.host_ip != "-":
         # The phone sees only its own loopback, and adb carries the
         # connection back here. 127-0-0-1.sslip.io resolves to 127.0.0.1 on
         # the phone, so the SNI labels still work and no LAN address is used.
@@ -432,11 +432,26 @@ def main():
                           "tcp:%d" % port)
             if reverse.returncode != 0:
                 raise SystemExit("adb reverse failed: " + reverse.stderr.strip())
+    elif args.host_ip == "-":
+        # No base: the label is the whole hostname, for a name already in the
+        # device's /etc/hosts. Used to reach a hello length that a DNS label
+        # limit would otherwise forbid. The reverse forward is still needed
+        # so the device's loopback reaches this listener.
+        address = ""
+        base = ""
+        for port in [args.port] + ([args.proxy_port] if args.echo else []):
+            reverse = adb(args.serial, "reverse", "tcp:%d" % port,
+                          "tcp:%d" % port)
+            if reverse.returncode != 0:
+                raise SystemExit("adb reverse failed: " + reverse.stderr.strip())
     else:
         address = args.host_ip or host_ip()
     # sslip.io turns the dotted address into a name that resolves back to it.
-    base = address.replace(".", "-") + ".sslip.io"
-    print("host %s, phone will use %s-*.<base>" % (address, args.label))
+    base = "" if base == "" else address.replace(".", "-") + ".sslip.io"
+    if base == "":
+        print("host %s, phone will use %s-*" % (address or "ethernet", args.label))
+    else:
+        print("host %s, phone will use %s-*.<base>" % (address, args.label))
     print("mode: %s" % args.mode)
 
     facts = device_facts(args.serial)
@@ -465,8 +480,13 @@ def main():
         adb(args.serial, "logcat", "-c")
         adb(args.serial, "shell", "am", "force-stop", PACKAGE)
         start_args = ["shell", "am", "start", "-n", ACTIVITY,
-                      "--es", "base", base, "--ei", "port", str(args.port),
+                      "--ei", "port", str(args.port),
                       "--es", "label", args.label, "--es", "mode", args.mode]
+        # An empty `--es base ""` loses its value the same way proxy does;
+        # with no base the label alone is the hostname, so it is omitted.
+        # "." means no base: the label alone is the hostname.
+        start_args = start_args[:8] + ["--es", "base",
+                                       base if base else "."] + start_args[8:]
         # An empty `--es proxy ""` loses its value in adb's shell quoting,
         # and `am` then fails with "Argument expected after proxy".
         if args.echo:
