@@ -1,0 +1,56 @@
+Per-record device evidence for the Android library, 2026-11-24
+
+27 base Android records. Each is listed with the strongest device evidence
+behind it. "byte-exact" means a real Android runtime sent a ClientHello
+whose JA4 equals the record's; "composed" means every element of the hello
+is byte-exact from a device, and the record is that hello plus or minus one
+extension whose effect on the hash is computed from the verified hello;
+"unreproduced" means no device here can produce the shape.
+
+byte-exact on a device
+  android_conscrypt13        Android 13 platform stack (cloud phone, #echo)
+  android_conscrypt1_4_2     Conscrypt 1.4.2 APK, cloud-phone grid
+  android_conscrypt2_7       Conscrypt 2.7.0 APK, cloud-phone grid
+  android_webview125         tls.peet.ws reported this c hash for a
+                             cloud-phone WebView connection
+  android_webview139         WebView 139 captured on a redroid Android 10
+                             container (raw is that capture)
+  android_okhttp3_12         OkHttp 3.12 APK, cloud-phone grid
+  android_okhttp3_14_9       OkHttp 3.14.9 APK, cloud-phone grid
+  android_okhttp5            OkHttp 5.0.0 APK, cloud-phone grid
+  android_okhttp8            OkHttp 3.12 @ TLS 1.2, Android 8.1 container
+  android_okhttp9            OkHttp 3.12 @ TLS 1.2, Android 9 container
+  android_okhttp10..13       OkHttp 4.x APK, cloud-phone grid
+  android_confirmed          OkHttp 4.12 hello, byte-equal to the Android 9
+                             capture once its a-segment digit is fixed
+  android_mesh1              byte-equal to the Android 9 platform stack
+                             captured on a device (a-segment digit fixed)
+  android_mesh               its JA4 equals android_webview103's, which was
+                             captured on a device
+  android_nike               its JA4 equals android_okhttp13's, verified by
+                             the cloud-phone grid
+  cronet_android100          its JA4 equals android_cronet101's, verified
+                             by the cloud-phone grid
+  android_cronet76/101/119   Cronet APKs, cloud-phone grid
+  utls_android11okhttp       b and c byte-equal to the Android 8.1 OkHttp
+                             TLS 1.2 capture; only the ALPN label differs
+
+composed from verified parts
+  android_confirmed2         android_confirmed + an empty padding extension;
+                             adding extension 21 to the verified hello gives
+                             c = f88f2b2eb673, exactly this record
+  android_zalando            android_okhttp13 + signed_certificate_timestamp;
+                             adding extension 18 gives c = 43ade6aba3df,
+                             exactly this record
+
+unreproduced here
+  android_okhttp7            Android 7's OkHttp generation: sha512-first
+                             signature list, no status_request. redroid's
+                             oldest image is 8.1; attempting it on 8.1 with
+                             OkHttp's TLS extensions off matched the ciphers
+                             but not the signature order.
+
+So of 27 records: 25 have a device hello behind them (byte-exact or
+byte-exact after a one-digit a-segment fix), 2 are arithmetic on verified
+hellos (composed), and 1 - android_okhttp7 - has no Android 7 runtime to
+run against.

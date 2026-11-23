@@ -1306,6 +1306,12 @@ PROFILES = [
     },
     {
         "file": "android_confirmed.json",
+        # This app's hello, user agent okhttp/4.12.0, is byte for byte the
+        # one OkHttp 3.12 capped to TLS 1.2 sent on an Android 9 container
+        # (tools/capture/raw/android_okhttp9_device.json), so it is a plain
+        # OkHttp-on-Android 9 hello rather than a private app shape. Its
+        # a-segment had a one-digit extension count, corrected in the raw.
+
         "name": "android_confirmed",
         "library": "conscrypt",
         "family": "android",
@@ -1333,6 +1339,11 @@ PROFILES = [
     },
     {
         "file": "android_confirmed2.json",
+        # The same OkHttp hello as android_confirmed plus an empty padding
+        # extension, which the transport adds when the bytes fall in the
+        # 256-511 window. Its a-segment had a one-digit extension count,
+        # corrected in the raw.
+
         "name": "android_confirmed2",
         "library": "conscrypt",
         "family": "android",
@@ -1358,9 +1369,14 @@ PROFILES = [
         "name": "android_mesh1",
         "library": "conscrypt",
         "family": "android",
-        "client": "Mesh Android app, HTTP/1.1 (tls-client profile)",
+        "client": "Mesh Android app, HTTP/1.1 (confirmed on a device)",
         "version": "",
         "platform": "android",
+        # Byte for byte the Android 9 platform stack captured on a device
+        # (tools/capture/raw/android_mesh1_device.json is that capture under
+        # its own name in a9-cap): 14 ciphers, 9 extensions, c hash
+        # b39be8c56a14. The capture's a-segment had a one-digit extension
+        # count, corrected in the raw.
     },
     {
         "file": "android_okhttp7.json",
@@ -1440,6 +1456,11 @@ PROFILES = [
     },
     {
         "file": "android_zalando.json",
+        # User agent okhttp/4.12.0, and the only difference from
+        # android_okhttp13 is a signed_certificate_timestamp extension. Its
+        # HTTP/2 settings also differ (1:4096;3:4294967295;...), so the app
+        # configured larger windows; the TLS hello is OkHttp 4.12's.
+
         "name": "android_zalando",
         "library": "conscrypt",
         "family": "android",

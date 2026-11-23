@@ -8523,7 +8523,7 @@
     {
       "name": "android_mesh1",
       "family": "android",
-      "client": "Mesh Android app, HTTP/1.1 (tls-client profile)",
+      "client": "Mesh Android app, HTTP/1.1 (confirmed on a device)",
       "version": "",
       "platform": "android",
       "library": "conscrypt",

@@ -1,11 +1,10 @@
-Android records still without a real-device observation, 2026-11-24
+Android records: what still has no real-device observation, 2026-11-24
 
-The audit below compares each Android record's c hash with every c hash a
-real device produced in this work: the 33-build cloud-phone grid, the phone
-captures, the TLS 1.2 capping runs and the WebView service reports. 25 of
-27 base records are backed by a real device - 23 matched a captured hello
-byte for byte, and android_webview125 and android_webview139 were captured
-(one of them server-classified) on real hardware. Two have no backing:
+See record-evidence.txt for the per-record table. Summary: of 27 base
+Android records, 25 have a device hello behind them (byte-exact, or
+byte-exact once a one-digit a-segment defect is fixed), 2 are the
+arithmetic composition of a verified hello plus one extension, and 1 has
+no Android 7 runtime here to run against. The unreproduced ones:
 
 android_okhttp7   t12d1208h2_d34a8e72043a_31a7e1922da8
   OkHttp on Android 7: TLS 1.2, 8 extensions, no status_request, and
@@ -38,8 +37,13 @@ android_confirmed2  t12d1210h2_d34a8e72043a_f88f2b2eb673
   reproduced on a device.
 
 android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
-  Same situation: the Zalando Android app's hello, captured once, and the
-  app is not distributable.
+  User agent okhttp/4.12.0. Against android_okhttp13 the only TLS
+  difference is a signed_certificate_timestamp extension, and its HTTP/2
+  settings differ (1:4096;3:4294967295;4:16777216;5:16384;...), so the
+  app asked OkHttp for larger windows and for SCT. Neither is a
+  library default - the platform stack on Android 13 sends no SCT, and the
+  probe's OkHttp 4.12 does not either - so reproducing it needs that
+  configuration, not just that build.
 
 What is verified instead, and how
   21 base records match a c hash a real device produced. WebView 125's
