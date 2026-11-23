@@ -114,6 +114,33 @@ final class CappedSocketFactory extends SSLSocketFactory {
                     android.util.Log.i("PhoneCap", "sct request failed: "
                             + absentOnThisRelease);
                 }
+                // Conscrypt's internal switch: with CT verification on it
+                // sends SSL_enable_signed_cert_timestamps, which is what
+                // puts extension 18 in the hello.
+                try {
+                    // The field lives on the superclass (ConscryptEngineSocket),
+                    // not on the concrete Java8EngineSocket subclass.
+                    java.lang.reflect.Field f = null;
+                    for (Class<?> c = ssl.getClass(); c != null; c = c.getSuperclass()) {
+                        try {
+                            f = c.getDeclaredField("sslParameters");
+                            break;
+                        } catch (NoSuchFieldException next) {
+                            // Look further up.
+                        }
+                    }
+                    if (f == null) {
+                        throw new NoSuchFieldException("sslParameters");
+                    }
+                    f.setAccessible(true);
+                    Object impl = f.get(ssl);
+                    Class<?> implClass = impl.getClass();
+                    implClass.getMethod("setCTVerificationEnabled", boolean.class)
+                            .invoke(impl, true);
+                    android.util.Log.i("PhoneCap", "ct enabled");
+                } catch (Throwable notConscrypt) {
+                    android.util.Log.i("PhoneCap", "ct unavailable: " + notConscrypt);
+                }
             }
         }
         return socket;

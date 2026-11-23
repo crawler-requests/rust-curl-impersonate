@@ -43,12 +43,21 @@ android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
   User agent okhttp/4.12.0. Against android_okhttp13 the only TLS
   difference is a signed_certificate_timestamp extension, and its HTTP/2
   settings differ (1:4096;3:4294967295;4:16777216;5:16384;...), so the
-  app asked OkHttp for larger windows and for SCT. Tried on an Android 10
-  emulator with --include-sct: the flag reaches the socket, but neither
-  OkHttp's own TLS path nor the platform stack emits the extension, because
-  the SCT request needs a Conscrypt SSL_CTX-level setting that the Java API
-  does not expose. Everything else in the record matches the verified
-  android_okhttp13 hello.
+  app asked OkHttp for larger windows and for SCT.
+
+  What the SCT request needs was located this pass: Conscrypt's
+  libconscrypt_jni.so exports SSL_CTX_enable_signed_cert_timestamps and
+  SSL_enable_signed_cert_timestamps, and NativeSsl calls the latter when
+  SSLParametersImpl.isCTVerificationEnabled(host) is true, with
+  SSLParametersImpl.setCTVerificationEnabled(...) as the switch. It is an
+  internal class, so the probe must reach the SSLParametersImpl an engine
+  socket holds - and that is where it stops: the socket OkHttp gets is a
+  Java8EngineSocket that neither declares the field nor inherits it, so the
+  reflective route did not reach the object on Android 10. That is a probe
+  limitation, not an absence of the capability.
+
+  Everything else in the record matches the verified android_okhttp13
+  hello.
 
 What is verified instead, and how
   21 base records match a c hash a real device produced. WebView 125's
