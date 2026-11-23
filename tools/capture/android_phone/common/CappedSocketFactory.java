@@ -112,10 +112,16 @@ final class CappedSocketFactory extends SSLSocketFactory {
                     // The engine socket keeps its parameters in a field
                     // whose type is SSLParametersImpl; on the platform the
                     // class hierarchy is the same, so both builds match.
-                    // SocksSocketImpl is java.net.Socket's own impl field,
-                    // not the TLS parameters; skip anything java.net.
+                    // Only the field whose type is a Conscrypt
+                    // SSLParametersImpl carries the CT switch; java.net's
+                    // SocksSocketImpl also has an `impl`, so the type check
+                    // is what tells them apart.
                     String typeName = f.getType().getName();
-                    if (typeName.endsWith("SSLParametersImpl")) {
+                    // Android renames or erases this type in places, so the
+                    // field NAME is the reliable marker; the type check is a
+                    // secondary guard for the bundled build.
+                    if (f.getName().equals("sslParameters")
+                            || typeName.endsWith("SSLParametersImpl")) {
                         field = f;
                         break;
                     }

@@ -53,14 +53,19 @@ android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
   10's platform Conscrypt (com.android.org.conscrypt) carries the same
   method.
 
-  The probe reached that class and stopped there: the socket handed over
-  is a Java8FileDescriptorSocket, and the nearest field of the right kind
-  resolved to java.net.Socket's SocksSocketImpl, so the switch was invoked
-  on the wrong object. Installing the bundled Conscrypt moved the failure
-  one step on - OkHttp 4.12's Android10Platform refuses a bundled-Conscrypt
-  socket in ConscryptSocketAdapter - and either way the request never
-  reached a hello. That is a probe limitation at a specific step, not the
-  absence of the capability.
+  The probe then walked the whole socket hierarchy looking for the
+  SSLParametersImpl the switch is called on, and it is not there: on Android
+  10 the chain Java8FileDescriptorSocket - ConscryptFileDescriptorSocket -
+  OpenSSLSocketImpl - AbstractConscryptSocket - SSLSocket - Socket declares
+  no field of that type and no field named sslParameters (OpenSSLSocketImpl
+  has only `impl`, and its resolved type is Object; java.net.Socket's own
+  `impl` is SocksSocketImpl). The parameters are handed to the socket's
+  constructor and not retained afterwards, so no reflective route reaches
+  the object that carries setCTVerificationEnabled.
+
+  With the bundled Conscrypt installed the failure moves one step on: OkHttp
+  4.12's Android10Platform refuses a bundled-Conscrypt socket in
+  ConscryptSocketAdapter. Either path stops before a hello.
 
   Everything else in the record matches the verified android_okhttp13
   hello.
