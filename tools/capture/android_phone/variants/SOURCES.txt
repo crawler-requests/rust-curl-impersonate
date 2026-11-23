@@ -3,7 +3,9 @@
 # build.sh links every jar under variants/<name>/lib/; the jars themselves are
 # not committed (some are tens of megabytes). Fetch them from these
 # coordinates, put them in the variant's lib/, and unpack any AAR's classes.jar
-# and jni/<abi>/*.so into lib/ and jni/<abi>/.
+# and jni/<abi>/*.so into lib/ and jni/<abi>/. Both x86_64 (for the
+# redroid grid) and arm64-v8a (for a real phone) are used; build with
+# ABI=arm64-v8a ./build.sh --variant <name> to package the phone one.
 #
 # Maven Central is https://repo1.maven.org/maven2/, Google Maven is
 # https://dl.google.com/dl/android/maven2/.

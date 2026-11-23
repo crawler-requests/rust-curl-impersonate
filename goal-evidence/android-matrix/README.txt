@@ -9,6 +9,14 @@ question
   from 8.1 to 14, and read their ClientHellos off the wire.
 
 device
+  Two kinds of device. The grid below ran on seven redroid containers;
+  a physical OnePlus 9R (LE2100, Android 13, arm64-v8a, WebView 103)
+  is captured separately by tools/capture/device_matrix.py, which is the
+  same grid pointed at whatever phone adb shows. Both are real Android
+  runtimes running the real library build - the container's value is that
+  one can boot Android 8.1, 9, 10 and 14 on the same host; the phone's is
+  that it is a phone.
+
   Seven redroid containers, one per Android release: 8.1 (SDK 27), 9 (28),
   10 (29), 11 (30), 12 (31), 13 (33), 14 (34). All x86_64, not phones: the
   runtime is the real Android framework and the library is the real library,

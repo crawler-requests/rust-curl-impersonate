@@ -24,6 +24,7 @@ ANDROID_JAR="${ANDROID_JAR:-$SDK/platforms/android-33/android.jar}"
 BUILD_TOOLS="${BUILD_TOOLS:-$SDK/build-tools/30.0.3}"
 KEYSTORE="${KEYSTORE:-$HOME/.android/debug.keystore}"
 MIN_API="${MIN_API:-21}"
+ABI="${ABI:-}"
 
 VARIANT=""
 if [ "${1:-}" = "--variant" ]; then
@@ -79,6 +80,10 @@ rm -f "$WORK/unsigned.apk"
 if [ -n "$SRC" ] && [ -d "$SRC/jni" ]; then
     for abi in "$SRC"/jni/*/; do
         abi_name="$(basename "$abi")"
+        # ABI=<name> keeps only that ABI's native libraries; unset means all.
+        if [ -n "$ABI" ] && [ "$abi_name" != "$ABI" ]; then
+            continue
+        fi
         mkdir -p "$WORK/apk/lib/$abi_name"
         cp "$abi"* "$WORK/apk/lib/$abi_name/" 2>/dev/null || true
     done
