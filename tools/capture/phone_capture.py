@@ -448,7 +448,8 @@ def main():
     else:
         address = args.host_ip or host_ip()
     # sslip.io turns the dotted address into a name that resolves back to it.
-    base = "" if base == "" else address.replace(".", "-") + ".sslip.io"
+    if address:
+        base = address.replace(".", "-") + ".sslip.io"
     if base == "":
         print("host %s, phone will use %s-*" % (address or "ethernet", args.label))
     else:

@@ -1,0 +1,73 @@
+{
+ "tls": {
+  "ja4": "t12d1208h2_d34a8e72043a_31a7e1922da8",
+  "ciphers": [
+   "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+   "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+   "TLS_RSA_WITH_AES_128_GCM_SHA256",
+   "TLS_RSA_WITH_AES_256_GCM_SHA384",
+   "TLS_RSA_WITH_AES_128_CBC_SHA",
+   "TLS_RSA_WITH_AES_256_CBC_SHA"
+  ],
+  "extensions": [
+   {
+    "name": "extensionRenegotiationInfo (boringssl) (65281)"
+   },
+   {
+    "name": "server_name (0)"
+   },
+   {
+    "name": "extended_master_secret (23)"
+   },
+   {
+    "name": "session_ticket (35)"
+   },
+   {
+    "name": "signature_algorithms (13)",
+    "signature_algorithms": [
+     "rsa_pkcs1_sha512",
+     "ecdsa_secp521r1_sha512",
+     "rsa_pkcs1_sha384",
+     "ecdsa_secp384r1_sha384",
+     "rsa_pkcs1_sha256",
+     "ecdsa_secp256r1_sha256",
+     "0x301",
+     "0x303",
+     "rsa_pkcs1_sha1",
+     "ecdsa_sha1"
+    ]
+   },
+   {
+    "name": "application_layer_protocol_negotiation (16)",
+    "protocols": [
+     "h2",
+     "http/1.1"
+    ]
+   },
+   {
+    "name": "ec_point_formats (11)"
+   },
+   {
+    "name": "supported_groups (10)",
+    "supported_groups": [
+     "P-256"
+    ]
+   }
+  ]
+ },
+ "sni": "a7-okhttp.127-0-0-1.sslip.io",
+ "captured": "ClientHello only, recorded off the wire by a listener the client connected to; the handshake was never answered",
+ "captured_at": "2026-11-23T20:07:01Z",
+ "device": "Android SDK built for x86_64, Android 7.0 (SDK 24), x86_64, WebView unknown",
+ "build_fingerprint": "Android/sdk_google_phone_x86_64/generic_x86_64:7.0/NYC/6696031:userdebug/dev-keys",
+ "via": "direct",
+ "build_label": "a7",
+ "harness": "tools/capture/phone_capture.py + tools/capture/android_phone (max-version 1.2) on an Android 7.0 emulator",
+ "note": "OkHttp 3.12 capped at TLS 1.2 on Android 7.0 (API 24): byte for byte the android_okhttp7 record, t12d1208h2_d34a8e72043a_31a7e1922da8, including the md5/sha1 signature algorithms only that release's BoringSSL offers."
+}

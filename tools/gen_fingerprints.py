@@ -1383,9 +1383,16 @@ PROFILES = [
         "name": "android_okhttp7",
         "library": "conscrypt",
         "family": "okhttp",
-        "client": "OkHttp 4 on Android 7 (tls-client profile)",
+        "client": "OkHttp on Android 7 (confirmed on a device)",
         "version": "7",
         "platform": "android",
+        # Reproduced byte for byte: OkHttp 3.12 capped to TLS 1.2 on an
+        # Android 7.0 (API 24) emulator sent t12d1208h2_d34a8e72043a_
+        # 31a7e1922da8 - the same a, b and c segments and the same md5/sha1
+        # signature algorithms, which only that release's BoringSSL offers
+        # (tools/capture/raw/android_okhttp7_device.json).
+        "fidelity": "exact",
+        "deviations": [],
     },
     {
         "file": "android_okhttp8.json",
