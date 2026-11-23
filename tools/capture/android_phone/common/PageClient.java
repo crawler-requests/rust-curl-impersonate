@@ -24,7 +24,8 @@ final class PageClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         Log.i(Main.TAG, "webview finished " + url);
         view.evaluateJavascript(
-                "(function(){try{var d=JSON.parse(document.body.innerText);"
+                "(function(){try{var t=document.body.innerText||document.body.textContent||"
+                        + "document.documentElement.innerText;var d=JSON.parse(t);"
                         + "document.title='REPORT '+JSON.stringify({ja4:d.tls.ja4,"
                         + "http2:d.http2,http_version:d.http_version});}"
                         + "catch(e){document.title='REPORT ERROR '+e;}})()", null);

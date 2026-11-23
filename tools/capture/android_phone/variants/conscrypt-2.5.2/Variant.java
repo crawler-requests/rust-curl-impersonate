@@ -39,9 +39,18 @@ final class Variant {
             connection.setConnectTimeout(60000);
             connection.setReadTimeout(60000);
             try (InputStream in = connection.getInputStream()) {
+                // The echo path returns tls.peet.ws's own report; keep it so
+                // the server's ja4 and HTTP/2 fingerprint are available for
+                // this build, not just our parser's view.
+                java.io.ByteArrayOutputStream body = new java.io.ByteArrayOutputStream();
                 byte[] buffer = new byte[8192];
-                while (in.read(buffer) > 0) {
-                    // The body is not used; reading keeps the socket up.
+                int read;
+                while ((read = in.read(buffer)) > 0) {
+                    body.write(buffer, 0, read);
+                }
+                String text = body.toString("UTF-8");
+                if (text.length() > 0) {
+                    android.util.Log.i(Main.TAG, "conscrypt body " + text);
                 }
             }
         } finally {
