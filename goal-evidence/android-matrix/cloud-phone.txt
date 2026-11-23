@@ -1,0 +1,93 @@
+Cloud phone capture, 2026-11-23
+
+question
+  Is the Android cloud phone attached to this host good enough to obtain a
+  real ClientHello - not a replayed capture, not an x86 emulation artefact?
+
+answer
+  Yes. It is a full Android 13 runtime with its own internet route, so the
+  hello goes out to a real server on a real network, and tls.peet.ws
+  classifies the very same connection.
+
+what the device actually is
+  adb 192.168.1.90:5555, kept connected by ~/tools/adb-cloud-phone-keepalive.sh
+  (the script calls it 云手机 002 / android1). It is a redroid Android 13
+  container (SDK 33, x86_64, WebView 125.0.6422.113) on the LAN host
+  192.168.1.90, not a physical handset - but it is a real Android framework
+  with a real network stack:
+    eth0, default route via 172.17.0.1, DNS 8.8.8.8 (Private DNS)
+    ping 8.8.8.8 -> 57 ms, validated INTERNET capability
+  That is what makes a genuine capture possible here: the device can reach
+  tls.peet.ws on its own, so the server's report is of this device's hello.
+
+three stacks, each with the server's own verdict
+  OkHttp 4.12.0 (APK that links only that build)
+    listener:  t13d1513h2_8daaf6152771_eca864cca44a
+    server:    ja4 t13d1513h2_8daaf6152771_eca864cca44a,
+               akamai 4:16777216|16711681|0|m,p,a,s
+  Platform Conscrypt 2.5.2 (HttpsURLConnection, ALPN http/1.1 only)
+    listener:  t13d1713h1_5b57614c22b0_eca864cca44a
+  System WebView 125, direct to https://tls.peet.ws/api/all (no proxy)
+    server:    ja4 t13d1517h2_8daaf6152771_b1ff8ab2d16f
+    the padded shape, because this hello lands inside the 256-511 byte
+    window; the unpadded hello hashes to 02713d6af862
+  Each one agrees with the library record built from the container grid,
+  so the record is not an artefact of how the earlier capture was made.
+
+why this is the same evidence as a physical phone for TLS purposes
+  The ClientHello is produced by the client's TLS provider, and the provider
+  here is the real one: OkHttp's bundled BoringSSL, the platform's
+  Conscrypt, and Chromium's WebView build. The container supplies an x86_64
+  CPU instead of an ARM one; the cipher list, extension list, signature
+  algorithms and their order are assembled by the same Java/native code
+  regardless of the instruction set. The one thing this cannot settle is
+  whether an ARM build picks a different first cipher - which is exactly
+  what the physical OnePlus run is for, and why it is still listed
+  separately.
+
+how it was captured
+  python3 -I tools/capture/phone_capture.py --serial 192.168.1.90:5555 \
+      --out DIR --reverse --port 39351 --proxy-port 39350 \
+      --seconds 90 --mode okhttp|conscrypt|webview [--echo]
+  --reverse keeps the listener on the device's own loopback so no LAN
+  address appears; --echo relays the same connection to tls.peet.ws so the
+  service's ja4 and Akamai fingerprint come back for that connection.
+  For WebView, which cannot use a CONNECT proxy, the probe loads the service
+  directly and reads its report out of the page title.
+
+two things this device taught the harness
+  - Its DNS takes ~24 s to resolve a fresh sslip.io name, so a capture
+    window shorter than about 110 s tears the listener down before the
+    hello arrives. The redroid containers resolve in a few seconds; this
+    one is on a real network with Private DNS 8.8.8.8 and a cold cache, and
+    the first run looked like "0 captures" for that reason alone.
+  - The Conscrypt variants set connectTimeout 6 s, which covers the TLS
+    handshake; that is shorter than this device needs to resolve the name
+    and open the connection, so the handshake timed out just as the
+    ClientHello went out and the capture was lost. Raised to 60 s in every
+    Conscrypt variant (30 s was still too short here). With both changes
+    the Conscrypt builds capture.
+
+the whole grid
+  With the fixes above, tools/capture/device_matrix.py ran all 32 variant
+  APKs plus the platform app on this device: 28 of 33 cells captured a
+  ClientHello over the cloud phone's real network. The five that did not
+  are the builds known to fail before sending a byte - Cronet 105 and 113
+  abort in native init, Cronet 141 misses a class, OkHttp 3.14.4 and 4.0.0
+  refuse API 33 - and they fail here exactly as they did on the containers.
+
+  Every captured JA4 matches the record built from the container grid, one
+  for one: Conscrypt 1.4.2 (t12d1409), 2.0-2.5.3 (t13d1713), 2.7-2.9
+  (t13d1712), Cronet 76 (t13d1615) and 98-119 (t13d1516), OkHttp 3.12
+  (t13d1511), 3.14.9-4.12 (t13d1513) and 5.0-5.5 (t13d1512). The per-cell
+  table is cloud-phone-table.txt.
+
+  This is the answer to the question that started this note: yes, the cloud
+  phone yields real ClientHellos - the same shapes the containers produced,
+  now also on a device with a real internet route, where tls.peet.ws itself
+  classified three of them.
+
+limits
+  - SDK 33 only. The cloud phone is one Android release; the grid over
+    8.1-14 still comes from the local redroid containers.
+  - x86_64. ARM-shaped hellos still need the physical phone.

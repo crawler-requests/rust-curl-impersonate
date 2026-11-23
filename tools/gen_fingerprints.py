@@ -685,7 +685,11 @@ PROFILES = [
             "the same extension set and signature algorithms, and its JA4 "
             "differs only by the padding extension the transport adds when "
             "the hello fits the 256-511 byte window "
-            "(t13d1516h2_8daaf6152771_02713d6af862 on the device), "
+            "(t13d1516h2_8daaf6152771_02713d6af862 on the device); "
+            "independently, the Android cloud phone (redroid Android 13, "
+            "real network) loaded https://tls.peet.ws/api/all and the "
+            "service itself reported t13d1517h2_8daaf6152771_b1ff8ab2d16f "
+            "for that connection, the same padded shape; "
             "tools/capture/phone_capture.py, "
             "tools/capture/raw/android_webview125.json"
         ),
@@ -803,7 +807,9 @@ PROFILES = [
             "ClientHello recorded off the wire from HttpsURLConnection on a "
             "OnePlus 9R running Android 13, confirmed by the tls.peet.ws "
             "report for the same connection (t13d1713h1_5b57614c22b0_"
-            "eca864cca44a), tools/capture/phone_capture.py, "
+            "eca864cca44a); the same hello was recorded off the Android "
+            "cloud phone (redroid Android 13, real network, Conscrypt 2.5.2 "
+            "as the provider), tools/capture/phone_capture.py, "
             "tools/capture/raw/android_conscrypt13.json"
         ),
     },
@@ -1315,7 +1321,9 @@ PROFILES = [
         "source": (
             "tls.peet.ws capture of the profile, matched byte for byte by a "
             "real OkHttp 4.12 client on a OnePlus 9R running Android 13 - same "
-            "JA4, same server-side ja4_r, same HTTP/2 fingerprint "
+            "JA4, same server-side ja4_r, same HTTP/2 fingerprint - and again "
+            "on the Android cloud phone (redroid Android 13, real network), "
+            "where tls.peet.ws reported the same ja4 and Akamai fingerprint "
             "(tools/capture/phone_capture.py --echo), "
             "tools/capture/raw/android_okhttp13.json"
         ),

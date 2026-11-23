@@ -1,0 +1,33 @@
+33  conscrypt-1.4.2        t12d1409h1_c866b44c5a26_b39be8c56a14
+33  conscrypt-2.0.0        t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.1.0        t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.2.1        t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.5.2        t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.5.3        t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.7.0        t13d1712h1_5b57614c22b0_40271e0a5736
+33  conscrypt-2.9.0        t13d1712h1_5b57614c22b0_40271e0a5736
+33  cronet-101.4951.41     t13d1516h2_8daaf6152771_e5627efa2ab1, t13d1516h2_8daaf6152771_ef90417dd72d
+33  cronet-102.5005.125    t13d1516h2_8daaf6152771_e5627efa2ab1, t13d1516h2_8daaf6152771_ef90417dd72d
+33  cronet-105.5195.68     (does not run on this device)
+33  cronet-108.5359.79     t13d1516h2_8daaf6152771_e5627efa2ab1, t13d1516h2_8daaf6152771_ef90417dd72d
+33  cronet-113.5672.61     (does not run on this device)
+33  cronet-119.6045.31     t13d1516h2_8daaf6152771_02713d6af862
+33  cronet-141.7340.3      (does not run on this device)
+33  cronet-76.3809.111     t13d1615h2_46e7e9700bed_45f260be83e2
+33  cronet-98.4758.87      t13d1516h2_8daaf6152771_e5627efa2ab1, t13d1516h2_8daaf6152771_ef90417dd72d
+33  okhttp-3.12.0          t13d151100_8daaf6152771_3f5d972527c0
+33  okhttp-3.14.4          (does not run on this device)
+33  okhttp-3.14.9          t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-4.0.0           (does not run on this device)
+33  okhttp-4.10.0          t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-4.11.0          t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-4.12.0          t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-4.7.2           t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-4.9.3           t13d1513h2_8daaf6152771_eca864cca44a
+33  okhttp-5.0.0           t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.1.0           t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.2.2           t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.3.2           t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.4.0           t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.5.1           t13d1512h2_8daaf6152771_3f5d972527c0
+33  platform               t13d1713h1_5b57614c22b0_eca864cca44a
