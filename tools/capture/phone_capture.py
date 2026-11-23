@@ -421,6 +421,7 @@ def main():
     if not args.label:
         raise SystemExit("empty --label")
 
+    base = ""
     if args.reverse and args.host_ip != "-":
         # The phone sees only its own loopback, and adb carries the
         # connection back here. 127-0-0-1.sslip.io resolves to 127.0.0.1 on

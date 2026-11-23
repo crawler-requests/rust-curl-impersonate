@@ -12,9 +12,11 @@ android_okhttp7   t12d1208h2_d34a8e72043a_31a7e1922da8
   every modern OkHttp build. Tried to reproduce it on Android 8.1 by
   disabling OkHttp's TLS extensions: the ciphers matched (d34a8e72043a)
   but the signature list stayed sha256-first and the ALPN and
-  session_ticket extensions went missing instead. redroid publishes no
-  Android 7 image (its oldest is 8.1), so this record stays a tls.peet.ws
-  capture and is the one Android record no device here can reproduce.
+  session_ticket extensions went missing instead. Its signature list also
+  carries 0x0301 and 0x0303 (md5 and sha1 signatures), which no current
+  TLS stack will offer, so the shape comes from Android 7's own BoringSSL
+  and cannot be produced by any build that runs here. redroid publishes
+  no Android 7 image (its oldest is 8.1).
 
 android_okhttp8   t12d1209h2_d34a8e72043a_e08eabe7240f   NOW CONFIRMED
   Reproduced byte for byte: OkHttp 3.12 capped to TLS 1.2 on an Android 8.1
