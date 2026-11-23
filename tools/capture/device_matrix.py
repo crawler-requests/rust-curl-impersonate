@@ -72,7 +72,10 @@ def main():
     parser.add_argument("--serial", default=os.environ.get("ANDROID_SERIAL"))
     parser.add_argument("--apk-dir", default=os.path.join(PHONE, "out"))
     parser.add_argument("--variants", default="")
-    parser.add_argument("--seconds", type=int, default=25)
+    # The device resolves the sslip.io name before connecting, and on a
+    # cold DNS cache that takes 20-30 seconds; a shorter window captures
+    # nothing and looks like a hang.
+    parser.add_argument("--seconds", type=int, default=75)
     parser.add_argument("--port", type=int, default=39280)
     parser.add_argument("--echo", action="store_true")
     args = parser.parse_args()
