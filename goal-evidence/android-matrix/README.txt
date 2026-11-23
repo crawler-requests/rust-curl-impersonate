@@ -1,5 +1,23 @@
 Android capture matrix, 2026-11-23
 
+STATE OF THE PHONE RUN (last checked 2026-11-23 13:50 CST)
+  The OnePlus 9R is attached to another Mac reached over WireGuard
+  (10.9.0.2). That link has not handshaked in over eight hours: ping and ssh
+  both time out, and the Mac's frpc is off the relay at 43.228.79.80:7001,
+  so it is not merely the phone that is unreachable. Nothing about the phone
+  can be captured from here until it is back.
+
+  Ready for the moment it is: 32 arm64 library APKs plus the platform app,
+  built and bundled at /tmp/probe-arm64.tgz (49 MB), and
+  goal-evidence/android-matrix/phone-run.md holds the exact sequence -
+  restore the key, push, run device_matrix.py --echo, convert, regenerate,
+  audit, test.
+
+  What the phone run adds over this grid: the ARM shape of every library
+  (the container grid is x86_64), Android 7 (no image boots here), and
+  WebView 103 as a live build with its HTTP/2 fingerprint.
+
+
 question
   "Are the library's Android records right on every Android release, for
   every library version a real client uses?" Until this pass that was
