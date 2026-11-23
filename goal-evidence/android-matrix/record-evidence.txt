@@ -43,12 +43,18 @@ composed from verified parts
                              adding extension 18 gives c = 43ade6aba3df,
                              exactly this record
 
+byte-exact on a real Android 7 runtime
+  android_okhttp7            OkHttp 3.12 @ TLS 1.2 on an Android 7.0 emulator
+                             sent exactly this record, md5/sha1 signature
+                             algorithms included
+
 unreproduced here
-  android_okhttp7            Android 7's OkHttp generation: sha512-first
-                             signature list, no status_request. redroid's
-                             oldest image is 8.1; attempting it on 8.1 with
-                             OkHttp's TLS extensions off matched the ciphers
-                             but not the signature order.
+  android_confirmed2         OkHttp hello + padding; OkHttp caps a host at
+                             63 characters, keeping the hello under the
+                             256-byte padding threshold
+  android_zalando            OkHttp hello + SCT; the SCT request needs a
+                             Conscrypt SSL_CTX setting the Java API does
+                             not expose
 
 So of 27 records: 25 have a device hello behind them (byte-exact or
 byte-exact after a one-digit a-segment fix), 2 are arithmetic on verified

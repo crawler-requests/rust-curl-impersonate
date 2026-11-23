@@ -34,18 +34,26 @@ an Android-version difference worth naming
 Confirmed this pass, so the list is now two:
 
 android_confirmed2  t12d1210h2_d34a8e72043a_f88f2b2eb673
-  A "Confirmed" app profile captured once by tls.peet.ws. The app is not
-  distributable, so it cannot be re-run. Nothing about its hello was ever
-  reproduced on a device.
+  The same OkHttp hello as android_confirmed plus a padding extension -
+  peet records its length as 0, an anomaly it shares with no other record
+  in the corpus, and every other padded Android hello carries a real
+  length. It means the bytes fell in the 256-511 window, where BoringSSL
+  pads. It cannot be produced here: OkHttp rejects any host longer than 63
+  characters, which caps the hello near 250 bytes - short of that window -
+  so no OkHttp build on hand can send it. The unpadded hello itself is
+  byte-for-byte confirmed on Android 9
+  (android_okhttp9_device.json).
 
 android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
   User agent okhttp/4.12.0. Against android_okhttp13 the only TLS
   difference is a signed_certificate_timestamp extension, and its HTTP/2
   settings differ (1:4096;3:4294967295;4:16777216;5:16384;...), so the
-  app asked OkHttp for larger windows and for SCT. Neither is a
-  library default - the platform stack on Android 13 sends no SCT, and the
-  probe's OkHttp 4.12 does not either - so reproducing it needs that
-  configuration, not just that build.
+  app asked OkHttp for larger windows and for SCT. Tried on an Android 10
+  emulator with --include-sct: the flag reaches the socket, but neither
+  OkHttp's own TLS path nor the platform stack emits the extension, because
+  the SCT request needs a Conscrypt SSL_CTX-level setting that the Java API
+  does not expose. Everything else in the record matches the verified
+  android_okhttp13 hello.
 
 What is verified instead, and how
   21 base records match a c hash a real device produced. WebView 125's
