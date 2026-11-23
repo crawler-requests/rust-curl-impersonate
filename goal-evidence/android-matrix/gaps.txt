@@ -63,6 +63,10 @@ android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
   constructor and not retained afterwards, so no reflective route reaches
   the object that carries setCTVerificationEnabled.
 
+  getSSLParameters() does not help either: on Android 10 it returns a
+  plain javax.net.ssl.SSLParameters with none of Conscrypt's fields, so the
+  SSLParametersImpl is not reachable from outside the socket at all.
+
   With the bundled Conscrypt installed the failure moves one step on: OkHttp
   4.12's Android10Platform refuses a bundled-Conscrypt socket in
   ConscryptSocketAdapter. Either path stops before a hello.
