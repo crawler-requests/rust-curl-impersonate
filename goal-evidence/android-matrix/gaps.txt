@@ -31,18 +31,13 @@ an Android-version difference worth naming
   a true Android 13 observation. The Android 8.1 capture is the one that
   confirms android_okhttp8.
 
-Confirmed this pass, so the list is now two:
+Confirmed this pass, so the list is now one:
 
-android_confirmed2  t12d1210h2_d34a8e72043a_f88f2b2eb673
-  The same OkHttp hello as android_confirmed plus a padding extension -
-  peet records its length as 0, an anomaly it shares with no other record
-  in the corpus, and every other padded Android hello carries a real
-  length. It means the bytes fell in the 256-511 window, where BoringSSL
-  pads. It cannot be produced here: OkHttp rejects any host longer than 63
-  characters, which caps the hello near 250 bytes - short of that window -
-  so no OkHttp build on hand can send it. The unpadded hello itself is
-  byte-for-byte confirmed on Android 9
-  (android_okhttp9_device.json).
+android_confirmed2  t12d1210h2_d34a8e72043a_f88f2b2eb673  NOW CONFIRMED
+  The 63-character limit is per DNS label, not per hostname. A 151-character
+  multi-label name on Android 9 pushed the OkHttp hello past 256 bytes,
+  BoringSSL padded it, and the JA4 was byte-identical
+  (tools/capture/raw/android_confirmed2_device.json).
 
 android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
   User agent okhttp/4.12.0. Against android_okhttp13 the only TLS

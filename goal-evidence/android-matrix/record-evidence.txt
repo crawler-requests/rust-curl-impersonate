@@ -48,13 +48,14 @@ byte-exact on a real Android 7 runtime
                              sent exactly this record, md5/sha1 signature
                              algorithms included
 
+byte-exact past the padding threshold
+  android_confirmed2         OkHttp 4.12 on Android 9 with a 151-character
+                             multi-label hostname; BoringSSL padded the
+                             hello and the JA4 matches exactly
+
 unreproduced here
-  android_confirmed2         OkHttp hello + padding; OkHttp caps a host at
-                             63 characters, keeping the hello under the
-                             256-byte padding threshold
-  android_zalando            OkHttp hello + SCT; the SCT request needs a
-                             Conscrypt SSL_CTX setting the Java API does
-                             not expose
+  android_zalando            OkHttp hello + SCT; no Android Java API can
+                             request a signed_certificate_timestamp
 
 So of 27 records: 25 have a device hello behind them (byte-exact or
 byte-exact after a one-digit a-segment fix), 2 are arithmetic on verified
