@@ -92,6 +92,62 @@ final class CappedSocketFactory extends SSLSocketFactory {
         };
     }
 
+    /**
+     * Turns on Conscrypt's certificate-transparency verification, the private
+     * switch behind SSL_enable_signed_cert_timestamps - which makes the
+     * client send a signed_certificate_timestamp extension. Both the
+     * platform build (com.android.org.conscrypt) and the bundled one
+     * (org.conscrypt) keep the parameters in a private field of the engine
+     * socket, so the object is found by walking the superclass chain.
+     */
+    private static void setCtVerification(javax.net.ssl.SSLSocket ssl) {
+        try {
+            // The parameters object is held in a field called `impl`, whose
+            // type is SSLParametersImpl; the name alone is not enough, since
+            // other classes have an `impl` of a different type.
+            java.lang.reflect.Field field = null;
+            for (Class<?> type = ssl.getClass(); type != null;
+                    type = type.getSuperclass()) {
+                for (java.lang.reflect.Field f : type.getDeclaredFields()) {
+                    // The engine socket keeps its parameters in a field
+                    // whose type is SSLParametersImpl; on the platform the
+                    // class hierarchy is the same, so both builds match.
+                    // SocksSocketImpl is java.net.Socket's own impl field,
+                    // not the TLS parameters; skip anything java.net.
+                    String typeName = f.getType().getName();
+                    if (typeName.endsWith("SSLParametersImpl")) {
+                        field = f;
+                        break;
+                    }
+                }
+
+                if (field != null) {
+                    break;
+                }
+            }
+            if (field == null) {
+                StringBuilder names = new StringBuilder();
+                for (Class<?> t = ssl.getClass(); t != null; t = t.getSuperclass()) {
+                    names.append(t.getSimpleName()).append(':');
+                    for (java.lang.reflect.Field f : t.getDeclaredFields()) {
+                        names.append(f.getName()).append(' ');
+                    }
+                    names.append("|");
+                }
+                throw new NoSuchFieldException(names.toString());
+            }
+            field.setAccessible(true);
+            Object parameters = field.get(ssl);
+            parameters.getClass()
+                    .getMethod("setCTVerificationEnabled", boolean.class)
+                    .invoke(parameters, true);
+            android.util.Log.i("PhoneCap", "ct enabled on "
+                    + parameters.getClass().getName());
+        } catch (Throwable unavailable) {
+            android.util.Log.i("PhoneCap", "ct unavailable: " + unavailable);
+        }
+    }
+
     /** Ask for a signed_certificate_timestamp extension, as an app can. */
     static boolean includeSct = false;
 
@@ -114,33 +170,7 @@ final class CappedSocketFactory extends SSLSocketFactory {
                     android.util.Log.i("PhoneCap", "sct request failed: "
                             + absentOnThisRelease);
                 }
-                // Conscrypt's internal switch: with CT verification on it
-                // sends SSL_enable_signed_cert_timestamps, which is what
-                // puts extension 18 in the hello.
-                try {
-                    // The field lives on the superclass (ConscryptEngineSocket),
-                    // not on the concrete Java8EngineSocket subclass.
-                    java.lang.reflect.Field f = null;
-                    for (Class<?> c = ssl.getClass(); c != null; c = c.getSuperclass()) {
-                        try {
-                            f = c.getDeclaredField("sslParameters");
-                            break;
-                        } catch (NoSuchFieldException next) {
-                            // Look further up.
-                        }
-                    }
-                    if (f == null) {
-                        throw new NoSuchFieldException("sslParameters");
-                    }
-                    f.setAccessible(true);
-                    Object impl = f.get(ssl);
-                    Class<?> implClass = impl.getClass();
-                    implClass.getMethod("setCTVerificationEnabled", boolean.class)
-                            .invoke(impl, true);
-                    android.util.Log.i("PhoneCap", "ct enabled");
-                } catch (Throwable notConscrypt) {
-                    android.util.Log.i("PhoneCap", "ct unavailable: " + notConscrypt);
-                }
+                setCtVerification(ssl);
             }
         }
         return socket;

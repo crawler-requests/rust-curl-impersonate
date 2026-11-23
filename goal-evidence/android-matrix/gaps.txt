@@ -45,16 +45,22 @@ android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
   settings differ (1:4096;3:4294967295;4:16777216;5:16384;...), so the
   app asked OkHttp for larger windows and for SCT.
 
-  What the SCT request needs was located this pass: Conscrypt's
+  What the SCT request needs was located: Conscrypt's
   libconscrypt_jni.so exports SSL_CTX_enable_signed_cert_timestamps and
   SSL_enable_signed_cert_timestamps, and NativeSsl calls the latter when
   SSLParametersImpl.isCTVerificationEnabled(host) is true, with
-  SSLParametersImpl.setCTVerificationEnabled(...) as the switch. It is an
-  internal class, so the probe must reach the SSLParametersImpl an engine
-  socket holds - and that is where it stops: the socket OkHttp gets is a
-  Java8EngineSocket that neither declares the field nor inherits it, so the
-  reflective route did not reach the object on Android 10. That is a probe
-  limitation, not an absence of the capability.
+  SSLParametersImpl.setCTVerificationEnabled(...) as the switch. Android
+  10's platform Conscrypt (com.android.org.conscrypt) carries the same
+  method.
+
+  The probe reached that class and stopped there: the socket handed over
+  is a Java8FileDescriptorSocket, and the nearest field of the right kind
+  resolved to java.net.Socket's SocksSocketImpl, so the switch was invoked
+  on the wrong object. Installing the bundled Conscrypt moved the failure
+  one step on - OkHttp 4.12's Android10Platform refuses a bundled-Conscrypt
+  socket in ConscryptSocketAdapter - and either way the request never
+  reached a hello. That is a probe limitation at a specific step, not the
+  absence of the capability.
 
   Everything else in the record matches the verified android_okhttp13
   hello.
