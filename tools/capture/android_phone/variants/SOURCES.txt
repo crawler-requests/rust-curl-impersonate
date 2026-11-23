@@ -44,3 +44,9 @@ cronet-101.4951.41 / cronet-119.6045.31
   engine fails with NoClassDefFoundError on NativeCronetEngineBuilderImpl
   before a hello is sent. The dex is built with d8 --debug, because Cronet
   looks its providers up by class name and shrinking renames them.
+
+cronet-76.3809.111 / 98.4758.87 / 105.5195.68 / 113.5672.61 / 141.7340.3
+  Same coordinates as above with each version. 76 and 98 run and were
+  captured; 105 and 113 abort in CronetLibraryLoader on Android 13; 141
+  needs a newer org.chromium.base than the embedded AAR ships. 141 also
+  needs build-tools 34 (d8 2.1.7 fails on it); BUILD_TOOLS=... selects it.

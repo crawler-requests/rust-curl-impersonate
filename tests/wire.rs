@@ -852,6 +852,7 @@ async fn android_records_reproduce_the_phone_captures() {
         ("android_okhttp3_14_9", ("8daaf6152771", "eca864cca44a")),
         ("android_okhttp5", ("8daaf6152771", "3f5d972527c0")),
         ("android_cronet101", ("8daaf6152771", "e5627efa2ab1")),
+        ("android_cronet76", ("46e7e9700bed", "45f260be83e2")),
         ("android_webview139", ("8daaf6152771", "d8a2da3f94cd")),
     ] {
         let hello = read_client_hello(&client(name)).await;

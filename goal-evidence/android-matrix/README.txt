@@ -116,3 +116,24 @@ what is not device-confirmed, and why
 the raw table
   table.txt has one line per (release, variant) with the JA4 the listener
   computed, so the grid itself is in the repository, not just in this note.
+
+cronet versions beyond the first pair
+  Five more Cronet builds were tried. The result is the boundary, not a
+  list of failures:
+    Cronet 76.0.3809.111   runs; t13d1615h2_46e7e9700bed_45f260be83e2,
+                           no ALPS extension, a 16th cipher. Added as
+                           android_cronet76. This is where Cronet's TLS
+                           shape changes.
+    Cronet 98.0.4758.87    runs; identical to 101/119 (t13d1516).
+    Cronet 101, 119, 143   run; t13d1516.
+    Cronet 105.0.5195.68   the native library aborts during
+                           CronetLibraryLoader init on this Android 13
+                           build - no hello is ever sent.
+    Cronet 113.0.5672.61   same abort.
+    Cronet 141.0.7340.3    refuses to start: NoClassDefFoundError on
+                           org.chromium.base.metrics.ScopedSysTraceEvent
+                           (its jar expects a newer base library than the
+                           one the embedded AAR ships).
+  So 66-98 share one shape, 98-143 share another, and two builds in
+  between cannot run here at all. That is the honest coverage of the
+  library, not a pretence that every patch level was tested.

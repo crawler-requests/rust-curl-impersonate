@@ -710,6 +710,27 @@ PROFILES = [
         ),
     },
     {
+        # Cronet 76 predates the ALPS extension and offers a 16th cipher, so
+        # its a-segment is t13d1615, not the t13d1516 that 98 through 143
+        # send. Captured on a redroid Android 13 device; the listener's
+        # hello is the evidence, because this build's CONNECT proxy support
+        # is too unreliable to reach tls.peet.ws through the relay.
+        "file": "android_cronet76.json",
+        "name": "android_cronet76",
+        "library": "cronet",
+        "family": "android",
+        "client": "Cronet 76.0.3809.111 (embedded)",
+        "version": "76.0.3809.111",
+        "platform": "android",
+        "permute_extensions": True,
+        "source": (
+            "ClientHello recorded off the wire from an APK that links "
+            "cronet-embedded 76.0.3809.111, on a redroid Android 13 "
+            "device (x86_64), tools/capture/phone_capture.py, "
+            "tools/capture/raw/android_cronet76.json"
+        ),
+    },
+    {
         # Cronet 101 and 119, linked as the only network stack in a probe
         # APK: the two Chromium versions send the same 16 ciphers and 16
         # extensions as WebView 125/139, with the padding extension.

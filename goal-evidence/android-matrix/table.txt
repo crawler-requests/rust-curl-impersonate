@@ -80,3 +80,8 @@ Columns: Android SDK, variant, JA4 b/c from the listener.
 34  okhttp-4.9.3         t13d1513h2_8daaf6152771_eca864cca44a
 34  okhttp-5.0.0         t13d1512h2_8daaf6152771_3f5d972527c0
 34  platform             t13d1516h2_8daaf6152771_02713d6af862
+33  cronet-76.3809.111    t13d1615h2_46e7e9700bed_45f260be83e2
+33  cronet-98.4758.87     t13d1516h2_8daaf6152771_e5627efa2ab1
+33  cronet-105.5195.68    (native library aborts before any hello)
+33  cronet-113.5672.61    (native library aborts before any hello)
+33  cronet-141.7340.3     (NoClassDefFoundError before any hello)

@@ -41,7 +41,7 @@ final class Variant {
         UrlRequest request = engine.newUrlRequestBuilder(url, callback, executor)
                 .build();
         request.start();
-        DONE.await(25, TimeUnit.SECONDS);
+        DONE.await(45, TimeUnit.SECONDS);
         // The echo path returns tls.peet.ws's report; it is only useful if
         // it reaches the log.
         if (BODY.length() > 0) {

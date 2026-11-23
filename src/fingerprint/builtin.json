@@ -5013,6 +5013,55 @@
       }
     },
     {
+      "name": "android_cronet76",
+      "family": "android",
+      "client": "Cronet 76.0.3809.111 (embedded)",
+      "version": "76.0.3809.111",
+      "platform": "android",
+      "library": "cronet",
+      "source": "ClientHello recorded off the wire from an APK that links cronet-embedded 76.0.3809.111, on a redroid Android 13 device (x86_64), tools/capture/phone_capture.py, tools/capture/raw/android_cronet76.json",
+      "fidelity": "close",
+      "deviations": [
+        "The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+      ],
+      "tls": {
+        "ciphers": "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384:TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA:TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_AES_128_GCM_SHA256:TLS_RSA_WITH_AES_256_GCM_SHA384:TLS_RSA_WITH_AES_128_CBC_SHA:TLS_RSA_WITH_AES_256_CBC_SHA:TLS_RSA_WITH_3DES_EDE_CBC_SHA",
+        "curves": "X25519:P-256:P-384",
+        "sigalgs": "ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512:rsa_pkcs1_sha1",
+        "extension_order": "0-23-65281-10-11-35-16-5-13-18-51-45-43-27",
+        "key_shares": "X25519",
+        "grease": true,
+        "permute_extensions": true,
+        "session_ticket": true,
+        "ocsp_stapling": true,
+        "signed_cert_timestamps": true,
+        "ech_grease": false,
+        "alps": false,
+        "new_alps_codepoint": false,
+        "renegotiation": true,
+        "psk_dhe_ke": true,
+        "preserve_tls13_cipher_list": true,
+        "cert_compression": "brotli",
+        "sigalg_codes": [
+          1027,
+          2052,
+          1025,
+          1283,
+          2053,
+          1281,
+          2054,
+          1537,
+          513
+        ],
+        "alpn": [
+          "h2",
+          "http/1.1"
+        ]
+      },
+      "headers": [],
+      "http1_only": true
+    },
+    {
       "name": "android_cronet101",
       "family": "android",
       "client": "Cronet 101.0.4951.41 (embedded)",
