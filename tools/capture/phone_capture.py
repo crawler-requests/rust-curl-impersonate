@@ -186,7 +186,16 @@ class DirectListener(threading.Thread):
         self.recorder = recorder
         self.sock = socket.socket()
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.bind(("0.0.0.0", port))
+        # A previous run's socket can still be closing when the next cell
+        # starts; retry briefly instead of failing the whole capture.
+        for attempt in range(20):
+            try:
+                self.sock.bind(("0.0.0.0", port))
+                break
+            except OSError:
+                if attempt == 19:
+                    raise
+                time.sleep(0.5)
         self.sock.listen(32)
         self.sock.settimeout(1.0)
         self.stopping = False
@@ -232,7 +241,16 @@ class ConnectProxy(threading.Thread):
         self.recorder = recorder
         self.sock = socket.socket()
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.bind(("0.0.0.0", port))
+        # A previous run's socket can still be closing when the next cell
+        # starts; retry briefly instead of failing the whole capture.
+        for attempt in range(20):
+            try:
+                self.sock.bind(("0.0.0.0", port))
+                break
+            except OSError:
+                if attempt == 19:
+                    raise
+                time.sleep(0.5)
         self.sock.listen(16)
         self.sock.settimeout(1.0)
         self.stopping = False

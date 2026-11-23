@@ -33,8 +33,11 @@ final class Variant {
             URLConnection connection = proxy == null
                     ? new URL(url).openConnection()
                     : new URL(url).openConnection(proxy);
-            connection.setConnectTimeout(6000);
-            connection.setReadTimeout(6000);
+            // The listener never answers, so the handshake always ends in a
+            // timeout; 6 s is too short when the device's DNS is slow and
+            // the ClientHello would still be in flight.
+            connection.setConnectTimeout(60000);
+            connection.setReadTimeout(60000);
             try (InputStream in = connection.getInputStream()) {
                 byte[] buffer = new byte[8192];
                 while (in.read(buffer) > 0) {

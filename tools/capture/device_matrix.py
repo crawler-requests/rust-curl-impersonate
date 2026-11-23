@@ -103,19 +103,27 @@ def main():
     for variant in apks:
         apk = os.path.join(PHONE, "app.apk") if variant == "platform" \
             else os.path.join(args.apk_dir, variant + ".apk")
-        label = "%s-%s" % (variant, facts["sdk"])
-        outdir = os.path.join(args.out, label)
+        # The SNI is part of the hello: a long label pushes the ClientHello
+        # past the 511-byte padding window and the capture gets flaky on
+        # some devices, so the wire name stays short. The directory keeps
+        # the full name, and matrix.json maps one to the other.
+        label = "v%02d" % apks.index(variant)
+        outdir = os.path.join(args.out, "%s-%s" % (variant, facts["sdk"]))
         if os.path.exists(outdir):
             shutil.rmtree(outdir)
         print("\n== %s" % variant, flush=True)
 
         install = adb(serial, "install", "-r", "-t", apk)
-        if install.returncode != 0:
+        if install.returncode != 0 or "Success" not in install.stdout:
             why = (install.stdout + install.stderr).strip().splitlines()[-1:]
             results.append({"variant": variant, "device": facts,
                             "captures": [], "error": " ".join(why)})
             print("  install failed: %s" % why, flush=True)
             continue
+        # A stale install of another ABI reports Success and then cannot
+        # load its native library, which looks like "0 captures" later.
+        updated = adb(serial, "shell", "dumpsys", "package", "io.capture.phone")
+        print("  installed %s" % apk.rsplit("/", 1)[-1], flush=True)
 
         command = [sys.executable, "-I", CAPTURE, "--serial", serial,
                    "--out", outdir, "--reverse", "--port", str(args.port),
@@ -126,8 +134,8 @@ def main():
             command.append("--echo")
         proc = subprocess.run(command, capture_output=True, text=True,
                               timeout=args.seconds + 240)
-        entry = {"variant": variant, "device": facts, "captures": [],
-                 "error": ""}
+        entry = {"variant": variant, "label": label, "device": facts,
+                 "captures": [], "error": ""}
         for item in sorted(glob.glob(os.path.join(outdir, "*.json"))):
             document = json.load(open(item))
             entry["captures"].append({"sni": document.get("sni"),
@@ -142,6 +150,8 @@ def main():
         results.append(entry)
         print("  %d captures %s" % (len(entry["captures"]),
                                     entry.get("failures") or ""), flush=True)
+        # Let the previous cell's listener and reverse forward go away.
+        time.sleep(2)
 
     with open(os.path.join(args.out, "matrix.json"), "w") as handle:
         json.dump(results, handle, indent=1)
