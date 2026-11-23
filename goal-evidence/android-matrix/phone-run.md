@@ -25,22 +25,29 @@ Reach it:
 
   $SSH '/opt/homebrew/bin/adb devices -l'    # 9b3d516a must say `device`
 
-Build the arm64 APKs. The Mac has a JDK 17 and an Android SDK at
-~/tools/android-sdk; d8/aapt output does not depend on the host's
-architecture, so this can equally be built here and pushed:
+Build the arm64 APKs - or use the ready-made bundle at
+/tmp/probe-arm64.tgz (33 APKs: the platform app plus 32 variants, 49 MB).
+The Mac has a JDK 17 and an Android SDK at ~/tools/android-sdk; d8/aapt
+output does not depend on the host's architecture, so it can be built here
+and pushed. To rebuild:
 
   cd tools/capture/android_phone
   ABI=arm64-v8a ./build.sh                    # app.apk, platform only
   for v in variants/*/; do
       ABI=arm64-v8a ./build.sh --variant "$(basename "$v")"
   done
+  # cronet-141.7340.3 needs build-tools 34 (d8 2.1.7 fails on it):
+  BUILD_TOOLS=~/Android/Sdk/build-tools/34.0.0 ABI=arm64-v8a \
+      ./build.sh --variant cronet-141.7340.3
 
 Run the grid on the phone. device_matrix.py installs each variant in turn
 and reads the hello off the wire; it needs only adb on the same machine as
 the listener. Push the bundle and run it there (the device's sslip.io name
 resolves to its own loopback through adb reverse):
 
+  # /tmp/probe-arm64.tgz is already that bundle; or:
   tar czf probe.tgz -C tools/capture/android_phone \
+      --exclude='variants/*/lib' --exclude='variants/*/jni' \
       AndroidManifest.xml build.sh common variant variants app.apk out
   scp -i /tmp/.k1 probe.tgz phone_capture.py firefox_hello.py \
       device_matrix.py CC11001100@10.9.0.2:/tmp/probe/
