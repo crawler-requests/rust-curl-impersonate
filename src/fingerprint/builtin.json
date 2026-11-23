@@ -17147,6 +17147,33 @@
       "fidelity": "exact"
     },
     {
+      "name": "cronet_98_android",
+      "family": "cronet",
+      "client": "Cronet 98.0.4758.87 on Android (captured on SDK 33)",
+      "platform": "android",
+      "source": "alias of android_cronet101",
+      "extends": "android_cronet101",
+      "fidelity": "exact"
+    },
+    {
+      "name": "cronet_102_android",
+      "family": "cronet",
+      "client": "Cronet 102.5005.125 on Android (captured on SDK 33)",
+      "platform": "android",
+      "source": "alias of android_cronet101",
+      "extends": "android_cronet101",
+      "fidelity": "exact"
+    },
+    {
+      "name": "cronet_108_android",
+      "family": "cronet",
+      "client": "Cronet 108.5359.79 on Android (captured on SDK 33)",
+      "platform": "android",
+      "source": "alias of android_cronet101",
+      "extends": "android_cronet101",
+      "fidelity": "exact"
+    },
+    {
       "name": "okhttp_5_1_0_android",
       "family": "okhttp",
       "client": "OkHttp 5.1.0 on Android (captured on SDK 33)",

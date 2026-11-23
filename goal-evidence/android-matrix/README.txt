@@ -125,6 +125,8 @@ cronet versions beyond the first pair
                            android_cronet76. This is where Cronet's TLS
                            shape changes.
     Cronet 98.0.4758.87    runs; identical to 101/119 (t13d1516).
+    Cronet 102, 108        run; identical too, so 98 through 143 really is
+                           one shape and the boundary is 76 on one side and 105 on the other.
     Cronet 101, 119, 143   run; t13d1516.
     Cronet 105.0.5195.68   the native library aborts during
                            CronetLibraryLoader init on this Android 13

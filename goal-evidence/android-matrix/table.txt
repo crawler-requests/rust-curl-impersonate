@@ -101,3 +101,5 @@ Columns: Android SDK, variant, JA4 b/c from the listener.
 33  okhttp-5.3.2         t13d1512h2_8daaf6152771_3f5d972527c0
 33  okhttp-5.4.0         t13d1512h2_8daaf6152771_3f5d972527c0
 33  okhttp-5.5.1         t13d1512h2_8daaf6152771_3f5d972527c0
+33  cronet-102.5005.125 t13d1516h2_8daaf6152771_e5627efa2ab1
+33  cronet-108.5359.79 t13d1516h2_8daaf6152771_e5627efa2ab1
