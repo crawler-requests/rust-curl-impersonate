@@ -96,3 +96,8 @@ Columns: Android SDK, variant, JA4 b/c from the listener.
 33  conscrypt-2.5.3     t13d1713h1_5b57614c22b0_eca864cca44a
 33  conscrypt-2.7.0     t13d1712h1_5b57614c22b0_40271e0a5736
 33  conscrypt-2.9.0     t13d1712h1_5b57614c22b0_40271e0a5736
+33  okhttp-5.1.0         t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.2.2         t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.3.2         t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.4.0         t13d1512h2_8daaf6152771_3f5d972527c0
+33  okhttp-5.5.1         t13d1512h2_8daaf6152771_3f5d972527c0

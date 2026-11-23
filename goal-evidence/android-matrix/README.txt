@@ -170,3 +170,9 @@ conscrypt versions
   supported_versions was read from the record-version byte (769, the legacy
   1.0 value) and capped at 1.0 instead of 1.2. Only Android records with a
   TLS 1.2 capture were affected, and they now say 1.2.
+
+okhttp 5.x beyond 5.0.0
+  5.1.0, 5.2.2, 5.3.2, 5.4.0 and 5.5.1 all send the same hello as 5.0.0 -
+  t13d1512, 12 extensions - so nothing inside 5.x moves the shape; the
+  change is 4 to 5 (session_ticket goes). They name the base record through
+  aliases rather than becoming five identical records.
