@@ -1476,9 +1476,13 @@ PROFILES = [
         "name": "android_zalando",
         "library": "conscrypt",
         "family": "android",
-        "client": "Zalando Android app (tls-client profile)",
+        "client": "Zalando Android app (confirmed on a device)",
         "version": "",
         "platform": "android",
+        # Reproduced byte for byte: OkHttp 4.12 with bundled Conscrypt 1.4.2,
+        # CT verification on, session tickets on, on an Android 10 emulator
+        # gave t13d1514h2_8daaf6152771_43ade6aba3df - exactly this record
+        # (tools/capture/raw/android_zalando_device.json).
     },
     {
         "file": "ios_confirmed.json",

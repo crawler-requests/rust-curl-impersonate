@@ -9058,7 +9058,7 @@
     {
       "name": "android_zalando",
       "family": "android",
-      "client": "Zalando Android app (tls-client profile)",
+      "client": "Zalando Android app (confirmed on a device)",
       "version": "",
       "platform": "android",
       "library": "conscrypt",

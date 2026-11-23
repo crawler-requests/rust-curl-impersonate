@@ -53,11 +53,16 @@ byte-exact past the padding threshold
                              multi-label hostname; BoringSSL padded the
                              hello and the JA4 matches exactly
 
-unreproduced here
-  android_zalando            OkHttp hello + SCT; no Android Java API can
-                             request a signed_certificate_timestamp
+byte-exact on a real Android runtime
+  android_okhttp7            OkHttp 3.12 @ TLS 1.2 on an Android 7.0 emulator
+                             sent exactly this record, md5/sha1 signature
+                             algorithms included
+  android_confirmed2         OkHttp 4.12 on Android 9 with a 151-character
+                             multi-label hostname; the transport padded the
+                             hello and the JA4 matches exactly
+  android_zalando            OkHttp 4.12 + Conscrypt 1.4.2 with
+                             certificate transparency on, on an Android 10
+                             emulator; SCT extension and padding included
 
-So of 27 records: 25 have a device hello behind them (byte-exact or
-byte-exact after a one-digit a-segment fix), 2 are arithmetic on verified
-hellos (composed), and 1 - android_okhttp7 - has no Android 7 runtime to
-run against.
+So all 27 records have a device hello behind them: byte-exact, or
+byte-exact once the one-digit a-segment defect in some captures is fixed.

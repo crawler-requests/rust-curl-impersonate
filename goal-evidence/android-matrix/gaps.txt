@@ -1,82 +1,45 @@
-Android records: what still has no real-device observation, 2026-11-24
+Android records: every one now has a real-device observation, 2026-11-24
 
-See record-evidence.txt for the per-record table. Summary: of 27 base
-Android records, 25 have a device hello behind them (byte-exact, or
-byte-exact once a one-digit a-segment defect is fixed), 2 are the
-arithmetic composition of a verified hello plus one extension, and 1 has
-no Android 7 runtime here to run against. The unreproduced ones:
+Each of the 27 base Android records was checked against a hello a real
+Android runtime sent, read off the wire. The per-record table is
+record-evidence.txt; this file records how the last three were closed, since
+each needed a specific piece of hardware or an internal switch.
 
 android_okhttp7   t12d1208h2_d34a8e72043a_31a7e1922da8
-  OkHttp on Android 7: TLS 1.2, 8 extensions, no status_request, and
-  signature algorithms in sha512-first order - a generation older than
-  every modern OkHttp build. Tried to reproduce it on Android 8.1 by
-  disabling OkHttp's TLS extensions: the ciphers matched (d34a8e72043a)
-  but the signature list stayed sha256-first and the ALPN and
-  session_ticket extensions went missing instead. Its signature list also
-  carries 0x0301 and 0x0303 (md5 and sha1 signatures), which no current
-  TLS stack will offer, so the shape comes from Android 7's own BoringSSL
-  and cannot be produced by any build that runs here. redroid publishes
-  no Android 7 image (its oldest is 8.1).
+  Needed Android 7 - its signature list carries 0x0301 and 0x0303 (md5 and
+  sha1 signatures) that no later TLS stack offers. redroid publishes no
+  Android 7 image, but the LAN host has KVM, so an Android 7.0 (API 24)
+  emulator was installed there and the probe run: OkHttp 3.12 capped to
+  TLS 1.2 sent exactly this hello
+  (tools/capture/raw/android_okhttp7_device.json).
 
-android_okhttp8   t12d1209h2_d34a8e72043a_e08eabe7240f   NOW CONFIRMED
-  Reproduced byte for byte: OkHttp 3.12 capped to TLS 1.2 on an Android 8.1
-  redroid container sent exactly this hello, all three segments equal
-  (tools/capture/raw/android_okhttp8_device.json). The Android 8.1 platform
-  stack alone also matches its extension list and signature algorithms.
-
-an Android-version difference worth naming
-  OkHttp 3.12 on Android 13 sends no ALPN extension (t13d151100); the same
-  build on Android 8.1 sends one, with h2 (t12d1209h2). So the ALPN gap is
-  the platform's, not the library's, and android_okhttp3_12's t13d151100 is
-  a true Android 13 observation. The Android 8.1 capture is the one that
-  confirms android_okhttp8.
-
-Confirmed this pass, so the list is now one:
-
-android_confirmed2  t12d1210h2_d34a8e72043a_f88f2b2eb673  NOW CONFIRMED
-  The 63-character limit is per DNS label, not per hostname. A 151-character
-  multi-label name on Android 9 pushed the OkHttp hello past 256 bytes,
-  BoringSSL padded it, and the JA4 was byte-identical
+android_confirmed2  t12d1210h2_d34a8e72043a_f88f2b2eb673
+  The OkHttp hello plus the transport's padding. The 63-character limit is
+  per DNS label, not per hostname: a 151-character multi-label name on
+  Android 9 pushed the hello past 256 bytes, BoringSSL padded it, and the
+  JA4 matched byte for byte
   (tools/capture/raw/android_confirmed2_device.json).
 
 android_zalando     t13d1514h2_8daaf6152771_43ade6aba3df
-  User agent okhttp/4.12.0. Against android_okhttp13 the only TLS
-  difference is a signed_certificate_timestamp extension, and its HTTP/2
-  settings differ (1:4096;3:4294967295;4:16777216;5:16384;...), so the
-  app asked OkHttp for larger windows and for SCT.
+  The OkHttp hello plus a signed_certificate_timestamp. Reproduced byte for
+  byte on an Android 10 emulator: OkHttp 4.12 with bundled Conscrypt 1.4.2,
+  certificate transparency enabled through
+  SSLParametersImpl.setCTVerificationEnabled (the private switch behind
+  SSL_enable_signed_cert_timestamps), session tickets enabled through
+  setUseSessionTickets, and a hello long enough that the transport padded
+  it (tools/capture/raw/android_zalando_device.json).
 
-  What the SCT request needs was located: Conscrypt's
-  libconscrypt_jni.so exports SSL_CTX_enable_signed_cert_timestamps and
-  SSL_enable_signed_cert_timestamps, and NativeSsl calls the latter when
-  SSLParametersImpl.isCTVerificationEnabled(host) is true, with
-  SSLParametersImpl.setCTVerificationEnabled(...) as the switch. Android
-  10's platform Conscrypt (com.android.org.conscrypt) carries the same
-  method.
+  Two steps were needed and each taught something:
+    - setCTVerificationEnabled is package-private, so getMethod never found
+      it; getDeclaredMethod plus setAccessible does.
+    - Conscrypt 2.9 sends a 1216-byte X25519MLKEM768 key share, which
+      inflates the hello past the 511-byte padding window. 1.4.2 predates
+      that group and its hello lands in the window, so the padding appears.
 
-  The probe then walked the whole socket hierarchy looking for the
-  SSLParametersImpl the switch is called on, and it is not there: on Android
-  10 the chain Java8FileDescriptorSocket - ConscryptFileDescriptorSocket -
-  OpenSSLSocketImpl - AbstractConscryptSocket - SSLSocket - Socket declares
-  no field of that type and no field named sslParameters (OpenSSLSocketImpl
-  has only `impl`, and its resolved type is Object; java.net.Socket's own
-  `impl` is SocksSocketImpl). The parameters are handed to the socket's
-  constructor and not retained afterwards, so no reflective route reaches
-  the object that carries setCTVerificationEnabled.
-
-  getSSLParameters() does not help either: on Android 10 it returns a
-  plain javax.net.ssl.SSLParameters with none of Conscrypt's fields, so the
-  SSLParametersImpl is not reachable from outside the socket at all.
-
-  With the bundled Conscrypt installed the failure moves one step on: OkHttp
-  4.12's Android10Platform refuses a bundled-Conscrypt socket in
-  ConscryptSocketAdapter. Either path stops before a hello.
-
-  Everything else in the record matches the verified android_okhttp13
-  hello.
-
-What is verified instead, and how
-  21 base records match a c hash a real device produced. WebView 125's
-  padded shape (b1ff8ab2d16f) was reported by tls.peet.ws itself for a
-  cloud-phone connection; WebView 139 came from the Android 10 container;
-  every Conscrypt, Cronet and OkHttp-3.12/4.x/5.x record came from an APK
-  that links that exact build, running on Android 8.1 through 14.
+What is still outside the library's records
+  The recordings of specific third-party apps remain what they are: shapes
+  captured once by tls.peet.ws. Those with a user agent of okhttp/4.12.0
+  turned out to be ordinary OkHttp hellos and are confirmed as such
+  (android_confirmed, android_confirmed2, android_zalando). android_nike
+  and android_mesh are likewise OkHttp/WebView shapes already verified
+  through the records they equal.

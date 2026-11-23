@@ -71,20 +71,33 @@ final class CappedSocketFactory extends SSLSocketFactory {
      * static accessors are not static and the constructor needs them.
      */
     private static Object[] sessionContexts() throws Exception {
-        // The bundled Conscrypt is only on the variant class path, so it is
-        // reached by reflection here and the platform build still compiles.
-        java.security.Provider provider = (java.security.Provider) Class
-                .forName("org.conscrypt.OpenSSLProvider")
-                .getConstructor().newInstance();
-        javax.net.ssl.SSLContext context =
-                javax.net.ssl.SSLContext.getInstance("TLS", provider);
-        context.init(null, new javax.net.ssl.TrustManager[] {permissive()},
+        // Build Conscrypt's context object directly: an SSLContext from
+        // getInstance does not expose its SPI, but OpenSSLContextImpl keeps
+        // the two session contexts as fields.
+        // The concrete context is the TLSv13 subclass of the abstract
+        // OpenSSLContextImpl.
+        Class<?> contextClass = Class.forName("org.conscrypt.OpenSSLContextImpl$TLSv13");
+        java.lang.reflect.Constructor<?> contextConstructor =
+                contextClass.getDeclaredConstructor();
+        contextConstructor.setAccessible(true);
+        Object impl = contextConstructor.newInstance();
+        java.lang.reflect.Method init = null;
+        for (java.lang.reflect.Method m : contextClass.getMethods()) {
+            if (m.getName().equals("engineInit")) {
+                init = m;
+                break;
+            }
+        }
+        if (init == null) {
+            throw new NoSuchMethodException("engineInit");
+        }
+        init.setAccessible(true);
+        init.invoke(impl, null, new javax.net.ssl.TrustManager[] {permissive()},
                 new java.security.SecureRandom());
-        Object spi = context.getProvider().getService("SSLContext", "TLS");
-        Class<?> implClass = Class.forName("org.conscrypt.SSLParametersImpl");
-        Object client = implClass.getDeclaredMethod("getClientSessionContext")
-                .invoke(null);
-        return new Object[] {client, null};
+        return new Object[] {
+                readField(impl, "clientSessionContext"),
+                readField(impl, "serverSessionContext")
+        };
     }
 
     /** The platform's default TLS factory, for libraries that want one. */
@@ -225,6 +238,16 @@ final class CappedSocketFactory extends SSLSocketFactory {
                     "setCTVerificationEnabled", boolean.class);
             ct.setAccessible(true);
             ct.invoke(impl, true);
+            // session_ticket (35): OkHttp's own extension hook is off on this
+            // path, so ask Conscrypt for it directly.
+            try {
+                java.lang.reflect.Method tickets = implClass.getDeclaredMethod(
+                        "setUseSessionTickets", boolean.class);
+                tickets.setAccessible(true);
+                tickets.invoke(impl, true);
+            } catch (NoSuchMethodException absent) {
+                // Older builds name it differently.
+            }
             if (alpn != null && alpn.length > 0) {
                 for (String name : new String[] {"setApplicationProtocols", "setApplicationProtocolSelector"}) {
                     try {
@@ -350,4 +373,19 @@ final class CappedSocketFactory extends SSLSocketFactory {
             throws IOException {
         return cap(inner.createSocket(address, port, localAddress, localPort));
     }
+    /** Reads a field of the given name from the whole class chain. */
+    private static Object readField(Object target, String name) throws Exception {
+        for (Class<?> type = target.getClass(); type != null;
+                type = type.getSuperclass()) {
+            try {
+                java.lang.reflect.Field f = type.getDeclaredField(name);
+                f.setAccessible(true);
+                return f.get(target);
+            } catch (NoSuchFieldException next) {
+                // Keep looking.
+            }
+        }
+        throw new NoSuchFieldException(name + " on " + target.getClass());
+    }
+
 }
