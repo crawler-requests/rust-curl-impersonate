@@ -111,7 +111,8 @@ final class CappedSocketFactory extends SSLSocketFactory {
                     m.invoke(parameters, true);
                     ssl.setSSLParameters(parameters);
                 } catch (Throwable absentOnThisRelease) {
-                    // The extension cannot be requested here.
+                    android.util.Log.i("PhoneCap", "sct request failed: "
+                            + absentOnThisRelease);
                 }
             }
         }

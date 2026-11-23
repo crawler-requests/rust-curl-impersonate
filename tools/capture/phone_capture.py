@@ -419,8 +419,11 @@ def main():
                              "extension, as an app can on Android 9+")
     parser.add_argument("--no-install", action="store_true")
     args = parser.parse_args()
-    # A label becomes a DNS name, so keep it to what sslip.io accepts.
-    args.label = re.sub(r"[^A-Za-z0-9-]+", "-", args.label).strip("-")
+    # A label becomes a DNS name. Dots are kept so a long hostname can be
+    # built from several short labels - the DNS limit is 63 per label, but a
+    # hostname may be 253 characters, which is what lets a hello grow past
+    # the 256-byte padding threshold.
+    args.label = re.sub(r"[^A-Za-z0-9.-]+", "-", args.label).strip("-.")
     if not args.label:
         raise SystemExit("empty --label")
 

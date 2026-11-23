@@ -1347,9 +1347,14 @@ PROFILES = [
         "name": "android_confirmed2",
         "library": "conscrypt",
         "family": "android",
-        "client": "Confirmed Android app, second profile (tls-client)",
+        "client": "Confirmed Android app, second profile (confirmed on a device)",
         "version": "",
         "platform": "android",
+        # Reproduced byte for byte: OkHttp 4.12 on Android 9 with a 151-
+        # character hostname pushed the hello past 256 bytes, BoringSSL
+        # padded it, and the JA4 came out t12d1210h2_d34a8e72043a_
+        # f88f2b2eb673 - exactly this record
+        # (tools/capture/raw/android_confirmed2_device.json).
     },
     {
         "file": "android_mesh.json",
