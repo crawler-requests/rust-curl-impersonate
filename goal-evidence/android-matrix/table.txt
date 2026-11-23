@@ -90,3 +90,9 @@ Columns: Android SDK, variant, JA4 b/c from the listener.
 33  okhttp-4.11.0       t13d1513h2_8daaf6152771_eca864cca44a
 33  okhttp-4.0.0        (refuses to start: API level check)
 —   okhttp-3.0.0        (no close() on Response; does not build)
+33  conscrypt-1.4.2     t12d1409h1_c866b44c5a26_b39be8c56a14
+33  conscrypt-2.0.0     t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.2.1     t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.5.3     t13d1713h1_5b57614c22b0_eca864cca44a
+33  conscrypt-2.7.0     t13d1712h1_5b57614c22b0_40271e0a5736
+33  conscrypt-2.9.0     t13d1712h1_5b57614c22b0_40271e0a5736

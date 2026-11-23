@@ -808,6 +808,46 @@ PROFILES = [
         ),
     },
     {
+        # Conscrypt 1.4.2 predates TLS 1.3 in this configuration and offers
+        # no session_ticket, so its hello is the platform stack's TLS 1.2
+        # predecessor: t12d1409h1.
+        "file": "android_conscrypt1_4_2.json",
+        "name": "android_conscrypt1_4_2",
+        "library": "conscrypt",
+        "family": "android",
+        "client": "Conscrypt 1.4.2 on Android 13",
+        "version": "1.4.2",
+        "platform": "android",
+        # The capture offers no TLS 1.3 suites and no supported_versions,
+        # so the record has to cap the version explicitly; BoringSSL would
+        # otherwise enable 1.3 by default and send a different hello.
+        "min_version": "1.2",
+        "max_version": "1.2",
+        "source": (
+            "ClientHello recorded off the wire from HttpsURLConnection with "
+            "Conscrypt 1.4.2 installed as the JCA provider, on a redroid "
+            "Android 13 device (x86_64), tools/capture/android_matrix.py, "
+            "tools/capture/raw/android_conscrypt1_4_2.json"
+        ),
+    },
+    {
+        # Conscrypt 2.7 and later drop one extension, which moves both the
+        # a-segment (t13d1712) and the c hash.
+        "file": "android_conscrypt2_7_0.json",
+        "name": "android_conscrypt2_7",
+        "library": "conscrypt",
+        "family": "android",
+        "client": "Conscrypt 2.7.0 on Android 13",
+        "version": "2.7.0",
+        "platform": "android",
+        "source": (
+            "ClientHello recorded off the wire from HttpsURLConnection with "
+            "Conscrypt 2.7.0 installed as the JCA provider, on a redroid "
+            "Android 13 device (x86_64), tools/capture/android_matrix.py, "
+            "tools/capture/raw/android_conscrypt2_7_0.json"
+        ),
+    },
+    {
         # OkHttp 3.12 on Android 13 offers no ALPN and no session_ticket:
         # t13d1511 (ALPN 00), against OkHttp 4's t13d1513. The relayed
         # connection to tls.peet.ws came back t13d1510 because the CONNECT
@@ -2795,12 +2835,18 @@ def build_record(spec):
         record_version = data["tls"].get("tls_version_record") or data["tls"].get(
             "tls_version_negotiated"
         )
+        # A hello with no supported_versions is capped at the record
+        # version: a TLS 1.2 record (771) means "TLS 1.2 and below", which
+        # BoringSSL reproduces with min 1.2 / max 1.2. Reading the raw
+        # record-version byte (769, the historical 1.0 value) would wrongly
+        # cap the client at 1.0.
+        negotiated = data["tls"].get("tls_version_negotiated")
         versions = {
-            "769": ["1.0"],
-            "770": ["1.1"],
+            "769": ["1.2"],
+            "770": ["1.2"],
             "771": ["1.2"],
             "772": ["1.3"],
-        }.get(str(record_version), [])
+        }.get(str(negotiated or record_version), [])
     min_version = min(versions) if versions else None
     max_version = max(versions) if versions else None
     if 23 not in captured_exts and max_version in ("1.2", "1.3"):

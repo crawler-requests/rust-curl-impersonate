@@ -152,3 +152,21 @@ okhttp versions beyond the first five
   4.7.2, 4.11.0  Identical to 4.12 on this platform (t13d1513).
   So OkHttp's shape changes at 3.x-versus-4.x (ALPN and session_ticket) and
   at 5 (session_ticket only); patch levels within 4.x do not move it.
+
+conscrypt versions
+  Conscrypt ships as a JCA provider, so each version replaced the platform's
+  own stack for one run:
+    1.4.2     t12d1409h1 - no TLS 1.3 suites, no supported_versions; the
+              hello a platform stack sent before 1.3. Added as
+              android_conscrypt1_4_2, capped at 1.2 so BoringSSL does not
+              add 1.3 on its own.
+    2.0 - 2.5 t13d1713h1, the same hello as 2.1.0 and 2.5.2.
+    2.7 - 2.9 t13d1712h1: one extension fewer, and the c hash moves to
+              40271e0a5736. Added as android_conscrypt2_7.
+  So Conscrypt's shape changes at 2.0 (1.3 arrives) and at 2.7 (an extension
+  goes); 2.0 through 2.5 are one shape.
+
+  This also fixed a version-mapping bug in the generator: a hello with no
+  supported_versions was read from the record-version byte (769, the legacy
+  1.0 value) and capped at 1.0 instead of 1.2. Only Android records with a
+  TLS 1.2 capture were affected, and they now say 1.2.
