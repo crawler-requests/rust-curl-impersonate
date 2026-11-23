@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Certificate transparency as an app can configure it. On Android this
+     checks the SCTs a server sends; it does NOT make the client request
+     one, so the extension this probe captures is unchanged. Kept because
+     it is the only CT route the platform exposes, and its absence from the
+     hello is the finding. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors><system/></trust-anchors>
+        <certificate-transparency>
+            <enforcement>enforce</enforcement>
+        </certificate-transparency>
+    </base-config>
+</network-security-config>

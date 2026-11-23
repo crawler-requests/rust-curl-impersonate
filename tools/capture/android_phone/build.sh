@@ -71,8 +71,10 @@ javac -nowarn -source 8 -target 8 -bootclasspath "$ANDROID_JAR" \
     ${JARS[@]+"${JARS[@]}"}
 
 rm -f "$WORK/unsigned.apk"
+# res/xml carries the network security config that asks for certificate
+# transparency, the only route to an SCT extension on Android.
 "$BUILD_TOOLS/aapt" package -f -M AndroidManifest.xml -I "$ANDROID_JAR" \
-    -F "$WORK/unsigned.apk"
+    -S res -F "$WORK/unsigned.apk"
 (cd "$WORK/dex" && "$BUILD_TOOLS/aapt" add "../unsigned.apk" classes.dex >/dev/null)
 
 # Native code, when the variant ships any (Conscrypt, Cronet): aapt stores

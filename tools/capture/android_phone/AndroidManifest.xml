@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30"/>
-    <application android:label="PhoneCapture" android:usesCleartextTraffic="true">
+    <application android:label="PhoneCapture" android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity android:name=".Main" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
