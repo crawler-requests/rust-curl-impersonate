@@ -59,6 +59,34 @@ final class CappedSocketFactory extends SSLSocketFactory {
         }
     }
 
+    private static Object serverContext() throws Exception {
+        Class<?> implClass = Class.forName("org.conscrypt.SSLParametersImpl");
+        return implClass.getDeclaredMethod("getServerSessionContext")
+                .invoke(null);
+    }
+
+    /**
+     * The client and server session contexts of the bundled Conscrypt. They
+     * are taken from a real SSLContext built with its provider, because the
+     * static accessors are not static and the constructor needs them.
+     */
+    private static Object[] sessionContexts() throws Exception {
+        // The bundled Conscrypt is only on the variant class path, so it is
+        // reached by reflection here and the platform build still compiles.
+        java.security.Provider provider = (java.security.Provider) Class
+                .forName("org.conscrypt.OpenSSLProvider")
+                .getConstructor().newInstance();
+        javax.net.ssl.SSLContext context =
+                javax.net.ssl.SSLContext.getInstance("TLS", provider);
+        context.init(null, new javax.net.ssl.TrustManager[] {permissive()},
+                new java.security.SecureRandom());
+        Object spi = context.getProvider().getService("SSLContext", "TLS");
+        Class<?> implClass = Class.forName("org.conscrypt.SSLParametersImpl");
+        Object client = implClass.getDeclaredMethod("getClientSessionContext")
+                .invoke(null);
+        return new Object[] {client, null};
+    }
+
     /** The platform's default TLS factory, for libraries that want one. */
     static SSLSocketFactory platformFactory() {
         try {
@@ -154,7 +182,109 @@ final class CappedSocketFactory extends SSLSocketFactory {
         }
     }
 
-    /** Ask for a signed_certificate_timestamp extension, as an app can. */
+    /**
+     * A Conscrypt factory, from the bundled jar, whose parameters have CT
+     * verification on - the setting that makes the client send an SCT
+     * extension. Uses getDefault() and setCTVerificationEnabled(), both
+     * internal but reachable on the Maven build.
+     */
+    static SSLSocketFactory ctWithBundled(String[] alpn) {
+        try {
+            Class<?> implClass = Class.forName("org.conscrypt.SSLParametersImpl");
+            {
+                StringBuilder m = new StringBuilder("methods:");
+                for (java.lang.reflect.Method mm : implClass.getDeclaredMethods()) {
+                    if (mm.getName().toLowerCase().contains("ct")) {
+                        m.append(' ').append(mm.getName()).append('/')
+                         .append(mm.getParameterCount());
+                    }
+                }
+                android.util.Log.i("PhoneCap", m.toString());
+            }
+            // (KeyManager[], TrustManager[], SecureRandom,
+            //  ClientSessionContext, ServerSessionContext, String[])
+            Object[] contexts = sessionContexts();
+            java.lang.reflect.Constructor<?> ctor = implClass.getDeclaredConstructor(
+                    javax.net.ssl.KeyManager[].class,
+                    javax.net.ssl.TrustManager[].class,
+                    java.security.SecureRandom.class,
+                    Class.forName("org.conscrypt.ClientSessionContext"),
+                    Class.forName("org.conscrypt.ServerSessionContext"),
+                    String[].class);
+            ctor.setAccessible(true);
+            Object impl = ctor.newInstance(
+                    new javax.net.ssl.KeyManager[0],
+                    new javax.net.ssl.TrustManager[] {permissive()},
+                    new java.security.SecureRandom(),
+                    contexts[0], contexts[1],
+                    new String[] {"TLSv1.3", "TLSv1.2"});
+            // getMethod only finds public members; Conscrypt keeps this
+            // package-private, so getDeclaredMethod plus setAccessible is
+            // the way in.
+            java.lang.reflect.Method ct = implClass.getDeclaredMethod(
+                    "setCTVerificationEnabled", boolean.class);
+            ct.setAccessible(true);
+            ct.invoke(impl, true);
+            if (alpn != null && alpn.length > 0) {
+                for (String name : new String[] {"setApplicationProtocols", "setApplicationProtocolSelector"}) {
+                    try {
+                        java.lang.reflect.Method m = implClass.getDeclaredMethod(
+                                name, String[].class);
+                        m.setAccessible(true);
+                        m.invoke(impl, (Object) alpn);
+                        break;
+                    } catch (NoSuchMethodException next) {
+                        // Try the next name.
+                    }
+                }
+            }
+            Class<?> factoryClass =
+                    Class.forName("org.conscrypt.OpenSSLSocketFactoryImpl");
+            {
+                StringBuilder m = new StringBuilder("factoryctors:");
+                for (java.lang.reflect.Constructor<?> cc : factoryClass.getDeclaredConstructors()) {
+                    m.append('(');
+                    for (Class<?> t : cc.getParameterTypes()) {
+                        m.append(t.getSimpleName()).append(',');
+                    }
+                    m.append(')');
+                }
+                android.util.Log.i("PhoneCap", m.toString());
+            }
+            java.lang.reflect.Constructor<?> factoryConstructor =
+                    factoryClass.getDeclaredConstructor(implClass);
+            factoryConstructor.setAccessible(true);
+            try {
+                return (SSLSocketFactory) factoryConstructor.newInstance(impl);
+            } catch (Throwable needsContext) {
+                // The no-arg form supplies its own default session context.
+                java.lang.reflect.Constructor<?> bare =
+                        factoryClass.getDeclaredConstructor();
+                bare.setAccessible(true);
+                return (SSLSocketFactory) bare.newInstance();
+            }
+        } catch (Throwable unavailable) {
+            StringBuilder sig = new StringBuilder();
+            try {
+                for (java.lang.reflect.Constructor<?> c : Class
+                        .forName("org.conscrypt.SSLParametersImpl").getDeclaredConstructors()) {
+                    sig.append('(');
+                    for (Class<?> t : c.getParameterTypes()) {
+                        sig.append(t.getSimpleName()).append(',');
+                    }
+                    sig.append(')');
+                }
+            } catch (Throwable e3) {
+                sig.append(e3);
+            }
+            android.util.Log.i("PhoneCap", "ct factory failed: " + unavailable
+                    + " ctors=" + sig);
+            return null;
+        }
+    }
+
+
+    /** The platform's default TLS factory, for libraries that want one. */
     static boolean includeSct = false;
 
     private Socket cap(Socket socket) {
