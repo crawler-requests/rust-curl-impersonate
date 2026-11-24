@@ -30,15 +30,18 @@ export function SuiteFrequency() {
 
   const total = handshakes.length;
   const rare = rows.filter((row) => row.count <= total / 5).length;
+  const common = rows.filter((row) => row.count > total / 2).length;
 
   return (
     <section className="section">
       <div className="section__head">
         <span className="section__kicker">套件从哪来到哪去</span>
-        <h2 className="section__title">32 个套件，前 16 个几乎人人都有</h2>
+        <h2 className="section__title">
+          {rows.length} 个套件，{common} 个几乎人人都有
+        </h2>
         <p className="section__lede">
-          横轴是「多少条记录发了这个套件」，按出现次数排列。靠前的套件大家都发，
-          区分不了谁；越往右越少见，{rare} 个套件的出现次数不到 {Math.round(total / 5)} 条，
+          每一行是「多少条记录发了这个套件」，按出现次数排列。靠前的套件大家都发，
+          区分不了谁；越往下越少见，有 {rare} 个套件的出现次数不到 {Math.round(total / 5)} 条，
           它们才是把某一个家族从其他家族里分出来的东西。
         </p>
       </div>

@@ -27,7 +27,7 @@ const ROUTES = [
   {
     to: "/library",
     kicker: "指纹库",
-    title: "242 条记录，全部来自抓包",
+    title: `${totals.records} 条记录，全部来自抓包`,
     body: "浏览器、各语言运行时、Android 与 iOS 应用。可按名称、客户端、JA4 搜索，也可只看逐字节一致的那些。",
   },
   {
@@ -85,6 +85,10 @@ export function HomePage() {
           <div>
             <div className="stat__value">{handshakeTotals.extensions}</div>
             <div className="stat__label">条扩展顺序记录</div>
+          </div>
+          <div>
+            <div className="stat__value">{handshakeTotals.ciphers}</div>
+            <div className="stat__label">条 cipher 条目</div>
           </div>
         </div>
         <div className="hero__actions">
