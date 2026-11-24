@@ -6,13 +6,18 @@ import { familyIcon } from "../components/icons";
 // entries in one slot; this page is where a reader lands when they want the
 // whole picture rather than one family's records.
 
+// The count comes from the data, but a headline reads better in Chinese
+// numerals up to ten than starting a line with a digit.
+const CN_NUMERALS = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+const familyCount = CN_NUMERALS[FAMILY_PAGES.length] ?? String(FAMILY_PAGES.length);
+
 export function ClientsPage() {
   return (
     <>
       <section className="hero hero--compact">
         <div className="hero__eyebrow">客户端</div>
         <h1 className="hero__title">
-          {FAMILY_PAGES.length} 类客户端，
+          {familyCount}类客户端，
           <br />
           各有各的<b>握手</b>。
         </h1>
