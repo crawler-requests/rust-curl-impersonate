@@ -199,26 +199,40 @@ jobs:
             --out dist
 
       # The header and the shipped library must agree: every rci_ function the
-      # header declares is in the library's dynamic export table. Cross builds
-      # are inspected with the target's own nm where the runner has one.
+      # header declares is in the library's dynamic export table.
       - name: Check exported symbols match rci.h
         shell: bash
-        if: startsWith(matrix.target, 'x86_64') || startsWith(matrix.target, 'aarch64')
         run: |
-          library="$(find target -path "*/${{ matrix.target }}/release" -name '*rust_curl_impersonate_ffi*' -type f | head -1)"
+          release_dir="target/${{ matrix.target }}/release"
+          case "${{ matrix.os }}" in
+            *windows*)
+              library="$release_dir/rust_curl_impersonate_ffi.dll"
+              ;;
+            *macos*)
+              library="$release_dir/librust_curl_impersonate_ffi.dylib"
+              ;;
+            *)
+              library="$release_dir/librust_curl_impersonate_ffi.so"
+              ;;
+          esac
+          if [ ! -f "$library" ]; then
+            echo "library not found: $library"
+            find target -name '*rust_curl_impersonate_ffi*' -type f | head -20
+            exit 1
+          fi
           echo "library: $library"
           grep -oE 'rci_[a-z0-9_]+' bindings/ffi/rci.h | sort -u > /tmp/declared.txt
           case "${{ matrix.os }}" in
             *windows*)
-              # Dumpbin ships with MSVC; list exported names one per line.
-              dumpbin //EXPORTS "$library" | awk '/rci_/{print $NF}' | sed 's/lib$/ /' | awk '{print $1}' \
-                | grep -oE 'rci_[a-z0-9_]+' | sort -u > /tmp/exported.txt
+              # Dumpbin prints one export per line; the name is the last field.
+              dumpbin //EXPORTS "$library" | grep -oE 'rci_[a-z0-9_]+' | sort -u > /tmp/exported.txt
               ;;
             *)
-              nm -D --defined-only "$library" 2>/dev/null | awk '{print $3}' | sort -u > /tmp/exported.txt \
-                || nm --defined-only "$library" | awk '{print $3}' | sort -u > /tmp/exported.txt
+              nm -D --defined-only "$library" | awk '{print $3}' | grep -oE 'rci_[a-z0-9_]+' \
+                | sort -u > /tmp/exported.txt
               ;;
           esac
+          echo "declared: $(wc -l < /tmp/declared.txt)  exported: $(wc -l < /tmp/exported.txt)"
           echo "declared but not exported:"
           comm -23 /tmp/declared.txt /tmp/exported.txt | tee /tmp/missing.txt
           test ! -s /tmp/missing.txt
