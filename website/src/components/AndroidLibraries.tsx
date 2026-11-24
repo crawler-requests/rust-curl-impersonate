@@ -2,6 +2,7 @@ import { Card, Col, Row, Table, Tag, Typography } from "antd";
 import { androidFidelity, androidGroups, androidRecordCount } from "../data/library";
 import type { FingerprintRecord } from "../data/library";
 import { FidelityTag } from "./FidelityTag";
+import { stackIcon } from "./icons";
 
 // The Android section: every built-in Android record, grouped by the library
 // that shapes the ClientHello. Each group states what the library is, then
@@ -73,6 +74,7 @@ export function AndroidLibraries() {
               className="android-card"
               title={
                 <span className="android-card__title">
+                  <span className="android-card__icon">{stackIcon(group.key)}</span>
                   {group.title}
                   <Tag bordered={false} className="count-tag">
                     {group.records.length}

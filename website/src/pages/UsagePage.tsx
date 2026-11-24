@@ -1,4 +1,5 @@
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
+import { AreaMark } from "../components/icons";
 
 export function UsagePage() {
   return (
@@ -17,7 +18,10 @@ export function UsagePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">最小例子</span>
+        <span className="section__kicker">
+          <AreaMark icon="presets" />
+          最小例子
+        </span>
         <h2 className="section__title">创建客户端，发一个请求</h2>
         <CodeBlock>
           {"use rust_curl_impersonate::{Client, Profile};\n\n"}
@@ -35,7 +39,10 @@ export function UsagePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">HTTP/3</span>
+        <span className="section__kicker">
+          <AreaMark icon="http3" />
+          HTTP/3
+        </span>
         <h2 className="section__title">带 QUIC 配置的预设走 HTTP/3</h2>
         <p className="section__lede">
           预设带 HTTP/3 指纹时用 http3_get；http3_endpoint 是这条发送路径绑定的端点，
@@ -56,7 +63,10 @@ export function UsagePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">请求头与 Cookie</span>
+        <span className="section__kicker">
+          <AreaMark icon="proxy" />
+          请求头与 Cookie
+        </span>
         <h2 className="section__title">默认头按预设顺序发，同名的由调用方替换</h2>
         <CodeBlock>
           <Comment>{"// 同名头替换默认头；空值抑制该头；其余默认头保留\n"}</Comment>
@@ -79,7 +89,10 @@ export function UsagePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">代理与 DNS</span>
+        <span className="section__kicker">
+          <AreaMark icon="proxy" />
+          代理与 DNS
+        </span>
         <h2 className="section__title">HTTP、HTTPS、SOCKS5 三种代理</h2>
         <CodeBlock>
           {"let client = Client::builder(Profile::find("}
@@ -95,7 +108,10 @@ export function UsagePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">WebSocket</span>
+        <span className="section__kicker">
+          <AreaMark icon="websocket" />
+          WebSocket
+        </span>
         <h2 className="section__title">deflate 扩展与压缩负载</h2>
         <CodeBlock>
           {"let upgrade = client.websocket_deflate("}
@@ -111,7 +127,10 @@ export function UsagePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">覆盖预设字段</span>
+        <span className="section__kicker">
+          <AreaMark icon="override" />
+          覆盖预设字段
+        </span>
         <h2 className="section__title">不改生成的预设源码，也能改字段</h2>
         <CodeBlock>
           {"let client = Client::builder(Profile::find("}
@@ -131,7 +150,51 @@ export function UsagePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">C ABI</span>
+        <span className="section__kicker">
+          <AreaMark icon="fork" />
+          该选哪一个
+        </span>
+        <h2 className="section__title">按你面对的服务端挑</h2>
+        <p className="section__lede">
+          目标不同，合适的名字也不同。下面是最常见的几种情况，每一种都指向已经抓包验证过的记录。
+        </p>
+        <div className="issue-grid">
+          <div className="issue-card">
+            <div className="issue-card__title">要过浏览器风控</div>
+            <div className="issue-card__body">
+              用浏览器预设：chrome150、firefox155、ios_safari26。
+              它们来自官方构建，扩展顺序、GREASE 与 ALPS 都按真实浏览器发。
+            </div>
+          </div>
+          <div className="issue-card">
+            <div className="issue-card__title">服务端在认「哪个 Go / Python 版本」</div>
+            <div className="issue-card__body">
+              用运行时的记录：go1.26、python3.12_requests、node22_http2。
+              同一语言的不同版本经常只差一个扩展，选错版本会被看出来。
+            </div>
+          </div>
+          <div className="issue-card">
+            <div className="issue-card__title">请求要从 Android 应用里发出</div>
+            <div className="issue-card__body">
+              用 Android 记录：android_okhttp13、android_conscrypt13、
+              android_webview125。按系统版本和内置栈选，不是随便挑一个。
+            </div>
+          </div>
+          <div className="issue-card">
+            <div className="issue-card__title">要同时走 HTTP/3</div>
+            <div className="issue-card__body">
+              选带 QUIC 配置的预设：chrome145、146、150，firefox147。
+              其他预设没有 HTTP/3 指纹，要求只走 HTTP/3 会失败。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <span className="section__kicker">
+          <AreaMark icon="abi" />
+          C ABI
+        </span>
         <h2 className="section__title">给非 Rust 调用方</h2>
         <CodeBlock>
           <Comment>{"// bindings/ffi 提供共享库；演示脚本在 bindings/ffi/python/demo.py\n"}</Comment>

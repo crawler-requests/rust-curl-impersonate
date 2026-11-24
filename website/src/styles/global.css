@@ -37,6 +37,8 @@ body {
   background: var(--paper);
   color: var(--ink-soft);
   font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -115,21 +117,20 @@ body {
 
 .hero__eyebrow {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 13px;
   color: var(--accent-ink);
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(38px, 5.2vw, 62px);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
+  font-size: clamp(38px, 5.2vw, 60px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--ink);
-  margin: 0 0 24px;
-  max-width: 15em;
+  margin: 0 0 26px;
+  max-width: 20em;
+  text-wrap: balance;
 }
 
 .hero__title em {
@@ -138,10 +139,10 @@ body {
 }
 
 .hero__lede {
-  font-size: 18px;
-  line-height: 1.65;
+  font-size: 17px;
+  line-height: 1.7;
   color: var(--ink-muted);
-  max-width: 46em;
+  max-width: 60ch;
 }
 
 .hero__stats {
@@ -173,26 +174,27 @@ body {
 
 .section__kicker {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 13px;
   color: var(--ink-muted);
 }
 
 .section__title {
   font-family: var(--font-display);
   font-size: 34px;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--ink);
-  margin: 12px 0 14px;
+  margin: 14px 0 18px;
+  max-width: 24em;
+  text-wrap: balance;
 }
 
 .section__lede {
   color: var(--ink-muted);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.7;
-  max-width: 44em;
-  margin-bottom: 34px;
+  max-width: 62ch;
+  margin-bottom: 38px;
 }
 
 /* --- code ---------------------------------------------------------------- */
@@ -225,7 +227,7 @@ body {
 /* --- small print --------------------------------------------------------- */
 
 .note {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--ink-muted);
   line-height: 1.7;
 }
@@ -275,7 +277,7 @@ body {
 }
 
 .chip {
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--ink-muted);
   background: var(--paper-raised);
   border: 1px solid var(--line);
@@ -344,8 +346,7 @@ body {
 }
 
 .family-tile__count {
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ink-muted);
 }
 
@@ -376,7 +377,7 @@ body {
 }
 
 .trust-item__body {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.65;
   color: var(--ink-muted);
 }
@@ -455,10 +456,7 @@ body {
 }
 
 .route-card__kicker {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 13px;
   color: var(--accent-ink);
 }
 
@@ -470,7 +468,7 @@ body {
 }
 
 .route-card__body {
-  font-size: 13.5px;
+  font-size: 15px;
   line-height: 1.7;
   color: var(--ink-muted);
 }
@@ -506,7 +504,7 @@ body {
 }
 
 .compare__row {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--ink-soft);
   padding: 6px 0;
@@ -582,7 +580,7 @@ body {
 }
 
 .issue-card__body {
-  font-size: 13.5px;
+  font-size: 15px;
   line-height: 1.75;
   color: var(--ink-muted);
 }
@@ -649,4 +647,109 @@ body {
   .github-badge__name {
     display: none;
   }
+}
+
+/* --- icon-led cards ------------------------------------------------------ */
+
+.android-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 16px;
+  vertical-align: -6px;
+}
+
+.android-card__blurb {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 8px;
+  color: var(--ink-muted);
+}
+
+.android-card__versions {
+  font-size: 14px;
+  color: var(--ink-muted);
+  padding-bottom: 14px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.family-tile__head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.family-tile__icon {
+  font-size: 19px;
+  line-height: 1;
+}
+
+.family-tile__head .family-tile__name {
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* --- area marks ---------------------------------------------------------- */
+
+.area-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 9px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 13px;
+  vertical-align: -5px;
+}
+
+.section__kicker {
+  display: flex;
+  align-items: center;
+}
+
+/* --- support overview ---------------------------------------------------- */
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 16px;
+}
+
+.support-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 24px 24px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.support-card__icon {
+  font-size: 22px;
+  color: var(--accent-ink);
+  line-height: 1;
+}
+
+.support-card__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.support-card__body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-muted);
 }

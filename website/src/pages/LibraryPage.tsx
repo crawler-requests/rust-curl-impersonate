@@ -1,6 +1,7 @@
 import { familySummary, records, totals } from "../data/library";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { LibraryExplorer } from "../components/LibraryExplorer";
+import { familyIcon } from "../components/icons";
 
 export function LibraryPage() {
   const maxFamily = familySummary[0]?.count ?? 1;
@@ -28,7 +29,12 @@ export function LibraryPage() {
         <div className="family-grid">
           {familySummary.map((family) => (
             <div className="family-tile" key={family.key}>
-              <div className="family-tile__name">{family.label}</div>
+              <div className="family-tile__head">
+                <span className="family-tile__icon" style={{ color: family.tint }}>
+                  {familyIcon(family.key)}
+                </span>
+                <span className="family-tile__name">{family.label}</span>
+              </div>
               <div className="family-tile__count">{family.count} 条记录</div>
               <div
                 className="family-tile__bar"

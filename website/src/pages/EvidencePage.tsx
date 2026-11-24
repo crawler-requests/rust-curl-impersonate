@@ -1,4 +1,5 @@
 import { CodeBlock, Comment } from "../components/CodeBlock";
+import { AreaMark } from "../components/icons";
 import { records, totals } from "../data/library";
 
 // What makes the records trustworthy: the audit, the fidelity vocabulary, and
@@ -60,7 +61,10 @@ export function EvidencePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">六条检查</span>
+        <span className="section__kicker">
+          <AreaMark icon="audit" />
+          六条检查
+        </span>
         <h2 className="section__title">审计做了什么</h2>
         <div className="issue-grid">
           {CLAIMS.map((claim) => (
@@ -73,7 +77,10 @@ export function EvidencePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">当前结果</span>
+        <span className="section__kicker">
+          <AreaMark icon="evidence" />
+          当前结果
+        </span>
         <h2 className="section__title">审计输出</h2>
         <CodeBlock>
           <Comment>{"$ python3 -I tools/audit_provenance.py\n"}</Comment>
@@ -96,7 +103,10 @@ export function EvidencePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">边界</span>
+        <span className="section__kicker">
+          <AreaMark icon="limits" />
+          边界
+        </span>
         <h2 className="section__title">明确写在文档里的限制</h2>
         <ul className="plain-list">
           {LIMITS.map((limit) => (
@@ -106,7 +116,10 @@ export function EvidencePage() {
       </section>
 
       <section className="section">
-        <span className="section__kicker">证据在哪里</span>
+        <span className="section__kicker">
+          <AreaMark icon="evidence" />
+          证据在哪里
+        </span>
         <h2 className="section__title">仓库里可以直接查</h2>
         <CodeBlock>
           <Comment>{"tools/capture/raw/            每条记录的抓包\n"}</Comment>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { totals } from "../data/library";
+import { familyIcon } from "../components/icons";
 
 // The landing page: what this is, the problem it removes, and where to read
 // next. Details live on their own pages.
@@ -99,6 +100,49 @@ export function HomePage() {
           {")?)?;   "}
           <Comment>{"// 即 python3.12_requests\n"}</Comment>
         </CodeBlock>
+      </section>
+
+      <section className="section">
+        <span className="section__kicker">一眼看懂支持哪些客户端</span>
+        <h2 className="section__title">浏览器、运行时、移动端，各有各的记录</h2>
+        <p className="section__lede">
+          每组都是抓包得到的真实握手，不是一个参数表。选一个名字就用那一组的线路参数，
+          名称和版本对不上会被服务端看出来。
+        </p>
+        <div className="support-grid">
+          <div className="support-card">
+            <span className="support-card__icon">{familyIcon("chrome")}</span>
+            <span className="support-card__title">浏览器</span>
+            <span className="support-card__body">
+              Chrome 113–160、Firefox 121–162、Safari 15–27、Opera、Brave、Edge。
+              含 Chrome for Testing 与 Firefox 各发布通道。
+            </span>
+          </div>
+          <div className="support-card">
+            <span className="support-card__icon">{familyIcon("go")}</span>
+            <span className="support-card__title">服务端运行时</span>
+            <span className="support-card__body">
+              Go 1.20–1.26、Python 3.8–3.13、Node 18–24、PHP 7.4–8.3、
+              Java 8–21、.NET 8、Ruby、Deno、Bun、Dart、Erlang。
+            </span>
+          </div>
+          <div className="support-card">
+            <span className="support-card__icon">{familyIcon("android")}</span>
+            <span className="support-card__title">Android</span>
+            <span className="support-card__body">
+              OkHttp、Conscrypt 平台栈、Cronet、WebView，覆盖 Android 7.0 到 14，
+              每条都在真实运行时上逐字节复核。
+            </span>
+          </div>
+          <div className="support-card">
+            <span className="support-card__icon">{familyIcon("ios")}</span>
+            <span className="support-card__title">iOS 与系统库</span>
+            <span className="support-card__body">
+              NSURLSession、Safari iOS、SwiftNIO，以及 libcurl、
+              OpenSSL s_client、GNU Wget 这类命令行客户端。
+            </span>
+          </div>
+        </div>
       </section>
 
       <section className="section">

@@ -40,6 +40,8 @@ export interface AndroidGroup {
   key: string;
   title: string;
   blurb: string;
+  /** The Android releases this group's records were captured on. */
+  versions: string;
   records: FingerprintRecord[];
 }
 
@@ -56,11 +58,13 @@ const group = (
   key: string,
   title: string,
   blurb: string,
+  versions: string,
   pick: (r: FingerprintRecord) => boolean,
 ): AndroidGroup => ({
   key,
   title,
   blurb,
+  versions,
   records: androidRecords.filter(pick).sort((a, b) => a.name.localeCompare(b.name)),
 });
 
@@ -69,24 +73,28 @@ export const androidGroups: AndroidGroup[] = [
     "okhttp",
     "OkHttp",
     "Android 上最常见的应用层 HTTP 库。TLS 由它自带的 BoringSSL 或平台 Conscrypt 提供，握手形态随库版本和 Android 版本一起变化。",
+    "Android 7.0、8.1、9、10、13",
     (r) => r.name.includes("okhttp") && !r.name.startsWith("utls"),
   ),
   group(
     "conscrypt",
     "Conscrypt / 平台 TLS",
     "Android 平台自带的 TLS provider，也是 HttpsURLConnection 的底层实现。应用可以把不同版本的 Conscrypt 装成 JCA provider 来换掉平台栈。",
+    "Android 9、10、13",
     (r) => r.library === "conscrypt" && !r.name.includes("okhttp"),
   ),
   group(
     "cronet",
     "Cronet",
     "Chromium 的网络栈以库的形式打包进应用。它的握手形态与 WebView 同源，跨版本变化很少。",
+    "Android 8.1 到 14",
     (r) => r.library === "cronet" || r.name.includes("cronet"),
   ),
   group(
     "webview",
     "WebView",
     "系统 WebView 使用 Chromium 的 TLS 栈。不同版本会在 ALPS 码点、padding 与 ECH GREASE 上不同。",
+    "Android 10、11、13",
     (r) => r.library === "webview",
   ),
 ];
