@@ -180,12 +180,8 @@ jobs:
           fi
           echo "VERSION=$version" >> "$GITHUB_ENV"
 
-      # The export check below needs `dumpbin`, which only a developer prompt
-      # provides; this puts the MSVC toolset on PATH for the Windows jobs.
-      - name: Set up the MSVC toolset
-        if: contains(matrix.os, 'windows')
-        uses: ilammy/msvc-dev-cmd@v1
-
+      # The export check below reads the library's export table directly, so
+      # it works on every runner without a platform linker tool on PATH.
       - name: Build
         shell: bash
         run: |
@@ -230,9 +226,10 @@ jobs:
           grep -oE 'rci_[a-z0-9_]+' bindings/ffi/rci.h | sort -u > /tmp/declared.txt
           case "${{ matrix.os }}" in
             *windows*)
-              # `dumpbin` lives in the MSVC toolset, which is not on PATH
-              # outside a developer prompt; msvc-dev-cmd puts it there.
-              dumpbin //EXPORTS "$library" | grep -oE 'rci_[a-z0-9_]+' | sort -u > /tmp/exported.txt
+              # Read the PE export directory directly: dumpbin needs an MSVC
+              # developer prompt, which also shadows the Git Bash `link.exe`.
+              python3 -I scripts/peexports.py "$library" \
+                | grep -oE 'rci_[a-z0-9_]+' | sort -u > /tmp/exported.txt
               ;;
             *macos*)
               # Mach-O has no ELF dynamic symbol table; `nm -gU` lists the
