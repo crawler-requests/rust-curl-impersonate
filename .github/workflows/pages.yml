@@ -11,6 +11,7 @@ on:
       - "website/**"
       - "src/fingerprint/builtin.json"
       - "tools/capture/raw/**"
+      - "goal-evidence/echo-latest/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -46,6 +47,11 @@ jobs:
       # builtin.json and the captures it names.
       - name: Sync the handshake detail
         run: node scripts/sync-handshakes.mjs
+        working-directory: website
+      # And the live verification logs, so the /verification page shows the
+      # most recent echo runs rather than a snapshot taken by hand.
+      - name: Sync the verification runs
+        run: node scripts/sync-echo.mjs
         working-directory: website
       - name: Build
         run: npm run build

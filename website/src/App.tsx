@@ -7,6 +7,7 @@ import { LibraryPage } from "./pages/LibraryPage";
 import { UsagePage } from "./pages/UsagePage";
 import { EvidencePage } from "./pages/EvidencePage";
 import { LimitsPage } from "./pages/LimitsPage";
+import { VerificationPage } from "./pages/VerificationPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ClientsPage } from "./pages/ClientsPage";
 import { FamilyPage } from "./pages/FamilyPage";
@@ -37,6 +38,7 @@ export function App() {
           <Route path="/usage" element={<UsagePage />} />
           <Route path="/evidence" element={<EvidencePage />} />
           <Route path="/limits" element={<LimitsPage />} />
+          <Route path="/verification" element={<VerificationPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Layout>

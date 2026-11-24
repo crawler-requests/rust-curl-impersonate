@@ -1,0 +1,127 @@
+{
+ "generatedFrom": "goal-evidence/echo-latest",
+ "runs": [
+  {
+   "name": "chrome158",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.8127.18 Safari/537.36",
+   "captureJa4": "t13d1519h2_8daaf6152771_3d1b1b7bef36",
+   "echoJa4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "captureExtensions": 21,
+   "echoExtensions": 19,
+   "missing": [
+    "Unknown extension 4832",
+    "pre_shared_key (41)"
+   ],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p",
+   "akamaiEcho": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p"
+  },
+  {
+   "name": "chrome159",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/159.0.8144.0 Safari/537.36",
+   "captureJa4": "t13d1519h2_8daaf6152771_3d1b1b7bef36",
+   "echoJa4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "captureExtensions": 21,
+   "echoExtensions": 19,
+   "missing": [
+    "Unknown extension 4832",
+    "pre_shared_key (41)"
+   ],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p",
+   "akamaiEcho": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p"
+  },
+  {
+   "name": "chrome160",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/160.0.8167.0 Safari/537.36",
+   "captureJa4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "echoJa4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "captureExtensions": 20,
+   "echoExtensions": 19,
+   "missing": [
+    "Unknown extension 4832"
+   ],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p",
+   "akamaiEcho": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p"
+  },
+  {
+   "name": "chromium157",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.8103.38 Safari/537.36",
+   "captureJa4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "echoJa4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "captureExtensions": 20,
+   "echoExtensions": 19,
+   "missing": [
+    "Unknown extension 4832"
+   ],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p",
+   "akamaiEcho": "1:65536;2:0;4:6291456;6:262144|15663105|0|m,a,s,p"
+  },
+  {
+   "name": "firefox159",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:159.0) Gecko/20100101 Firefox/159.0",
+   "captureJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "echoJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "captureExtensions": 17,
+   "echoExtensions": 17,
+   "missing": [],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s",
+   "akamaiEcho": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s"
+  },
+  {
+   "name": "firefox160",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:160.0) Gecko/20100101 Firefox/160.0",
+   "captureJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "echoJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "captureExtensions": 17,
+   "echoExtensions": 17,
+   "missing": [],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s",
+   "akamaiEcho": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s"
+  },
+  {
+   "name": "firefox161",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:161.0) Gecko/20100101 Firefox/161.0",
+   "captureJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "echoJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "captureExtensions": 17,
+   "echoExtensions": 17,
+   "missing": [],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s",
+   "akamaiEcho": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s"
+  },
+  {
+   "name": "firefox162",
+   "status": "200 OK",
+   "httpVersion": "h2",
+   "userAgent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:162.0) Gecko/20100101 Firefox/162.0",
+   "captureJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "echoJa4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "captureExtensions": 17,
+   "echoExtensions": 17,
+   "missing": [],
+   "extra": [],
+   "akamaiCapture": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s",
+   "akamaiEcho": "1:65536;2:0;4:131072;5:16384|12517377|0|m,p,a,s"
+  }
+ ]
+}

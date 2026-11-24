@@ -14,6 +14,7 @@ const NAV = [
   { to: "/library", label: "指纹库" },
   { to: "/usage", label: "用法" },
   { to: "/evidence", label: "可信度" },
+  { to: "/verification", label: "实测" },
   { to: "/limits", label: "边界" },
 ];
 
