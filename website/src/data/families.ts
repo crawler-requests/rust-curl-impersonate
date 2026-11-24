@@ -3,8 +3,8 @@ import type { FingerprintRecord } from "./library";
 
 // The navigation is organised by client family, because that is how someone
 // arrives: "I need to look like Chrome", not "I need record number 47". Each
-// family gets a page with its own records, and the remaining families share
-// one page so nothing is unreachable.
+// family gets a page with its own records; every family in the library is a
+// member of exactly one of these pages, so nothing is unreachable.
 
 export interface FamilyPage {
   key: string;
@@ -17,8 +17,6 @@ export interface FamilyPage {
   lede: string;
   /** The families this page owns. `other` collects everything not listed. */
   members: string[];
-  /** Record whose JA4 a visitor can switch between, when the family has one. */
-  highlight?: string;
 }
 
 export const FAMILY_PAGES: FamilyPage[] = [
@@ -61,7 +59,6 @@ export const FAMILY_PAGES: FamilyPage[] = [
     title: "Android",
     lede: "Android 平台的 TLS provider（Conscrypt）、应用自带的 OkHttp、Chromium 网络栈打包成的 Cronet，以及系统 WebView。同一个 Android 版本上，这四个可能发出完全不同的握手。",
     members: ["android", "okhttp"],
-    highlight: "/android",
   },
   {
     key: "runtimes",
@@ -91,17 +88,6 @@ export const FAMILY_PAGES: FamilyPage[] = [
   },
 ];
 
-const MEMBER_OF = new Map<string, FamilyPage>();
-for (const page of FAMILY_PAGES) {
-  for (const family of page.members) {
-    MEMBER_OF.set(family, page);
-  }
-}
-
-export function pageFor(family: string): FamilyPage | undefined {
-  return MEMBER_OF.get(family);
-}
-
 export function recordsOf(page: FamilyPage): FingerprintRecord[] {
   return records
     .filter((record) => page.members.includes(record.family))
@@ -115,14 +101,4 @@ export function recordsOf(page: FamilyPage): FingerprintRecord[] {
 export function aliasesOf(page: FamilyPage): { name: string; target: string }[] {
   const names = new Set(recordsOf(page).map((record) => record.name));
   return aliases.filter((alias) => names.has(alias.target));
-}
-
-/** Families with no page of their own; they are listed under the library page. */
-export function ungroupedFamilies(): string[] {
-  const grouped = new Set(FAMILY_PAGES.flatMap((page) => page.members));
-  return Array.from(
-    new Set(records.map((record) => record.family).filter(Boolean)),
-  )
-    .filter((family) => !grouped.has(family))
-    .sort();
 }

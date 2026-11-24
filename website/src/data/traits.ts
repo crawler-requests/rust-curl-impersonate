@@ -103,5 +103,3 @@ export function traitsFor(members: string[]): Trait[] {
   }
   return [];
 }
-
-export const helloTraits = Object.keys(TRAITS);
