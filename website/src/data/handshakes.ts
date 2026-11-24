@@ -26,6 +26,8 @@ export interface Handshake {
   fidelity: Fidelity;
   /** JA4 of the capture, empty when the capture was a local socket. */
   ja4: string;
+  /** JA4 with the raw cipher/extension/sigalg code points instead of a count. */
+  ja4r: string;
   /** The capture file this record was read from, shown as the record's evidence. */
   source: string;
   minVersion: string;

@@ -17,6 +17,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/go1.26.json",
    "fidelity": "close",
    "ja4": "t13d1312h2_f57a46bbacb6_ab7e3b40a677",
+   "ja4r": "t13d1312h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,002b,0032,0033,ff01_0804,0403,0807,0805,0806,0401,0501,0601,0503,0603",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -120,6 +121,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.12_requests.json",
    "fidelity": "partial",
    "ja4": "t13d3112h1_e8f1e7e78f70_b26ce05bbdd6",
+   "ja4r": "t13d3112h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -214,6 +216,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.12_urllib.json",
    "fidelity": "partial",
    "ja4": "t13d3113h1_e8f1e7e78f70_d339722ba4af",
+   "ja4r": "t13d3113h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,0023,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -309,6 +312,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.12_aiohttp.json",
    "fidelity": "partial",
    "ja4": "t13d3112h1_e8f1e7e78f70_d41ae481755e",
+   "ja4r": "t13d3112h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -404,6 +408,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/curl8.5_h2.json",
    "fidelity": "partial",
    "ja4": "t13d3112h2_e8f1e7e78f70_b26ce05bbdd6",
+   "ja4r": "t13d3112h2_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -517,6 +522,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/curl8.5_http1.json",
    "fidelity": "partial",
    "ja4": "t13d3112h1_e8f1e7e78f70_b26ce05bbdd6",
+   "ja4r": "t13d3112h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -611,6 +617,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/java21_httpclient.json",
    "fidelity": "partial",
    "ja4": "t13d3113h2_1d947a95fc68_7e1102d2036b",
+   "ja4r": "t13d3113h2_0032,0033,0038,0039,0040,0067,006a,006b,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_0005,000a,000b,000d,0011,0017,0023,002b,002d,0032,0033_0403,0503,0603,0807,0808,0804,0805,0806,0809,080a,080b,0401,0501,0601,0402,0303,0301,0302",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -733,6 +740,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/java21_urlconn.json",
    "fidelity": "partial",
    "ja4": "t13d3112_1d947a95fc68_7e1102d2036b",
+   "ja4r": "t13d3112_0032,0033,0038,0039,0040,0067,006a,006b,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_0005,000a,000b,000d,0011,0017,0023,002b,002d,0032,0033_0403,0503,0603,0807,0808,0804,0805,0806,0809,080a,080b,0401,0501,0601,0402,0303,0301,0302",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -821,6 +829,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/node22_https.json",
    "fidelity": "partial",
    "ja4": "t13d5910_a33745022dd6_1f22a2ca17c4",
+   "ja4r": "t13d5910_002f,0032,0033,0035,0038,0039,003c,003d,0040,0067,006a,006b,009c,009d,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c09c,c09d,c09e,c09f,c0a0,c0a1,c0a2,c0a3,c0ac,c0ad,c0ae,c0af,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -913,6 +922,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/node22_http2.json",
    "fidelity": "partial",
    "ja4": "t13d5911h2_a33745022dd6_1f22a2ca17c4",
+   "ja4r": "t13d5911h2_002f,0032,0033,0035,0038,0039,003c,003d,0040,0067,006a,006b,009c,009d,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c09c,c09d,c09e,c09f,c0a0,c0a1,c0a2,c0a3,c0ac,c0ad,c0ae,c0af,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -1008,6 +1018,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/node22_fetch.json",
    "fidelity": "partial",
    "ja4": "t13d5911h1_a33745022dd6_1f22a2ca17c4",
+   "ja4r": "t13d5911h1_002f,0032,0033,0035,0038,0039,003c,003d,0040,0067,006a,006b,009c,009d,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c09c,c09d,c09e,c09f,c0a0,c0a1,c0a2,c0a3,c0ac,c0ad,c0ae,c0af,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -1103,6 +1114,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/go1.26_http1.json",
    "fidelity": "close",
    "ja4": "t13d1311_f57a46bbacb6_ab7e3b40a677",
+   "ja4r": "t13d1311_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,002b,0032,0033,ff01_0804,0403,0807,0805,0806,0401,0501,0601,0503,0603",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -1180,6 +1192,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.12_httpx.json",
    "fidelity": "partial",
    "ja4": "t13d4313h1_c7886603b240_d339722ba4af",
+   "ja4r": "t13d4313h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c09c,c09d,c09e,c09f,c0a0,c0a1,c0a2,c0a3,c0ac,c0ad,c0ae,c0af,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,0023,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -1306,6 +1319,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.12_httpclient.json",
    "fidelity": "partial",
    "ja4": "t13d3113h1_e8f1e7e78f70_d339722ba4af",
+   "ja4r": "t13d3113h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,0023,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -1401,6 +1415,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/bun1.3.14.json",
    "fidelity": "exact",
    "ja4": "t13d1714h1_5b57614c22b0_43ade6aba3df",
+   "ja4r": "t13d1714h1_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -1479,6 +1494,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/php8.3_curl.json",
    "fidelity": "partial",
    "ja4": "t13d3112h2_e8f1e7e78f70_b26ce05bbdd6",
+   "ja4r": "t13d3112h2_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -1592,6 +1608,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/php8.3_streams.json",
    "fidelity": "partial",
    "ja4": "t13d7511_479067518aa3_d41ae481755e",
+   "ja4r": "t13d7511_002f,0032,0033,0035,0038,0039,003c,003d,0040,0041,0044,0045,0067,006a,006b,0084,0087,0088,009c,009d,009e,009f,00a2,00a3,00ba,00bd,00be,00c0,00c3,00c4,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c072,c073,c076,c077,c09c,c09d,c09e,c09f,c0a0,c0a1,c0a2,c0a3,c0ac,c0ad,c0ae,c0af,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -1684,6 +1701,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/wget1.21.4.json",
    "fidelity": "partial",
    "ja4": "t13d7511_479067518aa3_fb8d5ffd48c1",
+   "ja4r": "t13d7511_002f,0032,0033,0035,0038,0039,003c,003d,0040,0041,0044,0045,0067,006a,006b,0084,0087,0088,009c,009d,009e,009f,00a2,00a3,00ba,00bd,00be,00c0,00c3,00c4,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c072,c073,c076,c077,c09c,c09d,c09e,c09f,c0a0,c0a1,c0a2,c0a3,c0ac,c0ad,c0ae,c0af,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -1776,6 +1794,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/perl5_lwp.json",
    "fidelity": "partial",
    "ja4": "t13d3112_e8f1e7e78f70_ccd0985badbe",
+   "ja4r": "t13d3112_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_0005,000a,000b,000d,0015,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -1869,6 +1888,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/openssl3_sclient.json",
    "fidelity": "partial",
    "ja4": "t13d3111h1_e8f1e7e78f70_1f22a2ca17c4",
+   "ja4r": "t13d3111h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -1964,6 +1984,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/rust_reqwest_rustls.json",
    "fidelity": "close",
    "ja4": "t13d1011h2_61a7ad8aa9b6_3fcd1a44f3e3",
+   "ja4r": "t13d1011h2_00ff,1301,1302,1303,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,002b,002d,0033_0503,0403,0807,0806,0805,0804,0601,0501,0401",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2057,6 +2078,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chromium156.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_cb7bf5808d99",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2166,6 +2188,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chromium157.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,12e0,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2276,6 +2299,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome114.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2383,6 +2407,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome116_cft.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2490,6 +2515,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome118.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2593,6 +2619,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome119_cft.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2698,6 +2725,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome121.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2803,6 +2831,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome122.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -2908,6 +2937,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome123_cft.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3013,6 +3043,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome125.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3118,6 +3149,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome126.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3223,6 +3255,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome127.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3328,6 +3361,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome128.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3433,6 +3467,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome129.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3538,6 +3573,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome130.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3643,6 +3679,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome132.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3748,6 +3785,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome134.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3853,6 +3891,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome135.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -3958,6 +3997,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome136_cft.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4064,6 +4104,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome137.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4170,6 +4211,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome138.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4276,6 +4318,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome139.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4382,6 +4425,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome140.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4488,6 +4532,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome141.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4594,6 +4639,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome142_cft.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,ca34,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4700,6 +4746,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome143.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,ca34,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4807,6 +4854,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome145_cft.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,ca34,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -4914,6 +4962,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome147.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,ca34,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5021,6 +5070,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome148.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,44cd,ca34,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5128,6 +5178,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome149.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,ca34,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5234,6 +5285,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome151_cft.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_cb7bf5808d99",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5343,6 +5395,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome153.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,12e0,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5453,6 +5506,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome154.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,12e0,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5563,6 +5617,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome155.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,12e0,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5673,6 +5728,7 @@
    "source": "tls.peet.ws capture of WebView 125.0.6422.113, confirmed on a OnePlus 9R running Android 13: the device's own WebView sends the same extension set and signature algorithms, and its JA4 differs only by the padding extension the transport adds when the hello fits the 256-511 byte window (t13d1516h2_8daaf6152771_02713d6af862 on the device); independently, the Android cloud phone (redroid Android 13, real network) loaded https://tls.peet.ws/api/all and the service itself reported t13d1517h2_8daaf6152771_b1ff8ab2d16f for that connection, the same padded shape; tools/capture/phone_capture.py, tools/capture/raw/android_webview125.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_b1ff8ab2d16f",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -5776,6 +5832,7 @@
    "source": "ClientHello recorded off the wire from the system WebView 139.0.7258.143 on a redroid Android 10 device (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_webview139_report.json",
    "fidelity": "close",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -5883,6 +5940,7 @@
    "source": "ClientHello recorded off the wire from an APK that links cronet-embedded 76.0.3809.111, on a redroid Android 13 device (x86_64), tools/capture/phone_capture.py, tools/capture/raw/android_cronet76.json",
    "fidelity": "close",
    "ja4": "t13d1615h2_46e7e9700bed_45f260be83e2",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -5966,6 +6024,7 @@
    "source": "ClientHello recorded off the wire from an APK that links cronet-embedded 101.0.4951.41, on redroid Android 8.1 through 14 devices (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_cronet101_echo.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -6068,6 +6127,7 @@
    "source": "ClientHello recorded off the wire from an APK that links cronet-embedded 119.0.6045.31, on redroid Android 8.1 through 14 devices (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_cronet119_echo.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -6171,6 +6231,7 @@
    "source": "ClientHello recorded off the wire from the system WebView 103.0.5060.129 on a OnePlus 9R running Android 13, tools/capture/phone_capture.py, tools/capture/raw/android_webview103.json",
    "fidelity": "close",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -6253,6 +6314,7 @@
    "source": "ClientHello recorded off the wire from HttpsURLConnection on a OnePlus 9R running Android 13, confirmed by the tls.peet.ws report for the same connection (t13d1713h1_5b57614c22b0_eca864cca44a); the same hello was recorded off the Android cloud phone (redroid Android 13, real network, Conscrypt 2.5.2 as the provider), tools/capture/phone_capture.py, tools/capture/raw/android_conscrypt13.json",
    "fidelity": "exact",
    "ja4": "t13d1713h1_5b57614c22b0_eca864cca44a",
+   "ja4r": "t13d1713h1_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -6330,6 +6392,7 @@
    "source": "ClientHello recorded off the wire from HttpsURLConnection with Conscrypt 1.4.2 installed as the JCA provider, on a redroid Android 13 device (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_conscrypt1_4_2.json",
    "fidelity": "exact",
    "ja4": "t12d1409h1_c866b44c5a26_b39be8c56a14",
+   "ja4r": "",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -6399,6 +6462,7 @@
    "source": "ClientHello recorded off the wire from HttpsURLConnection with Conscrypt 2.7.0 installed as the JCA provider, on a redroid Android 13 device (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_conscrypt2_7_0.json",
    "fidelity": "exact",
    "ja4": "t13d1712h1_5b57614c22b0_40271e0a5736",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -6478,6 +6542,7 @@
    "source": "ClientHello recorded off the wire from an APK that links OkHttp 3.12.0, on a redroid Android 13 device (x86_64); this probe build sends no ALPN extension, so the a-segment reads t13d151100 where an uncapped 3.12 would read t13d1511h1 - the ciphers, extensions and c hash are the client's own, tools/capture/phone_capture.py, tools/capture/raw/android_okhttp3_12_0.json",
    "fidelity": "exact",
    "ja4": "t13d151100_8daaf6152771_3f5d972527c0",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [],
@@ -6549,6 +6614,7 @@
    "source": "ClientHello recorded by a listener on a redroid Android 13 (SDK 33, x86_64) device running an APK that links OkHttp 5.0.0, then relayed to tls.peet.ws whose report (ja4, ja4_r, HTTP/2 frames, Akamai fingerprint) is stored here; tools/capture/phone_capture.py --echo, tools/capture/raw/android_okhttp5_sdk33.json",
    "fidelity": "exact",
    "ja4": "t13d1512h2_8daaf6152771_3f5d972527c0",
+   "ja4r": "t13d1512h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -6634,6 +6700,7 @@
    "source": "ClientHello recorded by a listener on a redroid Android 13 (SDK 33, x86_64) device running an APK that links OkHttp 3.14.9, then relayed to tls.peet.ws whose report is stored here; the same hello OkHttp 4 sends on this platform; tools/capture/phone_capture.py --echo, tools/capture/raw/android_okhttp3_14_9_sdk33.json",
    "fidelity": "exact",
    "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "ja4r": "t13d1513h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -6720,6 +6787,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/webkitgtk26_4.json",
    "fidelity": "partial",
    "ja4": "t13d2913h2_723694b0fccc_5671b5df5029",
+   "ja4r": "t13d2913h2_002f,0033,0035,0039,009c,009d,009e,009f,1301,1302,1303,1304,c009,c00a,c013,c014,c02b,c02c,c02f,c030,c09c,c09d,c09e,c09f,c0ac,c0ad,cca8,cca9,ccaa_0005,000a,000b,000d,0015,001c,0023,002b,002d,0033,ff01_0401,0809,0804,0403,0807,0501,080a,0805,0503,0808,0601,080b,0806,0603,0201,0203",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -6831,6 +6899,7 @@
    "source": "tls.peet.ws capture of the tls-client profile safari27_2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari27_2.json",
    "fidelity": "exact",
    "ja4": "t13d2013h2_a09f3c656075_7f0f34a4126d",
+   "ja4r": "t13d2013h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -6941,6 +7010,7 @@
    "source": "ClientHello recorded off the wire from a Cronet 100.0.4891.0 engine running on Android 13 (redroid), tools/capture/cronet_capture.py, tools/capture/raw/cronet_android100.json",
    "fidelity": "close",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7045,6 +7115,7 @@
    "source": "ClientHello and HTTP/2 frames recorded off the wire from a swift-nio-ssl 2.36 + swift-nio-http2 client (tools/capture/swiftnio_capture.py), tools/capture/raw/swiftnio_ssl.json",
    "fidelity": "exact",
    "ja4": "t13d1712h2_5b57614c22b0_ef7df7f74e48",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7136,6 +7207,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome158.json",
    "fidelity": "exact",
    "ja4": "t13d1519h2_8daaf6152771_3d1b1b7bef36",
+   "ja4r": "t13d1519h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,12e0,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -7247,6 +7319,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome159.json",
    "fidelity": "exact",
    "ja4": "t13d1519h2_8daaf6152771_3d1b1b7bef36",
+   "ja4r": "t13d1519h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,0029,002b,002d,0033,12e0,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -7358,6 +7431,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome160.json",
    "fidelity": "exact",
    "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "ja4r": "t13d1518h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,12e0,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -7468,6 +7542,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox121.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7555,6 +7630,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox122.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7642,6 +7718,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox124.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7729,6 +7806,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox125.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7816,6 +7894,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox126.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7903,6 +7982,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox127.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -7990,6 +8070,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox128.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8077,6 +8158,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox129.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8164,6 +8246,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox130.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8251,6 +8334,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox131.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8338,6 +8422,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox134.json",
    "fidelity": "exact",
    "ja4": "t13d1716h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8432,6 +8517,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox136.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8527,6 +8613,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox137.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8622,6 +8709,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox138.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8717,6 +8805,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox139.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8812,6 +8901,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox140.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8903,6 +8993,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox141.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -8998,6 +9089,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox142.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9093,6 +9185,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox143.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9188,6 +9281,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox144_official.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9283,6 +9377,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox145.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9378,6 +9473,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox146.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9473,6 +9569,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox149.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9568,6 +9665,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox150.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9663,6 +9761,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox151.json",
    "fidelity": "exact",
    "ja4": "t13d1617h2_86a278354501_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9757,6 +9856,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox152.json",
    "fidelity": "exact",
    "ja4": "t13d1617h2_86a278354501_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9851,6 +9951,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox153_official.json",
    "fidelity": "exact",
    "ja4": "t13d1617h2_86a278354501_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -9945,6 +10046,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox154_official.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -10038,6 +10140,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox155_official.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -10131,6 +10234,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox156.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -10222,6 +10326,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox157.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_-",
+   "ja4r": "",
    "minVersion": "",
    "maxVersion": "",
    "alpn": [
@@ -10313,6 +10418,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox158.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -10426,6 +10532,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox159.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -10539,6 +10646,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox160.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -10652,6 +10760,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox161.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -10765,6 +10874,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/firefox162.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -10878,6 +10988,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_confirmed.json",
    "fidelity": "exact",
    "ja4": "t12d1209h2_d34a8e72043a_b39be8c56a14",
+   "ja4r": "t12d1209h2_002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -10956,6 +11067,7 @@
    "source": "tls.peet.ws capture of the profile, matched byte for byte by a real OkHttp 4.12 client on a OnePlus 9R running Android 13 - same JA4, same server-side ja4_r, same HTTP/2 fingerprint - and again on the Android cloud phone (redroid Android 13, real network), where tls.peet.ws reported the same ja4 and Akamai fingerprint (tools/capture/phone_capture.py --echo), tools/capture/raw/android_okhttp13.json",
    "fidelity": "exact",
    "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "ja4r": "t13d1513h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -11042,6 +11154,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_confirmed2.json",
    "fidelity": "exact",
    "ja4": "t12d1210h2_d34a8e72043a_f88f2b2eb673",
+   "ja4r": "t12d1210h2_002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -11124,6 +11237,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_mesh.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -11226,6 +11340,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_mesh1.json",
    "fidelity": "exact",
    "ja4": "t12d1409h1_c866b44c5a26_b39be8c56a14",
+   "ja4r": "t12d1409h1_002f,0035,009c,009d,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -11295,6 +11410,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp7.json",
    "fidelity": "close",
    "ja4": "t12d1208h2_d34a8e72043a_31a7e1922da8",
+   "ja4r": "t12d1208h2_002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_000a,000b,000d,0017,0023,ff01_0601,0603,0501,0503,0401,0403,0301,0303,0201,0203",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -11373,6 +11489,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp8.json",
    "fidelity": "exact",
    "ja4": "t12d1209h2_d34a8e72043a_e08eabe7240f",
+   "ja4r": "t12d1209h2_002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,ff01_0403,0401,0503,0501,0603,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -11449,6 +11566,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp9.json",
    "fidelity": "exact",
    "ja4": "t12d1209h2_d34a8e72043a_b39be8c56a14",
+   "ja4r": "t12d1209h2_002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -11527,6 +11645,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp10.json",
    "fidelity": "exact",
    "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "ja4r": "t13d1513h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -11613,6 +11732,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp11.json",
    "fidelity": "exact",
    "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "ja4r": "t13d1513h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -11699,6 +11819,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp12.json",
    "fidelity": "exact",
    "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "ja4r": "t13d1513h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -11785,6 +11906,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_nike.json",
    "fidelity": "exact",
    "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "ja4r": "t13d1513h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -11887,6 +12009,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/android_zalando.json",
    "fidelity": "exact",
    "ja4": "t13d1514h2_8daaf6152771_43ade6aba3df",
+   "ja4r": "t13d1514h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -11990,6 +12113,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/ios_confirmed.json",
    "fidelity": "exact",
    "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "ja4r": "t13d1314h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12100,6 +12224,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/ios_safari18_5.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_e42f34c56612",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -12208,6 +12333,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/ios_safari26.json",
    "fidelity": "exact",
    "ja4": "t13d2013h2_a09f3c656075_7f0f34a4126d",
+   "ja4r": "t13d2013h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12318,6 +12444,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/opera91.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12420,6 +12547,7 @@
    "source": "tls.peet.ws capture of the tls-client profile brave146 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_brave146.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12525,6 +12653,7 @@
    "source": "tls.peet.ws capture of the tls-client profile cloudflare (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_cloudflare.json",
    "fidelity": "partial",
    "ja4": "t12d58h1_be41622fbb2f_3c5a66c06c35",
+   "ja4r": "t12d58h1_00ff,c009,c00a,c013,c014_000a,000b,000d,0016,0017,0023_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0203,0301,0201,0302,0202,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -12587,6 +12716,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome103 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome103.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12689,6 +12819,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome104 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome104.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12791,6 +12922,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome105 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome105.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12893,6 +13025,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome106 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome106.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -12999,6 +13132,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome107 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome107.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13105,6 +13239,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome108 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome108.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13211,6 +13346,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome109 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome109.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13317,6 +13453,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome110 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome110.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13423,6 +13560,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome111 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome111.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13529,6 +13667,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome112 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome112.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13635,6 +13774,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome117 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome117.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13737,6 +13877,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome120 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome120.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13840,6 +13981,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome124 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome124.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -13945,6 +14087,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome131 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome131.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14050,6 +14193,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome133 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome133.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14156,6 +14300,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome144 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome144.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14261,6 +14406,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome146 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome146.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,ca34,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14367,6 +14513,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome150 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome150.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_806a8c22fdea",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14475,6 +14622,7 @@
    "source": "tls.peet.ws capture of the tls-client profile chrome152 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome152.json",
    "fidelity": "exact",
    "ja4": "t13d1517h2_8daaf6152771_cb7bf5808d99",
+   "ja4r": "t13d1517h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,ca34,fe0d,ff01_0904,0905,0906,0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14584,6 +14732,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox102 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox102.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14688,6 +14837,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox104 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox104.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14792,6 +14942,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox105 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox105.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -14896,6 +15047,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox106 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox106.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15000,6 +15152,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox108 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox108.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15104,6 +15257,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox110 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox110.json",
    "fidelity": "exact",
    "ja4": "t13d1713h2_5b57614c22b0_f81080dfc557",
+   "ja4r": "t13d1713h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,002b,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15206,6 +15360,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox117 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox117.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15310,6 +15465,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox120 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox120.json",
    "fidelity": "exact",
    "ja4": "t13d1713h2_5b57614c22b0_748f4c70de1c",
+   "ja4r": "t13d1713h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,001c,0022,002b,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15413,6 +15569,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox123 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox123.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_5c2c66f702b0",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15518,6 +15675,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox132 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox132.json",
    "fidelity": "exact",
    "ja4": "t13d1714h2_5b57614c22b0_3dd24b5ebec4",
+   "ja4r": "t13d1714h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,001b,001c,0022,002b,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15636,6 +15794,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox133 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox133.json",
    "fidelity": "exact",
    "ja4": "t13d1714h2_5b57614c22b0_3dd24b5ebec4",
+   "ja4r": "t13d1714h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,001b,001c,0022,002b,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15750,6 +15909,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox135 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox135.json",
    "fidelity": "exact",
    "ja4": "t13d1715h2_5b57614c22b0_a54fffd0eb61",
+   "ja4r": "t13d1715h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,002b,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15865,6 +16025,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox147 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox147.json",
    "fidelity": "exact",
    "ja4": "t13d1717h2_5b57614c22b0_68c5a8c2958d",
+   "ja4r": "t13d1717h2_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -15981,6 +16142,7 @@
    "source": "tls.peet.ws capture of the tls-client profile firefox148 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox148.json",
    "fidelity": "exact",
    "ja4": "t13d1917h2_4d8ed5baf28e_3cbfd9057e0d",
+   "ja4r": "t13d1917h2_002f,0033,0035,0039,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -16100,6 +16262,7 @@
    "source": "tls.peet.ws capture of the tls-client profile opera89 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_opera89.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -16202,6 +16365,7 @@
    "source": "tls.peet.ws capture of the tls-client profile opera90 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_opera90.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -16304,6 +16468,7 @@
    "source": "tls.peet.ws capture of the tls-client profile safari15_6_1 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari15_6_1.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -16405,6 +16570,7 @@
    "source": "tls.peet.ws capture of the tls-client profile safari16 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari16.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -16506,6 +16672,7 @@
    "source": "tls.peet.ws capture of the tls-client profile safari_ipad15_6 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari_ipad15_6.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -16607,6 +16774,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_mms (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms.json",
    "fidelity": "exact",
    "ja4": "t13d1810_e8a523a41297_78e6aca7449b",
+   "ja4r": "t13d1810_000a,002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_000a,000b,000d,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -16681,6 +16849,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_mms2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms2.json",
    "fidelity": "exact",
    "ja4": "t13d1810_e8a523a41297_78e6aca7449b",
+   "ja4r": "t13d1810_000a,002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_000a,000b,000d,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -16755,6 +16924,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_mms3 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms3.json",
    "fidelity": "exact",
    "ja4": "t13d1314h2_f57a46bbacb6_2a6581477f52",
+   "ja4r": "t13d1314h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -16864,6 +17034,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_mesh (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mesh.json",
    "fidelity": "exact",
    "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "ja4r": "t13d1314h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -16974,6 +17145,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_mesh2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mesh2.json",
    "fidelity": "exact",
    "ja4": "t13d1714h2_0633f72d41ca_14788d8d241b",
+   "ja4r": "t13d1714h2_1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -17076,6 +17248,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_nike (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_nike.json",
    "fidelity": "exact",
    "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "ja4r": "t13d1314h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -17182,6 +17355,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_zalando (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_zalando.json",
    "fidelity": "exact",
    "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "ja4r": "t13d1314h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -17288,6 +17462,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_safari15_5 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari15_5.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -17389,6 +17564,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_safari15_6 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari15_6.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -17490,6 +17666,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_safari16 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari16.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -17591,6 +17768,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_safari17 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari17.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -17696,6 +17874,7 @@
    "source": "tls.peet.ws capture of the tls-client profile ios_safari18 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari18.json",
    "fidelity": "exact",
    "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h2_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -17809,6 +17988,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome58 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome58.json",
    "fidelity": "close",
    "ja4": "t12d1311h1_8b80da21ef18_eb7c9aabf852",
+   "ja4r": "t12d1311h1_000a,002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,0023,7550,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -17882,6 +18062,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome62 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome62.json",
    "fidelity": "close",
    "ja4": "t12d1311h1_8b80da21ef18_eb7c9aabf852",
+   "ja4r": "t12d1311h1_000a,002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,0023,7550,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -17955,6 +18136,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome70 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome70.json",
    "fidelity": "exact",
    "ja4": "t13d1616h1_46e7e9700bed_4551aecd7b38",
+   "ja4r": "t13d1616h1_000a,002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,7550,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -18038,6 +18220,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome72 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome72.json",
    "fidelity": "exact",
    "ja4": "t13d1615h1_46e7e9700bed_45f260be83e2",
+   "ja4r": "t13d1615h1_000a,002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -18120,6 +18303,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome83 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome83.json",
    "fidelity": "exact",
    "ja4": "t13d1515h1_8daaf6152771_de4a06bb82e3",
+   "ja4r": "t13d1515h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -18200,6 +18384,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome87 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome87.json",
    "fidelity": "exact",
    "ja4": "t13d1515h1_8daaf6152771_de4a06bb82e3",
+   "ja4r": "t13d1515h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -18280,6 +18465,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome96 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome96.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -18361,6 +18547,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome100 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome100.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -18442,6 +18629,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome102 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome102.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -18523,6 +18711,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome106shuffle (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome106shuffle.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -18604,6 +18793,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome115pq (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome115pq.json",
    "fidelity": "exact",
    "ja4": "t13d1515h1_8daaf6152771_f37e75b10bcc",
+   "ja4r": "t13d1515h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -18687,6 +18877,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome120 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome120.json",
    "fidelity": "exact",
    "ja4": "t13d1517h1_8daaf6152771_b1ff8ab2d16f",
+   "ja4r": "t13d1517h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -18769,6 +18960,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome120pq (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome120pq.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -18853,6 +19045,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome131 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome131.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -18937,6 +19130,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome133 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome133.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_d8a2da3f94cd",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,44cd,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -19021,6 +19215,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox55 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox55.json",
    "fidelity": "exact",
    "ja4": "t12d159h1_073e58a039a6_e70312a1ce2c",
+   "ja4r": "t12d159h1_000a,002f,0033,0035,0039,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -19096,6 +19291,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox56 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox56.json",
    "fidelity": "exact",
    "ja4": "t12d159h1_073e58a039a6_e70312a1ce2c",
+   "ja4r": "t12d159h1_000a,002f,0033,0035,0039,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -19171,6 +19367,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox63 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox63.json",
    "fidelity": "exact",
    "ja4": "t13d1814h1_29a2cd9e9f10_d267a5f792d4",
+   "ja4r": "t13d1814h1_000a,002f,0033,0035,0039,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -19258,6 +19455,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox65 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox65.json",
    "fidelity": "exact",
    "ja4": "t13d1814h1_29a2cd9e9f10_d267a5f792d4",
+   "ja4r": "t13d1814h1_000a,002f,0033,0035,0039,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -19345,6 +19543,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox99 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox99.json",
    "fidelity": "exact",
    "ja4": "t13d1815h1_e8a523a41297_3d5424432f57",
+   "ja4r": "t13d1815h1_000a,002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -19433,6 +19632,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox102 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox102.json",
    "fidelity": "exact",
    "ja4": "t13d1715h1_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h1_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -19520,6 +19720,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox105 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox105.json",
    "fidelity": "exact",
    "ja4": "t13d1715h1_5b57614c22b0_3d5424432f57",
+   "ja4r": "t13d1715h1_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0015,0017,001c,0022,0023,002b,002d,0033,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -19607,6 +19808,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox120 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox120.json",
    "fidelity": "exact",
    "ja4": "t13d1715h1_5b57614c22b0_5c2c66f702b0",
+   "ja4r": "t13d1715h1_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,001c,0022,0023,002b,002d,0033,fe0d,ff01_0403,0503,0603,0804,0805,0806,0401,0501,0601,0203,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -19695,6 +19897,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for safari16 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_safari16.json",
    "fidelity": "exact",
    "ja4": "t13d2014h1_a09f3c656075_14788d8d241b",
+   "ja4r": "t13d2014h1_000a,002f,0035,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -19783,6 +19986,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios11 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios11.json",
    "fidelity": "exact",
    "ja4": "t12d2010h1_2a284e3b0c56_f05fdf8c38a9",
+   "ja4r": "t12d2010h1_002f,0035,003c,003d,009c,009d,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,3374,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -19862,6 +20066,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios12 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios12.json",
    "fidelity": "exact",
    "ja4": "t12d2310h1_f91c41aead95_12b7a1cb7c36",
+   "ja4r": "t12d2310h1_000a,002f,0035,003c,003d,009c,009d,c008,c009,c00a,c012,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,3374,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -19946,6 +20151,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios13 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios13.json",
    "fidelity": "exact",
    "ja4": "t13d2613h1_2802a3db6c62_845d286b0d67",
+   "ja4r": "t13d2613h1_000a,002f,0035,003c,003d,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -20037,6 +20243,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios14 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios14.json",
    "fidelity": "exact",
    "ja4": "t13d2613h1_2802a3db6c62_845d286b0d67",
+   "ja4r": "t13d2613h1_000a,002f,0035,003c,003d,009c,009d,1301,1302,1303,c008,c009,c00a,c012,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,002b,002d,0033,ff01_0403,0804,0401,0503,0203,0805,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -20128,6 +20335,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for android11okhttp (refraction-networking/utls, sent by its Go harness); the shape is confirmed on real hardware by OkHttp 3.12 with TLS 1.2 capped on an Android 13 device - same ciphers, extensions, signature algorithms and c hash (036209cd1ead), tools/capture/raw/utls_android11okhttp.json",
    "fidelity": "exact",
    "ja4": "t12d128h1_d34a8e72043a_036209cd1ead",
+   "ja4r": "t12d128h1_002f,0035,009c,009d,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -20196,6 +20404,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for edge85 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_edge85.json",
    "fidelity": "exact",
    "ja4": "t13d1515h1_8daaf6152771_de4a06bb82e3",
+   "ja4r": "t13d1515h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -20276,6 +20485,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for edge106 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_edge106.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -20357,6 +20567,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for 360_7_5 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_360_7_5.json",
    "fidelity": "close",
    "ja4": "t12d2010h1_0bf03fa604e3_736b2a1ed4d3",
+   "ja4r": "t12d2010h1_0004,0005,000a,002f,0032,0033,0035,0039,003c,003d,0067,006b,c007,c009,c00a,c011,c013,c014,c023,c027_0005,000a,000b,000d,0023,3374,754f,ff01_0401,0501,0201,0403,0503,0203,0402,0202",
    "minVersion": "1.2",
    "maxVersion": "1.2",
    "alpn": [
@@ -20428,6 +20639,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for 360_11_0 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_360_11_0.json",
    "fidelity": "exact",
    "ja4": "t13d1616h1_46e7e9700bed_4551aecd7b38",
+   "ja4r": "t13d1616h1_000a,002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,7550,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -20511,6 +20723,7 @@
    "source": "tls.peet.ws capture of the uTLS ClientHelloID for qq11_1 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_qq11_1.json",
    "fidelity": "exact",
    "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "ja4r": "t13d1516h1_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0015,0017,001b,0023,002b,002d,0033,4469,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -20592,6 +20805,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/go1.21.json",
    "fidelity": "close",
    "ja4": "t13d1911h2_9dc949149365_e7c285222651",
+   "ja4r": "t13d1911h2_000a,002f,0035,009c,009d,1301,1302,1303,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,002b,0033,ff01_0804,0403,0807,0805,0806,0401,0501,0601,0503,0603,0201,0203",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -20695,6 +20909,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/go1.22.json",
    "fidelity": "close",
    "ja4": "t13d1411h2_cbb2034c60b8_e7c285222651",
+   "ja4r": "t13d1411h2_1301,1302,1303,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,002b,0033,ff01_0804,0403,0807,0805,0806,0401,0501,0601,0503,0603,0201,0203",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -20793,6 +21008,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/go1.23.json",
    "fidelity": "close",
    "ja4": "t13d1311h2_f57a46bbacb6_e7c285222651",
+   "ja4r": "t13d1311h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,002b,0033,ff01_0804,0403,0807,0805,0806,0401,0501,0601,0503,0603,0201,0203",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -20892,6 +21108,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/go1.24.json",
    "fidelity": "close",
    "ja4": "t13d1311h2_f57a46bbacb6_e7c285222651",
+   "ja4r": "t13d1311h2_1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,002b,0033,ff01_0804,0403,0807,0805,0806,0401,0501,0601,0503,0603,0201,0203",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -20995,6 +21212,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/node24_https.json",
    "fidelity": "partial",
    "ja4": "t13d5211_b262b3658495_8e6e362c5eac",
+   "ja4r": "t13d5211_002f,0032,0033,0035,0038,0039,003c,003d,0040,0067,006a,006b,009c,009d,009e,009f,00a2,00a3,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c09c,c09d,c09e,c09f,c0ac,c0ad,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033,ff01_0905,0906,0904,0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -21093,6 +21311,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/node24_http2.json",
    "fidelity": "partial",
    "ja4": "t13d5212h2_b262b3658495_8e6e362c5eac",
+   "ja4r": "t13d5212h2_002f,0032,0033,0035,0038,0039,003c,003d,0040,0067,006a,006b,009c,009d,009e,009f,00a2,00a3,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c09c,c09d,c09e,c09f,c0ac,c0ad,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033,ff01_0905,0906,0904,0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -21194,6 +21413,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/curl7.88.1_h2.json",
    "fidelity": "partial",
    "ja4": "t13d3112h2_e8f1e7e78f70_8d633dac7124",
+   "ja4r": "t13d3112h2_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0203,0301,0201,0302,0202,0402,0502,0602",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -21307,6 +21527,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/curl7.88.1_http1.json",
    "fidelity": "partial",
    "ja4": "t13d3112h1_e8f1e7e78f70_8d633dac7124",
+   "ja4r": "t13d3112h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0203,0301,0201,0302,0202,0402,0502,0602",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -21401,6 +21622,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/curl8.10.1_h2.json",
    "fidelity": "partial",
    "ja4": "t13d3112h2_e8f1e7e78f70_6bebaf5329ac",
+   "ja4r": "t13d3112h2_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -21514,6 +21736,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/curl8.10.1_http1.json",
    "fidelity": "partial",
    "ja4": "t13d3112h1_e8f1e7e78f70_6bebaf5329ac",
+   "ja4r": "t13d3112h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,002b,002d,0031,0033_0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -21608,6 +21831,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.9_urllib.json",
    "fidelity": "partial",
    "ja4": "t13d3013_1d37bd780c83_5ae85263eb3b",
+   "ja4r": "t13d3013_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0016,0017,001b,0023,002b,002d,0031,0033,ff01_0905,0906,0904,0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -21710,6 +21934,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.11_urllib.json",
    "fidelity": "partial",
    "ja4": "t13d1714h1_ab0a1bf427ad_5ae85263eb3b",
+   "ja4r": "t13d1714h1_0067,006b,009e,009f,1301,1302,1303,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9_000a,000b,000d,0016,0017,001b,0023,002b,002d,0031,0033,ff01_0905,0906,0904,0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -21803,6 +22028,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/java8_urlconn.json",
    "fidelity": "partial",
    "ja4": "t13d339_80cecea31fe6_9da38b6fd1bc",
+   "ja4r": "t13d339_002f,0032,0033,0035,0038,0039,003c,003d,0040,0067,006a,006b,009c,009d,009e,009f,00a2,00a3,00ff,1301,1302,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030_000a,000b,000d,0017,002b,002d,0032,0033_0403,0503,0603,0804,0805,0806,0809,080a,080b,0401,0501,0601,0402,0303,0301,0302,0203,0201,0202",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -21891,6 +22117,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/java11_httpclient.json",
    "fidelity": "partial",
    "ja4": "t13d3112h2_1d947a95fc68_b72e173852fa",
+   "ja4r": "t13d3112h2_0032,0033,0038,0039,0040,0067,006a,006b,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_0005,000a,000b,000d,0011,0017,002b,002d,0032,0033_0403,0503,0603,0804,0805,0806,0809,080a,080b,0401,0501,0601,0402,0303,0301,0302",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -22010,6 +22237,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/java11_urlconn.json",
    "fidelity": "partial",
    "ja4": "t13d3111_1d947a95fc68_b72e173852fa",
+   "ja4r": "t13d3111_0032,0033,0038,0039,0040,0067,006a,006b,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_0005,000a,000b,000d,0011,0017,002b,002d,0032,0033_0403,0503,0603,0804,0805,0806,0809,080a,080b,0401,0501,0601,0402,0303,0301,0302",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -22095,6 +22323,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/java17_urlconn.json",
    "fidelity": "partial",
    "ja4": "t13d3112_1d947a95fc68_7e1102d2036b",
+   "ja4r": "t13d3112_0032,0033,0038,0039,0040,0067,006a,006b,009e,009f,00a2,00a3,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_0005,000a,000b,000d,0011,0017,0023,002b,002d,0032,0033_0403,0503,0603,0807,0808,0804,0805,0806,0809,080a,080b,0401,0501,0601,0402,0303,0301,0302",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -22183,6 +22412,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/openssl1.1_sclient.json",
    "fidelity": "partial",
    "ja4": "t13d3111h1_e8f1e7e78f70_5ac7197df9d2",
+   "ja4r": "t13d3111h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0203,0301,0201,0302,0202,0402,0502,0602",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [
@@ -22278,6 +22508,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/openssl3.3_sclient.json",
    "fidelity": "partial",
    "ja4": "t13d3111h1_e8f1e7e78f70_518fb456ca59",
+   "ja4r": "t13d3111h1_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -22373,6 +22604,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/wget1.21_bookworm.json",
    "fidelity": "partial",
    "ja4": "t13d2913_723694b0fccc_899037bd0b8c",
+   "ja4r": "t13d2913_002f,0033,0035,0039,009c,009d,009e,009f,1301,1302,1303,1304,c009,c00a,c013,c014,c02b,c02c,c02f,c030,c09c,c09d,c09e,c09f,c0ac,c0ad,cca8,cca9,ccaa_0005,000a,000b,000d,0015,001c,0023,002b,002d,0031,0033,ff01_0401,0809,0804,0403,0807,0501,080a,0805,0503,0808,0601,080b,0806,0603,0201,0203",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [],
@@ -22462,6 +22694,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/php8.1_streams.json",
    "fidelity": "partial",
    "ja4": "t13d6811_13e0e9e1c501_8e6e362c5eac",
+   "ja4r": "t13d6811_002f,0032,0033,0035,0038,0039,003c,003d,0040,0041,0044,0045,0067,006a,006b,0084,0087,0088,009c,009d,009e,009f,00a2,00a3,00ba,00bd,00be,00c0,00c3,00c4,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,c050,c051,c052,c053,c056,c057,c05c,c05d,c060,c061,c072,c073,c076,c077,c09c,c09d,c09e,c09f,c0ac,c0ad,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0033,ff01_0905,0906,0904,0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -22560,6 +22793,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/go1.20.json",
    "fidelity": "close",
    "ja4": "t13d1910h2_9dc949149365_97f8aa674fd9",
+   "ja4r": "t13d1910h2_000a,002f,0035,009c,009d,1301,1302,1303,c009,c00a,c012,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,002b,0033,ff01_0804,0403,0807,0805,0806,0401,0501,0601,0503,0603,0201,0203",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -22663,6 +22897,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/python3.8_urllib.json",
    "fidelity": "partial",
    "ja4": "t13d3112_e8f1e7e78f70_d339722ba4af",
+   "ja4r": "t13d3112_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,00ff,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0015,0016,0017,0023,002b,002d,0031,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [],
@@ -22755,6 +22990,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/ruby3.3_nethttp.json",
    "fidelity": "partial",
    "ja4": "t13d3012_1d37bd780c83_89ab6efea773",
+   "ja4r": "t13d3012_002f,0033,0035,0039,003c,003d,0067,006b,009c,009d,009e,009f,1301,1302,1303,c009,c00a,c013,c014,c023,c024,c027,c028,c02b,c02c,c02f,c030,cca8,cca9,ccaa_000a,000b,000d,0016,0017,0023,002b,002d,0031,0033,ff01_0905,0906,0904,0403,0503,0603,0807,0808,081a,081b,081c,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -22853,6 +23089,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/deno_fetch.json",
    "fidelity": "close",
    "ja4": "t13d1011h2_61a7ad8aa9b6_f9531d972513",
+   "ja4r": "t13d1011h2_00ff,1301,1302,1303,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0017,0023,002b,002d,0033_0503,0403,0603,0807,0806,0805,0804,0601,0501,0401",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -22948,6 +23185,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/dart_httpclient.json",
    "fidelity": "exact",
    "ja4": "t13d1710_5b57614c22b0_78e6aca7449b",
+   "ja4r": "t13d1710_002f,0035,009c,009d,1301,1302,1303,c009,c00a,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_000a,000b,000d,0017,0023,002b,002d,0033,ff01_0403,0804,0401,0503,0805,0501,0806,0601,0201",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -23023,6 +23261,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/erlang_ssl.json",
    "fidelity": "partial",
    "ja4": "t13d257_77cab16fc9f0_78a613864d9e",
+   "ja4r": "t13d257_009e,009f,00a2,00a3,00ff,1301,1302,1303,1304,1305,c02b,c02c,c02d,c02e,c02f,c030,c031,c032,c0ac,c0ad,c0ae,c0af,cca8,cca9,ccaa_000a,000b,000d,002b,0032,0033_0807,0808,0603,0503,0403,081c,081b,081a,080b,080a,0809,0806,0805,0804,0601,0501,0401,0603,0503,0403",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [],
@@ -23095,6 +23334,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/dotnet8_http1.json",
    "fidelity": "partial",
    "ja4": "t13d1211_a538d02d76d5_f6eeaf393d2e",
+   "ja4r": "t13d1211_00ff,1301,1302,1303,c023,c024,c027,c028,c02b,c02c,c02f,c030_0005,000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [],
@@ -23170,6 +23410,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/chrome113.json",
    "fidelity": "exact",
    "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "ja4r": "t13d1516h2_002f,0035,009c,009d,1301,1302,1303,c013,c014,c02b,c02c,c02f,c030,cca8,cca9_0005,000a,000b,000d,0012,0017,001b,0023,002b,002d,0033,4469,fe0d,ff01_0403,0804,0401,0503,0805,0501,0806,0601",
    "minVersion": "1.2",
    "maxVersion": "1.3",
    "alpn": [
@@ -23277,6 +23518,7 @@
    "source": "tls.peet.ws capture, tools/capture/raw/dotnet8_http2.json",
    "fidelity": "partial",
    "ja4": "t13d1212h2_a538d02d76d5_f6eeaf393d2e",
+   "ja4r": "t13d1212h2_00ff,1301,1302,1303,c023,c024,c027,c028,c02b,c02c,c02f,c030_0005,000a,000b,000d,0016,0017,0023,002b,002d,0033_0403,0503,0603,0807,0808,0809,080a,080b,0804,0805,0806,0401,0501,0601,0303,0301,0302,0402,0502,0602",
    "minVersion": "1.0",
    "maxVersion": "1.3",
    "alpn": [

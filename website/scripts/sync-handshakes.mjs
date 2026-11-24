@@ -39,18 +39,19 @@ function settings(value) {
     .filter(Boolean);
 }
 
+/** The capture's JA4 and the raw hash inputs behind it, for the anatomy panel. */
 function ja4Of(record) {
   const source = record.source || "";
   const at = source.indexOf("tools/capture/raw/");
-  if (at < 0) return "";
+  if (at < 0) return { ja4: "", ja4r: "" };
   const file = source.slice(at + "tools/capture/raw/".length).split(/[\s,]+/)[0];
   try {
     const capture = JSON.parse(
       readFileSync(join(ROOT, "tools", "capture", "raw", file), "utf8"),
     );
-    return capture.tls?.ja4 || "";
+    return { ja4: capture.tls?.ja4 || "", ja4r: capture.tls?.ja4_r || "" };
   } catch {
-    return "";
+    return { ja4: "", ja4r: "" };
   }
 }
 
@@ -67,7 +68,7 @@ const handshakes = library
       platform: record.platform || "",
       source: record.source || "",
       fidelity: record.fidelity || "",
-      ja4: ja4Of(record),
+      ...ja4Of(record),
       minVersion: tls.min_version || "",
       maxVersion: tls.max_version || "",
       // `alpn` is already an array in builtin.json; older records store a

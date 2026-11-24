@@ -1,6 +1,7 @@
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { totals } from "../data/library";
 import { FingerprintLeak } from "../components/FingerprintLeak";
+import { Ja4Breakdown } from "../components/Ja4Breakdown";
 
 // The page the site exists for: what problem the library removes.
 
@@ -84,6 +85,8 @@ export function ProblemPage() {
           </div>
         </div>
       </section>
+
+      <Ja4Breakdown />
 
       <section className="section">
         <span className="section__kicker">问题三</span>
