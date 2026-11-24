@@ -4,6 +4,8 @@ import { totals } from "../data/library";
 import { FAMILY_PAGES } from "../data/families";
 import { familyIcon } from "../components/icons";
 import { Reveal } from "../components/Reveal";
+import { HandshakeAnatomy } from "../components/HandshakeAnatomy";
+import { handshakeTotals } from "../data/handshakes";
 
 // The landing page: what this is, the problem it removes, and where to read
 // next. Details live on their own pages.
@@ -73,6 +75,10 @@ export function HomePage() {
             <div className="stat__value">{totals.presets}</div>
             <div className="stat__label">个 curl-impersonate 预设</div>
           </div>
+          <div>
+            <div className="stat__value">{handshakeTotals.extensions}</div>
+            <div className="stat__label">条扩展顺序记录</div>
+          </div>
         </div>
         <div className="hero__actions">
           <Link className="cta" to="/usage">
@@ -104,6 +110,14 @@ export function HomePage() {
           <Comment>{"// 即 python3.12_requests\n"}</Comment>
         </CodeBlock>
       </section>
+      </Reveal>
+
+      <Reveal>
+        <HandshakeAnatomy
+          kicker="先在浏览器里看一眼"
+          title="一条 ClientHello 长什么样"
+          lede="挑一个客户端，看它真正发出去的 cipher、扩展与密钥共享。这些值不是说明书上的参数，而是某次握手被抓包记下来的原样。"
+        />
       </Reveal>
 
       <Reveal delay={90}>

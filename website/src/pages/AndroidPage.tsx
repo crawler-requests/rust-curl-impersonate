@@ -2,6 +2,8 @@ import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { AndroidLibraries } from "../components/AndroidLibraries";
 import { HelloExplorer } from "../components/HelloExplorer";
 import { androidFidelity, androidRecordCount } from "../data/library";
+import { HandshakeAnatomy } from "../components/HandshakeAnatomy";
+import { handshakeFor } from "../data/handshakes";
 
 // The Android page: what makes the platform's TLS stacks hard to pin down, how
 // each record was checked, and every built-in Android record.
@@ -88,6 +90,18 @@ export function AndroidPage() {
       </section>
 
       <HelloExplorer />
+
+      <HandshakeAnatomy
+        picks={[
+          { key: "android_webview125", label: "WebView 125" },
+          { key: "android_conscrypt13", label: "平台 Conscrypt 13" },
+          { key: "android_okhttp13", label: "OkHttp 4.12" },
+          { key: "android_cronet119", label: "Cronet 119" },
+        ].filter((pick) => handshakeFor(pick.key))}
+        kicker="同一个 Android 版本，四条栈"
+        title="四份握手，四条不同的 JA4"
+        lede="下面四条记录都来自 Android 13。切换看看 cipher 数量、扩展顺序与 key share 怎么变——它们之间的差别，就是服务端用来区分「哪个应用发的请求」的东西。"
+      />
 
       <AndroidLibraries />
 

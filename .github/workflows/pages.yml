@@ -41,6 +41,12 @@ jobs:
       - name: Sync the fingerprint library
         run: node scripts/sync-library.mjs
         working-directory: website
+      # The handshake panel shows cipher lists and extension orders, which the
+      # library script does not carry; this one extracts them from the same
+      # builtin.json and the captures it names.
+      - name: Sync the handshake detail
+        run: node scripts/sync-handshakes.mjs
+        working-directory: website
       - name: Build
         run: npm run build
         working-directory: website

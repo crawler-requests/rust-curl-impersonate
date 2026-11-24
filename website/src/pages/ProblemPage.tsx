@@ -1,5 +1,6 @@
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { totals } from "../data/library";
+import { FingerprintLeak } from "../components/FingerprintLeak";
 
 // The page the site exists for: what problem the library removes.
 
@@ -50,6 +51,8 @@ export function ProblemPage() {
           </div>
         </div>
       </section>
+
+      <FingerprintLeak />
 
       <section className="section">
         <span className="section__kicker">问题二</span>

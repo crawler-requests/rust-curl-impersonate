@@ -1,6 +1,8 @@
 import { familySummary, records, totals } from "../data/library";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { LibraryExplorer } from "../components/LibraryExplorer";
+import { FidelityTag } from "../components/FidelityTag";
+import { FidelityBreakdown } from "../components/FidelityBreakdown";
 import { familyIcon } from "../components/icons";
 
 export function LibraryPage() {
@@ -26,6 +28,10 @@ export function LibraryPage() {
       <section className="section">
         <span className="section__kicker">覆盖范围</span>
         <h2 className="section__title">按家族看记录数量</h2>
+        <p className="section__lede">
+          {totals.families} 个家族，分布很不均匀：Chrome 一家就占了三分之一，
+          因为它每个大版本都要单独抓一次；运行时那一侧每个语言只留代表性的几个版本。
+        </p>
         <div className="family-grid">
           {familySummary.map((family) => (
             <div className="family-tile" key={family.key}>
@@ -47,6 +53,32 @@ export function LibraryPage() {
           ))}
         </div>
       </section>
+
+      <section className="section">
+        <span className="section__kicker">保真度</span>
+        <h2 className="section__title">哪些记录是逐字节一致的</h2>
+        <p className="section__lede">
+          exact 表示这一族的记录能用 BoringSSL 原样发出；close 与 partial 不是「不准」，
+          而是那次抓包里有这个构建发不出来的项，差额写在记录的 deviations 里。
+          选择时不必追 exact，只要那几项对你要过的服务端不重要。
+        </p>
+        <div className="fidelity-legend">
+          <span className="fidelity-legend__item">
+            <FidelityTag value="exact" />
+            <span>全部字段都发得出来，与抓包逐字节一致</span>
+          </span>
+          <span className="fidelity-legend__item">
+            <FidelityTag value="close" />
+            <span>少数项发不出来，记录里逐条写明是哪几项</span>
+          </span>
+          <span className="fidelity-legend__item">
+            <FidelityTag value="partial" />
+            <span>缺的项较多，形状与抓包明显不同，适合对照不适合冒充</span>
+          </span>
+        </div>
+      </section>
+
+      <FidelityBreakdown />
 
       <section className="section">
         <span className="section__kicker">怎么用</span>
