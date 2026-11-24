@@ -1,0 +1,3573 @@
+{
+ "generatedFrom": "src/fingerprint/builtin.json",
+ "baseRecords": 242,
+ "aliases": 49,
+ "records": [
+  {
+   "name": "go1.26",
+   "family": "go",
+   "client": "Go net/http",
+   "version": "go1.26.5",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/go1.26.json",
+   "ja4": "t13d1312h2_f57a46bbacb6_ab7e3b40a677",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites.",
+    "BoringSSL cannot send 2 captured groups: Unknown curve 4587, Unknown curve 4589 (5 sent)."
+   ]
+  },
+  {
+   "name": "python3.12_requests",
+   "family": "python",
+   "client": "Python requests",
+   "version": "2.32.5",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.12_requests.json",
+   "ja4": "t13d3112h1_e8f1e7e78f70_b26ce05bbdd6",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "python3.12_urllib",
+   "family": "python",
+   "client": "Python urllib",
+   "version": "3.12.3",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.12_urllib.json",
+   "ja4": "t13d3113h1_e8f1e7e78f70_d339722ba4af",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "python3.12_aiohttp",
+   "family": "python",
+   "client": "Python aiohttp",
+   "version": "3.14.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.12_aiohttp.json",
+   "ja4": "t13d3112h1_e8f1e7e78f70_d41ae481755e",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "curl8.5_h2",
+   "family": "curl",
+   "client": "libcurl with OpenSSL, HTTP/2",
+   "version": "8.5.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/curl8.5_h2.json",
+   "ja4": "t13d3112h2_e8f1e7e78f70_b26ce05bbdd6",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "curl8.5_http1",
+   "family": "curl",
+   "client": "libcurl with OpenSSL, HTTP/1.1",
+   "version": "8.5.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/curl8.5_http1.json",
+   "ja4": "t13d3112h1_e8f1e7e78f70_b26ce05bbdd6",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "java21_httpclient",
+   "family": "java",
+   "client": "Java HttpClient",
+   "version": "21.0.12",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/java21_httpclient.json",
+   "ja4": "t13d3113h2_1d947a95fc68_7e1102d2036b",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "java21_urlconn",
+   "family": "java",
+   "client": "Java HttpsURLConnection",
+   "version": "21.0.12",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/java21_urlconn.json",
+   "ja4": "t13d3112_1d947a95fc68_7e1102d2036b",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "node22_https",
+   "family": "node",
+   "client": "Node.js HTTPS, HTTP/1.1",
+   "version": "22.19.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/node22_https.json",
+   "ja4": "t13d5910_a33745022dd6_1f22a2ca17c4",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 30 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 26 more (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "node22_http2",
+   "family": "node",
+   "client": "Node.js HTTP/2",
+   "version": "22.19.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/node22_http2.json",
+   "ja4": "t13d5911h2_a33745022dd6_1f22a2ca17c4",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 30 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 26 more (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "node22_fetch",
+   "family": "node",
+   "client": "Node.js global fetch (undici)",
+   "version": "22.19.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/node22_fetch.json",
+   "ja4": "t13d5911h1_a33745022dd6_1f22a2ca17c4",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 30 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 26 more (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "go1.26_http1",
+   "family": "go",
+   "client": "Go net/http, HTTP/1.1 only",
+   "version": "go1.26.5",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/go1.26_http1.json",
+   "ja4": "t13d1311_f57a46bbacb6_ab7e3b40a677",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites.",
+    "BoringSSL cannot send 2 captured groups: Unknown curve 4587, Unknown curve 4589 (5 sent)."
+   ]
+  },
+  {
+   "name": "python3.12_httpx",
+   "family": "python",
+   "client": "Python httpx",
+   "version": "0.27.2",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.12_httpx.json",
+   "ja4": "t13d4313h1_c7886603b240_d339722ba4af",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 14 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_ECDHE_ECDSA_WITH_AES_128_CCM_8 and 10 more (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "python3.12_httpclient",
+   "family": "python",
+   "client": "Python http.client",
+   "version": "3.12.3",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.12_httpclient.json",
+   "ja4": "t13d3113h1_e8f1e7e78f70_d339722ba4af",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "bun1.3.14",
+   "family": "bun",
+   "client": "Bun fetch",
+   "version": "1.3.14",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/bun1.3.14.json",
+   "ja4": "t13d1714h1_5b57614c22b0_43ade6aba3df",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "php8.3_curl",
+   "family": "php",
+   "client": "PHP curl extension",
+   "version": "8.3.6",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/php8.3_curl.json",
+   "ja4": "t13d3112h2_e8f1e7e78f70_b26ce05bbdd6",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "php8.3_streams",
+   "family": "php",
+   "client": "PHP stream wrapper",
+   "version": "8.3.6",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/php8.3_streams.json",
+   "ja4": "t13d7511_479067518aa3_d41ae481755e",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 46 captured cipher suites: TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA and 42 more (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "wget1.21.4",
+   "family": "wget",
+   "client": "GNU Wget with GnuTLS",
+   "version": "1.21.4",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/wget1.21.4.json",
+   "ja4": "t13d7511_479067518aa3_fb8d5ffd48c1",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 46 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM_8, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 42 more (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "perl5_lwp",
+   "family": "perl",
+   "client": "Perl LWP::UserAgent",
+   "version": "LWP 6.76",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/perl5_lwp.json",
+   "ja4": "t13d3112_e8f1e7e78f70_ccd0985badbe",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "openssl3_sclient",
+   "family": "openssl",
+   "client": "OpenSSL s_client",
+   "version": "3.0.13",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/openssl3_sclient.json",
+   "ja4": "t13d3111h1_e8f1e7e78f70_1f22a2ca17c4",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "rust_reqwest_rustls",
+   "family": "rust",
+   "client": "reqwest with rustls",
+   "version": "reqwest 0.12.28 / rustls 0.23",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/rust_reqwest_rustls.json",
+   "ja4": "t13d1011h2_61a7ad8aa9b6_3fcd1a44f3e3",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (9 sent)."
+   ]
+  },
+  {
+   "name": "chromium156",
+   "family": "chrome",
+   "client": "Chromium (headless)",
+   "version": "156.0.8078.47",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chromium156.json",
+   "ja4": "t13d1517h2_8daaf6152771_cb7bf5808d99",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chromium157",
+   "family": "chrome",
+   "client": "Chromium for Testing Stable (headless)",
+   "version": "157.0.8103.78",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chromium157.json",
+   "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome114",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "114.0.5696.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome114.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome116_cft",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "116.0.5791.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome116_cft.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome118",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "118.0.5939.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome118.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome119_cft",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "119.0.5997.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome119_cft.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome121",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "121.0.6100.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome121.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome122",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "122.0.6168.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome122.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome123_cft",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "123.0.6262.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome123_cft.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome125",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "125.0.6368.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome125.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome126",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "126.0.6423.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome126.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome127",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "127.0.6483.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome127.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome128",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "128.0.6534.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome128.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome129",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "129.0.6614.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome129.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome130",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "130.0.6669.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome130.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome132",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "132.0.6779.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome132.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome134",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "134.0.6944.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome134.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome135",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "135.0.6999.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome135.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome136_cft",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "136.0.7051.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome136_cft.json",
+   "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome137",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "137.0.7104.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome137.json",
+   "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome138",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "138.0.7152.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome138.json",
+   "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome139",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "139.0.7205.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome139.json",
+   "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome140",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "140.0.7259.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome140.json",
+   "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome141",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "141.0.7340.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome141.json",
+   "ja4": "t13d1517h2_8daaf6152771_b6f405a00624",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome142_cft",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "142.0.7391.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome142_cft.json",
+   "ja4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome143",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "143.0.7446.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome143.json",
+   "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome145_cft",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "145.0.7561.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome145_cft.json",
+   "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome147",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "147.0.7681.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome147.json",
+   "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome148",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "148.0.7728.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome148.json",
+   "ja4": "t13d1518h2_8daaf6152771_0c9ac9b5c72c",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome149",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "149.0.7779.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome149.json",
+   "ja4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome151_cft",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "151.0.7872.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome151_cft.json",
+   "ja4": "t13d1517h2_8daaf6152771_cb7bf5808d99",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome153",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "153.0.7978.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome153.json",
+   "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome154",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "154.0.8011.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome154.json",
+   "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome155",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "155.0.8038.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome155.json",
+   "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_webview125",
+   "family": "android",
+   "client": "Android WebView (Chromium 125)",
+   "version": "125.0.6422.113",
+   "platform": "android",
+   "library": "webview",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of WebView 125.0.6422.113, confirmed on a OnePlus 9R running Android 13: the device's own WebView sends the same extension set and signature algorithms, and its JA4 differs only by the padding extension the transport adds when the hello fits the 256-511 byte window (t13d1516h2_8daaf6152771_02713d6af862 on the device); independently, the Android cloud phone (redroid Android 13, real network) loaded https://tls.peet.ws/api/all and the service itself reported t13d1517h2_8daaf6152771_b1ff8ab2d16f for that connection, the same padded shape; tools/capture/phone_capture.py, tools/capture/raw/android_webview125.json",
+   "ja4": "t13d1517h2_8daaf6152771_b1ff8ab2d16f",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_webview139",
+   "family": "android",
+   "client": "Android WebView 139.0.7258.143",
+   "version": "139.0.7258.143",
+   "platform": "android",
+   "library": "webview",
+   "fidelity": "close",
+   "source": "ClientHello recorded off the wire from the system WebView 139.0.7258.143 on a redroid Android 10 device (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_webview139_report.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": [
+    "The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+   ]
+  },
+  {
+   "name": "android_cronet76",
+   "family": "android",
+   "client": "Cronet 76.0.3809.111 (embedded)",
+   "version": "76.0.3809.111",
+   "platform": "android",
+   "library": "cronet",
+   "fidelity": "close",
+   "source": "ClientHello recorded off the wire from an APK that links cronet-embedded 76.0.3809.111, on a redroid Android 13 device (x86_64), tools/capture/phone_capture.py, tools/capture/raw/android_cronet76.json",
+   "ja4": "t13d1615h2_46e7e9700bed_45f260be83e2",
+   "http1Only": true,
+   "deviations": [
+    "The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+   ]
+  },
+  {
+   "name": "android_cronet101",
+   "family": "android",
+   "client": "Cronet 101.0.4951.41 (embedded)",
+   "version": "101.0.4951.41",
+   "platform": "android",
+   "library": "cronet",
+   "fidelity": "exact",
+   "source": "ClientHello recorded off the wire from an APK that links cronet-embedded 101.0.4951.41, on redroid Android 8.1 through 14 devices (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_cronet101_echo.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_cronet119",
+   "family": "android",
+   "client": "Cronet 119.0.6045.31 (embedded)",
+   "version": "119.0.6045.31",
+   "platform": "android",
+   "library": "cronet",
+   "fidelity": "exact",
+   "source": "ClientHello recorded off the wire from an APK that links cronet-embedded 119.0.6045.31, on redroid Android 8.1 through 14 devices (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_cronet119_echo.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_webview103",
+   "family": "android",
+   "client": "Android WebView 103.0.5060.129 (Chromium)",
+   "version": "103.0.5060.129",
+   "platform": "android",
+   "library": "webview",
+   "fidelity": "close",
+   "source": "ClientHello recorded off the wire from the system WebView 103.0.5060.129 on a OnePlus 9R running Android 13, tools/capture/phone_capture.py, tools/capture/raw/android_webview103.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": true,
+   "deviations": [
+    "The capture greases only the cipher suite, extension, group, version; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+   ]
+  },
+  {
+   "name": "android_conscrypt13",
+   "family": "android",
+   "client": "Android 13 platform TLS (HttpsURLConnection / Conscrypt)",
+   "version": "13",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "ClientHello recorded off the wire from HttpsURLConnection on a OnePlus 9R running Android 13, confirmed by the tls.peet.ws report for the same connection (t13d1713h1_5b57614c22b0_eca864cca44a); the same hello was recorded off the Android cloud phone (redroid Android 13, real network, Conscrypt 2.5.2 as the provider), tools/capture/phone_capture.py, tools/capture/raw/android_conscrypt13.json",
+   "ja4": "t13d1713h1_5b57614c22b0_eca864cca44a",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "android_conscrypt1_4_2",
+   "family": "android",
+   "client": "Conscrypt 1.4.2 on Android 13",
+   "version": "1.4.2",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "ClientHello recorded off the wire from HttpsURLConnection with Conscrypt 1.4.2 installed as the JCA provider, on a redroid Android 13 device (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_conscrypt1_4_2.json",
+   "ja4": "t12d1409h1_c866b44c5a26_b39be8c56a14",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "android_conscrypt2_7",
+   "family": "android",
+   "client": "Conscrypt 2.7.0 on Android 13",
+   "version": "2.7.0",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "ClientHello recorded off the wire from HttpsURLConnection with Conscrypt 2.7.0 installed as the JCA provider, on a redroid Android 13 device (x86_64), tools/capture/android_matrix.py, tools/capture/raw/android_conscrypt2_7_0.json",
+   "ja4": "t13d1712h1_5b57614c22b0_40271e0a5736",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp3_12",
+   "family": "okhttp",
+   "client": "OkHttp 3.12.0 on Android 13",
+   "version": "3.12.0",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "ClientHello recorded off the wire from an APK that links OkHttp 3.12.0, on a redroid Android 13 device (x86_64); this probe build sends no ALPN extension, so the a-segment reads t13d151100 where an uncapped 3.12 would read t13d1511h1 - the ciphers, extensions and c hash are the client's own, tools/capture/phone_capture.py, tools/capture/raw/android_okhttp3_12_0.json",
+   "ja4": "t13d151100_8daaf6152771_3f5d972527c0",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp5",
+   "family": "okhttp",
+   "client": "OkHttp 5.0.0 on Android 13",
+   "version": "5.0.0",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "ClientHello recorded by a listener on a redroid Android 13 (SDK 33, x86_64) device running an APK that links OkHttp 5.0.0, then relayed to tls.peet.ws whose report (ja4, ja4_r, HTTP/2 frames, Akamai fingerprint) is stored here; tools/capture/phone_capture.py --echo, tools/capture/raw/android_okhttp5_sdk33.json",
+   "ja4": "t13d1512h2_8daaf6152771_3f5d972527c0",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp3_14_9",
+   "family": "okhttp",
+   "client": "OkHttp 3.14.9 on Android 13",
+   "version": "3.14.9",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "ClientHello recorded by a listener on a redroid Android 13 (SDK 33, x86_64) device running an APK that links OkHttp 3.14.9, then relayed to tls.peet.ws whose report is stored here; the same hello OkHttp 4 sends on this platform; tools/capture/phone_capture.py --echo, tools/capture/raw/android_okhttp3_14_9_sdk33.json",
+   "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "webkitgtk26_4",
+   "family": "safari",
+   "client": "WebKitGTK 2.52 (Linux)",
+   "version": "26.4",
+   "platform": "linux",
+   "library": "webkitgtk",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/webkitgtk26_4.json",
+   "ja4": "t13d2913h2_723694b0fccc_5671b5df5029",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 8 captured cipher suites: TLS_AES_128_CCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_ECDHE_ECDSA_WITH_AES_128_CCM, TLS_RSA_WITH_AES_256_CCM and 4 more (21 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "tlsclient_safari27_2",
+   "family": "safari",
+   "client": "Safari 27.2 (tls-client master profile)",
+   "version": "27.2",
+   "platform": "macos",
+   "library": "webkit-macos",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile safari27_2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari27_2.json",
+   "ja4": "t13d2013h2_a09f3c656075_7f0f34a4126d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "cronet_android100",
+   "family": "android",
+   "client": "Cronet 100.0.4891.0 (Chromium network stack in an Android app)",
+   "version": "100",
+   "platform": "android",
+   "library": "cronet",
+   "fidelity": "close",
+   "source": "ClientHello recorded off the wire from a Cronet 100.0.4891.0 engine running on Android 13 (redroid), tools/capture/cronet_capture.py, tools/capture/raw/cronet_android100.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": [
+    "The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+   ]
+  },
+  {
+   "name": "swiftnio_ssl",
+   "family": "ios",
+   "client": "SwiftNIO / NIOSSL 2.36 (AsyncHTTPClient stack)",
+   "version": "2.36",
+   "platform": "ios",
+   "library": "swiftnio",
+   "fidelity": "exact",
+   "source": "ClientHello and HTTP/2 frames recorded off the wire from a swift-nio-ssl 2.36 + swift-nio-http2 client (tools/capture/swiftnio_capture.py), tools/capture/raw/swiftnio_ssl.json",
+   "ja4": "t13d1712h2_5b57614c22b0_ef7df7f74e48",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome158",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "158.0.8127.18",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome158.json",
+   "ja4": "t13d1519h2_8daaf6152771_3d1b1b7bef36",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome159",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "159.0.8144.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome159.json",
+   "ja4": "t13d1519h2_8daaf6152771_3d1b1b7bef36",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "chrome160",
+   "family": "chrome",
+   "client": "Chrome for Testing Canary (headless)",
+   "version": "160.0.8167.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome160.json",
+   "ja4": "t13d1518h2_8daaf6152771_4980c97edce0",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "firefox121",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "121.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox121.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox122",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "122.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox122.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox124",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "124.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox124.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox125",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "125.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox125.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox126",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "126.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox126.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox127",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "127.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox127.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox128",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "128.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox128.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox129",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "129.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox129.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox130",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "130.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox130.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox131",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "131.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox131.json",
+   "ja4": "t13d1715h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox134",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "134.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox134.json",
+   "ja4": "t13d1716h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox136",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "136.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox136.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox137",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "137.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox137.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox138",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "138.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox138.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox139",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "139.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox139.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox140",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "140.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox140.json",
+   "ja4": "t13d1517h2_8daaf6152771_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox141",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "141.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox141.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox142",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "142.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox142.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox143",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "143.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox143.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox144_official",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "144.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox144_official.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox145",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "145.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox145.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox146",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "146.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox146.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox149",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "149.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox149.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox150",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "150.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox150.json",
+   "ja4": "t13d1717h2_5b57614c22b0_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox151",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "151.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox151.json",
+   "ja4": "t13d1617h2_86a278354501_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox152",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "152.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox152.json",
+   "ja4": "t13d1617h2_86a278354501_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox153_official",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "153.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox153_official.json",
+   "ja4": "t13d1617h2_86a278354501_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox154_official",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "154.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox154_official.json",
+   "ja4": "t13d1517h2_8daaf6152771_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox155_official",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "155.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox155_official.json",
+   "ja4": "t13d1517h2_8daaf6152771_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox156",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "156.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox156.json",
+   "ja4": "t13d1517h2_8daaf6152771_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox157",
+   "family": "firefox",
+   "client": "Firefox (headless, official build)",
+   "version": "157.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox157.json",
+   "ja4": "t13d1517h2_8daaf6152771_-",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "firefox158",
+   "family": "firefox",
+   "client": "Firefox (headless)",
+   "version": "158.0.1",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox158.json",
+   "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "firefox159",
+   "family": "firefox",
+   "client": "Firefox (headless)",
+   "version": "159.0.1",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox159.json",
+   "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "firefox160",
+   "family": "firefox",
+   "client": "Firefox (headless, candidate)",
+   "version": "160.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox160.json",
+   "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "firefox161",
+   "family": "firefox",
+   "client": "Firefox (headless, beta)",
+   "version": "161.0b1",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox161.json",
+   "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "firefox162",
+   "family": "firefox",
+   "client": "Firefox (headless, nightly)",
+   "version": "162.0a1",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/firefox162.json",
+   "ja4": "t13d1517h2_8daaf6152771_3cbfd9057e0d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_confirmed",
+   "family": "android",
+   "client": "Confirmed Android app (tls-client profile)",
+   "version": "",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_confirmed.json",
+   "ja4": "t12d1209h2_d34a8e72043a_b39be8c56a14",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp13",
+   "family": "okhttp",
+   "client": "OkHttp 4.12 on Android 13 (tls-client profile, verified on a device)",
+   "version": "13",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the profile, matched byte for byte by a real OkHttp 4.12 client on a OnePlus 9R running Android 13 - same JA4, same server-side ja4_r, same HTTP/2 fingerprint - and again on the Android cloud phone (redroid Android 13, real network), where tls.peet.ws reported the same ja4 and Akamai fingerprint (tools/capture/phone_capture.py --echo), tools/capture/raw/android_okhttp13.json",
+   "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_confirmed2",
+   "family": "android",
+   "client": "Confirmed Android app, second profile (confirmed on a device)",
+   "version": "",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_confirmed2.json",
+   "ja4": "t12d1210h2_d34a8e72043a_f88f2b2eb673",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_mesh",
+   "family": "android",
+   "client": "Mesh Android app, system WebView (tls-client profile)",
+   "version": "",
+   "platform": "android",
+   "library": "webview",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_mesh.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_mesh1",
+   "family": "android",
+   "client": "Mesh Android app, HTTP/1.1 (confirmed on a device)",
+   "version": "",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_mesh1.json",
+   "ja4": "t12d1409h1_c866b44c5a26_b39be8c56a14",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp7",
+   "family": "okhttp",
+   "client": "OkHttp on Android 7 (confirmed on a device)",
+   "version": "7",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp7.json",
+   "ja4": "t12d1208h2_d34a8e72043a_31a7e1922da8",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 2 captured signature algorithms: rsa_pkcs1_sha224, ecdsa_sha224 (8 sent)."
+   ]
+  },
+  {
+   "name": "android_okhttp8",
+   "family": "okhttp",
+   "client": "OkHttp 4 on Android 8 (confirmed on a device)",
+   "version": "8",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp8.json",
+   "ja4": "t12d1209h2_d34a8e72043a_e08eabe7240f",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp9",
+   "family": "okhttp",
+   "client": "OkHttp 4 on Android 9 (confirmed on a device)",
+   "version": "9",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp9.json",
+   "ja4": "t12d1209h2_d34a8e72043a_b39be8c56a14",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp10",
+   "family": "okhttp",
+   "client": "OkHttp 4 on Android 10 (tls-client profile)",
+   "version": "10",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp10.json",
+   "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp11",
+   "family": "okhttp",
+   "client": "OkHttp 4 on Android 11 (tls-client profile)",
+   "version": "11",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp11.json",
+   "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_okhttp12",
+   "family": "okhttp",
+   "client": "OkHttp 4 on Android 12 (tls-client profile)",
+   "version": "12",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_okhttp12.json",
+   "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_nike",
+   "family": "android",
+   "client": "Nike Android app (tls-client profile)",
+   "version": "",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_nike.json",
+   "ja4": "t13d1513h2_8daaf6152771_eca864cca44a",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "android_zalando",
+   "family": "android",
+   "client": "Zalando Android app (confirmed on a device)",
+   "version": "",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/android_zalando.json",
+   "ja4": "t13d1514h2_8daaf6152771_43ade6aba3df",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "ios_confirmed",
+   "family": "ios",
+   "client": "NSURLSession app (Confirmed profile)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/ios_confirmed.json",
+   "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "ios_safari18_5",
+   "family": "ios",
+   "client": "Safari on iOS 18.5",
+   "version": "18.5",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/ios_safari18_5.json",
+   "ja4": "t13d2014h2_a09f3c656075_e42f34c56612",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "ios_safari26",
+   "family": "ios",
+   "client": "Safari on iOS 26.0",
+   "version": "26.0",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/ios_safari26.json",
+   "ja4": "t13d2013h2_a09f3c656075_7f0f34a4126d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "opera91",
+   "family": "opera",
+   "client": "Opera (tls-client profile)",
+   "version": "91",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/opera91.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_brave146",
+   "family": "brave",
+   "client": "Brave (tls-client profile)",
+   "version": "146",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile brave146 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_brave146.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_cloudflare",
+   "family": "cloudflare",
+   "client": "Cloudflare custom profile (tls-client)",
+   "version": "custom",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture of the tls-client profile cloudflare (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_cloudflare.json",
+   "ja4": "t12d58h1_be41622fbb2f_3c5a66c06c35",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (4 sent).",
+    "BoringSSL cannot send 11 captured signature algorithms: ed448, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512 and 7 more (12 sent)."
+   ]
+  },
+  {
+   "name": "tlsclient_chrome103",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "103",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome103 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome103.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome104",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "104",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome104 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome104.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome105",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "105",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome105 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome105.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome106",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "106",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome106 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome106.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome107",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "107",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome107 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome107.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome108",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "108",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome108 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome108.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome109",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "109",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome109 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome109.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome110",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "110",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome110 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome110.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome111",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "111",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome111 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome111.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome112",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "112",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome112 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome112.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome117",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "117",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome117 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome117.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome120",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "120",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome120 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome120.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome124",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "124",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome124 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome124.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome131",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "131",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome131 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome131.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome133",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "133",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome133 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome133.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome144",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "144",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome144 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome144.json",
+   "ja4": "t13d1516h2_8daaf6152771_d8a2da3f94cd",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome146",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "146",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome146 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome146.json",
+   "ja4": "t13d1517h2_8daaf6152771_dcad5a053991",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome150",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "150",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome150 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome150.json",
+   "ja4": "t13d1516h2_8daaf6152771_806a8c22fdea",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_chrome152",
+   "family": "chrome",
+   "client": "Chrome (tls-client profile)",
+   "version": "152",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile chrome152 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_chrome152.json",
+   "ja4": "t13d1517h2_8daaf6152771_cb7bf5808d99",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox102",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "102",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox102 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox102.json",
+   "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox104",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "104",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox104 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox104.json",
+   "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox105",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "105",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox105 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox105.json",
+   "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox106",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "106",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox106 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox106.json",
+   "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox108",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "108",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox108 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox108.json",
+   "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox110",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "110",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox110 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox110.json",
+   "ja4": "t13d1713h2_5b57614c22b0_f81080dfc557",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox117",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "117",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox117 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox117.json",
+   "ja4": "t13d1715h2_5b57614c22b0_3d5424432f57",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox120",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "120",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox120 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox120.json",
+   "ja4": "t13d1713h2_5b57614c22b0_748f4c70de1c",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox123",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "123",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox123 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox123.json",
+   "ja4": "t13d1715h2_5b57614c22b0_5c2c66f702b0",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox132",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "132",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox132 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox132.json",
+   "ja4": "t13d1714h2_5b57614c22b0_3dd24b5ebec4",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox133",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "133",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox133 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox133.json",
+   "ja4": "t13d1714h2_5b57614c22b0_3dd24b5ebec4",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox135",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "135",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox135 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox135.json",
+   "ja4": "t13d1715h2_5b57614c22b0_a54fffd0eb61",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox147",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "147",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox147 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox147.json",
+   "ja4": "t13d1717h2_5b57614c22b0_68c5a8c2958d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_firefox148",
+   "family": "firefox",
+   "client": "Firefox (tls-client profile)",
+   "version": "148",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile firefox148 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_firefox148.json",
+   "ja4": "t13d1917h2_4d8ed5baf28e_3cbfd9057e0d",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_opera89",
+   "family": "opera",
+   "client": "Opera (tls-client profile)",
+   "version": "89",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile opera89 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_opera89.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_opera90",
+   "family": "opera",
+   "client": "Opera (tls-client profile)",
+   "version": "90",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile opera90 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_opera90.json",
+   "ja4": "t13d1516h2_8daaf6152771_e5627efa2ab1",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_safari15_6_1",
+   "family": "safari",
+   "client": "Safari on macOS (tls-client profile)",
+   "version": "15.6.1",
+   "platform": "macos",
+   "library": "webkit-macos",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile safari15_6_1 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari15_6_1.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_safari16",
+   "family": "safari",
+   "client": "Safari on macOS (tls-client profile)",
+   "version": "16.0",
+   "platform": "macos",
+   "library": "webkit-macos",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile safari16 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari16.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_safari_ipad15_6",
+   "family": "safari",
+   "client": "Safari on iPad (tls-client profile)",
+   "version": "15.6",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile safari_ipad15_6 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_safari_ipad15_6.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_mms",
+   "family": "ios",
+   "client": "NSURLSession app (MMS profile)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_mms (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms.json",
+   "ja4": "t13d1810_e8a523a41297_78e6aca7449b",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_mms2",
+   "family": "ios",
+   "client": "NSURLSession app (MMS profile 2)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_mms2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms2.json",
+   "ja4": "t13d1810_e8a523a41297_78e6aca7449b",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_mms3",
+   "family": "ios",
+   "client": "NSURLSession app (MMS profile 3)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_mms3 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mms3.json",
+   "ja4": "t13d1314h2_f57a46bbacb6_2a6581477f52",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_mesh",
+   "family": "ios",
+   "client": "NSURLSession app (Mesh profile)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_mesh (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mesh.json",
+   "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_mesh2",
+   "family": "ios",
+   "client": "NSURLSession app (Mesh profile 2)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_mesh2 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_mesh2.json",
+   "ja4": "t13d1714h2_0633f72d41ca_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_nike",
+   "family": "ios",
+   "client": "NSURLSession app (Nike profile)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_nike (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_nike.json",
+   "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_zalando",
+   "family": "ios",
+   "client": "NSURLSession app (Zalando profile)",
+   "version": "",
+   "platform": "ios",
+   "library": "cfnetwork",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_zalando (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_zalando.json",
+   "ja4": "t13d1314h2_f57a46bbacb6_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_safari15_5",
+   "family": "ios",
+   "client": "Safari on iOS 15.5",
+   "version": "15.5",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_safari15_5 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari15_5.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_safari15_6",
+   "family": "ios",
+   "client": "Safari on iOS 15.6",
+   "version": "15.6",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_safari15_6 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari15_6.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_safari16",
+   "family": "ios",
+   "client": "Safari on iOS 16.0",
+   "version": "16.0",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_safari16 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari16.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_safari17",
+   "family": "ios",
+   "client": "Safari on iOS 17.0",
+   "version": "17.0",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_safari17 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari17.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "tlsclient_ios_safari18",
+   "family": "ios",
+   "client": "Safari on iOS 18.0",
+   "version": "18.0",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the tls-client profile ios_safari18 (bogdanfinn/tls-client, sent by its Go harness), tools/capture/raw/tlsclient_ios_safari18.json",
+   "ja4": "t13d2014h2_a09f3c656075_14788d8d241b",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "utls_chrome58",
+   "family": "chrome",
+   "client": "Chrome 58 (uTLS ClientHello)",
+   "version": "58",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome58 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome58.json",
+   "ja4": "t12d1311h1_8b80da21ef18_eb7c9aabf852",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
+    "The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+   ]
+  },
+  {
+   "name": "utls_chrome62",
+   "family": "chrome",
+   "client": "Chrome 62 (uTLS ClientHello)",
+   "version": "62",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome62 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome62.json",
+   "ja4": "t12d1311h1_8b80da21ef18_eb7c9aabf852",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
+    "The capture greases only the cipher suite, extension, group; BoringSSL's GREASE switch greases the cipher, group, version, key-share and extension lists together."
+   ]
+  },
+  {
+   "name": "utls_chrome70",
+   "family": "chrome",
+   "client": "Chrome 70 (uTLS ClientHello)",
+   "version": "70",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome70 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome70.json",
+   "ja4": "t13d1616h1_46e7e9700bed_4551aecd7b38",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome72",
+   "family": "chrome",
+   "client": "Chrome 72 (uTLS ClientHello)",
+   "version": "72",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome72 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome72.json",
+   "ja4": "t13d1615h1_46e7e9700bed_45f260be83e2",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome83",
+   "family": "chrome",
+   "client": "Chrome 83 (uTLS ClientHello)",
+   "version": "83",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome83 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome83.json",
+   "ja4": "t13d1515h1_8daaf6152771_de4a06bb82e3",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome87",
+   "family": "chrome",
+   "client": "Chrome 87 (uTLS ClientHello)",
+   "version": "87",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome87 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome87.json",
+   "ja4": "t13d1515h1_8daaf6152771_de4a06bb82e3",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome96",
+   "family": "chrome",
+   "client": "Chrome 96 (uTLS ClientHello)",
+   "version": "96",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome96 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome96.json",
+   "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome100",
+   "family": "chrome",
+   "client": "Chrome 100 (uTLS ClientHello)",
+   "version": "100",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome100 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome100.json",
+   "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome102",
+   "family": "chrome",
+   "client": "Chrome 102 (uTLS ClientHello)",
+   "version": "102",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome102 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome102.json",
+   "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome106shuffle",
+   "family": "chrome",
+   "client": "Chrome 106 with shuffled extensions (uTLS)",
+   "version": "106 shuffled",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome106shuffle (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome106shuffle.json",
+   "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome115pq",
+   "family": "chrome",
+   "client": "Chrome 115 with PQ key share (uTLS)",
+   "version": "115 PQ",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome115pq (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome115pq.json",
+   "ja4": "t13d1515h1_8daaf6152771_f37e75b10bcc",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome120",
+   "family": "chrome",
+   "client": "Chrome 120 (uTLS ClientHello)",
+   "version": "120",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome120 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome120.json",
+   "ja4": "t13d1517h1_8daaf6152771_b1ff8ab2d16f",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome120pq",
+   "family": "chrome",
+   "client": "Chrome 120 with PQ key share (uTLS)",
+   "version": "120 PQ",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome120pq (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome120pq.json",
+   "ja4": "t13d1516h1_8daaf6152771_02713d6af862",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome131",
+   "family": "chrome",
+   "client": "Chrome 131 (uTLS ClientHello)",
+   "version": "131",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome131 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome131.json",
+   "ja4": "t13d1516h1_8daaf6152771_02713d6af862",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_chrome133",
+   "family": "chrome",
+   "client": "Chrome 133 (uTLS ClientHello)",
+   "version": "133",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for chrome133 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_chrome133.json",
+   "ja4": "t13d1516h1_8daaf6152771_d8a2da3f94cd",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox55",
+   "family": "firefox",
+   "client": "Firefox 55 (uTLS ClientHello)",
+   "version": "55",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox55 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox55.json",
+   "ja4": "t12d159h1_073e58a039a6_e70312a1ce2c",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox56",
+   "family": "firefox",
+   "client": "Firefox 56 (uTLS ClientHello)",
+   "version": "56",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox56 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox56.json",
+   "ja4": "t12d159h1_073e58a039a6_e70312a1ce2c",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox63",
+   "family": "firefox",
+   "client": "Firefox 63 (uTLS ClientHello)",
+   "version": "63",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox63 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox63.json",
+   "ja4": "t13d1814h1_29a2cd9e9f10_d267a5f792d4",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox65",
+   "family": "firefox",
+   "client": "Firefox 65 (uTLS ClientHello)",
+   "version": "65",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox65 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox65.json",
+   "ja4": "t13d1814h1_29a2cd9e9f10_d267a5f792d4",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox99",
+   "family": "firefox",
+   "client": "Firefox 99 (uTLS ClientHello)",
+   "version": "99",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox99 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox99.json",
+   "ja4": "t13d1815h1_e8a523a41297_3d5424432f57",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox102",
+   "family": "firefox",
+   "client": "Firefox 102 (uTLS ClientHello)",
+   "version": "102",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox102 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox102.json",
+   "ja4": "t13d1715h1_5b57614c22b0_3d5424432f57",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox105",
+   "family": "firefox",
+   "client": "Firefox 105 (uTLS ClientHello)",
+   "version": "105",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox105 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox105.json",
+   "ja4": "t13d1715h1_5b57614c22b0_3d5424432f57",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_firefox120",
+   "family": "firefox",
+   "client": "Firefox 120 (uTLS ClientHello)",
+   "version": "120",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for firefox120 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_firefox120.json",
+   "ja4": "t13d1715h1_5b57614c22b0_5c2c66f702b0",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_safari16",
+   "family": "safari",
+   "client": "Safari 16.0 (uTLS ClientHello)",
+   "version": "16.0",
+   "platform": "macos",
+   "library": "webkit-macos",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for safari16 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_safari16.json",
+   "ja4": "t13d2014h1_a09f3c656075_14788d8d241b",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_ios11",
+   "family": "ios",
+   "client": "Safari on iOS 11.1 (uTLS)",
+   "version": "11.1",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios11 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios11.json",
+   "ja4": "t12d2010h1_2a284e3b0c56_f05fdf8c38a9",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_ios12",
+   "family": "ios",
+   "client": "Safari on iOS 12.1 (uTLS)",
+   "version": "12.1",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios12 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios12.json",
+   "ja4": "t12d2310h1_f91c41aead95_12b7a1cb7c36",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_ios13",
+   "family": "ios",
+   "client": "Safari on iOS 13 (uTLS)",
+   "version": "13.0",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios13 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios13.json",
+   "ja4": "t13d2613h1_2802a3db6c62_845d286b0d67",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_ios14",
+   "family": "ios",
+   "client": "Safari on iOS 14 (uTLS)",
+   "version": "14.0",
+   "platform": "ios",
+   "library": "webkit",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for ios14 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_ios14.json",
+   "ja4": "t13d2613h1_2802a3db6c62_845d286b0d67",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_android11okhttp",
+   "family": "okhttp",
+   "client": "OkHttp on Android 11 (uTLS ClientHello)",
+   "version": "11",
+   "platform": "android",
+   "library": "conscrypt",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for android11okhttp (refraction-networking/utls, sent by its Go harness); the shape is confirmed on real hardware by OkHttp 3.12 with TLS 1.2 capped on an Android 13 device - same ciphers, extensions, signature algorithms and c hash (036209cd1ead), tools/capture/raw/utls_android11okhttp.json",
+   "ja4": "t12d128h1_d34a8e72043a_036209cd1ead",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_edge85",
+   "family": "edge",
+   "client": "Edge 85 (uTLS ClientHello)",
+   "version": "85",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for edge85 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_edge85.json",
+   "ja4": "t13d1515h1_8daaf6152771_de4a06bb82e3",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_edge106",
+   "family": "edge",
+   "client": "Edge 106 (uTLS ClientHello)",
+   "version": "106",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for edge106 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_edge106.json",
+   "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_360_7_5",
+   "family": "360",
+   "client": "360 Browser 7.5 (uTLS ClientHello)",
+   "version": "7.5",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for 360_7_5 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_360_7_5.json",
+   "ja4": "t12d2010h1_0bf03fa604e3_736b2a1ed4d3",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list.",
+    "BoringSSL cannot send 5 captured cipher suites: TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_RC4_128_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_RC4_128_SHA and 1 more (15 sent)."
+   ]
+  },
+  {
+   "name": "utls_360_11_0",
+   "family": "360",
+   "client": "360 Browser 11.0 (uTLS ClientHello)",
+   "version": "11.0",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for 360_11_0 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_360_11_0.json",
+   "ja4": "t13d1616h1_46e7e9700bed_4551aecd7b38",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "utls_qq11_1",
+   "family": "qq",
+   "client": "QQ Browser 11.1 (uTLS ClientHello)",
+   "version": "11.1",
+   "platform": "windows",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture of the uTLS ClientHelloID for qq11_1 (refraction-networking/utls, sent by its Go harness), tools/capture/raw/utls_qq11_1.json",
+   "ja4": "t13d1516h1_8daaf6152771_e5627efa2ab1",
+   "http1Only": true,
+   "deviations": [
+    "The capture ran over HTTP/1.1: ALPN advertises only http/1.1, not the client's full h2 list."
+   ]
+  },
+  {
+   "name": "go1.21",
+   "family": "go",
+   "client": "Go net/http",
+   "version": "go1.21.13",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/go1.21.json",
+   "ja4": "t13d1911h2_9dc949149365_e7c285222651",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites."
+   ]
+  },
+  {
+   "name": "go1.22",
+   "family": "go",
+   "client": "Go net/http",
+   "version": "go1.22.x",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/go1.22.json",
+   "ja4": "t13d1411h2_cbb2034c60b8_e7c285222651",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites."
+   ]
+  },
+  {
+   "name": "go1.23",
+   "family": "go",
+   "client": "Go net/http",
+   "version": "go1.23.x",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/go1.23.json",
+   "ja4": "t13d1311h2_f57a46bbacb6_e7c285222651",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites."
+   ]
+  },
+  {
+   "name": "go1.24",
+   "family": "go",
+   "client": "Go net/http",
+   "version": "go1.24.x",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/go1.24.json",
+   "ja4": "t13d1311h2_f57a46bbacb6_e7c285222651",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites."
+   ]
+  },
+  {
+   "name": "node24_https",
+   "family": "node",
+   "client": "Node.js https",
+   "version": "24 (OpenSSL 3.5)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/node24_https.json",
+   "ja4": "t13d5211_b262b3658495_8e6e362c5eac",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 23 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_DHE_RSA_WITH_AES_256_CCM and 19 more (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent)."
+   ]
+  },
+  {
+   "name": "node24_http2",
+   "family": "node",
+   "client": "Node.js http2",
+   "version": "24 (OpenSSL 3.5)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/node24_http2.json",
+   "ja4": "t13d5212h2_b262b3658495_8e6e362c5eac",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 23 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_DHE_RSA_WITH_AES_256_CCM and 19 more (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent)."
+   ]
+  },
+  {
+   "name": "curl7.88.1_h2",
+   "family": "curl",
+   "client": "libcurl with OpenSSL, HTTP/2",
+   "version": "7.88.1 (OpenSSL 1.1.1t)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/curl7.88.1_h2.json",
+   "ja4": "t13d3112h2_e8f1e7e78f70_8d633dac7124",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (4 sent)."
+   ]
+  },
+  {
+   "name": "curl7.88.1_http1",
+   "family": "curl",
+   "client": "libcurl with OpenSSL, HTTP/1.1",
+   "version": "7.88.1 (OpenSSL 1.1.1t)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/curl7.88.1_http1.json",
+   "ja4": "t13d3112h1_e8f1e7e78f70_8d633dac7124",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (4 sent)."
+   ]
+  },
+  {
+   "name": "curl8.10.1_h2",
+   "family": "curl",
+   "client": "libcurl with OpenSSL, HTTP/2",
+   "version": "8.10.1 (OpenSSL 3.x)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/curl8.10.1_h2.json",
+   "ja4": "t13d3112h2_e8f1e7e78f70_6bebaf5329ac",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "curl8.10.1_http1",
+   "family": "curl",
+   "client": "libcurl with OpenSSL, HTTP/1.1",
+   "version": "8.10.1 (OpenSSL 3.x)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/curl8.10.1_http1.json",
+   "ja4": "t13d3112h1_e8f1e7e78f70_6bebaf5329ac",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "python3.9_urllib",
+   "family": "python",
+   "client": "Python urllib",
+   "version": "3.9.24 (OpenSSL 3.5)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.9_urllib.json",
+   "ja4": "t13d3013_1d37bd780c83_5ae85263eb3b",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 1 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent)."
+   ]
+  },
+  {
+   "name": "python3.11_urllib",
+   "family": "python",
+   "client": "Python urllib",
+   "version": "3.10-3.13 (OpenSSL 3.5)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.11_urllib.json",
+   "ja4": "t13d1714h1_ab0a1bf427ad_5ae85263eb3b",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent).",
+    "BoringSSL cannot send 13 captured signature algorithms: ed448, ecdsa_brainpoolP256r1tls13_sha256, ecdsa_brainpoolP384r1tls13_sha384, ecdsa_brainpoolP512r1tls13_sha512 and 9 more (13 sent)."
+   ]
+  },
+  {
+   "name": "java8_urlconn",
+   "family": "java",
+   "client": "Java HttpsURLConnection",
+   "version": "8u504",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/java8_urlconn.json",
+   "ja4": "t13d339_80cecea31fe6_9da38b6fd1bc",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 7 captured cipher suites: TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256 and 3 more (26 sent).",
+    "BoringSSL cannot send 3 captured groups: ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (5 sent)."
+   ]
+  },
+  {
+   "name": "java11_httpclient",
+   "family": "java",
+   "client": "Java HttpClient",
+   "version": "11 (Temurin)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/java11_httpclient.json",
+   "ja4": "t13d3112h2_1d947a95fc68_b72e173852fa",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "java11_urlconn",
+   "family": "java",
+   "client": "Java HttpsURLConnection",
+   "version": "11 (Temurin)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/java11_urlconn.json",
+   "ja4": "t13d3111_1d947a95fc68_b72e173852fa",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "java17_urlconn",
+   "family": "java",
+   "client": "Java HttpsURLConnection",
+   "version": "17 (Temurin)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/java17_urlconn.json",
+   "ja4": "t13d3112_1d947a95fc68_7e1102d2036b",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 8 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256 and 4 more (23 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "openssl1.1_sclient",
+   "family": "openssl",
+   "client": "OpenSSL s_client",
+   "version": "1.1.1w (Alpine 3.15)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/openssl1.1_sclient.json",
+   "ja4": "t13d3111h1_e8f1e7e78f70_5ac7197df9d2",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (4 sent)."
+   ]
+  },
+  {
+   "name": "openssl3.3_sclient",
+   "family": "openssl",
+   "client": "OpenSSL s_client",
+   "version": "3.3.7 (Alpine 3.20)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/openssl3.3_sclient.json",
+   "ja4": "t13d3111h1_e8f1e7e78f70_518fb456ca59",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "wget1.21_bookworm",
+   "family": "wget",
+   "client": "GNU Wget + GnuTLS",
+   "version": "1.21.3 (Debian bookworm)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/wget1.21_bookworm.json",
+   "ja4": "t13d2913_723694b0fccc_899037bd0b8c",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 8 captured cipher suites: TLS_AES_128_CCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM, TLS_ECDHE_ECDSA_WITH_AES_128_CCM, TLS_RSA_WITH_AES_256_CCM and 4 more (21 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "php8.1_streams",
+   "family": "php",
+   "client": "PHP streams",
+   "version": "8.1.34 (OpenSSL 3.5)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/php8.1_streams.json",
+   "ja4": "t13d6811_13e0e9e1c501_8e6e362c5eac",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 39 captured cipher suites: TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_256_CBC_SHA and 35 more (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent)."
+   ]
+  },
+  {
+   "name": "go1.20",
+   "family": "go",
+   "client": "Go net/http",
+   "version": "go1.20 (pre-1.21 extension set)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/go1.20.json",
+   "ja4": "t13d1910h2_9dc949149365_97f8aa674fd9",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites.",
+    "BoringSSL always sends extended_master_secret (23); the capture omits it."
+   ]
+  },
+  {
+   "name": "python3.8_urllib",
+   "family": "python",
+   "client": "Python urllib",
+   "version": "3.8.20 (OpenSSL 1.1.1)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/python3.8_urllib.json",
+   "ja4": "t13d3112_e8f1e7e78f70_d339722ba4af",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 2 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_EMPTY_RENEGOTIATION_INFO (29 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "ruby3.3_nethttp",
+   "family": "ruby",
+   "client": "Ruby Net::HTTP",
+   "version": "3.3.13 (OpenSSL 3.5)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/ruby3.3_nethttp.json",
+   "ja4": "t13d3012_1d37bd780c83_89ab6efea773",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 1 captured cipher suites: TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (29 sent).",
+    "BoringSSL cannot send 1 captured groups: X448 (30) (7 sent)."
+   ]
+  },
+  {
+   "name": "deno_fetch",
+   "family": "deno",
+   "client": "Deno fetch",
+   "version": "2.9.8 (rustls)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "close",
+   "source": "tls.peet.ws capture, tools/capture/raw/deno_fetch.json",
+   "ja4": "t13d1011h2_61a7ad8aa9b6_f9531d972513",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (9 sent)."
+   ]
+  },
+  {
+   "name": "dart_httpclient",
+   "family": "dart",
+   "client": "Dart dart:io HttpClient",
+   "version": "3.13",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/dart_httpclient.json",
+   "ja4": "t13d1710_5b57614c22b0_78e6aca7449b",
+   "http1Only": true,
+   "deviations": []
+  },
+  {
+   "name": "erlang_ssl",
+   "family": "erlang",
+   "client": "Erlang/OTP ssl over httpc",
+   "version": "OTP 27",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/erlang_ssl.json",
+   "ja4": "t13d257_77cab16fc9f0_78a613864d9e",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 14 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO, TLS_AES_128_CCM_SHA256, TLS_AES_128_CCM_8_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CCM and 10 more (11 sent).",
+    "BoringSSL always sends the TLS 1.3 cipher suites before the TLS 1.2 suites; the capture lists them after the TLS 1.2 suites."
+   ]
+  },
+  {
+   "name": "dotnet8_http1",
+   "family": "dotnet",
+   "client": ".NET HttpClient, HTTP/1.1",
+   "version": "8.0.33 (SocketsHttpHandler + OpenSSL)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/dotnet8_http1.json",
+   "ja4": "t13d1211_a538d02d76d5_f6eeaf393d2e",
+   "http1Only": true,
+   "deviations": [
+    "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (11 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  },
+  {
+   "name": "chrome113",
+   "family": "chrome",
+   "client": "Chrome for Testing (headless)",
+   "version": "113.0.5672.0",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "exact",
+   "source": "tls.peet.ws capture, tools/capture/raw/chrome113.json",
+   "ja4": "t13d1516h2_8daaf6152771_02713d6af862",
+   "http1Only": false,
+   "deviations": []
+  },
+  {
+   "name": "dotnet8_http2",
+   "family": "dotnet",
+   "client": ".NET HttpClient, HTTP/2",
+   "version": "8.0.33 (SocketsHttpHandler + OpenSSL)",
+   "platform": "linux",
+   "library": "",
+   "fidelity": "partial",
+   "source": "tls.peet.ws capture, tools/capture/raw/dotnet8_http2.json",
+   "ja4": "t13d1212h2_a538d02d76d5_f6eeaf393d2e",
+   "http1Only": false,
+   "deviations": [
+    "BoringSSL cannot send 1 captured cipher suites: TLS_EMPTY_RENEGOTIATION_INFO (11 sent).",
+    "BoringSSL cannot send 4 captured groups: X448 (30), ffdhe4096 (258), ffdhe6144 (259), ffdhe8192 (260) (6 sent)."
+   ]
+  }
+ ],
+ "aliasList": [
+  {
+   "name": "chrome_android",
+   "target": "chrome131_android"
+  },
+  {
+   "name": "safari_ios",
+   "target": "safari270_ios"
+  },
+  {
+   "name": "okhttp_android",
+   "target": "okhttp4_android"
+  },
+  {
+   "name": "okhttp_4_9_3_android",
+   "target": "android_okhttp13"
+  },
+  {
+   "name": "okhttp_4_10_0_android",
+   "target": "android_okhttp13"
+  },
+  {
+   "name": "okhttp_4_12_0_android",
+   "target": "android_okhttp13"
+  },
+  {
+   "name": "conscrypt_2_1_0_android",
+   "target": "android_conscrypt13"
+  },
+  {
+   "name": "cronet_98_android",
+   "target": "android_cronet101"
+  },
+  {
+   "name": "cronet_102_android",
+   "target": "android_cronet101"
+  },
+  {
+   "name": "cronet_108_android",
+   "target": "android_cronet101"
+  },
+  {
+   "name": "okhttp_5_1_0_android",
+   "target": "android_okhttp5"
+  },
+  {
+   "name": "okhttp_5_2_2_android",
+   "target": "android_okhttp5"
+  },
+  {
+   "name": "okhttp_5_3_2_android",
+   "target": "android_okhttp5"
+  },
+  {
+   "name": "okhttp_5_4_0_android",
+   "target": "android_okhttp5"
+  },
+  {
+   "name": "okhttp_5_5_1_android",
+   "target": "android_okhttp5"
+  },
+  {
+   "name": "okhttp_3_12_0_android",
+   "target": "android_okhttp3_12"
+  },
+  {
+   "name": "conscrypt_2_7_0_android",
+   "target": "android_conscrypt2_7"
+  },
+  {
+   "name": "conscrypt_1_4_2_android",
+   "target": "android_conscrypt1_4_2"
+  },
+  {
+   "name": "conscrypt_2_5_2_android",
+   "target": "android_conscrypt13"
+  },
+  {
+   "name": "golang",
+   "target": "go1.26"
+  },
+  {
+   "name": "python",
+   "target": "python3.12_requests"
+  },
+  {
+   "name": "curl",
+   "target": "curl8.5_h2"
+  },
+  {
+   "name": "java",
+   "target": "java21_httpclient"
+  },
+  {
+   "name": "node",
+   "target": "node22_http2"
+  },
+  {
+   "name": "bun",
+   "target": "bun1.3.14"
+  },
+  {
+   "name": "php",
+   "target": "php8.3_curl"
+  },
+  {
+   "name": "wget",
+   "target": "wget1.21.4"
+  },
+  {
+   "name": "perl",
+   "target": "perl5_lwp"
+  },
+  {
+   "name": "rust",
+   "target": "rust_reqwest_rustls"
+  },
+  {
+   "name": "httpx",
+   "target": "python3.12_httpx"
+  },
+  {
+   "name": "chrome",
+   "target": "chromium156"
+  },
+  {
+   "name": "firefox",
+   "target": "firefox158"
+  },
+  {
+   "name": "android",
+   "target": "android_okhttp13"
+  },
+  {
+   "name": "android7",
+   "target": "android_okhttp7"
+  },
+  {
+   "name": "android8",
+   "target": "android_okhttp8"
+  },
+  {
+   "name": "android9",
+   "target": "android_okhttp9"
+  },
+  {
+   "name": "android10",
+   "target": "android_okhttp10"
+  },
+  {
+   "name": "android11",
+   "target": "android_okhttp11"
+  },
+  {
+   "name": "android12",
+   "target": "android_okhttp12"
+  },
+  {
+   "name": "nike",
+   "target": "android_nike"
+  },
+  {
+   "name": "zalando",
+   "target": "android_zalando"
+  },
+  {
+   "name": "ios",
+   "target": "ios_safari26"
+  },
+  {
+   "name": "opera",
+   "target": "opera91"
+  },
+  {
+   "name": "openssl",
+   "target": "openssl3_sclient"
+  },
+  {
+   "name": "ruby",
+   "target": "ruby3.3_nethttp"
+  },
+  {
+   "name": "deno",
+   "target": "deno_fetch"
+  },
+  {
+   "name": "dart",
+   "target": "dart_httpclient"
+  },
+  {
+   "name": "erlang",
+   "target": "erlang_ssl"
+  },
+  {
+   "name": "dotnet",
+   "target": "dotnet8_http2"
+  }
+ ]
+}

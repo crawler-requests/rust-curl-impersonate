@@ -1,0 +1,5 @@
+# Build output and installed packages; `npm ci` restores them.
+node_modules/
+dist/
+*.local
+*.tsbuildinfo
