@@ -2987,3 +2987,7 @@ body {
   font-size: 14px;
   color: var(--ink-muted);
 }
+
+.inline-link {
+  color: var(--accent-ink);
+}

@@ -132,6 +132,19 @@ export function EvidencePage() {
       <section className="section">
         <span className="section__kicker">
           <AreaMark icon="evidence" />
+          线上实测
+        </span>
+        <h2 className="section__title">审计之外，还跑了一次真实请求</h2>
+        <p className="section__lede">
+          审计从抓包里重算哈希，证明记录与抓包一致；还有一步是拿编译好的库真发一次请求，
+          让回显服务写出它收到的握手。<a href="#/verification" className="inline-link">实测</a>
+          页列出了最近一轮的逐条结果。
+        </p>
+      </section>
+
+      <section className="section">
+        <span className="section__kicker">
+          <AreaMark icon="evidence" />
           证据在哪里
         </span>
         <h2 className="section__title">仓库里可以直接查</h2>
