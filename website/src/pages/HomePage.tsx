@@ -5,6 +5,7 @@ import { FAMILY_PAGES } from "../data/families";
 import { familyIcon } from "../components/icons";
 import { Reveal } from "../components/Reveal";
 import { HandshakeAnatomy } from "../components/HandshakeAnatomy";
+import { Faq } from "../components/Faq";
 import { handshakeTotals } from "../data/handshakes";
 
 // The landing page: what this is, the problem it removes, and where to read
@@ -40,6 +41,12 @@ const ROUTES = [
     kicker: "可信度",
     title: "没有一条记录是写出来的",
     body: "审计脚本从抓包里重新算 JA4，对不上就让 CI 失败。标为 close 的记录写明哪一项发不出来。",
+  },
+  {
+    to: "/limits",
+    kicker: "边界",
+    title: "发不出来的东西写在明处",
+    body: "ML-DSA、扩展 4832、真实 ECH、X448 与 pre_shared_key：哪些有补丁、哪些做不到，逐项列出。",
   },
 ];
 
@@ -138,6 +145,10 @@ export function HomePage() {
           ))}
         </div>
       </section>
+      </Reveal>
+
+      <Reveal>
+        <Faq />
       </Reveal>
 
       <Reveal delay={90}>

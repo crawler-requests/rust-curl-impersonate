@@ -13,6 +13,7 @@ const NAV = [
   { to: "/library", label: "指纹库" },
   { to: "/usage", label: "用法" },
   { to: "/evidence", label: "可信度" },
+  { to: "/limits", label: "边界" },
 ];
 
 // Under 920px the wordmark, the links and the badge no longer fit on one line

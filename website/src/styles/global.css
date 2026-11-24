@@ -2169,3 +2169,174 @@ body {
   color: var(--ink-muted);
   max-width: 62ch;
 }
+
+/* --- limits -------------------------------------------------------------- */
+
+.limits__table-wrap {
+  overflow-x: auto;
+}
+
+.limits__table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.limits__table th {
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-weight: 500;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.limits__table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  vertical-align: top;
+}
+
+.limits__table td.mono {
+  font-size: 12px;
+  color: var(--accent-ink);
+  white-space: nowrap;
+}
+
+.limits__body {
+  line-height: 1.7;
+  color: var(--ink-muted);
+  font-size: 13.5px;
+}
+
+.limits__state {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.limits__state--ok {
+  background: #e8efe9;
+  color: var(--ok);
+}
+
+.limits__state--no {
+  background: #f3e4dc;
+  color: var(--accent-ink);
+}
+
+.limits__state--part {
+  background: var(--paper-raised);
+  color: var(--ink-muted);
+}
+
+/* On a phone the four-column table is wider than the screen; stacking each
+   row into a small card keeps the explanation readable without a sideways
+   scroll. */
+@media (max-width: 720px) {
+  .limits__table {
+    min-width: 0;
+  }
+  .limits__table thead {
+    display: none;
+  }
+  .limits__table,
+  .limits__table tbody,
+  .limits__table tr,
+  .limits__table td {
+    display: block;
+    width: 100%;
+  }
+  .limits__table tr {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .limits__table td {
+    border-bottom: 0;
+    padding: 2px 0;
+  }
+  .limits__table td.mono {
+    font-size: 12.5px;
+  }
+  .limits__body {
+    margin-top: 6px;
+  }
+}
+
+/* --- faq ----------------------------------------------------------------- */
+
+.faq__list {
+  border-top: 1px solid var(--line);
+  max-width: 780px;
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq__q {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  padding: 16px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15.5px;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq__q .anticon {
+  color: var(--ink-muted);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.faq__q:hover {
+  color: var(--accent-ink);
+}
+
+.faq__q:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.faq__a {
+  padding: 0 0 18px;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--ink-muted);
+  max-width: 66ch;
+  animation: faq-in 0.22s ease;
+}
+
+.faq__a a {
+  color: var(--accent-ink);
+}
+
+@keyframes faq-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__a {
+    animation: none;
+  }
+}
