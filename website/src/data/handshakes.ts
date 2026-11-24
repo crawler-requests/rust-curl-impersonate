@@ -99,8 +99,18 @@ export function differencesBetween(a: Handshake, b: Handshake): Difference[] {
   const out: Difference[] = [];
   if (a.ciphers.length !== b.ciphers.length) {
     out.push({ label: "cipher 数量", from: String(a.ciphers.length), to: String(b.ciphers.length) });
-  } else if (a.ciphers.join() !== b.ciphers.join()) {
-    out.push({ label: "cipher 顺序", from: "不同", to: "不同" });
+  }
+  if (a.ciphers.join() !== b.ciphers.join()) {
+    // Naming the first index that differs is more useful than "不同": a
+    // reader can count how far the two lists agree before they diverge.
+    const common = Math.min(a.ciphers.length, b.ciphers.length);
+    let at = 0;
+    while (at < common && a.ciphers[at] === b.ciphers[at]) at += 1;
+    out.push({
+      label: "cipher 顺序",
+      from: at === 0 ? "开头就不同" : `前 ${at} 个相同`,
+      to: `第 ${at + 1} 个起不同`,
+    });
   }
   // Each side lists what the other lacks, so the row reads "mine has X that
   // yours does not" rather than a direction-dependent "少了/多了".
@@ -124,8 +134,15 @@ export function differencesBetween(a: Handshake, b: Handshake): Difference[] {
       out.push({ label: flag, from: a[flag] ? "带" : "不带", to: b[flag] ? "带" : "不带" });
     }
   }
-  if (a.http2 && b.http2 && a.http2.settings.map((s) => `${s.id}:${s.value}`).join(";") !== b.http2.settings.map((s) => `${s.id}:${s.value}`).join(";")) {
-    out.push({ label: "HTTP/2 SETTINGS", from: "不同", to: "不同" });
+  if (a.http2 && b.http2) {
+    const left = a.http2.settings.map((s) => `${s.id}:${s.value}`).join(";");
+    const right = b.http2.settings.map((s) => `${s.id}:${s.value}`).join(";");
+    if (left !== right) {
+      out.push({ label: "HTTP/2 SETTINGS", from: left || "无", to: right || "无" });
+    }
+    if (a.http2.pseudoOrder !== b.http2.pseudoOrder) {
+      out.push({ label: "伪头顺序", from: a.http2.pseudoOrder, to: b.http2.pseudoOrder });
+    }
   }
   if (!out.length) out.push({ label: "线路参数", from: "一致", to: "一致" });
   return out;

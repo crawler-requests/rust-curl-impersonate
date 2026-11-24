@@ -9,6 +9,7 @@ import { handshakeFor } from "../data/handshakes";
 import { FidelityTag } from "../components/FidelityTag";
 import { HandshakeAnatomy } from "../components/HandshakeAnatomy";
 import { VersionDiff } from "../components/VersionDiff";
+import { SharedFingerprints } from "../components/SharedFingerprints";
 import { familyIcon } from "../components/icons";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 
@@ -268,6 +269,8 @@ export function FamilyPage({ spec }: { spec: FamilySpec }) {
       </section>
 
       <VersionDiff names={diffNames} />
+
+      <SharedFingerprints names={diffNames} familyLabel={spec.nav} />
 
       <section className="section">
         <span className="section__kicker">怎么选</span>

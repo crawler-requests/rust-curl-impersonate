@@ -25,11 +25,22 @@ export function VersionDiff({ names }: { names: string[] }) {
 }
 
 function DiffBody({ list }: { list: Handshake[] }) {
-  // The list arrives newest-first, so the default pair is the newest record
-  // and the nearest one below it: the question the panel answers is whether
-  // a normal version bump changes what the server sees.
-  const [left, setLeft] = useStateSafe(0, list);
-  const [right, setRight] = useStateSafe(1, list);
+  // Default to two records of the same family: "同一族里两个版本" is the
+  // question, and on the runtimes page the first two records are normally
+  // different languages. `left` is the newest record whose family has a
+  // second entry, and `right` the next one in that family.
+  const defaultPair = useMemo(() => {
+    for (let index = 0; index < list.length; index += 1) {
+      const twin = list.findIndex(
+        (other, at) => at !== index && other.family === list[index].family,
+      );
+      if (twin >= 0) return [index, twin] as const;
+    }
+    return [0, Math.min(1, list.length - 1)] as const;
+  }, [list]);
+
+  const [left, setLeft] = useStateSafe(defaultPair[0], list);
+  const [right, setRight] = useStateSafe(defaultPair[1], list);
 
   const a = list[left];
   const b = list[right];
