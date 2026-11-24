@@ -180,6 +180,12 @@ jobs:
           fi
           echo "VERSION=$version" >> "$GITHUB_ENV"
 
+      # The export check below needs `dumpbin`, which only a developer prompt
+      # provides; this puts the MSVC toolset on PATH for the Windows jobs.
+      - name: Set up the MSVC toolset
+        if: contains(matrix.os, 'windows')
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Build
         shell: bash
         run: |
@@ -224,8 +230,14 @@ jobs:
           grep -oE 'rci_[a-z0-9_]+' bindings/ffi/rci.h | sort -u > /tmp/declared.txt
           case "${{ matrix.os }}" in
             *windows*)
-              # Dumpbin prints one export per line; the name is the last field.
+              # `dumpbin` lives in the MSVC toolset, which is not on PATH
+              # outside a developer prompt; msvc-dev-cmd puts it there.
               dumpbin //EXPORTS "$library" | grep -oE 'rci_[a-z0-9_]+' | sort -u > /tmp/exported.txt
+              ;;
+            *macos*)
+              # Mach-O has no ELF dynamic symbol table; `nm -gU` lists the
+              # defined external symbols, which is what a dylib exports.
+              nm -gU "$library" | grep -oE 'rci_[a-z0-9_]+' | sort -u > /tmp/exported.txt
               ;;
             *)
               nm -D --defined-only "$library" | awk '{print $3}' | grep -oE 'rci_[a-z0-9_]+' \
