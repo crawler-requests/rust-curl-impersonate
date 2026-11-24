@@ -13,6 +13,16 @@ const families = Array.from(new Set(records.map((r) => r.family).filter(Boolean)
   .sort()
   .map((family) => ({ label: family, value: family }));
 
+// Only a family with a page of its own gets a link here. The runtimes page
+// owns seventeen families, and repeating "运行时" on every row would say
+// nothing; the family select already covers that case.
+function specificPage(family: string) {
+  const page = familyOf(family);
+  return page && page.members.length > 0 && page.key !== "runtimes" && page.members.length <= 6
+    ? page
+    : undefined;
+}
+
 const platforms = Array.from(
   new Set(records.map((r) => r.platform).filter(Boolean)).values(),
 )
@@ -27,13 +37,13 @@ const columns = [
     render: (value: string, record: FingerprintRecord) => (
       <span className="mono" style={{ fontSize: 12.5 }}>
         {value}
-        {familyOf(record.family) ? (
+        {specificPage(record.family) ? (
           <Link
-            to={familyOf(record.family)!.path}
+            to={specificPage(record.family)!.path}
             className="library__family-link"
-            title={`去看 ${familyOf(record.family)!.nav} 这一族`}
+            title={`去看 ${specificPage(record.family)!.title}`}
           >
-            {familyOf(record.family)!.nav}
+            {specificPage(record.family)!.nav}
           </Link>
         ) : null}
       </span>
