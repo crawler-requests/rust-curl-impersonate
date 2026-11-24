@@ -1,7 +1,6 @@
-import { familySummary, records, totals } from "../data/library";
+import { familySummary, totals } from "../data/library";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { LibraryExplorer } from "../components/LibraryExplorer";
-import { FidelityTag } from "../components/FidelityTag";
 import { FidelityBreakdown } from "../components/FidelityBreakdown";
 import { familyIcon } from "../components/icons";
 
@@ -54,30 +53,6 @@ export function LibraryPage() {
         </div>
       </section>
 
-      <section className="section">
-        <span className="section__kicker">保真度</span>
-        <h2 className="section__title">哪些记录是逐字节一致的</h2>
-        <p className="section__lede">
-          exact 表示这一族的记录能用 BoringSSL 原样发出；close 与 partial 不是「不准」，
-          而是那次抓包里有这个构建发不出来的项，差额写在记录的 deviations 里。
-          选择时不必追 exact，只要那几项对你要过的服务端不重要。
-        </p>
-        <div className="fidelity-legend">
-          <span className="fidelity-legend__item">
-            <FidelityTag value="exact" />
-            <span>全部字段都发得出来，与抓包逐字节一致</span>
-          </span>
-          <span className="fidelity-legend__item">
-            <FidelityTag value="close" />
-            <span>少数项发不出来，记录里逐条写明是哪几项</span>
-          </span>
-          <span className="fidelity-legend__item">
-            <FidelityTag value="partial" />
-            <span>缺的项较多，形状与抓包明显不同，适合对照不适合冒充</span>
-          </span>
-        </div>
-      </section>
-
       <FidelityBreakdown />
 
       <section className="section">
@@ -102,37 +77,6 @@ export function LibraryPage() {
         </CodeBlock>
       </section>
 
-      <section className="section">
-        <span className="section__kicker">关于保真度</span>
-        <h2 className="section__title">exact / close / partial 的含义</h2>
-        <div className="issue-grid">
-          <div className="issue-card">
-            <div className="issue-card__title">exact</div>
-            <div className="issue-card__body">
-              抓包里的 cipher、扩展、签名算法、HTTP/2 或 QUIC 参数全部都能发出来，与记录逐字节一致。
-            </div>
-          </div>
-          <div className="issue-card">
-            <div className="issue-card__title">close</div>
-            <div className="issue-card__body">
-              有一两项 BoringSSL 不支持（例如 ffdhe 组或 X448），deviations 里写明是哪一项。
-              剩下的部分仍然逐字节一致。
-            </div>
-          </div>
-          <div className="issue-card">
-            <div className="issue-card__title">partial</div>
-            <div className="issue-card__body">
-              丢掉的项多到形状明显不同，例如若干 cipher 套件与全部 ffdhe 组都发不出来。
-              仍然来自真实抓包，只是还原度低。
-            </div>
-          </div>
-        </div>
-        <p className="note" style={{ marginTop: 16 }}>
-          当前 {records.filter((r) => r.fidelity === "exact").length} 条 exact、
-          {records.filter((r) => r.fidelity === "close").length} 条 close、
-          {records.filter((r) => r.fidelity === "partial").length} 条 partial。
-        </p>
-      </section>
     </>
   );
 }

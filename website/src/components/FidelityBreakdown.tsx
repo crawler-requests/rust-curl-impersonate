@@ -41,8 +41,9 @@ export function FidelityBreakdown() {
         <span className="section__kicker">按家族看</span>
         <h2 className="section__title">哪一族真的逐字节一致</h2>
         <p className="section__lede">
-          条形的总长是这个家族的记录数，颜色是保真度。点一下图例只看某一档，
-          能看出 exact 主要来自能找到同一实现的家族，partial 则集中在用 OpenSSL 的运行时。
+          条形的总长是这个家族的记录数，颜色是保真度。exact 表示抓包里的字段 BoringSSL 全部发得出；
+          close 是少数项发不出、差额写在 deviations 里；partial 是缺得较多、形状已明显不同。
+          点一下图例只看某一档，能看出 exact 集中在找得到同一实现的家族，partial 集中在 OpenSSL 系的运行时。
         </p>
       </div>
 
