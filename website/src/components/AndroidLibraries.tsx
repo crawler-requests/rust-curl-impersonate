@@ -1,5 +1,5 @@
 import { Card, Col, Row, Table, Tag, Typography } from "antd";
-import { androidGroups, androidRecordCount } from "../data/library";
+import { androidFidelity, androidGroups, androidRecordCount } from "../data/library";
 import type { FingerprintRecord } from "../data/library";
 import { FidelityTag } from "./FidelityTag";
 
@@ -50,28 +50,36 @@ const columns = [
 export function AndroidLibraries() {
   return (
     <section className="section" id="android">
-      <span className="section__kicker">Android 指纹</span>
-      <h2 className="section__title">Android 上每种库、每个版本都实测过</h2>
-      <Typography.Paragraph className="section__lede">
-        {androidRecordCount} 条内置记录，覆盖 OkHttp、Conscrypt 平台栈、Cronet 与 WebView。
-        每一条都对应一次真实 Android 运行时发出的 ClientHello —— Android 7.0、8.1、9、10、12、13、14
-        的模拟器与容器，以及云手机 —— 并逐字节比对了 JA4 的三段。
-      </Typography.Paragraph>
+      <div className="section__head">
+        <span className="section__kicker">Android 指纹</span>
+        <h2 className="section__title">Android 上每种库、每个版本都实测过</h2>
+        <Typography.Paragraph className="section__lede">
+          {androidRecordCount} 条内置记录，覆盖 OkHttp、Conscrypt 平台栈、Cronet 与 WebView。
+          每一条都对应一次真实 Android 运行时发出的 ClientHello —— Android 7.0、8.1、9、10、12、13、14
+          的模拟器与容器，以及云手机 —— 并逐字节比对了 JA4 的三段。
+        </Typography.Paragraph>
+        <div className="chip-row">
+          <span className="chip">{androidFidelity.exact} 条 exact</span>
+          <span className="chip">{androidFidelity.close} 条 close</span>
+          <span className="chip">7 个 Android 版本</span>
+          <span className="chip">4 种库</span>
+        </div>
+      </div>
 
       <Row gutter={[20, 20]}>
         {androidGroups.map((group) => (
           <Col xs={24} xl={12} key={group.key}>
             <Card
+              className="android-card"
               title={
-                <span style={{ fontFamily: "var(--font-display)", fontSize: 19 }}>
-                  {group.title}{" "}
-                  <Tag bordered={false} style={{ marginLeft: 6 }}>
+                <span className="android-card__title">
+                  {group.title}
+                  <Tag bordered={false} className="count-tag">
                     {group.records.length}
                   </Tag>
                 </span>
               }
               bordered
-              style={{ background: "var(--paper)", height: "100%" }}
             >
               <Typography.Paragraph
                 type="secondary"

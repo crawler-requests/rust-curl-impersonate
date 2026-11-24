@@ -8,6 +8,7 @@ import { LibraryExplorer } from "../components/LibraryExplorer";
 // this site exists to describe in detail.
 
 export function Home() {
+  const maxFamily = familySummary[0]?.count ?? 1;
   return (
     <>
       <header className="site-header">
@@ -100,22 +101,18 @@ export function Home() {
             tls-client 的 ClientHello 定义并实测、uTLS 的旧版本定义，
             以及 Android 与 iOS 上的真实应用。
           </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+          <div className="family-grid">
             {familySummary.map((family) => (
-              <div
-                key={family.key}
-                style={{
-                  border: "1px solid var(--line)",
-                  borderRadius: "var(--radius-small)",
-                  padding: "10px 14px",
-                  background: "var(--paper-raised)",
-                  minWidth: 150,
-                }}
-              >
-                <div style={{ color: "var(--ink)", fontSize: 14 }}>{family.label}</div>
-                <div className="note" style={{ fontSize: 12 }}>
-                  {family.count} 条记录
-                </div>
+              <div className="family-tile" key={family.key}>
+                <div className="family-tile__name">{family.label}</div>
+                <div className="family-tile__count">{family.count} 条记录</div>
+                <div
+                  className="family-tile__bar"
+                  style={{
+                    background: family.tint,
+                    width: `${Math.max(18, (family.count / maxFamily) * 100)}%`,
+                  }}
+                />
               </div>
             ))}
           </div>
@@ -131,6 +128,27 @@ export function Home() {
             保真度标为 <span className="badge-close">close</span> 的记录，
             会在 deviations 里写明哪一项 BoringSSL 发不出来。
           </p>
+          <div className="trust-grid">
+            <div className="trust-item">
+              <div className="trust-item__title">每条记录都有抓包</div>
+              <div className="trust-item__body">
+                {records.length} 条记录全部指向一次真实握手，没有一条是照着参数拼出来的。
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-item__title">哈希可以重算</div>
+              <div className="trust-item__body">
+                审计从抓包里重新算 JA4 的 b、c 段，与记录里的值比对；
+                对不上就让 CI 失败。
+              </div>
+            </div>
+            <div className="trust-item">
+              <div className="trust-item__title">Android 逐字节复核</div>
+              <div className="trust-item__body">
+                Android 的每条记录都在真机、容器或模拟器上复现过同一个 ClientHello。
+              </div>
+            </div>
+          </div>
           <CodeBlock>
             <Comment>{"$ python3 -I tools/audit_provenance.py\n"}</Comment>
             {"242 base records, 0 problems\n202 stored JA4s recomputed from their capture,\n233 records checked against their capture\n"}

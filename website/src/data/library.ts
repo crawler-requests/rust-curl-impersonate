@@ -52,13 +52,16 @@ const isAndroid = (record: FingerprintRecord) =>
 
 const androidRecords = records.filter(isAndroid);
 
-const group = (key: string, title: string, blurb: string, pick: (r: FingerprintRecord) => boolean): AndroidGroup => ({
+const group = (
+  key: string,
+  title: string,
+  blurb: string,
+  pick: (r: FingerprintRecord) => boolean,
+): AndroidGroup => ({
   key,
   title,
   blurb,
-  records: androidRecords
-    .filter(pick)
-    .sort((a, b) => a.name.localeCompare(b.name)),
+  records: androidRecords.filter(pick).sort((a, b) => a.name.localeCompare(b.name)),
 });
 
 export const androidGroups: AndroidGroup[] = [
@@ -89,6 +92,11 @@ export const androidGroups: AndroidGroup[] = [
 ];
 
 export const androidRecordCount = androidRecords.length;
+
+export const androidFidelity = {
+  exact: androidRecords.filter((r) => r.fidelity === "exact").length,
+  close: androidRecords.filter((r) => r.fidelity === "close").length,
+};
 
 /** Families for the general library, with counts and a readable label. */
 const FAMILY_LABELS: Record<string, string> = {
@@ -122,6 +130,26 @@ const FAMILY_LABELS: Record<string, string> = {
   qq: "QQ 浏览器",
 };
 
+// A short accent per family, used for the family tiles and the library table's
+// family column. Kept muted so the single orange stays the only loud colour.
+const FAMILY_TINTS: Record<string, string> = {
+  chrome: "#c78b5e",
+  firefox: "#c4603c",
+  safari: "#6f8f92",
+  ios: "#8a8f86",
+  android: "#b08a4a",
+  okhttp: "#9a8b63",
+  python: "#6f8f5a",
+  go: "#4e8b9a",
+  curl: "#a08a5e",
+  java: "#9a6a5e",
+  node: "#5a8f6f",
+  php: "#7a6f9a",
+  openssl: "#8a8068",
+  opera: "#a0606a",
+  rust: "#a0603c",
+};
+
 export const familySummary = Array.from(
   records.reduce((map, record) => {
     const key = record.family || "other";
@@ -133,5 +161,15 @@ export const familySummary = Array.from(
     key,
     label: FAMILY_LABELS[key] ?? key,
     count,
+    tint: FAMILY_TINTS[key] ?? "#e6e2d8",
   }))
   .sort((a, b) => b.count - a.count);
+
+/** Clipboard-friendly totals shown in the hero. */
+export const totals = {
+  records: records.length,
+  families: familySummary.length,
+  android: androidRecordCount,
+  aliases: aliases.length,
+  presets: 48,
+};

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Input, Select, Table, Tag, Typography } from "antd";
+import { Input, Segmented, Select, Table, Tag, Typography } from "antd";
 import { aliases, records } from "../data/library";
 import type { FingerprintRecord } from "../data/library";
 import { FidelityTag } from "./FidelityTag";
@@ -16,7 +16,11 @@ const columns = [
     title: "名称",
     dataIndex: "name",
     key: "name",
-    render: (value: string) => <span className="mono">{value}</span>,
+    render: (value: string) => (
+      <span className="mono" style={{ fontSize: 12.5 }}>
+        {value}
+      </span>
+    ),
     sorter: (a: FingerprintRecord, b: FingerprintRecord) => a.name.localeCompare(b.name),
   },
   {
@@ -69,11 +73,13 @@ const columns = [
 export function LibraryExplorer() {
   const [query, setQuery] = useState("");
   const [family, setFamily] = useState<string | undefined>();
+  const [onlyExact, setOnlyExact] = useState(false);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return records.filter((record) => {
       if (family && record.family !== family) return false;
+      if (onlyExact && record.fidelity !== "exact") return false;
       if (!needle) return true;
       return (
         record.name.toLowerCase().includes(needle) ||
@@ -81,7 +87,7 @@ export function LibraryExplorer() {
         record.ja4.toLowerCase().includes(needle)
       );
     });
-  }, [query, family]);
+  }, [query, family, onlyExact]);
 
   return (
     <section className="section" id="library">
@@ -107,6 +113,14 @@ export function LibraryExplorer() {
           value={family}
           onChange={(value) => setFamily(value)}
           style={{ minWidth: 200 }}
+        />
+        <Segmented
+          value={onlyExact ? "exact" : "all"}
+          onChange={(value) => setOnlyExact(value === "exact")}
+          options={[
+            { label: "全部", value: "all" },
+            { label: "仅 exact", value: "exact" },
+          ]}
         />
         <Tag bordered={false} style={{ alignSelf: "center" }}>
           匹配 {filtered.length} 条

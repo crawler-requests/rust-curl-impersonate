@@ -260,3 +260,123 @@ body {
     display: none;
   }
 }
+
+/* --- section head and chips ---------------------------------------------- */
+
+.section__head {
+  margin-bottom: 34px;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.chip {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.chip--accent {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-color: transparent;
+}
+
+/* --- android cards ------------------------------------------------------- */
+
+.android-card {
+  background: var(--paper) !important;
+  height: 100%;
+}
+
+.android-card .ant-card-head {
+  border-bottom: 1px solid var(--line);
+}
+
+.android-card__title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.count-tag {
+  margin-left: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 12px;
+}
+
+/* --- family tiles -------------------------------------------------------- */
+
+.family-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 12px;
+}
+
+.family-tile {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--paper);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.family-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.family-tile__name {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.family-tile__count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.family-tile__bar {
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 2px;
+}
+
+/* --- trust section ------------------------------------------------------- */
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  margin: 26px 0 30px;
+}
+
+.trust-item {
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 16px;
+}
+
+.trust-item__title {
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.trust-item__body {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
