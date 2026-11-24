@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { GitHubBadge } from "./GitHubBadge";
 
 // Shared page frame: the header, the page body, the footer. Each page supplies
 // its own sections.
@@ -33,7 +34,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 {item.label}
               </Link>
             ))}
-            <a href="https://github.com/crawler-requests/rust-curl-impersonate">GitHub</a>
+            <GitHubBadge />
           </nav>
         </div>
       </header>
