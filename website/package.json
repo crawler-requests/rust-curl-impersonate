@@ -10,10 +10,11 @@
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
-    "antd": "^5.22.2",
     "@ant-design/icons": "^5.5.1",
+    "antd": "^5.22.2",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",
