@@ -1,6 +1,7 @@
 import { CodeBlock, Comment } from "../components/CodeBlock";
 import { AreaMark } from "../components/icons";
 import { records, totals } from "../data/library";
+import { DeviationList } from "../components/DeviationList";
 
 // What makes the records trustworthy: the audit, the fidelity vocabulary, and
 // the limits stated plainly.
@@ -100,6 +101,19 @@ export function EvidencePage() {
             <span className="fact__text">条 partial：丢的项较多，形状明显不同</span>
           </div>
         </div>
+      </section>
+
+      <section className="section">
+        <span className="section__kicker">
+          <AreaMark icon="audit" />
+          逐条看
+        </span>
+        <h2 className="section__title">不是 exact 的那些，缺的是哪几项</h2>
+        <p className="section__lede">
+          下面按缺项归类。每一条都来自记录里的 deviations 字段，也就是审计脚本抓出来的差额；
+          点开一个家族能看到具体是哪几项发不出来。
+        </p>
+        <DeviationList />
       </section>
 
       <section className="section">

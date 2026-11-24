@@ -1,5 +1,6 @@
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { AreaMark } from "../components/icons";
+import { PresetPicker } from "../components/PresetPicker";
 
 export function UsagePage() {
   return (
@@ -148,6 +149,8 @@ export function UsagePage() {
           {")?)?;\n"}
         </CodeBlock>
       </section>
+
+      <PresetPicker />
 
       <section className="section">
         <span className="section__kicker">
