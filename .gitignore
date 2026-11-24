@@ -13,3 +13,6 @@ __pycache__/
 
 # CI scratch output
 /output.txt
+
+# the LAN/status-bar service list is machine-local
+server-url.txt
