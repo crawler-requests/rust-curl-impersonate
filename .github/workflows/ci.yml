@@ -136,3 +136,7 @@ jobs:
           printf '#include "rci.h"\nint main(void){return 0;}\n' > /tmp/hdr.c
           cc -Wall -Wextra -Werror -I bindings/ffi -o /tmp/hdr-c /tmp/hdr.c
           c++ -Wall -Wextra -Werror -I bindings/ffi -x c++ -o /tmp/hdr-cxx /tmp/hdr.c
+      # The Windows release check reads the PE export table with this script;
+      # a wrong RVA map would make it report zero exports, so test it here.
+      - name: Test the PE export reader
+        run: python3 -I scripts/test_peexports.py
