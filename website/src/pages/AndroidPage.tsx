@@ -2,6 +2,7 @@ import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { AndroidLibraries } from "../components/AndroidLibraries";
 import { HelloExplorer } from "../components/HelloExplorer";
 import { androidFidelity, androidRecordCount } from "../data/library";
+import { FeatureCoverage } from "../components/FeatureCoverage";
 import { HandshakeAnatomy } from "../components/HandshakeAnatomy";
 import { handshakeFor } from "../data/handshakes";
 
@@ -102,6 +103,8 @@ export function AndroidPage() {
         title="四份握手，四条不同的 JA4"
         lede="下面四条记录都来自 Android 13。切换看看 cipher 数量、扩展顺序与 key share 怎么变——它们之间的差别，就是服务端用来区分「哪个应用发的请求」的东西。"
       />
+
+      <FeatureCoverage members={["android", "okhttp"]} />
 
       <AndroidLibraries />
 

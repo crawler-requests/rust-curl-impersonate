@@ -10,6 +10,7 @@ import { FidelityTag } from "../components/FidelityTag";
 import { HandshakeAnatomy } from "../components/HandshakeAnatomy";
 import { VersionDiff } from "../components/VersionDiff";
 import { SharedFingerprints } from "../components/SharedFingerprints";
+import { FeatureCoverage } from "../components/FeatureCoverage";
 import { familyIcon } from "../components/icons";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 
@@ -271,6 +272,8 @@ export function FamilyPage({ spec }: { spec: FamilySpec }) {
       <VersionDiff names={diffNames} />
 
       <SharedFingerprints names={diffNames} familyLabel={spec.nav} />
+
+      <FeatureCoverage members={spec.members} />
 
       <section className="section">
         <span className="section__kicker">怎么选</span>
