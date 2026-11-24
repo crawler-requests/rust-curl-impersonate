@@ -146,7 +146,7 @@ pub use form::FormBoundary;
 pub use policy::CookieProtocol;
 pub use prepare::Prepared;
 pub use profile::{Profile, ProfileSpec};
-pub use wreq::{Method, Proxy, StatusCode};
+pub use wreq::{header, redirect, Method, Proxy, StatusCode, Version};
 pub use ws::{WebSocketUpgrade, WsError, WsFrame};
 
 /// Error returned by the client or the transport.

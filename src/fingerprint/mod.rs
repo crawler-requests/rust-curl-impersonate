@@ -1134,7 +1134,7 @@ impl LibraryEntry {
     pub fn name(&self) -> &'static str {
         match self {
             Self::Capture(record) => record.name(),
-            Self::Preset(target) => *target,
+            Self::Preset(target) => target,
         }
     }
 
@@ -1356,10 +1356,11 @@ fn compare_versions(left: &str, right: &str) -> std::cmp::Ordering {
 /// The enumeration layer is name-based: `Client::new(pool.pick()?)` after a
 /// `VersionPool` chooses. Supported rules cover the common cases without
 /// pulling in a random-number dependency at the call site.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum PoolRule {
     /// Uniform over the distinct wire shapes, so years that reuse one
     /// ClientHello do not outweigh the others.
+    #[default]
     RandomShape,
     /// Uniform over every captured record, so every captured version is
     /// equally likely.
@@ -1368,12 +1369,6 @@ pub enum PoolRule {
     Newest,
     /// A version picked by `Selector` rather than by chance.
     Fixed,
-}
-
-impl Default for PoolRule {
-    fn default() -> Self {
-        Self::RandomShape
-    }
 }
 
 /// A pool of records for one library, optionally narrowed to a version range.

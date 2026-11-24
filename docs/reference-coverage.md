@@ -88,9 +88,9 @@ API，仍保留在记录的 `deviations` 里。
 |---|---|---|
 | 库 | libcurl-impersonate（C ABI） | Rust crate（rlib） |
 | 命令行 | `curl-impersonate` + 各浏览器 wrapper 脚本 | 无 bin target；`examples/` 有 8 个演示程序 |
-| C ABI 共享库 | ✅ | ✅ 本轮新增 `bindings/ffi`（cdylib + `rci.h`，已用 Python ctypes 实测） |
+| C ABI 共享库 | ✅ | ✅ `bindings/ffi`（cdylib + `rci.h`，ABI v2：17 个导出函数，覆盖 profile 查询、带选项建客户端、请求头、二进制响应、HTTP/3、活动记录、运行时指纹注册；CI 校验头文件与导出表一致） |
 | 预编译二进制 / CI | ✅ 多平台 release | ✅ `.github/workflows/release.yml`，`v*` tag 产出 9 个平台的 cdylib（桌面/服务器目标另附 `echo`）与 `SHA256SUMS` |
-| 官方 Python/Node 绑定 | curl_cffi、impers | ❌ 本轮提供 C ABI 作为封装起点 |
+| 官方 Python/Node 绑定 | curl_cffi、impers | ❌ 不内置；C ABI v2 已是可直接封装的完整接口 |
 
 ## 5. 编译与封装状态（实测）
 
@@ -98,18 +98,30 @@ API，仍保留在记录的 `deviations` 里。
 - `cargo build --release --examples`：通过，`echo` 等示例是可执行二进制（约 9.9 MB，
   BoringSSL 静态链接）。
 - `cargo build -p rust-curl-impersonate-ffi --release`：通过，产出
-  `librust_curl_impersonate_ffi.so`（约 9.9 MB）。
+  `librust_curl_impersonate_ffi.so`（约 9.9 MB），动态导出 17 个 `rci_*` 函数，
+  与 `rci.h` 声明逐一对应（CI 与 release 都用 `nm -D`/`dumpbin` 校验）。
 - Python `ctypes` 调用 `rci_get("chrome150", "https://tls.peet.ws/api/all")`：
   HTTP 200、`h2`、UA `Chrome/150.0.0.0`、JA4 `t13d1516h2_8daaf6152771_d8a2da3f94cd`、
   Akamai h2 `1:65536;2:0;4:6291456;6:262144|15597570|0|m,s,a,p`。
+- `bindings/ffi/python/smoke.py` 对本地服务跑完 ABI v2 的全部函数：
+  profile 查询、48 预置 + 库记录枚举、默认与带选项建客户端、GET/POST、
+  请求头、非 UTF-8 body 的十六进制回传、`follow_redirects=false` 停在 302、
+  错误路径、运行时注册记录（并验证覆盖同名的内置记录生效）。
+- HTTP/3：`rci_http3_get` 对 `quic.nginx.org` 用 chrome152/firefox147/safari270
+  实测 `status 200`、9 个响应头、2523 字节 body（chrome160 因 ML-DSA 签名算法
+  被服务端拒绝，属已记录的偏差）。
 - 证据：`goal-evidence/binary-and-ffi.txt`。
 
 ## 6. 其他语言封装
 
 **可以开始。** 推荐路径：
 
-1. **Python / Node / Go / Java**：通过 `bindings/ffi` 的 C ABI。Python 用 `ctypes`
-   或 `cffi`，Node 用 `ffi-napi`/`koffi`，Go 用 cgo，Java 用 JNA/Panama。
+1. **Python / Node / Go / Java**：通过 `bindings/ffi` 的 C ABI（v2）。Python 用
+   `ctypes` 或 `cffi`，Node 用 `ffi-napi`/`koffi`，Go 用 cgo，Java 用 JNA/Panama。
+   v2 已覆盖封装所需的最小面：profile 枚举与元数据（family/platform/fidelity/
+   deviation/has_http3）、带选项建客户端（超时/代理/默认头/重定向策略/cookie
+   拆分）、逐请求头、二进制安全响应（非 UTF-8 走十六进制）、HTTP/3 GET、
+   活动记录（cookie 变更与重定向历史）、运行时注册指纹记录。
 2. **Rust 绑定框架**：Python 用 PyO3、Node 用 napi-rs、Swift/Kotlin 用 UniFFI，
    直接依赖本 crate，不需要走 C ABI。
 3. **C++**：直接 `#include "rci.h"` 链接 `.so`。

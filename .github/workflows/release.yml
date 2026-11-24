@@ -25,9 +25,12 @@ jobs:
         with:
           go-version: stable
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: release-test
+      - run: cargo clippy --workspace --all-targets -- -D warnings
       - run: cargo test --workspace
 
   build:
@@ -195,6 +198,31 @@ jobs:
             --version "$VERSION" \
             --out dist
 
+      # The header and the shipped library must agree: every rci_ function the
+      # header declares is in the library's dynamic export table. Cross builds
+      # are inspected with the target's own nm where the runner has one.
+      - name: Check exported symbols match rci.h
+        shell: bash
+        if: startsWith(matrix.target, 'x86_64') || startsWith(matrix.target, 'aarch64')
+        run: |
+          library="$(find target -path "*/${{ matrix.target }}/release" -name '*rust_curl_impersonate_ffi*' -type f | head -1)"
+          echo "library: $library"
+          grep -oE 'rci_[a-z0-9_]+' bindings/ffi/rci.h | sort -u > /tmp/declared.txt
+          case "${{ matrix.os }}" in
+            *windows*)
+              # Dumpbin ships with MSVC; list exported names one per line.
+              dumpbin //EXPORTS "$library" | awk '/rci_/{print $NF}' | sed 's/lib$/ /' | awk '{print $1}' \
+                | grep -oE 'rci_[a-z0-9_]+' | sort -u > /tmp/exported.txt
+              ;;
+            *)
+              nm -D --defined-only "$library" 2>/dev/null | awk '{print $3}' | sort -u > /tmp/exported.txt \
+                || nm --defined-only "$library" | awk '{print $3}' | sort -u > /tmp/exported.txt
+              ;;
+          esac
+          echo "declared but not exported:"
+          comm -23 /tmp/declared.txt /tmp/exported.txt | tee /tmp/missing.txt
+          test ! -s /tmp/missing.txt
+
       - uses: actions/upload-artifact@v4
         with:
           name: dist-${{ matrix.target }}
@@ -218,6 +246,27 @@ jobs:
           cd dist
           ls -l
           sha256sum *.tar.gz *.zip > SHA256SUMS
+      # A release that ships fewer platforms than the matrix builds is a
+      # silent regression; fail before publishing one.
+      - name: Every target produced an archive
+        run: |
+          count=$(find dist -maxdepth 1 \( -name '*.tar.gz' -o -name '*.zip' \) | wc -l)
+          echo "archives: $count"
+          test "$count" -eq 9
+      # Every archive carries the header a binding compiles against. Check the
+      # Linux/macOS tarballs here; Windows zips are checked in the matrix job.
+      - name: Archives carry rci.h
+        run: |
+          for archive in dist/*.tar.gz; do
+            tar -tzf "$archive" | grep -q 'include/rci.h' || {
+              echo "$archive has no include/rci.h"; exit 1;
+            }
+          done
+          for archive in dist/*.zip; do
+            unzip -l "$archive" | grep -q 'rci.h' || {
+              echo "$archive has no rci.h"; exit 1;
+            }
+          done
       - uses: softprops/action-gh-release@v2
         with:
           files: |

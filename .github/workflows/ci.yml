@@ -22,9 +22,13 @@ jobs:
         with:
           go-version: stable
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: ci-test
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Test
         run: cargo test --workspace
       # Every record must come from a capture. This fails the build if one
@@ -32,6 +36,18 @@ jobs:
       # header or HTTP/2 parameter the capture never contained.
       - name: Audit capture provenance
         run: python3 -I tools/audit_provenance.py
+
+      - name: Check the library is not empty
+        run: |
+          python3 -I - <<'PY'
+          import json
+          records = json.load(open("src/fingerprint/builtin.json"))["fingerprints"]
+          real = [r for r in records if not r.get("extends")]
+          assert len(real) >= 200, f"only {len(real)} captured records"
+          families = {r.get("family", "") for r in real} - {""}
+          assert len(families) >= 25, f"only {len(families)} families"
+          print(f"{len(real)} captures over {len(families)} families")
+          PY
 
   consumer:
     name: downstream consumer without patches
@@ -70,8 +86,11 @@ jobs:
       - name: Build and run the consumer
         run: cd consumer && cargo run --quiet
 
+  # The C ABI is what every non-Rust binding loads, so it gets its own gate:
+  # the bytes a shared library exports, the header it ships, and a runtime
+  # call through it. A shape change without a version bump fails here.
   ffi:
-    name: C ABI smoke test
+    name: C ABI (exports, header, smoke)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -79,20 +98,41 @@ jobs:
         with:
           go-version: stable
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: ci-ffi
       - name: Build shared library
         run: cargo build -p rust-curl-impersonate-ffi --release
-      - name: Exercise it from Python
+      # Every function in rci.h must be exported by the built library. The
+      # header is hand-written, so this is what keeps the two in step.
+      - name: Every declared function is exported
         run: |
-          mkdir -p site && echo 'hello from rust-curl-impersonate' > site/index.html
-          python3 -m http.server 8765 --directory site &
+          nm -D --defined-only target/release/librust_curl_impersonate_ffi.so \
+            | awk '{print $3}' | sort > /tmp/exported.txt
+          grep -oE 'rci_[a-z0-9_]+' bindings/ffi/rci.h | sort -u > /tmp/declared.txt
+          echo "declared but not exported:"
+          comm -23 /tmp/declared.txt /tmp/exported.txt | tee /tmp/missing.txt
+          test ! -s /tmp/missing.txt
+      - name: Exercise the ABI from Python
+        run: |
+          python3 -I bindings/ffi/python/testserver.py 8765 &
           for _ in $(seq 1 20); do
-            curl -sf http://127.0.0.1:8765/ >/dev/null && break
+            curl -sf http://127.0.0.1:8765/index.html >/dev/null && break
             sleep 0.5
           done
-          python3 bindings/ffi/python/demo.py chrome150 http://127.0.0.1:8765/ \
-            | tee output.txt
-          grep -q 'http status: 200' output.txt
-          grep -q 'hello from rust-curl-impersonate' output.txt
+          python3 -I bindings/ffi/python/smoke.py
+      # HTTP/3 has its own path; a failure here is a transport regression, not
+      # a flake, so it is a gate. Two profiles exercise a different QUIC preset.
+      - name: Exercise HTTP/3
+        run: |
+          for profile in chrome152 firefox147; do
+            RCI_H3_ADDR=quic.nginx.org:443 RCI_H3_PROFILE=$profile \
+              python3 -I bindings/ffi/python/smoke.py | grep 'http3 status 200'
+          done
+      - name: Header compiles as C and C++
+        run: |
+          printf '#include "rci.h"\nint main(void){return 0;}\n' > /tmp/hdr.c
+          cc -Wall -Wextra -Werror -I bindings/ffi -o /tmp/hdr-c /tmp/hdr.c
+          c++ -Wall -Wextra -Werror -I bindings/ffi -x c++ -o /tmp/hdr-cxx /tmp/hdr.c

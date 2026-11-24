@@ -138,7 +138,7 @@ fn pool_names_can_be_installed_and_used() {
     let record = pool.pick().expect("cfnetwork has records");
     let profile = Profile::find(record.name()).expect("the record resolves");
     let client = Client::new(profile).expect("the record builds a client");
-    assert!(!client.prepared().cipher_list().is_none());
+    assert!(client.prepared().cipher_list().is_some());
 }
 
 #[test]

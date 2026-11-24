@@ -1273,11 +1273,10 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 /// Stock BoringSSL rejects them; scripts/boringssl/chrome4832.patch makes them
 /// pass through. Probing keeps the test suite meaningful under both builds.
 fn sigalgs_installable(list: &str) -> bool {
-    match rust_curl_impersonate::Client::builder(rust_curl_impersonate::Profile::find("chrome150").unwrap())
-        .sigalgs(list)
-        .build()
-    {
-        Ok(_) => true,
-        Err(_) => false,
-    }
+    rust_curl_impersonate::Client::builder(
+        rust_curl_impersonate::Profile::find("chrome150").unwrap(),
+    )
+    .sigalgs(list)
+    .build()
+    .is_ok()
 }
