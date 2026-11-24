@@ -2903,3 +2903,69 @@ body {
   color: var(--ink-muted);
   max-width: 68ch;
 }
+
+/* --- platform split ------------------------------------------------------ */
+
+.split__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px 40px;
+}
+
+.split__col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.split__title {
+  font-size: 14px;
+  color: var(--ink);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.split__row {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 12px;
+}
+
+.split__label {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.split__bar {
+  display: block;
+  height: 8px;
+  border-radius: 4px;
+  background: #eee9dd;
+  overflow: hidden;
+}
+
+.split__fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--accent);
+}
+
+.split__fill--alt {
+  background: #8c9a7a;
+}
+
+.split__count {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  text-align: right;
+}
+
+.split__empty {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin: 0;
+}

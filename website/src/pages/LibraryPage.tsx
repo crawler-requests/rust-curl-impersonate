@@ -3,6 +3,7 @@ import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { LibraryExplorer } from "../components/LibraryExplorer";
 import { FidelityBreakdown } from "../components/FidelityBreakdown";
 import { SuiteFrequency } from "../components/SuiteFrequency";
+import { PlatformSplit } from "../components/PlatformSplit";
 import { familyIcon } from "../components/icons";
 
 export function LibraryPage() {
@@ -57,6 +58,8 @@ export function LibraryPage() {
       <FidelityBreakdown />
 
       <SuiteFrequency />
+
+      <PlatformSplit />
 
       <section className="section">
         <span className="section__kicker">怎么用</span>
