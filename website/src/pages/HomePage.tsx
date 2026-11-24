@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { totals } from "../data/library";
+import { FAMILY_PAGES } from "../data/families";
 import { familyIcon } from "../components/icons";
 import { Reveal } from "../components/Reveal";
 
@@ -15,10 +16,10 @@ const ROUTES = [
     body: "指纹不是「换个 User-Agent」：cipher 顺序、扩展顺序、GREASE、ECH、ALPS 决定了服务端看到的客户端。rustls 发不出这些。",
   },
   {
-    to: "/android",
-    kicker: "Android",
-    title: "每种库、每个版本都实测",
-    body: "OkHttp、Conscrypt、Cronet、WebView，覆盖 Android 7.0 到 14，每条记录都在真实运行时上复现过。",
+    to: "/clients",
+    kicker: "客户端",
+    title: "六类客户端，各有各的握手",
+    body: "Chrome、Firefox、Safari、iOS、Android 与各语言运行时。选一族进去，看它为什么与别人不一样、有哪些版本可挑。",
   },
   {
     to: "/library",
@@ -114,38 +115,13 @@ export function HomePage() {
           名称和版本对不上会被服务端看出来。
         </p>
         <div className="support-grid">
-          <div className="support-card">
-            <span className="support-card__icon">{familyIcon("chrome")}</span>
-            <span className="support-card__title">浏览器</span>
-            <span className="support-card__body">
-              Chrome 113–160、Firefox 121–162、Safari 15–27、Opera、Brave、Edge。
-              含 Chrome for Testing 与 Firefox 各发布通道。
-            </span>
-          </div>
-          <div className="support-card">
-            <span className="support-card__icon">{familyIcon("go")}</span>
-            <span className="support-card__title">服务端运行时</span>
-            <span className="support-card__body">
-              Go 1.20–1.26、Python 3.8–3.13、Node 18–24、PHP 7.4–8.3、
-              Java 8–21、.NET 8、Ruby、Deno、Bun、Dart、Erlang。
-            </span>
-          </div>
-          <div className="support-card">
-            <span className="support-card__icon">{familyIcon("android")}</span>
-            <span className="support-card__title">Android</span>
-            <span className="support-card__body">
-              OkHttp、Conscrypt 平台栈、Cronet、WebView，覆盖 Android 7.0 到 14，
-              每条都在真实运行时上逐字节复核。
-            </span>
-          </div>
-          <div className="support-card">
-            <span className="support-card__icon">{familyIcon("ios")}</span>
-            <span className="support-card__title">iOS 与系统库</span>
-            <span className="support-card__body">
-              NSURLSession、Safari iOS、SwiftNIO，以及 libcurl、
-              OpenSSL s_client、GNU Wget 这类命令行客户端。
-            </span>
-          </div>
+          {FAMILY_PAGES.map((page) => (
+            <Link key={page.key} to={page.path} className="support-card">
+              <span className="support-card__icon">{familyIcon(page.members[0])}</span>
+              <span className="support-card__title">{page.nav}</span>
+              <span className="support-card__body">{page.lede}</span>
+            </Link>
+          ))}
         </div>
       </section>
       </Reveal>

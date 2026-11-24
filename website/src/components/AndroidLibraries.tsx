@@ -95,7 +95,7 @@ export function AndroidLibraries() {
                 pagination={false}
                 columns={columns}
                 dataSource={group.records}
-                
+                scroll={{ x: 560 }}
               />
             </Card>
           </Col>
