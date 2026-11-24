@@ -2727,3 +2727,45 @@ body {
     display: none;
   }
 }
+
+.site-footer__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 28px;
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+}
+
+.site-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.site-footer__title {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.site-footer__text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-muted);
+  max-width: 34ch;
+}
+
+.site-footer__link {
+  font-size: 13px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  width: fit-content;
+}
+
+.site-footer__link:hover {
+  color: var(--accent-ink);
+  text-decoration: underline;
+}

@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { MenuOutlined } from "@ant-design/icons";
 import { GitHubBadge } from "./GitHubBadge";
 import { ClientMenu, FamilyNavList } from "./ClientMenu";
+import { SiteFooter } from "./SiteFooter";
 
 // Shared page frame: the header, the page body. Each page supplies its own
 // sections.
@@ -114,6 +115,7 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
       <div className="page">{children}</div>
+      <SiteFooter />
     </>
   );
 }

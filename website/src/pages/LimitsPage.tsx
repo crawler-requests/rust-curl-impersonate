@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { CodeBlock, Comment } from "../components/CodeBlock";
 import { AreaMark } from "../components/icons";
+import { records } from "../data/library";
 
 // The honest edge of the library: what BoringSSL cannot put on the wire, and
 // what the crate does about it. Everything here is from README's "传输层表达
@@ -150,7 +151,8 @@ export function LimitsPage() {
         <p className="section__lede">
           一条记录标 close，说明抓包里那几项它发不出来，差额写进了 deviations；
           标 partial 说明差额多到形状已经明显不同。想知道具体缺什么，
-          <Link to="/evidence">可信度</Link> 页按种类列出了全部 88 条。
+          <Link to="/evidence">可信度</Link> 页按种类列出了全部{" "}
+          {records.filter((record) => record.deviations.length > 0).length} 条。
         </p>
         <div className="hero__actions">
           <Link className="cta" to="/evidence">
