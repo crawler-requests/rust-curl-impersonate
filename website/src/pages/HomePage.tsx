@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { totals } from "../data/library";
 import { familyIcon } from "../components/icons";
+import { Reveal } from "../components/Reveal";
 
 // The landing page: what this is, the problem it removes, and where to read
 // next. Details live on their own pages.
@@ -82,8 +83,9 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="section">
-        <span className="section__kicker">用一行代码选择客户端</span>
+      <Reveal>
+        <section className="section">
+          <span className="section__kicker">用一行代码选择客户端</span>
         <h2 className="section__title">预设名与记录名，都接受</h2>
         <CodeBlock>
           <Comment>{"// 浏览器预设\n"}</Comment>
@@ -101,9 +103,11 @@ export function HomePage() {
           <Comment>{"// 即 python3.12_requests\n"}</Comment>
         </CodeBlock>
       </section>
+      </Reveal>
 
-      <section className="section">
-        <span className="section__kicker">一眼看懂支持哪些客户端</span>
+      <Reveal delay={90}>
+        <section className="section">
+          <span className="section__kicker">一眼看懂支持哪些客户端</span>
         <h2 className="section__title">浏览器、运行时、移动端，各有各的记录</h2>
         <p className="section__lede">
           每组都是抓包得到的真实握手，不是一个参数表。选一个名字就用那一组的线路参数，
@@ -144,9 +148,11 @@ export function HomePage() {
           </div>
         </div>
       </section>
+      </Reveal>
 
-      <section className="section">
-        <span className="section__kicker">继续阅读</span>
+      <Reveal delay={90}>
+        <section className="section">
+          <span className="section__kicker">继续阅读</span>
         <h2 className="section__title">按主题展开</h2>
         <div className="route-grid">
           {ROUTES.map((route) => (
@@ -158,6 +164,7 @@ export function HomePage() {
           ))}
         </div>
       </section>
+      </Reveal>
     </>
   );
 }

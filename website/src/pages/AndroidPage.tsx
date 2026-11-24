@@ -1,5 +1,6 @@
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { AndroidLibraries } from "../components/AndroidLibraries";
+import { HelloExplorer } from "../components/HelloExplorer";
 import { androidFidelity, androidRecordCount } from "../data/library";
 
 // The Android page: what makes the platform's TLS stacks hard to pin down, how
@@ -85,6 +86,8 @@ export function AndroidPage() {
           ))}
         </div>
       </section>
+
+      <HelloExplorer />
 
       <AndroidLibraries />
 
