@@ -2969,3 +2969,21 @@ body {
   color: var(--ink-muted);
   margin: 0;
 }
+
+.library__family-link {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 11px;
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.library__family-link:hover {
+  text-decoration: underline;
+}
+
+.library__empty {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--ink-muted);
+}

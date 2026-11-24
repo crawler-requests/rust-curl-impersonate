@@ -102,3 +102,8 @@ export function aliasesOf(page: FamilyPage): { name: string; target: string }[] 
   const names = new Set(recordsOf(page).map((record) => record.name));
   return aliases.filter((alias) => names.has(alias.target));
 }
+
+/** The page that owns a concrete family, e.g. edge → the Chrome page. */
+export function familyOf(family: string): FamilyPage | undefined {
+  return FAMILY_PAGES.find((page) => page.members.includes(family));
+}

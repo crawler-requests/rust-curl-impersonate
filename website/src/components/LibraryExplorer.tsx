@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
-import { Input, Segmented, Select, Table, Tag, Typography } from "antd";
+import { Button, Input, Segmented, Select, Table, Tag, Typography } from "antd";
+import { Link } from "react-router-dom";
 import { aliases, records } from "../data/library";
 import type { FingerprintRecord } from "../data/library";
+import { familyOf } from "../data/families";
 import { FidelityTag } from "./FidelityTag";
 
 // The whole built-in library, searchable. The list is generated from the
@@ -11,14 +13,29 @@ const families = Array.from(new Set(records.map((r) => r.family).filter(Boolean)
   .sort()
   .map((family) => ({ label: family, value: family }));
 
+const platforms = Array.from(
+  new Set(records.map((r) => r.platform).filter(Boolean)).values(),
+)
+  .sort()
+  .map((platform) => ({ label: platform, value: platform }));
+
 const columns = [
   {
     title: "名称",
     dataIndex: "name",
     key: "name",
-    render: (value: string) => (
+    render: (value: string, record: FingerprintRecord) => (
       <span className="mono" style={{ fontSize: 12.5 }}>
         {value}
+        {familyOf(record.family) ? (
+          <Link
+            to={familyOf(record.family)!.path}
+            className="library__family-link"
+            title={`去看 ${familyOf(record.family)!.nav} 这一族`}
+          >
+            {familyOf(record.family)!.nav}
+          </Link>
+        ) : null}
       </span>
     ),
     sorter: (a: FingerprintRecord, b: FingerprintRecord) => a.name.localeCompare(b.name),
@@ -73,13 +90,16 @@ const columns = [
 export function LibraryExplorer() {
   const [query, setQuery] = useState("");
   const [family, setFamily] = useState<string | undefined>();
-  const [onlyExact, setOnlyExact] = useState(false);
+  const [fidelity, setFidelity] = useState<"all" | "exact" | "other">("all");
+  const [platform, setPlatform] = useState<string | undefined>();
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return records.filter((record) => {
       if (family && record.family !== family) return false;
-      if (onlyExact && record.fidelity !== "exact") return false;
+      if (platform && record.platform !== platform) return false;
+      if (fidelity === "exact" && record.fidelity !== "exact") return false;
+      if (fidelity === "other" && record.fidelity === "exact") return false;
       if (!needle) return true;
       return (
         record.name.toLowerCase().includes(needle) ||
@@ -87,7 +107,7 @@ export function LibraryExplorer() {
         record.ja4.toLowerCase().includes(needle)
       );
     });
-  }, [query, family, onlyExact]);
+  }, [query, family, platform, fidelity]);
 
   return (
     <section className="section" id="library">
@@ -114,27 +134,59 @@ export function LibraryExplorer() {
           onChange={(value) => setFamily(value)}
           style={{ minWidth: 200 }}
         />
+        <Select
+          allowClear
+          placeholder="按平台筛选"
+          options={platforms}
+          value={platform}
+          onChange={(value) => setPlatform(value)}
+          style={{ minWidth: 160 }}
+        />
         <Segmented
-          value={onlyExact ? "exact" : "all"}
-          onChange={(value) => setOnlyExact(value === "exact")}
+          value={fidelity}
+          onChange={(value) => setFidelity(value as typeof fidelity)}
           options={[
-            { label: "全部", value: "all" },
-            { label: "仅 exact", value: "exact" },
+            { label: "全部保真度", value: "all" },
+            { label: "exact", value: "exact" },
+            { label: "close / partial", value: "other" },
           ]}
         />
         <Tag bordered={false} style={{ alignSelf: "center" }}>
           匹配 {filtered.length} 条
         </Tag>
+        {query || family || platform || fidelity !== "all" ? (
+          <Button
+            type="text"
+            size="small"
+            onClick={() => {
+              setQuery("");
+              setFamily(undefined);
+              setPlatform(undefined);
+              setFidelity("all");
+            }}
+          >
+            清除筛选
+          </Button>
+        ) : null}
       </div>
 
-      <Table
-        rowKey="name"
-        size="small"
-        columns={columns}
-        dataSource={filtered}
-        pagination={{ pageSize: 20, showSizeChanger: false }}
-        scroll={{ x: 820 }}
-      />
+      {filtered.length === 0 ? (
+        <p className="library__empty">
+          没有记录同时满足这些条件。放宽平台或保真度再看一次，或者{" "}
+          <Link to="/clients">按客户端</Link>浏览。
+        </p>
+      ) : null}
+
+      {filtered.length > 0 ? (
+        <Table
+          rowKey="name"
+          size="small"
+          columns={columns}
+          dataSource={filtered}
+          pagination={{ pageSize: 20, showSizeChanger: false }}
+          scroll={{ x: 820 }}
+        />
+      ) : null}
     </section>
   );
 }
