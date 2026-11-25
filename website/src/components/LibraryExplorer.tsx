@@ -156,9 +156,9 @@ export function LibraryExplorer() {
           value={fidelity}
           onChange={(value) => setFidelity(value as typeof fidelity)}
           options={[
-            { label: "全部保真度", value: "all" },
-            { label: "exact", value: "exact" },
-            { label: "close / partial", value: "other" },
+            { label: "全部", value: "all" },
+            { label: "逐字节一致", value: "exact" },
+            { label: "有差额", value: "other" },
           ]}
         />
         <Tag bordered={false} style={{ alignSelf: "center" }}>

@@ -112,28 +112,32 @@ export function AndroidPage() {
         <span className="section__kicker">选哪个名字</span>
         <h2 className="section__title">按运行环境挑记录</h2>
         <CodeBlock>
-          <Comment>{"// 平台栈：HttpsURLConnection 的默认形态\n"}</Comment>
-          {"let client = Client::new(Profile::find("}
+          <Comment>{"// 一个名字，就是一套线路参数\n"}</Comment>
+          {"Client::new(Profile::find("}
           <Str>"android_conscrypt13"</Str>
-          {")?)?;\n\n"}
-          <Comment>{"// OkHttp：按 Android 版本\n"}</Comment>
-          {"let client = Client::new(Profile::find("}
+          {").expect("}
+          <Str>"记录存在"</Str>
+          {"))?;\n\n"}
+          <Comment>{"// OkHttp：按 Android 版本选，不要随便挑\n"}</Comment>
+          {"Profile::find("}
           <Str>"android_okhttp8"</Str>
-          {")?)?;\nlet client = Client::new(Profile::find("}
+          {");    "}
+          <Comment>{"// Android 8 自带的 OkHttp\n"}</Comment>
+          {"Profile::find("}
           <Str>"android_okhttp13"</Str>
-          {")?)?;\n\n"}
-          <Comment>{"// 系统 WebView 与 Cronet\n"}</Comment>
-          {"let client = Client::new(Profile::find("}
-          <Str>"android_webview125"</Str>
-          {")?)?;\nlet client = Client::new(Profile::find("}
-          <Str>"android_cronet119"</Str>
-          {")?)?;\n\n"}
-          <Comment>{"// 别名按 Android 版本选 OkHttp\n"}</Comment>
-          {"let client = Client::new(Profile::find("}
+          {");   "}
+          <Comment>{"// Android 13\n"}</Comment>
+          {"Profile::find("}
           <Str>"android10"</Str>
-          {")?)?;   "}
-          <Comment>{"// 即 android_okhttp10\n"}</Comment>
-        </CodeBlock>
+          {");          "}
+          <Comment>{"// 别名，即 android_okhttp10\n"}</Comment>
+          {"\n"}
+          <Comment>{"// 系统 WebView 与 Cronet\n"}</Comment>
+          {"Profile::find("}
+          <Str>"android_webview125"</Str>
+          {");\nProfile::find("}
+          <Str>"android_cronet119"</Str>
+          {");\n"}</CodeBlock>
       </section>
     </>
   );

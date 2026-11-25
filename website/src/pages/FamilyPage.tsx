@@ -284,7 +284,7 @@ export function FamilyPage({ spec }: { spec: FamilySpec }) {
             <span key={record.name}>
               {"let client = Client::new(Profile::find("}
               <Str>{`"${record.name}"`}</Str>
-              {")?)?;\n"}
+              {").expect(\"记录存在\"))?;\n"}
             </span>
           ))}
           {aliasList.slice(0, 1).map((alias) => (
@@ -292,7 +292,7 @@ export function FamilyPage({ spec }: { spec: FamilySpec }) {
               <Comment>{"// 别名\n"}</Comment>
               {"let client = Client::new(Profile::find("}
               <Str>{`"${alias.name}"`}</Str>
-              {")?)?;\n"}
+              {").expect(\"记录存在\"))?;\n"}
             </span>
           ))}
         </CodeBlock>

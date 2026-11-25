@@ -6,6 +6,21 @@ curl-impersonate 是打在 curl 8.23.0 上的一组补丁，加上一份改过�
 
 `lib/impersonate.c` 的 48 个预设全部可用，包括 wreq-util 尚未收录的 Chrome 150–152、Firefox 153–155、Safari 260/270、OkHttp 和 Tor。
 
+## 引入
+
+Rust 项目直接加 git 依赖即可，不需要写 `[patch.crates-io]`：改过的
+`wreq`/`quinn`/`quinn-proto` 源码就在本仓库的 `vendor/` 里，path 依赖会一起带过去。
+
+```toml
+[dependencies]
+rust-curl-impersonate = { git = "https://github.com/crawler-requests/rust-curl-impersonate" }
+```
+
+非 Rust 调用方从 [Releases](https://github.com/crawler-requests/rust-curl-impersonate/releases)
+下载对应平台的归档：内含 `lib/` 下的共享库、`include/rci.h`、`python/demo.py` 和一个
+`LIBRARY_PATH.md`。C ABI 有 17 个函数，覆盖 profile 查询、带选项建客户端、逐请求头、
+二进制响应、HTTP/3 与运行时指纹注册；完整表见 `bindings/ffi/README.md`。
+
 ## 用法
 
 ```rust

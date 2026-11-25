@@ -180,4 +180,5 @@ export const totals = {
   android: androidRecordCount,
   aliases: aliases.length,
   presets: 48,
+  exact: records.filter((record) => record.fidelity === "exact").length,
 };

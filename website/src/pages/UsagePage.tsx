@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
 import { CodeBlock, Comment, Str } from "../components/CodeBlock";
 import { AreaMark } from "../components/icons";
 import { PresetPicker } from "../components/PresetPicker";
+
+const REPO = "https://github.com/crawler-requests/rust-curl-impersonate";
 
 export function UsagePage() {
   return (
@@ -16,6 +19,27 @@ export function UsagePage() {
           Profile::find 接受 48 个 curl-impersonate 预设里的任意一个，也接受指纹库里按家族或版本命名的记录名。
           TLS、HTTP/2、HTTP/3 与 QUIC 参数都从预设或记录里读出来，调用方不必再拼一遍。
         </p>
+      </section>
+
+      <section className="section">
+        <span className="section__kicker">
+          <AreaMark icon="presets" />
+          安装
+        </span>
+        <h2 className="section__title">两种引入方式，都不需要手写补丁</h2>
+        <p className="section__lede">
+          本仓库把改过的 wreq / quinn 源码直接放在 <code>vendor/</code> 里，所以依赖它就像依赖普通 crate，
+          不需要自己配 <code>[patch.crates-io]</code>。命令行工具不在本仓库；需要非 Rust 调用时用下面的 C ABI。
+        </p>
+        <CodeBlock>
+          <Comment>{"# 方式一：作为 git 依赖（推荐，直接拿到最新提交）\n"}</Comment>
+          {"[dependencies]\nrust-curl-impersonate = { git = "}
+          <Str>{`"${REPO}"`}</Str>
+          {" }\n\n"}
+          <Comment>{"# 方式二：下载预编译的 C ABI 共享库（给 Python / Node / Go / Java / C++）\n"}</Comment>
+          <Comment>{"# 每个归档都带 rci.h、librust_curl_impersonate_ffi.* 和 python/demo.py\n"}</Comment>
+          {"# 见 https://github.com/crawler-requests/rust-curl-impersonate/releases\n"}
+        </CodeBlock>
       </section>
 
       <section className="section">
@@ -37,6 +61,11 @@ export function UsagePage() {
           <Str>"{}"</Str>
           {", response.status());\n# Ok(())\n# }\n"}
         </CodeBlock>
+        <p className="section__lede">
+          记录名同样可以直接选：<code>Profile::find("android_okhttp13")</code>、
+          <code>Profile::find("python")</code>（即 <code>python3.12_requests</code>）。
+          它们和 48 个预设一样，不需要安装步骤。
+        </p>
       </section>
 
       <section className="section">
@@ -46,20 +75,30 @@ export function UsagePage() {
         </span>
         <h2 className="section__title">带 QUIC 配置的预设走 HTTP/3</h2>
         <p className="section__lede">
-          预设带 HTTP/3 指纹时用 http3_get；http3_endpoint 是这条发送路径绑定的端点，
-          HTTP/3 SETTINGS、传输参数、初始包号都在其中。协商到 HTTP/3 之后，
-          headers_after_negotiation 使用该预设单独的 HTTP/3 默认头；回退时仍用普通默认头。
+          HTTP/3 走 QUIC，需要自己解析目标地址再交给端点；<code>http3_endpoint()</code> 取到的端点已经带好
+          该预设的 SETTINGS、传输参数与初始包号。没有 QUIC 配置的预设（如 Firefox 153–155）会在
+          <code>http3_endpoint()</code> 处返回错误，而不是悄悄退回 HTTP/2。
         </p>
         <CodeBlock>
-          {"let client = Client::new(Profile::find("}
+          {"let profile = Profile::find("}
           <Str>"chrome150"</Str>
-          {")?)?;\nlet endpoint = client.http3_endpoint()?;\nlet response = client.http3_get("}
-          <Str>"https://example.com"</Str>
-          {").send().await?;\n\n"}
-          <Comment>{"// Firefox 153–155 没有单独的 HTTP/3 指纹，要求只走 HTTP/3 会失败\n"}</Comment>
-          {"let response = client.http3_get("}
-          <Str>"https://example.com"</Str>
-          {").http3_only(true).send().await;\n"}
+          {").expect("}
+          <Str>"chrome150 有 QUIC 配置"</Str>
+          {");\nlet client = Client::new(profile)?;\nlet endpoint = client.http3_endpoint()?;\n\n"}
+          <Comment>{"// 需要 `use std::net::ToSocketAddrs;`\n"}</Comment>
+          <Comment>{"// quic 走 UDP；这里只需地址\n"}</Comment>
+          {"let addr = (host, 443u16).to_socket_addrs()\\n    .expect("}
+          <Str>"resolve"</Str>
+          {").find(|a| a.is_ipv4()).unwrap();\\nlet response = endpoint.get(addr, host, "}
+          <Str>"/"</Str>
+          {").await?;\\nprintln!("}
+          <Str>"{}"</Str>
+          {", response.body.len());   "}
+          <Comment>{"// H3Response { headers, body }\n"}</Comment>
+          <Comment>{"// 想让 Client 自己处理代理时用它，它走同一个端点\n"}</Comment>
+          {"let response = client.http3_get(addr, host, "}
+          <Str>"/"</Str>
+          {").await?;\\n"}
         </CodeBlock>
       </section>
 
@@ -73,10 +112,14 @@ export function UsagePage() {
           <Comment>{"// 同名头替换默认头；空值抑制该头；其余默认头保留\n"}</Comment>
           {"let response = client.get("}
           <Str>"https://example.com"</Str>
-          {")?\n    .header("}
+          {")?.header("}
           <Str>"accept-language"</Str>
           {", "}
           <Str>"zh-CN,zh;q=0.9"</Str>
+          {").header("}
+          <Str>"x-dnt"</Str>
+          {", "}
+          <Str>""</Str>
           {").send().await?;\n\n"}
           <Comment>{"// Cookie：HTTP/1.1 合成一条头，HTTP/2 与 HTTP/3 按 cookie 拆开\n"}</Comment>
           {"let response = client.request_cookies("}
@@ -101,8 +144,8 @@ export function UsagePage() {
           {")?)?\n    .proxy_url("}
           <Str>"socks5://127.0.0.1:1080"</Str>
           {")?\n    .build()?;\n\n"}
-          <Comment>{"// HTTP/3 走 SOCKS5 时改用 UDP ASSOCIATE（命令字节 0x03）\n"}</Comment>
-          {"let response = client.http3_get("}
+          <Comment>{"// 代理能解析域名时，客户端不再自己去查 HTTPS 记录\n"}</Comment>
+          {"let response = client.get("}
           <Str>"https://example.com"</Str>
           {").send().await?;\n"}
         </CodeBlock>
@@ -115,15 +158,18 @@ export function UsagePage() {
         </span>
         <h2 className="section__title">deflate 扩展与压缩负载</h2>
         <CodeBlock>
+          <Comment>{"// 建立带 TLS 指纹的 WebSocket 连接\n"}</Comment>
+          {"let socket = client.websocket("}
+          <Str>"wss://example.com/chat"</Str>
+          {").send().await?;\n\n"}
+          <Comment>{"// 想发 permessage-deflate 扩展时，用它建连；对端接受后自动压缩 / 解压\n"}</Comment>
           {"let upgrade = client.websocket_deflate("}
           <Str>"wss://example.com/chat"</Str>
-          {").send().await?;\nlet ws = upgrade.accepted_codec()?;   "}
-          <Comment>{"// 文本与二进制自动压缩 / 解压\n"}</Comment>
-          {"\n"}
-          <Comment>{"// 没有链接 zlib 时返回 WsError::NotBuilt，且不发这个扩展\n"}</Comment>
+          {").send().await?;   "}
+          <Comment>{"// 没连 zlib 时 websocket_deflate 会 panic，改用 try_ 版本返回错误\n"}</Comment>
           {"let upgrade = client.try_websocket_deflate("}
           <Str>"wss://example.com/chat"</Str>
-          {").send().await?;\n"}
+          {", zlib_linked)?\n    .send().await?;\n"}
         </CodeBlock>
       </section>
 
@@ -196,13 +242,34 @@ export function UsagePage() {
       <section className="section">
         <span className="section__kicker">
           <AreaMark icon="abi" />
-          C ABI
+          非 Rust 调用
         </span>
-        <h2 className="section__title">给非 Rust 调用方</h2>
+        <h2 className="section__title">C ABI：17 个函数，够写一个可用封装</h2>
+        <p className="section__lede">
+          <code>bindings/ffi</code> 导出一份 C ABI 共享库，任何能调 C 的语言都能用。除了发请求，
+          它还能列出可选 profile、读元数据、带选项建客户端、逐请求加头、回传二进制 body、
+          发 HTTP/3、以及在运行时注册指纹记录。下载页面上的每个归档都带 <code>rci.h</code> 和一个现成的
+          <code>python/demo.py</code>。
+        </p>
         <CodeBlock>
-          <Comment>{"// bindings/ffi 提供共享库；演示脚本在 bindings/ffi/python/demo.py\n"}</Comment>
-          {"python3 bindings/ffi/python/demo.py chrome150 https://example.com/\n"}
+          <Comment>{"# Python：解压归档后，把 RCI_LIB 指向 lib/ 里的共享库\n"}</Comment>
+          {"python3 python/demo.py chrome150 https://tls.peet.ws/api/all\n\n"}
+          <Comment>{"# 其它语言：include rci.h，链接同一个库\n"}</Comment>
+          {"rci_client_new(profile) -> rci_request(handle, method, url, body, len) -> rci_string_free(reply)\n"}
         </CodeBlock>
+        <p className="section__lede">
+          完整函数表见归档里的 <code>README.md</code>；封装注意事项（阻塞调用、字符串所有权、错误 JSON）
+          也写在那里。
+        </p>
+      </section>
+
+      <section className="section">
+        <span className="section__kicker">下一步</span>
+        <h2 className="section__title">想知道它有多准，去看证据</h2>
+        <p className="section__lede">
+          库里每一条记录都来自真实抓包，审计脚本会从抓包里重算 JA4，对不上就让 CI 失败。
+          想了解哪些字段发不出来，<Link className="inline-link" to="/limits">边界页</Link>逐项列出了原因。
+        </p>
       </section>
     </>
   );

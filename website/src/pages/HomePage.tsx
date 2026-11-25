@@ -6,10 +6,13 @@ import { familyIcon } from "../components/icons";
 import { Reveal } from "../components/Reveal";
 import { HandshakeAnatomy } from "../components/HandshakeAnatomy";
 import { Faq } from "../components/Faq";
-import { handshakeTotals } from "../data/handshakes";
 
 // The landing page: what this is, the problem it removes, and where to read
 // next. Details live on their own pages.
+
+const REPO = "https://github.com/crawler-requests/rust-curl-impersonate";
+const RELEASES = `${REPO}/releases`;
+const LATEST_VERSION = "v0.2.0";
 
 const ROUTES = [
   {
@@ -71,34 +74,47 @@ export function HomePage() {
             <div className="stat__label">条抓包记录</div>
           </div>
           <div>
-            <div className="stat__value">{totals.families}</div>
-            <div className="stat__label">个客户端家族</div>
-          </div>
-          <div>
-            <div className="stat__value">{totals.android}</div>
-            <div className="stat__label">条 Android 记录</div>
-          </div>
-          <div>
             <div className="stat__value">{totals.presets}</div>
             <div className="stat__label">个 curl-impersonate 预设</div>
           </div>
           <div>
-            <div className="stat__value">{handshakeTotals.extensions}</div>
-            <div className="stat__label">条扩展顺序记录</div>
+            <div className="stat__value">{totals.families}</div>
+            <div className="stat__label">个客户端家族</div>
           </div>
           <div>
-            <div className="stat__value">{handshakeTotals.ciphers}</div>
-            <div className="stat__label">条 cipher 条目</div>
+            <div className="stat__value">{totals.exact}</div>
+            <div className="stat__label">条逐字节一致</div>
+          </div>
+          <div>
+            <div className="stat__value">9</div>
+            <div className="stat__label">个平台预编译</div>
+          </div>
+          <div>
+            <div className="stat__value">17</div>
+            <div className="stat__label">个 C ABI 函数</div>
           </div>
         </div>
         <div className="hero__actions">
           <Link className="cta" to="/usage">
             开始使用
           </Link>
-          <Link className="cta cta--ghost" to="/problem">
-            解决什么问题
-          </Link>
+          <a className="cta cta--ghost" href={RELEASES} target="_blank" rel="noreferrer noopener">
+            下载预编译库
+          </a>
         </div>
+        <p className="hero__install">
+          在 Rust 里直接加一行依赖；其它语言从 Release 下载 9 个平台的共享库（
+          <span className="mono">{LATEST_VERSION}</span>）：
+        </p>
+        <CodeBlock>
+          <Comment>{"# Rust：直接加 git 依赖，不需要 [patch.crates-io]\n"}</Comment>
+          {"rust-curl-impersonate = { git = "}
+          <Str>{`"${REPO}"`}</Str>
+          {" }\n\n"}
+          <Comment>{"# 或：下载带 rci.h 与 python/demo.py 的 C ABI 共享库\n"}</Comment>
+          <Str>{RELEASES}</Str>
+          {"\n"}
+        </CodeBlock>
       </section>
 
       <Reveal>
@@ -107,19 +123,59 @@ export function HomePage() {
         <h2 className="section__title">预设名与记录名，都接受</h2>
         <CodeBlock>
           <Comment>{"// 浏览器预设\n"}</Comment>
-          {"let profile = "}
+          {"let profile = Profile::find("}
           <Str>"chrome150"</Str>
-          {";\nlet client = Client::new(Profile::find(profile)?)?;\nlet response = client.get("}
+          {").expect("}
+          <Str>"已知目标"</Str>
+          {");\nlet client = Client::new(profile)?;\nlet response = client.get("}
           <Str>"https://example.com"</Str>
           {").send().await?;\n\n"}
-          <Comment>{"// 指纹库里按家族命名的记录名\n"}</Comment>
+          <Comment>{"// 指纹库里按家族命名的记录名，同样不需要安装步骤\n"}</Comment>
           {"let client = Client::new(Profile::find("}
           <Str>"android_okhttp13"</Str>
-          {")?)?;\nlet client = Client::new(Profile::find("}
+          {").expect("}
+          <Str>"记录存在"</Str>
+          {"))?;\nlet client = Client::new(Profile::find("}
           <Str>"python"</Str>
-          {")?)?;   "}
-          <Comment>{"// 即 python3.12_requests\n"}</Comment>
+          {").expect("}
+          <Str>"即 python3.12_requests"</Str>
+          {"))?;\n"}
         </CodeBlock>
+      </section>
+      </Reveal>
+
+      <Reveal>
+        <section className="section">
+          <span className="section__kicker">不止 Rust</span>
+        <h2 className="section__title">一份 C ABI，九种语言的起点</h2>
+        <p className="section__lede">
+          指纹逻辑只有 Rust 这一份实现。其它语言的封装都走同一个 C ABI 共享库——每个 Release
+          归档里已经放好了 <code>rci.h</code> 和一个能直接跑的 <code>python/demo.py</code>，
+          复制过去改就行，不用自己从零写 FFI。
+        </p>
+        <div className="lang-grid">
+          {[
+            ["Python", "demo.py 现成可改"],
+            ["Node.js", "koffi / ffi-napi"],
+            ["Go", "cgo"],
+            ["Java / Kotlin", "JNA / Panama"],
+            ["C / C++", "#include rci.h"],
+            ["C#", "P/Invoke"],
+            ["Ruby", "Fiddle"],
+            ["PHP", "FFI"],
+            ["Swift / Dart", "FFI 或 Rust 直接依赖"],
+          ].map(([lang, how]) => (
+            <div className="lang-card" key={lang}>
+              <span className="lang-card__name">{lang}</span>
+              <span className="lang-card__how">{how}</span>
+            </div>
+          ))}
+        </div>
+        <p className="section__lede">
+          17 个导出函数覆盖：列出与查询 profile、带选项建客户端（超时/代理/默认头/重定向）、
+          逐请求加头、二进制安全的响应、HTTP/3、请求活动记录、运行时注册指纹。
+          完整表见 <Link className="inline-link" to="/usage">用法页</Link>。
+        </p>
       </section>
       </Reveal>
 

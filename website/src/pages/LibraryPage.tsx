@@ -67,11 +67,14 @@ export function LibraryPage() {
         <CodeBlock>
           {"let client = Client::new(Profile::find("}
           <Str>"go1.26"</Str>
-          {")?)?;\nlet client = Client::new(Profile::find("}
+          {").expect(\"记录存在\"))?;\n\n"}
+          <Comment>{"// 换一个名字，就是换一套线路参数\n"}</Comment>
+          {"Profile::find("}
           <Str>"python3.12_requests"</Str>
-          {")?)?;\nlet client = Client::new(Profile::find("}
+          {");\n"}
+          {"Profile::find("}
           <Str>"node22_http2"</Str>
-          {")?)?;\n\n"}
+          {");\n\n"}
           <Comment>{"// 记录里没有的头由调用方自己补；同名头替换默认头\n"}</Comment>
           {"let response = client.get("}
           <Str>"https://api.example.com"</Str>

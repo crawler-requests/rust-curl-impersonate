@@ -97,13 +97,15 @@ export function ProblemPage() {
         </p>
         <CodeBlock>
           <Comment>{"// 预设不只是 TLS：HTTP/2 与 HTTP/3 字段一起带\n"}</Comment>
-          {"let preset = "}
+          {"let client = Client::new(Profile::find("}
           <Str>"chrome150"</Str>
-          {";\nlet client = Client::new(Profile::find(preset)?)?;\n\n"}
+          {").expect("}
+          <Str>"已知目标"</Str>
+          {"))?;\n\n"}
           <Comment>{"// HTTP/3：SETTINGS、传输参数、初始包号都来自预设\n"}</Comment>
-          {"let endpoint = client.http3_endpoint()?;\nlet response = client.http3_get("}
-          <Str>"https://example.com"</Str>
-          {").send().await?;\n\n"}
+          {"let endpoint = client.http3_endpoint()?;\nlet response = endpoint.get(addr, host, "}
+          <Str>"/"</Str>
+          {").await?;\n\n"}
           <Comment>{"// 预设没写伪头顺序时，不会自己补一个\n"}</Comment>
           {"assert!(client.prepared().pseudo_order().is_none());\n"}
         </CodeBlock>
