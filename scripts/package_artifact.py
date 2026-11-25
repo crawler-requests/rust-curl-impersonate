@@ -95,7 +95,47 @@ def stage(target, version, target_dir, out_dir):
         archive = os.path.join(out_dir, stem + ".tar.gz")
         with tarfile.open(archive, "w:gz") as handle:
             handle.add(stage_dir, arcname=stem)
+
+    verify_archive(archive, target)
     return archive
+
+
+# Files every archive must carry, relative to the archive root.
+REQUIRED = {
+    "include/rci.h",
+    "python/demo.py",
+    "python/LIBRARY_PATH.md",
+    "README.md",
+    "LICENSE",
+}
+
+
+def verify_archive(archive, target):
+    """Fail packaging when an archive is missing a file a binding needs.
+
+    Checked here rather than in a workflow step so the rule travels with the
+    packaging code and runs for every target.
+    """
+    if archive.endswith(".zip"):
+        with zipfile.ZipFile(archive) as handle:
+            names = handle.namelist()
+    else:
+        with tarfile.open(archive) as handle:
+            names = handle.getnames()
+
+    # Strip the single top-level directory each archive is wrapped in.
+    stripped = {name.split("/", 1)[1] for name in names if "/" in name}
+    missing = REQUIRED - stripped
+    if missing:
+        sys.exit(f"{archive} is missing: {', '.join(sorted(missing))}")
+
+    # A target that builds a library must ship one.
+    has_library = any(
+        name.startswith("lib/") and ("rust_curl_impersonate_ffi" in name)
+        for name in stripped
+    )
+    if not has_library:
+        sys.exit(f"{archive} carries no shared library")
 
 
 def main():
