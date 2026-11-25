@@ -92,19 +92,38 @@ jobs:
           } >> "$GITHUB_ENV"
 
       # Debian's musl-tools ships a C driver only; BoringSSL needs a C++
-      # standard library for musl, which Zig provides.
-      - name: Install Zig
+      # standard library for musl, which Zig provides. ziglang.org serves the
+      # tarball slowly (tens of KB/s on some runners), so cache it across runs:
+      # only a cache miss pays the ~57 MB download.
+      - name: Restore Zig from cache
+        id: zig-cache
         if: contains(matrix.target, '-linux-musl')
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/zig
+          key: zig-0.17.1-x86_64-linux
+
+      - name: Install Zig
+        if: contains(matrix.target, '-linux-musl') && steps.zig-cache.outputs.cache-hit != 'true'
         run: |
           version=0.17.1
           url="https://ziglang.org/download/$version/zig-x86_64-linux-$version.tar.xz"
-          # ziglang.org drops connections; retry with a per-attempt ceiling so a
-          # stall becomes a visible failure instead of a hung job.
+          # The server is slow rather than flaky; retry with a generous per-
+          # attempt ceiling so a stalled transfer restarts instead of hanging.
           curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 \
-            --connect-timeout 20 --max-time 300 "$url" -o "$RUNNER_TEMP/zig.tar.xz"
-          tar -xJf "$RUNNER_TEMP/zig.tar.xz" -C "$RUNNER_TEMP"
-          echo "$RUNNER_TEMP/zig-x86_64-linux-$version" >> "$GITHUB_PATH"
-          echo "ZIG_LIB=$RUNNER_TEMP/zig-x86_64-linux-$version/lib" >> "$GITHUB_ENV"
+            --connect-timeout 20 --max-time 600 "$url" -o "$RUNNER_TEMP/zig.tar.xz"
+          mkdir -p "$RUNNER_TEMP/zig"
+          tar -xJf "$RUNNER_TEMP/zig.tar.xz" -C "$RUNNER_TEMP/zig"
+
+      - name: Put Zig on PATH
+        if: contains(matrix.target, '-linux-musl')
+        run: |
+          zig_dir="$RUNNER_TEMP/zig/zig-x86_64-linux-0.17.1"
+          echo "$zig_dir" >> "$GITHUB_PATH"
+          # `ZIG_LIB` is `<zig>/lib`; the musl include paths below append
+          # `libc/...` to it.
+          echo "ZIG_LIB=$zig_dir/lib" >> "$GITHUB_ENV"
+          test -x "$zig_dir/zig" || { echo "zig is not executable at $zig_dir"; ls -la "$RUNNER_TEMP/zig"; exit 1; }
 
       - name: Configure musl toolchain
         if: contains(matrix.target, '-linux-musl')
