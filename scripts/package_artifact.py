@@ -6,7 +6,8 @@ Usage:
         --version 0.1.0 --out dist
 
 The archive contains the cdylib, its import library on Windows, rci.h, the
-`echo` smoke-test binary, LICENSE and the binding README.
+`echo` smoke-test binary, LICENSE, the binding README, and the Python
+binding (`python/demo.py` plus a usage note).
 """
 
 import argparse
@@ -66,6 +67,16 @@ def stage(target, version, target_dir, out_dir):
     shutil.copy2(os.path.join(ROOT, "LICENSE"), os.path.join(stage_dir, "LICENSE"))
     shutil.copy2(os.path.join(ROOT, "bindings", "ffi", "README.md"),
                  os.path.join(stage_dir, "README.md"))
+
+    # Ship the Python binding so a downloader can use the library without
+    # cloning the repository. Exclude the smoke test (it needs a local build
+    # server) and the bytecode cache.
+    python_dir = os.path.join(stage_dir, "python")
+    os.makedirs(python_dir, exist_ok=True)
+    for name in ("demo.py", "LIBRARY_PATH.md"):
+        source = os.path.join(ROOT, "bindings", "ffi", "python", name)
+        if os.path.exists(source):
+            shutil.copy2(source, os.path.join(python_dir, name))
 
     # Android artifacts are consumed as a shared library, not as a host binary.
     echo = os.path.join(release_dir, "examples", "echo" + (".exe" if "windows" in target else ""))
