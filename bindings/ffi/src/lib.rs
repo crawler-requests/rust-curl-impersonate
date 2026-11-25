@@ -480,7 +480,7 @@ pub extern "C" fn rci_http3_get(
 
 /// Turn an HTTP/3 header list and body into the ABI's JSON shape. Pseudo-headers
 /// leave `headers`; `:status` becomes the `status` field.
-fn http3_json(headers: &[(String, String)], body: &[u8]) -> Result<String, String> {
+pub fn http3_json(headers: &[(String, String)], body: &[u8]) -> Result<String, String> {
     let mut status: u16 = 0;
     let mut pairs: Vec<(String, String)> = Vec::new();
     for (name, value) in headers {

@@ -190,8 +190,10 @@ if h3_addr:
     check("http3 status 200", reply.get("status") == 200)
     check("http3 returns headers", bool(reply.get("headers")))
     check("http3 returns a body", bool(reply.get("body")))
+    # The error text lets a CI step tell "peer unreachable" from a real
+    # transport bug, so it is printed even on success.
     print(f"     http3 profile={profile} status={reply.get('status')} "
-          f"headers={len(reply.get('headers') or [])}")
+          f"headers={len(reply.get('headers') or [])} error={reply.get('error')}")
 else:
     print("skip http3 (set RCI_H3_ADDR=ip:port to include it)")
 
