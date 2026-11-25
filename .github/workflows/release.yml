@@ -303,12 +303,14 @@ jobs:
       - name: Archives carry rci.h
         run: |
           for archive in dist/*.tar.gz; do
-            tar -tzf "$archive" | grep -q 'include/rci.h' || {
+            listing="$(tar -tzf "$archive")"
+            printf '%s\n' "$listing" | grep -q 'include/rci.h' || {
               echo "$archive has no include/rci.h"; exit 1;
             }
           done
           for archive in dist/*.zip; do
-            unzip -l "$archive" | grep -q 'rci.h' || {
+            listing="$(unzip -l "$archive")"
+            printf '%s\n' "$listing" | grep -q 'rci.h' || {
               echo "$archive has no rci.h"; exit 1;
             }
           done
