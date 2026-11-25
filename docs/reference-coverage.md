@@ -107,9 +107,13 @@ API，仍保留在记录的 `deviations` 里。
   profile 查询、48 预置 + 库记录枚举、默认与带选项建客户端、GET/POST、
   请求头、非 UTF-8 body 的十六进制回传、`follow_redirects=false` 停在 302、
   错误路径、运行时注册记录（并验证覆盖同名的内置记录生效）。
+- Release 归档（9 个平台）内附 `python/demo.py` 与 `LIBRARY_PATH.md`，解压后设
+  `RCI_LIB` 即可直接调用，无需克隆仓库。
 - HTTP/3：`rci_http3_get` 对 `quic.nginx.org` 用 chrome152/firefox147/safari270
-  实测 `status 200`、9 个响应头、2523 字节 body（chrome160 因 ML-DSA 签名算法
-  被服务端拒绝，属已记录的偏差）。
+  实测过 `status 200`、9 个响应头、2523 字节 body。该服务器按源 IP 限流并会间歇
+  关流，因此 CI 只把它当 informational；HTTP/3 的响应格式由离线测试
+  `tests/abi.rs::http3_response_maps_status_and_pseudo_headers` 守住，握手字段由
+  `tests/wire.rs` 解密真实 QUIC Initial 断言。
 - 证据：`goal-evidence/binary-and-ffi.txt`。
 
 ## 6. 其他语言封装
