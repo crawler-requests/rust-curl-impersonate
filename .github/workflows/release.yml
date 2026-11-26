@@ -64,9 +64,51 @@ jobs:
           - target: aarch64-pc-windows-msvc
             os: windows-latest
             name: windows-arm64
+          # 32-bit Windows still shows up on older machines and in some
+          # embedded runtimes; i686-msvc is the target MSVC ships.
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+            name: windows-i686
+          # Android ships four ABIs. arm64 is the modern default, armv7
+          # (armeabi-v7a) covers older and low-end devices, and the two x86
+          # ABIs are what emulators and Chromebooks run.
           - target: aarch64-linux-android
             os: ubuntu-latest
             name: android-arm64
+          - target: armv7-linux-androideabi
+            os: ubuntu-latest
+            name: android-armv7
+          - target: x86_64-linux-android
+            os: ubuntu-latest
+            name: android-x86_64
+          - target: i686-linux-android
+            os: ubuntu-latest
+            name: android-x86
+          # iOS: arm64 is the device; the simulator runs arm64 on Apple
+          # silicon and x86_64 on Intel Macs.
+          - target: aarch64-apple-ios
+            os: macos-15
+            name: ios-arm64
+          - target: aarch64-apple-ios-sim
+            os: macos-15
+            name: ios-sim-arm64
+          - target: x86_64-apple-ios
+            os: macos-15-intel
+            name: ios-sim-x86_64
+          # armv7 Linux is the Raspberry Pi 2/3 (32-bit userland) and most
+          # single-board computers; soft-float armhf is the same ABI with a
+          # hard-float calling convention, which is what Debian's armhf uses.
+          - target: armv7-unknown-linux-gnueabihf
+            os: ubuntu-latest
+            name: linux-armv7-gnueabihf
+          - target: armv7-unknown-linux-musleabihf
+            os: ubuntu-latest
+            name: linux-armv7-musleabihf
+          # 32-bit x86 Linux is still the base image of a lot of CI and
+          # container tooling.
+          - target: i686-unknown-linux-gnu
+            os: ubuntu-latest
+            name: linux-i686-gnu
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -81,14 +123,30 @@ jobs:
           shared-key: release-${{ matrix.target }}
 
       - name: Install cross toolchain (Linux gnu)
-        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        if: matrix.target == 'aarch64-unknown-linux-gnu' || matrix.target == 'armv7-unknown-linux-gnueabihf' || matrix.target == 'i686-unknown-linux-gnu'
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+          case "${{ matrix.target }}" in
+            aarch64-unknown-linux-gnu)
+              sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+              cc=aarch64-linux-gnu-gcc; cxx=aarch64-linux-gnu-g++
+              ;;
+            armv7-unknown-linux-gnueabihf)
+              sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+              cc=arm-linux-gnueabihf-gcc; cxx=arm-linux-gnueabihf-g++
+              ;;
+            i686-unknown-linux-gnu)
+              # 32-bit BoringSSL needs the multilib C and C++ headers.
+              sudo apt-get install -y gcc-multilib g++-multilib
+              cc="gcc -m32"; cxx="g++ -m32"
+              ;;
+          esac
+          lower="$(echo "${{ matrix.target }}" | tr 'a-z-' 'a-z_')"
+          upper="$(echo "${{ matrix.target }}" | tr 'a-z-' 'A-Z_')"
           {
-            echo "CC_aarch64_unknown_linux_gnu=aarch64-linux-gnu-gcc"
-            echo "CXX_aarch64_unknown_linux_gnu=aarch64-linux-gnu-g++"
-            echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc"
+            echo "CC_$lower=$cc"
+            echo "CXX_$lower=$cxx"
+            echo "CARGO_TARGET_${upper}_LINKER=$cc"
           } >> "$GITHUB_ENV"
 
       # Debian's musl-tools ships a C driver only; BoringSSL needs a C++
@@ -129,7 +187,17 @@ jobs:
         if: contains(matrix.target, '-linux-musl')
         run: |
           target="${{ matrix.target }}"
-          arch="${target%%-*}"
+          # Rust triple -> zig's arch name. zig calls 32-bit ARM `arm`, not
+          # `armv7`, and wants the float ABI spelled out for hard-float.
+          case "$target" in
+            armv7-unknown-linux-musleabihf) zig_arch=arm-musleabihf ;;
+            armv7-unknown-linux-musl)       zig_arch=arm-musleabi ;;
+            x86_64-unknown-linux-musl)      zig_arch=x86_64-musl ;;
+            aarch64-unknown-linux-musl)     zig_arch=aarch64-musl ;;
+            i686-unknown-linux-musl)        zig_arch=x86-musl ;;
+            *) echo "unknown musl target $target"; exit 1 ;;
+          esac
+          arch="${zig_arch%%-*}"
           var="${target//-/_}"
           dir="$RUNNER_TEMP/zig-musl"
           mkdir -p "$dir"
@@ -152,7 +220,7 @@ jobs:
             esac
             filtered+=("\$arg")
           done
-          exec zig $zig_kind -target $arch-linux-musl "\${filtered[@]}"
+          exec zig $zig_kind -target $zig_arch "\${filtered[@]}"
           EOF
             chmod +x "$dir/$kind"
           done
@@ -177,19 +245,36 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Configure Android NDK
-        if: matrix.target == 'aarch64-linux-android'
+        if: contains(matrix.target, '-linux-android')
         run: |
           ndk="${ANDROID_NDK_HOME:-${ANDROID_NDK_LATEST_HOME:-}}"
           [ -n "$ndk" ] || { echo "no Android NDK on this runner"; exit 1; }
           bin="$ndk/toolchains/llvm/prebuilt/linux-x86_64/bin"
+          # NDK names its clang wrappers by its own arch spelling, not by the
+          # Rust triple. 32-bit ARM moved from `arm-linux-androideabi` to
+          # `armv7a-linux-androideabi` in a recent NDK, so probe both.
+          case "${{ matrix.target }}" in
+            aarch64-linux-android)   ndk_triple=arm64-linux-android ;;
+            armv7-linux-androideabi)
+              if [ -x "$bin/armv7a-linux-androideabi21-clang" ]; then
+                ndk_triple=armv7a-linux-androideabi
+              else
+                ndk_triple=arm-linux-androideabi
+              fi
+              ;;
+            x86_64-linux-android)    ndk_triple=x86_64-linux-android ;;
+            i686-linux-android)      ndk_triple=i686-linux-android ;;
+            *) echo "unknown Android target ${{ matrix.target }}"; exit 1 ;;
+          esac
+          rust_var="$(echo "${{ matrix.target }}" | tr 'a-z-' 'a-z_')"
           {
             echo "ANDROID_NDK_HOME=$ndk"
             echo "ANDROID_NDK_ROOT=$ndk"
-            echo "CC_aarch64_linux_android=$bin/aarch64-linux-android21-clang"
-            echo "CXX_aarch64_linux_android=$bin/aarch64-linux-android21-clang++"
-            echo "AR_aarch64_linux_android=$bin/llvm-ar"
-            echo "RANLIB_aarch64_linux_android=$bin/llvm-ranlib"
-            echo "CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=$bin/aarch64-linux-android21-clang"
+            echo "CC_$rust_var=$bin/${ndk_triple}${API:-21}-clang"
+            echo "CXX_$rust_var=$bin/${ndk_triple}${API:-21}-clang++"
+            echo "AR_$rust_var=$bin/llvm-ar"
+            echo "RANLIB_$rust_var=$bin/llvm-ranlib"
+            echo "CARGO_TARGET_$(echo "${{ matrix.target }}" | tr 'a-z-' 'A-Z_')_LINKER=$bin/${ndk_triple}${API:-21}-clang"
           } >> "$GITHUB_ENV"
 
       - name: Resolve version
@@ -204,12 +289,34 @@ jobs:
 
       # The export check below reads the library's export table directly, so
       # it works on every runner without a platform linker tool on PATH.
+      # iOS builds want an explicit deployment target, and the simulator has
+      # a different SDK than the device. Apple's toolchain finds the SDK by
+      # the -sdk flag that cc-rs passes from `SDKROOT`.
+      - name: Configure iOS SDK
+        if: contains(matrix.target, '-apple-ios')
+        run: |
+          case "${{ matrix.target }}" in
+            *-ios-sim) sdk=iphonesimulator; platform=iPhoneSimulator ;;
+            *)         sdk=iphoneos;       platform=iPhoneOS ;;
+          esac
+          sdk_path="$(xcrun --sdk "$sdk" --show-sdk-path)"
+          lower="$(echo "${{ matrix.target }}" | tr 'a-z-' 'a-z_')"
+          {
+            echo "SDKROOT=$sdk_path"
+            echo "IPHONEOS_DEPLOYMENT_TARGET=12.0"
+            echo "CC_$lower=$(xcrun --sdk "$sdk" --find clang)"
+            echo "CXX_$lower=$(xcrun --sdk "$sdk" --find clang++)"
+            echo "CARGO_TARGET_$(echo "${{ matrix.target }}" | tr 'a-z-' 'A-Z_')_LINKER=$(xcrun --sdk "$sdk" --find clang)"
+          } >> "$GITHUB_ENV"
+          echo "platform=$platform sdk=$sdk_path"
+
       - name: Build
         shell: bash
         run: |
-          # The echo smoke binary is a host tool; Android ships the library only.
+          # The echo smoke binary is a host tool; mobile targets ship the
+          # library only.
           case "${{ matrix.target }}" in
-            *android*) ;;
+            *android*|*-apple-ios*) ;;
             *) cargo build --release -p rust-curl-impersonate --example echo --target ${{ matrix.target }} ;;
           esac
           cargo build --release -p rust-curl-impersonate-ffi --target ${{ matrix.target }}
@@ -296,8 +403,14 @@ jobs:
       - name: Every target produced an archive
         run: |
           count=$(find dist -maxdepth 1 \( -name '*.tar.gz' -o -name '*.zip' \) | wc -l)
-          echo "archives: $count"
-          test "$count" -eq 9
+          # One archive per matrix target; a silent drop is a missing platform.
+          expected=$(python3 -I -c "
+          import re, sys
+          text = open('.github/workflows/release.yml').read()
+          print(text.count('          - target: '))
+          ")
+          echo "archives: $count  expected: $expected"
+          test "$count" -eq "$expected"
       # Every archive carries the header a binding compiles against. Check the
       # Linux/macOS tarballs here; Windows zips are checked in the matrix job.
       - name: Archives carry rci.h

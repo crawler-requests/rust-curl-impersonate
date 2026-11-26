@@ -7,9 +7,12 @@ description = "C ABI shared library for wrapping rust-curl-impersonate from othe
 
 [lib]
 name = "rust_curl_impersonate_ffi"
-# `rlib` lets the crate's own integration tests and a Rust binding link the
-# same code the cdylib exports.
-crate-type = ["cdylib", "rlib"]
+# `cdylib` is what a dynamic loader uses at runtime. `staticlib` is what an
+# app embeds when it links the library into its own binary (iOS apps, console
+# tools, anything that must not ship a separate .so). `rlib` lets the crate's
+# own integration tests and a Rust binding link the same code the cdylib
+# exports.
+crate-type = ["cdylib", "staticlib", "rlib"]
 
 [dependencies]
 rust-curl-impersonate = { path = "../.." }

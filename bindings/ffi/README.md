@@ -1,8 +1,9 @@
 # rust-curl-impersonate C ABI
 
-Shared library (`cdylib`) exposing `rust-curl-impersonate` to other languages.
-It is the entry point for Python/Node/Go/Java/C++/C# bindings; the Rust crate
-stays the single source of fingerprint logic.
+The C ABI exposing `rust-curl-impersonate` to other languages, in both a
+shared library (`cdylib`) and a static one (`staticlib`). It is the entry
+point for Python/Node/Go/Java/C++/C#/Swift bindings; the Rust crate stays the
+single source of fingerprint logic.
 
 ## Build
 
@@ -10,15 +11,33 @@ stays the single source of fingerprint logic.
 cargo build -p rust-curl-impersonate-ffi --release
 ```
 
-The artifact is `target/release/librust_curl_impersonate_ffi.so` on Linux,
-`.dylib` on macOS, `.dll` on Windows (with a `.lib` import library). `rci.h`
-is the matching C header.
+The artifacts are, per platform:
 
-Prebuilt libraries for Linux (gnu and musl, x86_64/aarch64), macOS
-(x86_64/arm64), Windows (x86_64/arm64) and Android (arm64) are attached to
-every `v*` tag on GitHub Releases with `rci.h` and `SHA256SUMS`. The Linux
-musl build is dynamically linked against musl (Alpine-compatible); the Android
-build expects `libc++_shared.so` from the NDK at runtime.
+- shared: `librust_curl_impersonate_ffi.so` / `.dylib` / `.dll` (with a
+  `.lib` import library on MSVC)
+- static: `librust_curl_impersonate_ffi.a` / `rust_curl_impersonate_ffi.lib`
+
+`rci.h` is the matching C header. The static archive bundles BoringSSL, which
+is C++, so link it with a C++ driver or add `-lstdc++` (details in
+`USING_THIS_ARCHIVE.md`).
+
+## Prebuilt platforms
+
+Every `v*` tag publishes one archive per target, each with `rci.h`, both
+library forms, `SHA256SUMS`, and a `USING_THIS_ARCHIVE.md`:
+
+| OS | Architectures |
+|---|---|
+| Linux (glibc) | x86_64, aarch64, armv7 (hard-float), i686 |
+| Linux (musl) | x86_64, aarch64, armv7 (hard-float) |
+| macOS | x86_64, arm64 |
+| Windows | x86_64, arm64, i686 |
+| Android | arm64-v8a, armeabi-v7a, x86_64, x86 |
+| iOS | arm64 (device), arm64 + x86_64 (simulator) |
+
+Linux musl builds are dynamically linked against musl (Alpine-compatible);
+the Android builds expect `libc++_shared.so` from the NDK at runtime when the
+shared form is used (the static form does not).
 
 ## Use from C
 
