@@ -48,14 +48,21 @@ def _strip_static(path):
     """Drop debug info from a static library in place.
 
     Rust's staticlib keeps every object file's DWARF, which makes the archive
-    over 100 MB. `strip` works on a .a by removing the debug sections from
-    each member; the exported symbols stay. A host without `strip` keeps the
-    unstripped archive rather than failing the whole build.
+    over 100 MB. `strip` works on a `.a` by removing the debug sections from
+    each member; the exported symbols stay.
+
+    A Windows `.lib` is an MSVC archive that MinGW's `strip` cannot read, so
+    prefer `llvm-strip` (which ships with the MSVC toolset Rust uses). A host
+    with neither keeps the unstripped archive rather than failing the build.
     """
     import shutil as _shutil
     import subprocess
 
-    strip = _shutil.which("strip") or _shutil.which("llvm-strip")
+    if path.endswith(".lib"):
+        candidates = ("llvm-strip",)
+    else:
+        candidates = ("strip", "llvm-strip")
+    strip = next((_shutil.which(name) for name in candidates if _shutil.which(name)), None)
     if strip is None:
         print(f"warning: no strip binary; {path} keeps debug info", file=sys.stderr)
         return
