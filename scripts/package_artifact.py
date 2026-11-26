@@ -126,6 +126,11 @@ def stage(target, version, target_dir, out_dir):
     note = os.path.join(ROOT, "bindings", "ffi", "python", "LIBRARY_PATH.md")
     if os.path.exists(note):
         shutil.copy2(note, os.path.join(stage_dir, "USING_THIS_ARCHIVE.md"))
+    # The per-language embedding guide belongs with the archive: someone who
+    # downloads it should not have to find the repository to learn the API.
+    guide = os.path.join(ROOT, "docs", "embedding.md")
+    if os.path.exists(guide):
+        shutil.copy2(guide, os.path.join(stage_dir, "EMBEDDING.md"))
 
     # Android artifacts are consumed as a shared library, not as a host binary.
     echo = os.path.join(release_dir, "examples", "echo" + (".exe" if "windows" in target else ""))
@@ -154,6 +159,7 @@ REQUIRED = {
     "include/rci.h",
     "python/demo.py",
     "USING_THIS_ARCHIVE.md",
+    "EMBEDDING.md",
     "README.md",
     "LICENSE",
 }

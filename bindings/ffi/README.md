@@ -122,3 +122,10 @@ A body that is not valid UTF-8 comes back as lowercase **hex** with
   block (currently the QUIC-era Chrome/Firefox/Safari presets and `chrome160`).
   A profile without one returns `{"error":"HTTP/3 is unavailable"}` from
   `rci_http3_get`.
+
+## Embedding guide
+
+`docs/embedding.md` is the per-language walkthrough: the full function table,
+the response shapes, and working examples for C, C++, Python, Node, Go,
+Java/Kotlin, PHP, C# and Swift. This file keeps the function list; that one
+shows how to call it from each language.

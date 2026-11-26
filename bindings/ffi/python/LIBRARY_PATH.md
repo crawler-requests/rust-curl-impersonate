@@ -7,8 +7,12 @@ forms an embedder needs.
 include/rci.h   C header for every language that binds to the C ABI
 lib/            the shared library and the static library
 python/demo.py  a ctypes binding you can copy into a project
+EMBEDDING.md    per-language guide: every function, and how to call it
 bin/echo        a host-tool smoke binary (desktop/server targets only)
 ```
+
+For the full function table and working examples in C, C++, Python, Node,
+Go, Java/Kotlin, PHP, C# and Swift, read `EMBEDDING.md` in this archive.
 
 ## Shared or static
 

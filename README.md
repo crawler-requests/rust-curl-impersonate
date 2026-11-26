@@ -17,9 +17,13 @@ rust-curl-impersonate = { git = "https://github.com/crawler-requests/rust-curl-i
 ```
 
 非 Rust 调用方从 [Releases](https://github.com/crawler-requests/rust-curl-impersonate/releases)
-下载对应平台的归档：内含 `lib/` 下的共享库、`include/rci.h`、`python/demo.py` 和一个
-`LIBRARY_PATH.md`。C ABI 有 17 个函数，覆盖 profile 查询、带选项建客户端、逐请求头、
-二进制响应、HTTP/3 与运行时指纹注册；完整表见 `bindings/ffi/README.md`。
+下载对应平台的归档：18 个平台，每个都同时含动态库与静态库、`include/rci.h`、
+`python/demo.py` 和 `USING_THIS_ARCHIVE.md`。C ABI 有 17 个函数，覆盖 profile 查询、
+带选项建客户端、逐请求头、二进制响应、HTTP/3 与运行时指纹注册。
+
+**各语言怎么内嵌、native API 全表**：[docs/embedding.md](docs/embedding.md)
+（C / C++ / Python / Node / Go / Java / Kotlin / PHP / C# / Swift，示例都实测过）。
+函数级细节：[bindings/ffi/README.md](bindings/ffi/README.md)。
 
 ## 用法
 
