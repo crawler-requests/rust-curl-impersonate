@@ -138,12 +138,13 @@ jobs:
             i686-unknown-linux-gnu)
               # 32-bit BoringSSL needs the multilib C and C++ headers. cc-rs and
               # cmake take the compiler as a path, so `gcc -m32` has to be a
-              # wrapper script, not a string with a flag.
+              # wrapper script, not a string with a flag. BoringSSL's x86
+              # assembly also requires SSE2 explicitly.
               sudo apt-get install -y gcc-multilib g++-multilib
               wrapdir="$RUNNER_TEMP/i686"
               mkdir -p "$wrapdir"
-              printf '#!/bin/sh\nexec gcc -m32 "$@"\n' > "$wrapdir/cc"
-              printf '#!/bin/sh\nexec g++ -m32 "$@"\n' > "$wrapdir/cxx"
+              printf '#!/bin/sh\nexec gcc -m32 -msse2 "$@"\n' > "$wrapdir/cc"
+              printf '#!/bin/sh\nexec g++ -m32 -msse2 "$@"\n' > "$wrapdir/cxx"
               chmod +x "$wrapdir/cc" "$wrapdir/cxx"
               cc="$wrapdir/cc"; cxx="$wrapdir/cxx"
               ;;
