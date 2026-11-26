@@ -22,8 +22,20 @@ rust-curl-impersonate = { git = "https://github.com/crawler-requests/rust-curl-i
 带选项建客户端、逐请求头、二进制响应、HTTP/3 与运行时指纹注册。
 
 **各语言怎么内嵌、native API 全表**：[docs/embedding.md](docs/embedding.md)
-（C / C++ / Python / Node / Go / Java / Kotlin / PHP / C# / Swift，示例都实测过）。
+（C / C++ / Python / Node / Go / Java / Kotlin / PHP / C# / Swift；C、C++、
+Python、Node、Go、Java、PHP 的示例都实测跑通）。归档里自带两套可用封装：
+`python/rci_bindings.py`（ctypes，加载时直接读 `rci.h` 应用 17 条签名）和
+`java/`（独立 Maven 工程，JNA）。
 函数级细节：[bindings/ffi/README.md](bindings/ffi/README.md)。
+
+**给 AI agent 用**：装上 [rust-curl-impersonate-skills](https://github.com/crawler-requests/rust-curl-impersonate-skills)
+后，agent 会自己按目标平台下载归档、校验 ABI、从头文件生成声明、复用现成封装，
+并用真实指纹证明接入成功：
+
+```sh
+claude plugin marketplace add crawler-requests/rust-curl-impersonate-skills
+claude plugin install rust-curl-impersonate-native@rust-curl-impersonate-skills
+```
 
 ## 用法
 
