@@ -71,7 +71,7 @@ public final class RustCurlImpersonate {
         return new Client(profile, null);
     }
 
-    /** A client with options JSON (see {@code rci.h}}, NULL for defaults). */
+    /** A client with options JSON (see {@code rci.h}, NULL for defaults). */
     public static Client client(String profile, String optionsJson) {
         return new Client(profile, optionsJson);
     }

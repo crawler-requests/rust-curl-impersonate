@@ -11,7 +11,7 @@ RCI_LIB=/path/to/lib/librust_curl_impersonate_ffi.so \
 RCI_BASE=http://127.0.0.1:8765 mvn test                # 需要一个本地测试服务器
 ```
 
-`RCI_BASE` 默认 `http://127.0.0.1:8765`，用归档里 `python/testserver.py 8765` 起。
+`RCI_BASE` 默认 `http://127.0.0.1:8765`，用 `python/testserver.py 8765`（归档 `python/` 目录）或任何本地 HTTP 服务起。
 `-Drci.h3=1` 追加一条真实 HTTP/3 用例（需要外网 UDP，会自己重试）。
 
 ## 使用
