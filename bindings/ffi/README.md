@@ -29,15 +29,18 @@ library forms, `SHA256SUMS`, and a `USING_THIS_ARCHIVE.md`:
 | OS | Architectures |
 |---|---|
 | Linux (glibc) | x86_64, aarch64, armv7 (hard-float), i686 |
-| Linux (musl) | x86_64, aarch64, armv7 (hard-float) |
+| Linux (musl) | x86_64, aarch64 |
 | macOS | x86_64, arm64 |
 | Windows | x86_64, arm64, i686 |
 | Android | arm64-v8a, armeabi-v7a, x86_64, x86 |
 | iOS | arm64 (device), arm64 + x86_64 (simulator) |
 
-Linux musl builds are dynamically linked against musl (Alpine-compatible);
-the Android builds expect `libc++_shared.so` from the NDK at runtime when the
-shared form is used (the static form does not).
+Two gaps are deliberate: armv7-musl and i686-musl. The `btls` crate passes
+an `i64` where `time_t` is expected, and musl on 32-bit targets has a 32-bit
+`time_t`, so it does not compile there. armv7 and i686 are covered by their
+glibc builds. Linux musl builds are dynamically linked against musl
+(Alpine-compatible); the Android builds expect `libc++_shared.so` from the
+NDK at runtime when the shared form is used (the static form does not).
 
 ## Use from C
 

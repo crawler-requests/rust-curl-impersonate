@@ -101,9 +101,9 @@ jobs:
           - target: armv7-unknown-linux-gnueabihf
             os: ubuntu-latest
             name: linux-armv7-gnueabihf
-          - target: armv7-unknown-linux-musleabihf
-            os: ubuntu-latest
-            name: linux-armv7-musleabihf
+          # armv7 + musl is omitted: btls 0.5.6 passes an i64 to a time_t
+          # argument, and musl-on-32-bit-ARM has a 32-bit time_t, so the crate
+          # does not compile there. armv7-gnueabihf above covers 32-bit ARM.
           # 32-bit x86 Linux is still the base image of a lot of CI and
           # container tooling.
           - target: i686-unknown-linux-gnu
@@ -198,7 +198,6 @@ jobs:
           # Rust triple -> zig target name. zig wants `<arch>-linux-<env>`;
           # e.g. armv7-unknown-linux-musleabihf is `arm-linux-musleabihf`.
           case "$target" in
-            armv7-unknown-linux-musleabihf) zig_arch=arm-linux-musleabihf ;;
             armv7-unknown-linux-musl)       zig_arch=arm-linux-musleabi ;;
             x86_64-unknown-linux-musl)      zig_arch=x86_64-linux-musl ;;
             aarch64-unknown-linux-musl)     zig_arch=aarch64-linux-musl ;;
