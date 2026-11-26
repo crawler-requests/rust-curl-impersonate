@@ -187,17 +187,16 @@ jobs:
         if: contains(matrix.target, '-linux-musl')
         run: |
           target="${{ matrix.target }}"
-          # Rust triple -> zig's arch name. zig calls 32-bit ARM `arm`, not
-          # `armv7`, and wants the float ABI spelled out for hard-float.
+          # Rust triple -> zig target name. zig wants `<arch>-linux-<env>`;
+          # e.g. armv7-unknown-linux-musleabihf is `arm-linux-musleabihf`.
           case "$target" in
-            armv7-unknown-linux-musleabihf) zig_arch=arm-musleabihf ;;
-            armv7-unknown-linux-musl)       zig_arch=arm-musleabi ;;
-            x86_64-unknown-linux-musl)      zig_arch=x86_64-musl ;;
-            aarch64-unknown-linux-musl)     zig_arch=aarch64-musl ;;
-            i686-unknown-linux-musl)        zig_arch=x86-musl ;;
+            armv7-unknown-linux-musleabihf) zig_arch=arm-linux-musleabihf ;;
+            armv7-unknown-linux-musl)       zig_arch=arm-linux-musleabi ;;
+            x86_64-unknown-linux-musl)      zig_arch=x86_64-linux-musl ;;
+            aarch64-unknown-linux-musl)     zig_arch=aarch64-linux-musl ;;
+            i686-unknown-linux-musl)        zig_arch=x86-linux-musl ;;
             *) echo "unknown musl target $target"; exit 1 ;;
           esac
-          arch="${zig_arch%%-*}"
           var="${target//-/_}"
           dir="$RUNNER_TEMP/zig-musl"
           mkdir -p "$dir"
@@ -236,10 +235,15 @@ jobs:
             # headers Zig ships for this musl target instead. BORINGSSL_NO_CXX
             # keeps the C++ wrapper in base.h (which pulls in libstdc++) out of
             # the parse; the C API declarations are unaffected.
+            # Zig ships libc headers under lib/libc/include/<target>. The
+            # directory names follow zig's target spelling (arch-linux-env),
+            # and `<arch>-linux-any` holds the per-arch headers shared by all
+            # linux flavours.
+            zig_os_arch="${zig_arch%%-*}"
             includes="-DBORINGSSL_NO_CXX -I $ZIG_LIB/lib/include"
-            includes="$includes -I $ZIG_LIB/libc/include/$arch-linux-musl"
+            includes="$includes -I $ZIG_LIB/libc/include/$zig_arch"
+            includes="$includes -I $ZIG_LIB/libc/include/$zig_os_arch-linux-any"
             includes="$includes -I $ZIG_LIB/libc/include/generic-musl"
-            includes="$includes -I $ZIG_LIB/libc/include/$arch-linux-any"
             includes="$includes -I $ZIG_LIB/libc/include/any-linux-any"
             echo "BINDGEN_EXTRA_CLANG_ARGS_$var=$includes"
           } >> "$GITHUB_ENV"
@@ -250,22 +254,31 @@ jobs:
           ndk="${ANDROID_NDK_HOME:-${ANDROID_NDK_LATEST_HOME:-}}"
           [ -n "$ndk" ] || { echo "no Android NDK on this runner"; exit 1; }
           bin="$ndk/toolchains/llvm/prebuilt/linux-x86_64/bin"
-          # NDK names its clang wrappers by its own arch spelling, not by the
-          # Rust triple. 32-bit ARM moved from `arm-linux-androideabi` to
-          # `armv7a-linux-androideabi` in a recent NDK, so probe both.
+          # NDK names its clang wrappers after the triplet it targets, and the
+          # spelling changed between NDK releases. Probe the common forms.
+          probe() {
+            for cand in "$@"; do
+              if [ -x "$bin/${cand}${API:-21}-clang" ]; then echo "$cand"; return 0; fi
+            done
+            return 1
+          }
           case "${{ matrix.target }}" in
-            aarch64-linux-android)   ndk_triple=arm64-linux-android ;;
+            aarch64-linux-android)
+              ndk_triple="$(probe aarch64-linux-android arm64-linux-android)" ;;
             armv7-linux-androideabi)
-              if [ -x "$bin/armv7a-linux-androideabi21-clang" ]; then
-                ndk_triple=armv7a-linux-androideabi
-              else
-                ndk_triple=arm-linux-androideabi
-              fi
-              ;;
-            x86_64-linux-android)    ndk_triple=x86_64-linux-android ;;
-            i686-linux-android)      ndk_triple=i686-linux-android ;;
+              ndk_triple="$(probe armv7a-linux-androideabi arm-linux-androideabi armv7-linux-androideabi)" ;;
+            x86_64-linux-android)
+              ndk_triple="$(probe x86_64-linux-android)" ;;
+            i686-linux-android)
+              ndk_triple="$(probe i686-linux-android x86-linux-android)" ;;
             *) echo "unknown Android target ${{ matrix.target }}"; exit 1 ;;
           esac
+          [ -n "$ndk_triple" ] || {
+            echo "no clang wrapper for ${{ matrix.target }} in $bin"
+            ls "$bin" | grep -i clang | head -20
+            exit 1
+          }
+          echo "ndk_triple=$ndk_triple"
           rust_var="$(echo "${{ matrix.target }}" | tr 'a-z-' 'a-z_')"
           {
             echo "ANDROID_NDK_HOME=$ndk"
