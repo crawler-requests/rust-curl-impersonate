@@ -129,3 +129,20 @@ A body that is not valid UTF-8 comes back as lowercase **hex** with
 the response shapes, and working examples for C, C++, Python, Node, Go,
 Java/Kotlin, PHP, C# and Swift. This file keeps the function list; that one
 shows how to call it from each language.
+
+Two ready-made bindings ship with every release archive, so a consumer does not
+have to write the glue:
+
+- `python/rci_bindings.py` — ctypes; reads `rci.h` at load time and applies all
+  17 signatures, so it cannot drift from the header. Has `Library` / `Profile` /
+  `Client` / `Response` and `python/tests/` (20 offline checks plus a retrying
+  HTTP/3 case).
+- `java/` — a standalone Maven project with a JNA binding (`RciLibrary`, a
+  `RustCurlImpersonate` facade, a dependency-free JSON reader) and 16 JUnit
+  tests. JNA rather than Panama because Panama is still preview on JDK 21 and
+  needs `--enable-native-access`.
+
+Both were run against the locally built library on 2026-11-26; the Python tests
+pass 20/20 (1 skipped without `RCI_H3=1`) and the Java tests 16/16 (0 skipped
+with `-Drci.h3=1`). `tools/gen_signatures.py --check` is the gate that keeps
+`rci.h` and the Java declarations in step.

@@ -35,6 +35,14 @@ STATIC_LIBRARIES = (
 # library, so it is copied by STATIC_LIBRARIES, not here.
 EXTRA_LIBRARY_SUFFIXES = (".dll.lib", ".dll.a", ".pdb")
 
+# Python files that go into the archive's python/ directory: the binding, its
+# smallest example, a local test server, and the full smoke gate.
+PYTHON_FILES = ("rci_bindings.py", "demo.py", "testserver.py", "smoke.py")
+
+# The Java binding ships as source. `target/` (Maven's build output) is not
+# copied, and neither is anything else not listed here.
+JAVA_FILES = ("pom.xml", "src", "README.md")
+
 
 def find_library(release_dir):
     for name in LIBRARIES:
@@ -120,9 +128,14 @@ def stage(target, version, target_dir, out_dir):
     # it covers the shared/static choice for every language, not just Python.
     python_dir = os.path.join(stage_dir, "python")
     os.makedirs(python_dir, exist_ok=True)
-    demo = os.path.join(ROOT, "bindings", "ffi", "python", "demo.py")
-    if os.path.exists(demo):
-        shutil.copy2(demo, os.path.join(python_dir, "demo.py"))
+    for name in PYTHON_FILES:
+        source = os.path.join(ROOT, "bindings", "ffi", "python", name)
+        if os.path.exists(source):
+            shutil.copy2(source, os.path.join(python_dir, name))
+    tests = os.path.join(ROOT, "bindings", "ffi", "python", "tests")
+    if os.path.isdir(tests):
+        shutil.copytree(tests, os.path.join(python_dir, "tests"),
+                        ignore=shutil.ignore_patterns("__pycache__", ".pytest_cache"))
     note = os.path.join(ROOT, "bindings", "ffi", "python", "LIBRARY_PATH.md")
     if os.path.exists(note):
         shutil.copy2(note, os.path.join(stage_dir, "USING_THIS_ARCHIVE.md"))
@@ -131,6 +144,19 @@ def stage(target, version, target_dir, out_dir):
     guide = os.path.join(ROOT, "docs", "embedding.md")
     if os.path.exists(guide):
         shutil.copy2(guide, os.path.join(stage_dir, "EMBEDDING.md"))
+    # The Java binding is a standalone Maven project, so it ships as source:
+    # javac output is platform-specific and Maven rebuilds it in seconds.
+    java_source = os.path.join(ROOT, "bindings", "ffi", "java")
+    java_dir = os.path.join(stage_dir, "java")
+    if os.path.isdir(java_source):
+        for name in JAVA_FILES:
+            source = os.path.join(java_source, name)
+            if os.path.isdir(source):
+                shutil.copytree(source, os.path.join(java_dir, name),
+                                ignore=shutil.ignore_patterns("target"))
+            elif os.path.exists(source):
+                os.makedirs(java_dir, exist_ok=True)
+                shutil.copy2(source, os.path.join(java_dir, name))
 
     # Android artifacts are consumed as a shared library, not as a host binary.
     echo = os.path.join(release_dir, "examples", "echo" + (".exe" if "windows" in target else ""))
@@ -158,6 +184,8 @@ def stage(target, version, target_dir, out_dir):
 REQUIRED = {
     "include/rci.h",
     "python/demo.py",
+    "python/rci_bindings.py",
+    "java/pom.xml",
     "USING_THIS_ARCHIVE.md",
     "EMBEDDING.md",
     "README.md",

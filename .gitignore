@@ -3,6 +3,9 @@ Cargo.lock
 
 __pycache__/
 *.pyc
+
+# Maven output for the shipped Java binding
+/bindings/ffi/java/target/
 /tools/capture/rust_capture/target
 /tools/capture/tlsclient_capture_bin
 /tools/capture/utls_capture_bin

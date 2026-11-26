@@ -6,7 +6,8 @@ forms an embedder needs.
 ```
 include/rci.h   C header for every language that binds to the C ABI
 lib/            the shared library and the static library
-python/demo.py  a ctypes binding you can copy into a project
+python/         rci_bindings.py (full ctypes binding), demo.py, smoke.py, tests/
+java/           a standalone Maven project with the JNA binding
 EMBEDDING.md    per-language guide: every function, and how to call it
 bin/echo        a host-tool smoke binary (desktop/server targets only)
 ```
@@ -41,22 +42,53 @@ inside an app bundle is either restricted (iOS) or awkward to package
 
 ## Python
 
-`python/demo.py` finds the library through `RCI_LIB`, so point it at this
-archive's `lib/` directory:
+`python/rci_bindings.py` is the full binding: it reads `include/rci.h` and applies
+every signature to the loaded library, and finds the library through `RCI_LIB`
+or the `lib/` directory next to it.
 
-```sh
-RCI_LIB=/path/to/lib/librust_curl_impersonate_ffi.so \
-  python3 python/demo.py chrome150 https://tls.peet.ws/api/all
+```python
+from rci_bindings import Client, Library
+
+with Client("chrome150") as client:
+    reply = client.get("https://tls.peet.ws/api/all")
+    print(reply.status, reply.version, reply.header("server"))
 ```
 
-`RCI_LIST=1` prints the selectable profiles instead of sending a request.
+The offline tests run against `python/testserver.py`:
+
+```sh
+python3 python/testserver.py 8765 &
+RCI_LIB=$PWD/lib/librust_curl_impersonate_ffi.so \
+  python3 -m pytest python/tests -q
+```
+
+`python/demo.py chrome150 <url>` prints the echo service's JA4 and h2 fingerprint;
+`RCI_LIST=1` lists the selectable profiles.
+
+## Java
+
+`java/` is a standalone Maven project with the JNA binding:
+
+```sh
+cd java
+RCI_LIB=/path/to/lib/librust_curl_impersonate_ffi.so mvn package
+```
+
+Add the built jar and JNA (`net.java.dev.jna:jna`) to your project, then:
+
+```java
+try (RustCurlImpersonate.Client client = RustCurlImpersonate.client("chrome150")) {
+    RustCurlImpersonate.Response reply = client.get("https://tls.peet.ws/api/all");
+    System.out.println(reply.status() + " " + reply.version());
+}
+```
 
 ## Other languages
 
 - **C / C++**: `#include "rci.h"`, link `lib/`, set a runtime search path
   (rpath) to the shared library, or link the static one directly.
 - **Go**: cgo with `#cgo LDFLAGS: -L${SRCDIR}/lib -lrust_curl_impersonate_ffi`.
-- **Java**: JNA or Panama against `rci.h`.
+- **Java**: the `java/` project in this archive; Panama is an option for JDK 22+.
 - **Node**: `koffi` or `ffi-napi` against the shared library.
 - **Swift / Objective-C**: link the static `.a` (iOS) or the `.dylib` (macOS).
 

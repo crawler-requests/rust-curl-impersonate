@@ -117,12 +117,40 @@ jobs:
           test ! -s /tmp/missing.txt
       - name: Exercise the ABI from Python
         run: |
-          python3 -I bindings/ffi/python/testserver.py 8765 &
+          python3 -I bindings/ffi/python/testserver.py 8765 > /tmp/testserver.log 2>&1 &
+          echo $! > /tmp/testserver.pid
           for _ in $(seq 1 20); do
             curl -sf http://127.0.0.1:8765/index.html >/dev/null && break
             sleep 0.5
           done
           python3 -I bindings/ffi/python/smoke.py
+      # A C ABI has no reflection, so a binding knows the API only through the
+      # header. This fails when rci.h grows a function that the Java binding
+      # does not declare (and vice versa), before a downloader finds out.
+      - name: Bindings agree with rci.h
+        run: python3 -I tools/gen_signatures.py --check
+      # The ready-made Python binding is what a downloader copies into their
+      # project, so it gets a gate of its own: the ctypes signatures are read
+      # from rci.h and the test asserts the fallback table matches it.
+      - name: The shipped Python binding
+        run: |
+          python3 -m pip install --quiet pytest
+          python3 -m pytest bindings/ffi/python/tests -q
+      # The Java binding ships in every archive; build it and run its tests
+      # against the same local server, so a broken JNA declaration is caught
+      # here rather than by a downloader.
+      - name: The shipped Java binding
+        run: |
+          # A background process from an earlier step is not reliable; start
+          # the test server fresh for this step.
+          python3 -I bindings/ffi/python/testserver.py 8765 > /tmp/testserver-java.log 2>&1 &
+          for _ in $(seq 1 20); do
+            curl -sf http://127.0.0.1:8765/index.html >/dev/null && break
+            sleep 0.5
+          done
+          cd bindings/ffi/java
+          RCI_LIB=${{ github.workspace }}/target/release/librust_curl_impersonate_ffi.so \
+            mvn -q -B test
       # HTTP/3 over the network is informational, not a gate: GitHub runners
       # drop outbound UDP on some pools, and a third-party QUIC peer
       # (quic.nginx.org) rate-limits by source IP and closes streams

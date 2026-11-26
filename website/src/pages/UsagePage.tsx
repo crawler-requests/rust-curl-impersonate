@@ -259,7 +259,9 @@ export function UsagePage() {
         </CodeBlock>
         <p className="section__lede">
           完整函数表见归档里的 <code>README.md</code>；封装注意事项（阻塞调用、字符串所有权、错误 JSON）
-          也写在那里。
+          也写在那里。归档另外自带两套现成封装——<code>python/rci_bindings.py</code>
+          （读 <code>rci.h</code> 自动套用 17 条签名）和可 <code>mvn package</code> 的
+          <code>java/</code>（JNA）；逐语言接法与实测记录见归档里的 <code>EMBEDDING.md</code>。
         </p>
       </section>
 
