@@ -409,6 +409,9 @@ jobs:
     needs: [test, build]
     runs-on: ubuntu-latest
     steps:
+      # The archive-count check reads the matrix out of the workflow file, so
+      # this job needs the repository checkout.
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           path: dist
@@ -425,9 +428,9 @@ jobs:
           count=$(find dist -maxdepth 1 \( -name '*.tar.gz' -o -name '*.zip' \) | wc -l)
           # One archive per matrix target; a silent drop is a missing platform.
           expected=$(python3 -I -c "
-          import re, sys
+          import re
           text = open('.github/workflows/release.yml').read()
-          print(text.count('          - target: '))
+          print(len(re.findall(r'^          - target: ', text, re.M)))
           ")
           echo "archives: $count  expected: $expected"
           test "$count" -eq "$expected"
