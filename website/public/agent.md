@@ -33,6 +33,9 @@ fact you need is behind one of the links below.
 
 ## Install it as a skill (recommended for Claude Code)
 
+Verified 2026-11-27 against this deployed catalog: `marketplace add` then
+`install` succeed, and `plugin details` reports one skill.
+
 One URL is enough — this site publishes a plugin marketplace manifest, and
 the plugin archive it points at is a static file next to it:
 
