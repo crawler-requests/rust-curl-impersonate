@@ -850,6 +850,9 @@ impl Fingerprint {
     }
 
     /// Check the parts that do not depend on a network connection.
+    ///
+    /// Cipher, curve and signature-algorithm names are not checked here: the
+    /// handshake resolves them through BoringSSL. `wire_check` does that.
     pub fn validate(&self) -> Result<(), String> {
         if self.name.is_empty() {
             return Err("fingerprint name is empty".to_string());
@@ -861,6 +864,23 @@ impl Fingerprint {
             return Ok(());
         }
         self.emulation().map(|_| ())
+    }
+
+    /// Check what only the transport can reject: a cipher, curve or signature
+    /// list with a name BoringSSL does not know builds a client that fails on
+    /// its first request instead of at registration. Building one client per
+    /// distinct record cost is what makes a bad document fail where a caller
+    /// expects it — when it is loaded, not on first use.
+    pub fn wire_check(&self) -> Result<(), String> {
+        if self.extends.is_some() {
+            return Ok(());
+        }
+        let emulation = self.emulation()?;
+        wreq::Client::builder()
+            .emulation(emulation)
+            .build()
+            .map(|_| ())
+            .map_err(|error| format!("{}: {error}", self.name))
     }
 }
 
@@ -1561,6 +1581,9 @@ pub fn load_json(text: &str) -> Result<Vec<Profile>, String> {
         }
         // Check every name and every wire input before installing anything.
         record.validate()?;
+        // `validate` stops at BoringSSL; this builds the client a caller
+        // would, so a bad cipher, curve or signature name fails here.
+        record.wire_check()?;
         if Profile::find(&record.name).is_some() {
             return Err(format!("{} is already registered", record.name));
         }

@@ -66,7 +66,9 @@ impl FingerprintProvider for CustomProvider {
             client: "Custom protocol client".to_string(),
             version: "1.0".to_string(),
             tls: rust_curl_impersonate::fingerprint::TlsFingerprint {
-                ciphers: Some("TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384".to_string()),
+                ciphers: Some(
+                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_AES_128_GCM_SHA256".to_string(),
+                ),
                 curves: Some("X25519:P-256".to_string()),
                 alpn: Some(vec!["h2".to_string(), "http/1.1".to_string()]),
                 ..Default::default()

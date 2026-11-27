@@ -34,7 +34,12 @@ fn record(name: &str, family: &str) -> Fingerprint {
         name: name.to_string(),
         family: family.to_string(),
         tls: fingerprint::TlsFingerprint {
-            ciphers: Some("TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384".to_string()),
+            // Registration builds the client a caller would, so the fixture
+            // needs a list BoringSSL accepts: a TLS 1.3-only list fails with
+            // NO_CIPHER_MATCH.
+            ciphers: Some(
+                "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_AES_128_GCM_SHA256".to_string(),
+            ),
             alpn: Some(vec!["http/1.1".to_string()]),
             ..Default::default()
         },
@@ -106,7 +111,9 @@ fn a_json_provider_makes_its_records_resolvable() {
 fn a_higher_priority_provider_shadows_a_lower_one() {
     let _registry = exclusive();
     let mut patched = record("go1.26", "patched");
-    patched.tls.ciphers = Some("TLS_AES_128_GCM_SHA256".to_string());
+    // A TLS 1.3-only list is rejected when the client is built.
+    patched.tls.ciphers =
+        Some("TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256:TLS_AES_128_GCM_SHA256".to_string());
     register_provider_with_priority(
         JsonProvider::new("prov-shadow", serde_json::to_string(&patched).unwrap()),
         PRIORITY_USER,
@@ -774,4 +781,21 @@ fn a_provider_record_can_override_a_builtin_preset() {
         .unwrap()
         .permute_extensions
         .unwrap());
+}
+
+/// A record whose cipher list BoringSSL does not accept must fail when it is
+/// registered. Building the emulation alone does not catch it: the name only
+/// resolves while the TLS client is constructed.
+#[test]
+fn a_record_with_a_unknown_cipher_is_rejected_at_registration() {
+    let _registry = exclusive();
+    let mut bad = record("prov_bad_cipher", "broken");
+    bad.tls.ciphers = Some("NOT_A_CIPHER".to_string());
+    let error = register_provider(JsonProvider::new(
+        "prov-bad-cipher",
+        serde_json::to_string(&bad).unwrap(),
+    ))
+    .unwrap_err();
+    assert!(error.contains("NO_CIPHER_MATCH"), "{error}");
+    assert!(fingerprint::find("prov_bad_cipher").is_none());
 }

@@ -701,6 +701,11 @@ fn register_boxed(provider: Arc<dyn FingerprintProvider>, priority: i32) -> Resu
             if record.http3.is_some() {
                 record.http3_profile()?;
             }
+            // Cipher, curve and signature names are resolved by BoringSSL
+            // while the client is built, not while the record is parsed. A
+            // misspelled name would otherwise register fine and only fail
+            // when a caller builds a client for it.
+            record.wire_check()?;
         }
     }
     {

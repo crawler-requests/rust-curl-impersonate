@@ -92,7 +92,7 @@ let profile = Profile::find("acme_client").expect("no install step needed");
 - 内置实现：`BuiltinProvider`（本 crate 的库，id `builtin`，不可卸载）、`JsonProvider`（内存 JSON 或文件）、`DirProvider`（目录下全部 `*.json`）、`FnProvider`（闭包，每次 load 都调用）、`RemoteProvider`（从 URL 拉取云端指纹库，见下）。
 - `register_provider` / `register_provider_with_priority` / `unregister_provider` / `refresh_providers` / `providers()` / `provider_of(name)`。
 - 优先级 `PRIORITY_BUILTIN` (0) < `PRIORITY_CLOUD` (50) < `PRIORITY_USER` (100)：名字冲突时高优先级胜出，同优先级后注册者胜出。于是应用可以在运行时覆盖内置记录（打补丁、接付费记录集），而不必等 crate 发版；被覆盖的名字仍保持原位置，内置记录顺序不变。
-- 注册前整体校验：provider 内重名、空名、保留/重复 id、`extends` 指向自身或无法解析的目标都会让整个 provider 回滚，不会留下半套记录。非别名记录的 TLS/HTTP/3 输入在注册时就构建，坏文档当场被拒。`Profile::find` 对 `extends` 链有深度上限，别名环也只会解析失败、不会死循环。
+- 注册前整体校验：provider 内重名、空名、保留/重复 id、`extends` 指向自身或无法解析的目标都会让整个 provider 回滚，不会留下半套记录。非别名记录的 TLS/HTTP/3 输入在注册时就构建，而且会真的建一次 client，所以 BoringSSL 不认识的 cipher/曲线/签名算法名也在注册时被拒（`{"error":"record: tls error: [NO_CIPHER_MATCH]"}` 这种），而不是等到第一次请求。注意 BoringSSL 的 cipher 列表至少要有一条 TLS 1.2 套件：只写 `TLS_AES_*` 三件套会被判为 `NO_CIPHER_MATCH`。`Profile::find` 对 `extends` 链有深度上限，别名环也只会解析失败、不会死循环。
 - `load()` 在注册表锁之外运行（`register_provider` 与 `refresh_providers` 都如此）：一个阻塞的 provider（比如网络拉取）不会卡住其它线程上的 `find`/`providers()`。provider 的实现因此不得调用注册表函数。
 - `builtin()` 仍是嵌入库本身；`records()` 是合并视图；`find`/`names`/`families`/`by_family` 都读合并视图。`load_json`/`load_json_file`/`to_json` 语义不变。
 - 一条记录就能表达**完整**浏览器 profile：TLS + HTTP/2 + headers + HTTP/3 + multipart 边界 + cookie 拆分全部是记录字段（`http3` / `form_boundary` / `split_cookies`），不需要 `extends` 指向预置。`ProfileSpec` 的 `http3_*` 构建器与记录的 `http3` 块是同一套生成逻辑；`behavior.rs` 的 48 目标行为表退为兜底。
