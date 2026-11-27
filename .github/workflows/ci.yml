@@ -37,6 +37,35 @@ jobs:
       - name: Audit capture provenance
         run: python3 -I tools/audit_provenance.py
 
+      # The agent entry point is a published URL other agents read, so what it
+      # links must exist in the build: the skill mirror, the plugin archive, and
+      # the two manifests that have to agree. `--live` is left to the release
+      # checklist; here the files are checked without network access.
+      - name: Agent entry point is complete
+        run: |
+          python3 -I - <<'PY'
+          import glob, json, os, zipfile
+          mirror = "website/public/skills/rust-curl-impersonate-native"
+          assert os.path.isfile(f"{mirror}/SKILL.md"), "SKILL.md"
+          assert os.path.isfile(f"{mirror}/.claude-plugin/plugin.json"), "plugin.json"
+          for needed in ("references/api.md", "scripts/fetch_library.py",
+                         "assets/python/rci_bindings.py", "assets/java/pom.xml"):
+              assert os.path.isfile(os.path.join(mirror, needed)), needed
+          manifest = json.load(open("website/public/.claude-plugin/marketplace.json"))
+          entry = manifest["plugins"][0]
+          assert entry["source"]["source"] == "archive", entry["source"]
+          assert entry["source"]["url"].startswith("https://"), entry["source"]
+          archive = "website/public/rust-curl-impersonate-native.zip"
+          names = zipfile.ZipFile(archive).namelist()
+          for needed in (".claude-plugin/plugin.json", "SKILL.md"):
+              assert needed in names, f"archive lacks {needed}"
+          agent = open("website/public/agent.md").read()
+          for url in ("agent.openapi.yaml", ".claude-plugin/marketplace.json",
+                      "rust-curl-impersonate-native.zip"):
+              assert url in agent, f"agent.md does not link {url}"
+          print(f"{len(names)} files in the plugin archive, manifests agree")
+          PY
+
       - name: Check the library is not empty
         run: |
           python3 -I - <<'PY'

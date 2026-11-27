@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  JNA wrapper for the rust-curl-impersonate C ABI (ABI version 2).
+
+  Build:   mvn -q package
+  Test:    mvn -q test -Drci.lib=/path/to/librust_curl_impersonate_ffi.so
+           (RCI_LIB and rci.lib both select the library; when neither is set,
+           JNA searches the usual loader paths)
+
+  This module is a standalone Maven project inside the release archive. It
+  depends only on JNA; the native library is loaded at runtime, so the jar can
+  be published and the .so/.dylib/.dll shipped alongside the application.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.github.crawler-requests</groupId>
+  <artifactId>rust-curl-impersonate-jna</artifactId>
+  <version>0.4.0</version>
+  <packaging>jar</packaging>
+
+  <name>rust-curl-impersonate JNA binding</name>
+  <description>Java access to the rust-curl-impersonate C ABI (browser TLS and HTTP/2 fingerprints)</description>
+  <licenses>
+    <license>
+      <name>MIT</name>
+    </license>
+  </licenses>
+
+  <properties>
+    <maven.compiler.release>11</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jna.version>5.17.0</jna.version>
+    <junit.version>5.11.4</junit.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>${jna.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>

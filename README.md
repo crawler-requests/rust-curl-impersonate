@@ -34,9 +34,19 @@ Python、Node、Go、Java、PHP 的示例都实测跑通）。归档里自带两
 需要跨请求状态时状态放哪、8 条已知行为（含两个 2026-11-27 修掉的缺陷）、以及
 「ABI 不够用时怎么加函数」和一张验收清单。
 
-**给 AI agent 用**：装上 [rust-curl-impersonate-skills](https://github.com/crawler-requests/rust-curl-impersonate-skills)
-后，agent 会自己按目标平台下载归档、校验 ABI、从头文件生成声明、复用现成封装，
-并用真实指纹证明接入成功：
+**给 AI agent 用**：入口是一个 URL ——
+**<https://crawler-requests.github.io/rust-curl-impersonate/agent.md>**
+（机器可读版：<https://crawler-requests.github.io/rust-curl-impersonate/agent.openapi.yaml>）。
+它把 C ABI 契约、每种语言的操作步骤、可下载的封装文件和验证方法收在一处，
+所有链接都不需要登录。同一份 skill 也发布成站点上的插件市场，一条命令就能装：
+
+```sh
+claude plugin marketplace add https://crawler-requests.github.io/rust-curl-impersonate/.claude-plugin/marketplace.json
+claude plugin install rust-curl-impersonate-native@rust-curl-impersonate
+```
+
+装好后 agent 会自己按目标平台下载归档、校验 ABI、从头文件生成声明、复用现成封装，
+并用真实指纹证明接入成功。也可以改用 skill 仓库的 git 源：
 
 ```sh
 claude plugin marketplace add crawler-requests/rust-curl-impersonate-skills

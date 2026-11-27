@@ -1,0 +1,311 @@
+openapi: 3.1.0
+info:
+  title: rust-curl-impersonate — the files an agent needs
+  version: 1.0.0
+  description: >
+    Machine-readable index of this project's agent entry points. Every entry is
+    a URL that resolves without a login. Start at agent.md: it is the
+    human-and-agent readable overview with the same links, in prose.
+  contact:
+    url: https://github.com/crawler-requests/rust-curl-impersonate
+servers:
+- url: https://crawler-requests.github.io/rust-curl-impersonate
+  description: the published site — agent entry points and the skill mirror
+- url: https://raw.githubusercontent.com/crawler-requests/rust-curl-impersonate/main
+  description: the repository source, served raw (the /docs and /bindings paths)
+- url: https://github.com/crawler-requests/rust-curl-impersonate/releases
+  description: prebuilt libraries for 18 targets
+paths:
+  /agent.md:
+    get:
+      operationId: getAgentEntry
+      summary: The entry point — what the project is, how to install the skill, where
+        everything is.
+      tags:
+      - entry
+      responses:
+        '200':
+          description: Markdown
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /.claude-plugin/marketplace.json:
+    get:
+      operationId: getMarketplaceManifest
+      summary: >
+        A Claude Code marketplace manifest. `claude plugin marketplace add
+        <this URL>` then `claude plugin install
+        rust-curl-impersonate-native@rust-curl-impersonate` installs the skill;
+        the catalog's plugin entry is the archive next to it.
+      tags:
+      - skill
+      responses:
+        '200':
+          description: JSON, marketplace schema
+          content:
+            application/json:
+              schema:
+                type: object
+  /skills/rust-curl-impersonate-native/.claude-plugin/plugin.json:
+    get:
+      operationId: getPluginManifest
+      summary: The plugin manifest the marketplace entry points at.
+      tags:
+      - skill
+      responses:
+        '200':
+          description: JSON
+          content:
+            application/json:
+              schema:
+                type: object
+  /skills/rust-curl-impersonate-native/SKILL.md:
+    get:
+      operationId: getSkillProcedure
+      summary: The working procedure — five steps from double-check to a proven request.
+      tags:
+      - skill
+      responses:
+        '200':
+          description: Markdown with YAML front matter (name, description)
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/references/api.md:
+    get:
+      operationId: getAbiContract
+      summary: The C ABI contract — 17 functions, JSON shapes, ownership rules, per-language
+        notes.
+      tags:
+      - contract
+      responses:
+        '200':
+          description: Markdown
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/references/troubleshooting.md:
+    get:
+      operationId: getTroubleshooting
+      summary: Symptom to cause — loader errors, crashes on free, unknown profile,
+        HTTP/3 unavailable.
+      tags:
+      - contract
+      responses:
+        '200':
+          description: Markdown
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/references/languages/{language}.md:
+    get:
+      operationId: getLanguageNotes
+      summary: Per-language integration notes.
+      tags:
+      - contract
+      parameters:
+      - name: language
+        in: path
+        required: true
+        description: 'One of python, java, go, node, php, csharp, swift, android,
+          c, rust.
+
+          '
+        schema:
+          type: string
+          enum:
+          - python
+          - java
+          - go
+          - node
+          - php
+          - csharp
+          - swift
+          - android
+          - c
+          - rust
+      responses:
+        '200':
+          description: Markdown
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/scripts/fetch_library.py:
+    get:
+      operationId: getLibraryFetcher
+      summary: 'Resolves the newest release, picks the target from the host (musl
+        vs glibc included), resumes the download, checks SHA-256, unpacks to rci/.
+
+        '
+      tags:
+      - tool
+      responses:
+        '200':
+          description: A Python 3 script; pass --target for mobile or cross targets
+          content:
+            text/x-python:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/scripts/verify_abi.py:
+    get:
+      operationId: getAbiVerifier
+      summary: '15 offline checks (17 exports, ABI >= 2, 48 presets, NULL and error
+        paths); --echo additionally asserts the JA4 and Akamai h2 fingerprints.
+
+        '
+      tags:
+      - tool
+      responses:
+        '200':
+          description: A Python 3 script; --lib points at rci/lib
+          content:
+            text/x-python:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/scripts/gen_declarations.py:
+    get:
+      operationId: getDeclarationGenerator
+      summary: Emits Java interface methods or a compilable cgo extern block from
+        rci.h.
+      tags:
+      - tool
+      responses:
+        '200':
+          description: A Python 3 script; --header defaults to rci/include/rci.h
+          content:
+            text/x-python:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/scripts/local_echo_server.py:
+    get:
+      operationId: getOfflineEchoServer
+      summary: Offline server with /, /index.html, /echo, /redirect, /binary, /rci-smoke.bin.
+      tags:
+      - tool
+      responses:
+        '200':
+          description: A Python 3 script taking a port argument
+          content:
+            text/x-python:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/assets/python/rci_bindings.py:
+    get:
+      operationId: getCtypesBinding
+      summary: 'A complete ctypes binding that parses rci.h at load time and applies
+        all 17 signatures; Library, Profile, Client, Response, hex-body decoding.
+
+        '
+      tags:
+      - binding
+      responses:
+        '200':
+          description: A Python 3 module, no third-party dependencies
+          content:
+            text/x-python:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/assets/java/README.md:
+    get:
+      operationId: getJavaBinding
+      summary: The JNA binding — a standalone Maven project; install it with mvn package.
+      tags:
+      - binding
+      responses:
+        '200':
+          description: Markdown with the build and load instructions
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /skills/rust-curl-impersonate-native/assets/java/src/main/java/io/github/crawlerrequests/impersonate/RciLibrary.java:
+    get:
+      operationId: getJavaDeclarations
+      summary: The 17 JNA declarations, asserted against rci.h in CI.
+      tags:
+      - binding
+      responses:
+        '200':
+          description: Java source
+          content:
+            text/x-java-source:
+              schema:
+                type: string
+  /bindings/ffi/rci.h:
+    get:
+      operationId: getCHeader
+      summary: The authoritative C header — every function signature the library exports.
+      tags:
+      - contract
+      responses:
+        '200':
+          description: C source; compiles as C and C++
+          content:
+            text/x-c:
+              schema:
+                type: string
+  /docs/embedding.md:
+    get:
+      operationId: getEmbeddingGuide
+      summary: 'The full walkthrough per language — C, C++, Python, Node, Go, Java,
+        Kotlin, PHP, C#, Swift — with commands that were run.
+
+        '
+      tags:
+      - guide
+      responses:
+        '200':
+          description: Markdown
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /docs/wrapper-guide.md:
+    get:
+      operationId: getWrapperGuide
+      summary: 'Building a library on top of this one — path choice, what the wrapper
+        layer adds, where state lives, how to widen the ABI, acceptance list.
+
+        '
+      tags:
+      - guide
+      responses:
+        '200':
+          description: Markdown
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /README.md:
+    get:
+      operationId: getReadme
+      summary: The Rust API overview, the fingerprint library, the build requirements.
+      tags:
+      - guide
+      responses:
+        '200':
+          description: Markdown
+          content:
+            text/markdown:
+              schema:
+                type: string
+  /rust-curl-impersonate-native.zip:
+    get:
+      operationId: getPluginArchive
+      summary: 'The plugin archive the marketplace catalog installs: plugin root at
+        the top of the zip.'
+      tags:
+      - skill
+      responses:
+        '200':
+          description: application/zip
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary

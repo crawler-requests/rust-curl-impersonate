@@ -1,0 +1,21 @@
+{
+  "name": "rust-curl-impersonate-native",
+  "version": "0.1.0",
+  "description": "Embed rust-curl-impersonate's C ABI from any language: download the right archive, verify the ABI, generate declarations, and prove the fingerprint reaches the wire.",
+  "author": {
+    "name": "crawler-requests",
+    "url": "https://github.com/crawler-requests"
+  },
+  "homepage": "https://github.com/crawler-requests/rust-curl-impersonate-skills",
+  "repository": "https://github.com/crawler-requests/rust-curl-impersonate-skills",
+  "license": "MIT",
+  "keywords": [
+    "ffi",
+    "jna",
+    "ctypes",
+    "cgo",
+    "native",
+    "curl-impersonate",
+    "fingerprint"
+  ]
+}

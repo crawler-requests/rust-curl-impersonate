@@ -1,0 +1,39 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "rust-curl-impersonate",
+  "description": "Installable skills for rust-curl-impersonate, published as a catalog so an agent can install them from one URL: https://crawler-requests.github.io/rust-curl-impersonate/",
+  "owner": {
+    "name": "crawler-requests",
+    "url": "https://github.com/crawler-requests"
+  },
+  "plugins": [
+    {
+      "name": "rust-curl-impersonate-native",
+      "source": {
+        "source": "archive",
+        "url": "https://crawler-requests.github.io/rust-curl-impersonate/rust-curl-impersonate-native.zip"
+      },
+      "description": "Embed rust-curl-impersonate's C ABI (17 functions, ABI v2) from Python, Java/Kotlin, Go, Node, PHP, C#, Swift, C/C++ or Android. Ships the downloader, the ABI verifier, a declaration generator, and ready-made ctypes and JNA bindings.",
+      "version": "0.1.0",
+      "author": {
+        "name": "crawler-requests",
+        "url": "https://github.com/crawler-requests"
+      },
+      "category": "development",
+      "license": "MIT",
+      "homepage": "https://crawler-requests.github.io/rust-curl-impersonate/agent.md",
+      "keywords": [
+        "native",
+        "ffi",
+        "jna",
+        "ctypes",
+        "cgo",
+        "curl-impersonate",
+        "tls",
+        "fingerprint",
+        "ja3",
+        "ja4"
+      ]
+    }
+  ]
+}
