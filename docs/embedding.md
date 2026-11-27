@@ -620,6 +620,17 @@ rust-curl-impersonate = { git = "https://github.com/crawler-requests/rust-curl-i
    不会静默退回 HTTP/2。
 7. **动态库加载路径**：Linux `rpath`/`LD_LIBRARY_PATH`，macOS
    `@rpath`/`DYLD_LIBRARY_PATH`，Windows 与 exe 同目录即可。
+8. **在 async 运行时内调用（Rust 封装必看）**：C ABI 同步、且内部会自建
+   runtime 并 `block_on`；在已进入 tokio runtime 的线程上这是非法的。库内已用
+   `off_runtime` 把这类调用挪到独立线程，**不会 abort 进程**（回归测试
+   `bindings/ffi/tests/abi.rs::calls_from_inside_a_runtime_do_not_abort`），但那条
+   线程会阻塞到响应返回。在 Rust 里写封装、且本身跑在 async 服务中时，优先像
+   §5.8 那样直接用 Rust 异步 API（`spawn_blocking` 只在必须用 C ABI 时才用）。
+9. **句柄持有 runtime 与连接池**，重定向策略、cookie、本次连接会话都挂在句柄上；
+   `rci_get` 每次新建并销毁句柄，所以它不跨请求保留任何东西（见 §11.3）。
+10. **`version` 是服务端协议版本**，不是 profile 的能力标签：一个 h2/h3 profile
+   连到只支持 HTTP/1.1 的服务端，返回的仍是 `"HTTP/1.1"`；判断 profile 是否带
+   HTTP/3 配置要看 `rci_profile_info(name).has_http3`。
 
 ---
 
