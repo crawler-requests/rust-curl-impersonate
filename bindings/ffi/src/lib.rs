@@ -189,7 +189,11 @@ fn build_handle(name: &str, options: Options) -> Result<Box<RciClient>, String> 
         builder = builder.header(name, value);
     }
     let client = builder.build().map_err(|error| error.to_string())?;
-    let runtime = tokio::runtime::Builder::new_multi_thread()
+    // A current-thread runtime, not a multi-thread one: every ABI call blocks
+    // the caller, so extra worker threads would only sit idle. A multi-thread
+    // runtime spawns one worker per core per handle, which made ten handles
+    // cost 320 threads.
+    let runtime = tokio::runtime::Builder::new_current_thread()
         .enable_all()
         .build()
         .map_err(|error| error.to_string())?;
@@ -199,6 +203,24 @@ fn build_handle(name: &str, options: Options) -> Result<Box<RciClient>, String> 
         follow_redirects: options.follow_redirects.unwrap_or(true),
         last_headers: Mutex::new(Vec::new()),
     }))
+}
+
+/// Run `body` somewhere that is not driving async tasks.
+///
+/// The ABI is synchronous: it builds a runtime, calls `block_on` on it, and
+/// drops it. All three are illegal on a thread that is itself inside a tokio
+/// runtime, and the panic they raise cannot unwind out of `extern "C"`, so the
+/// whole process aborts. A Rust caller that wraps this library from an async
+/// service hits that on its first request. When a runtime is already entered,
+/// the work therefore moves to a fresh thread that owns none.
+fn off_runtime<R: Send>(body: impl FnOnce() -> R + Send) -> R {
+    if tokio::runtime::Handle::try_current().is_err() {
+        return body();
+    }
+    match std::thread::scope(|scope| scope.spawn(body).join()) {
+        Ok(value) => value,
+        Err(panic) => std::panic::resume_unwind(panic),
+    }
 }
 
 /// Resolve `ip:port` or `host:port` to a socket address.
@@ -289,7 +311,7 @@ pub extern "C" fn rci_profile_info(profile: *const c_char) -> *mut c_char {
 pub extern "C" fn rci_client_new(profile: *const c_char) -> *mut RciClient {
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
         let name = unsafe { opt_str(profile) }?;
-        build_handle(name, Options::default())
+        off_runtime(|| build_handle(name, Options::default()))
     }))
     .unwrap_or_else(|_| Err("panic in rust-curl-impersonate".to_string()));
     finish_handle(result)
@@ -316,7 +338,7 @@ pub extern "C" fn rci_client_new_with_options(
                 }
             }
         };
-        build_handle(name, options)
+        off_runtime(|| build_handle(name, options))
     }))
     .unwrap_or_else(|_| Err("panic in rust-curl-impersonate".to_string()));
     finish_handle(result)
@@ -327,7 +349,12 @@ pub extern "C" fn rci_client_new_with_options(
 pub extern "C" fn rci_client_free(handle: *mut RciClient) {
     if !handle.is_null() {
         // SAFETY: the pointer came from `Box::into_raw` in this library.
-        unsafe { drop(Box::from_raw(handle)) };
+        // The drop releases the handle's runtime, and dropping a runtime
+        // blocks, so it cannot happen on a thread that drives async tasks.
+        unsafe {
+            let boxed = Box::from_raw(handle);
+            off_runtime(move || drop(boxed));
+        }
     }
 }
 
@@ -410,7 +437,7 @@ fn request_core(
         let url = unsafe { opt_str(url) }?;
         let payload = payload?;
         let method = Method::from_bytes(method.as_bytes()).map_err(|error| error.to_string())?;
-        handle.runtime.block_on(async {
+        off_runtime(|| handle.runtime.block_on(async {
             let mut request = handle.client.request(method, url);
             if !handle.follow_redirects {
                 request = request.redirect(redirect::Policy::none());
@@ -440,7 +467,7 @@ fn request_core(
                 }
             }
             Ok(object.to_string())
-        })
+        }))
     }))
 }
 
@@ -469,11 +496,13 @@ pub extern "C" fn rci_http3_get(
         let addr = unsafe { opt_str(addr) }?;
         let host = unsafe { opt_str(host) }?;
         let path = unsafe { opt_str(path) }?;
-        let handle = build_handle(name, Options::default())?;
-        let runtime = &handle.runtime;
-        let socket_addr = resolve_addr(runtime, addr)?;
-        let response = runtime.block_on(handle.client.http3_get(socket_addr, host, path))?;
-        http3_json(&response.headers, &response.body)
+        off_runtime(|| {
+            let handle = build_handle(name, Options::default())?;
+            let runtime = &handle.runtime;
+            let socket_addr = resolve_addr(runtime, addr)?;
+            let response = runtime.block_on(handle.client.http3_get(socket_addr, host, path))?;
+            http3_json(&response.headers, &response.body)
+        })
     }));
     into_c_string(text)
 }

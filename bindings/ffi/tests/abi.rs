@@ -174,3 +174,34 @@ fn loading_a_document_registers_a_record() {
     let bad = unsafe { take(rci_load_fingerprints(c"[{\"name\":\"\"}]".as_ptr())) };
     assert!(bad["error"].is_string());
 }
+
+/// The ABI builds a runtime, blocks on it, and drops it. All three are illegal
+/// on a thread that is already inside a runtime, and the panic cannot unwind
+/// out of `extern "C"`, so before the guard this aborted the process. A Rust
+/// caller wrapping the library from an async service hits it on the first
+/// request, which makes this the most likely way a wrapper breaks.
+#[test]
+fn calls_from_inside_a_runtime_do_not_abort() {
+    let runtime = tokio::runtime::Builder::new_multi_thread()
+        .worker_threads(1)
+        .enable_all()
+        .build()
+        .expect("test runtime");
+
+    let created = runtime.block_on(async {
+        let handle = rci_client_new(c"chrome150".as_ptr());
+        assert!(!handle.is_null(), "a runtime-entered thread can build a handle");
+        rci_client_free(handle);
+
+        // The one-shot path does create, request, and drop in one call.
+        let reply = unsafe {
+            take(rci_get(c"chrome150".as_ptr(), c"http://127.0.0.1:1/unreachable".as_ptr()))
+        };
+        assert!(
+            reply["error"].is_string(),
+            "a dead port is an error object, not a crash: {reply}"
+        );
+        reply
+    });
+    assert!(created["error"].is_string());
+}
