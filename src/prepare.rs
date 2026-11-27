@@ -580,6 +580,22 @@ fn apply_tls(tls: Option<&mut wreq::tls::TlsOptions>, overrides: &Overrides) -> 
     let Some(tls) = tls else {
         return Ok(());
     };
+    // An ALPN list carried by the profile wins over the connector-wide HTTP
+    // version preference, so `http1_only` only reaches the wire if the offered
+    // list stops at `http/1.1` here. An absent or empty list stays as it is:
+    // a real `http1_only` capture without ALPN must keep offering none, but a
+    // caller forcing `http1_only` on an h2 profile carries a non-empty list.
+    if overrides.http1_only == Some(true) {
+        let http1 = wreq::tls::AlpnProtocol::HTTP1;
+        if let Some(list) = tls.alpn_protocols.as_mut() {
+            if !list.is_empty() {
+                list.to_mut().retain(|protocol| *protocol == http1);
+                if list.is_empty() {
+                    list.to_mut().push(http1);
+                }
+            }
+        }
+    }
     if let Some(list) = overrides.sigalgs.as_deref() {
         let installed = policy::install_sigalgs(list);
         match policy::sigalg_codes(&installed) {

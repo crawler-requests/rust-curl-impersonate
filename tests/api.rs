@@ -1280,3 +1280,44 @@ fn sigalgs_installable(list: &str) -> bool {
     .build()
     .is_ok()
 }
+
+#[test]
+fn http1_only_override_narrows_the_offered_alpn() {
+    // The profile's ALPN list wins over the connector-wide HTTP version
+    // preference, so `http1_only` used to change nothing on the wire: a
+    // chrome150 handle with it set still negotiated h2. Only the offered list
+    // can force HTTP/1.1.
+    let profile = Profile::find("chrome150").unwrap();
+    let client = Client::builder(profile).http1_only(true).build().unwrap();
+    assert!(client.prepared().http1_only());
+    let alpn = client
+        .prepared()
+        .emulation()
+        .tls_options
+        .as_ref()
+        .unwrap()
+        .alpn_protocols
+        .clone()
+        .expect("chrome150 offers ALPN");
+    assert_eq!(
+        alpn.as_ref(),
+        &[wreq::tls::AlpnProtocol::HTTP1][..],
+        "forcing HTTP/1.1 must leave only http/1.1 on offer"
+    );
+
+    // A capture that had no ALPN extension keeps offering none.
+    let no_alpn = Profile::find("node22_https").unwrap();
+    let client = Client::builder(no_alpn).http1_only(true).build().unwrap();
+    assert_eq!(
+        client
+            .prepared()
+            .emulation()
+            .tls_options
+            .as_ref()
+            .unwrap()
+            .alpn_protocols
+            .as_deref(),
+        Some(&[][..]),
+        "an empty list must not gain an entry"
+    );
+}
