@@ -136,8 +136,8 @@ python3 bindings/ffi/python/testserver.py 8765 &
 - **Python**：`bindings/ffi/python/rci_bindings.py` 加载时直接解析 `rci.h`，17 条签名
   自动到位；19 个用例 + 1 个可选 HTTP/3 用例。
 - **Java**：`bindings/ffi/java` 是独立 Maven 工程，JNA + 零 JSON 依赖，16 个 JUnit 用例。
-- **Node**：`koffi` 3.3.8 实测同步调用返回 200；`lib.func(...).async(...)` 还能把调用
-  挪到线程池，实测 250 ms 的请求期间主线程定时器照常触发。
+- **Node**：`koffi` 3.3.8 实测同步调用返回 200；`fn.async(...)` 还能把调用挪到
+  线程池，实测 250 ms 的请求期间主线程定时器照常触发（回调式或 `await` 包装均可）。
 - **Go**：cgo 编译器会**拒绝**把 `void *` 传回 `void *` 形参，所以句柄的 C 类型
   必须照 `rci.h` 声明成 `RciClient *`（或 `char *`），不能自己写成 `void *`。
   `tools/gen_signatures.py --go` 生成的声明块加上 `#include <stdlib.h>` 后可被
