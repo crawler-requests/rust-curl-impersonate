@@ -147,6 +147,11 @@ pub use policy::CookieProtocol;
 pub use prepare::Prepared;
 pub use profile::{Profile, ProfileSpec};
 pub use wreq::{header, redirect, Method, Proxy, StatusCode, Version};
+// The transport's own types a caller would otherwise have to name through a
+// direct dependency on the vendored `wreq`: a wrapper that stores a response
+// or builds a request needs these to write its own signatures.
+pub use wreq::multipart::{Form as MultipartForm, Part as MultipartPart};
+pub use wreq::{Request, RequestBuilder, Response};
 pub use ws::{WebSocketUpgrade, WsError, WsFrame};
 
 /// Error returned by the client or the transport.
