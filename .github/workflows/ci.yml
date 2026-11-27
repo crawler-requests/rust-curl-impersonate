@@ -51,6 +51,12 @@ jobs:
           for needed in ("references/api.md", "scripts/fetch_library.py",
                          "assets/python/rci_bindings.py", "assets/java/pom.xml"):
               assert os.path.isfile(os.path.join(mirror, needed)), needed
+          # The entry point links repository documents by their published copy,
+          # so an agent never needs raw.githubusercontent.com.
+          for doc in ("README.md", "rci.h", "docs/embedding.md",
+                      "docs/wrapper-guide.md", "docs/provider-protocol.md",
+                      "bindings/README.md"):
+              assert os.path.isfile(os.path.join("website/public", doc)), doc
           manifest = json.load(open("website/public/.claude-plugin/marketplace.json"))
           entry = manifest["plugins"][0]
           assert entry["source"]["source"] == "archive", entry["source"]

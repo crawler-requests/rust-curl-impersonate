@@ -114,6 +114,16 @@ def check_manifests():
     )
 
 
+def check_site_docs():
+    """Every document an agent.md link points at must be published here."""
+    published = os.path.join(ROOT, "website", "public")
+    for name in ("README.md", "rci.h", "docs/embedding.md", "docs/wrapper-guide.md",
+                 "docs/provider-protocol.md", "bindings/README.md"):
+        path = os.path.join(published, name)
+        assert os.path.isfile(path), f"{name} is not published"
+    print("repository documents are published next to agent.md")
+
+
 def check_local():
     """Every file the agent.md table links under the mirror must exist."""
     text = open(AGENT, encoding="utf-8").read()
@@ -159,6 +169,7 @@ def main():
     arguments = parser.parse_args()
 
     check_local()
+    check_site_docs()
     check_manifests()
     check_mirror()
 

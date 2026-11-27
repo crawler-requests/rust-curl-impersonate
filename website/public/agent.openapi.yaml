@@ -8,6 +8,9 @@ info:
     human-and-agent readable overview with the same links, in prose.
   contact:
     url: https://github.com/crawler-requests/rust-curl-impersonate
+# Paths are relative to the published site: agent.md, the skill mirror
+# (/skills/...), and copies of /README.md, /rci.h and /docs/*. Nothing an agent
+# needs lives on raw.githubusercontent.com or github.com.
 servers:
 - url: https://crawler-requests.github.io/rust-curl-impersonate
   description: the published site — agent entry points and the skill mirror
@@ -236,7 +239,7 @@ paths:
             text/x-java-source:
               schema:
                 type: string
-  /bindings/ffi/rci.h:
+  /rci.h:
     get:
       operationId: getCHeader
       summary: The authoritative C header — every function signature the library exports.

@@ -108,6 +108,26 @@ def manifest_for_site(source_repo):
     return manifest
 
 
+# The repository documents an agent needs, copied into the site so the entry
+# point never depends on raw.githubusercontent.com — that host is unreachable
+# from some networks while the Pages site is not.
+DOCS = [
+    ("README.md", "README.md"),
+    ("docs/embedding.md", "docs/embedding.md"),
+    ("docs/wrapper-guide.md", "docs/wrapper-guide.md"),
+    ("docs/provider-protocol.md", "docs/provider-protocol.md"),
+    ("bindings/ffi/rci.h", "rci.h"),
+    ("bindings/ffi/README.md", "bindings/README.md"),
+]
+
+
+def doc_pairs():
+    """(repository path, published path) for every mirrored document."""
+    published = os.path.join(ROOT, "website", "public")
+    for source, target in DOCS:
+        yield (os.path.join(ROOT, source), os.path.join(published, target))
+
+
 def build_archive():
     """Zip the published plugin, plugin root at the top of the archive.
 
@@ -135,7 +155,7 @@ def sync(source_repo):
         json.dump(manifest, handle, indent=2, ensure_ascii=False)
         handle.write("\n")
     copied = 0
-    for source, target in pairs(source_repo):
+    for source, target in list(pairs(source_repo)) + list(doc_pairs()):
         os.makedirs(os.path.dirname(target), exist_ok=True)
         if not os.path.exists(target) or not filecmp.cmp(source, target, shallow=False):
             shutil.copy2(source, target)
@@ -167,6 +187,11 @@ def check(source_repo):
         path = os.path.join(PUBLISHED, name)
         if path not in expected:
             extra.append(os.path.relpath(path, ROOT))
+    for source, target in doc_pairs():
+        if not os.path.exists(target):
+            missing.append(os.path.relpath(target, ROOT))
+        elif not filecmp.cmp(source, target, shallow=False):
+            different.append(os.path.relpath(target, ROOT))
     expected_manifest = manifest_for_site(source_repo)
     if not os.path.exists(MARKETPLACE) or json.load(open(MARKETPLACE)) != expected_manifest:
         different.append(os.path.relpath(MARKETPLACE, ROOT))

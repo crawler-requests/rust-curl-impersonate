@@ -71,7 +71,8 @@ checkout or a login.
 
 ## The contract, without the skill
 
-Read these in order. Each is plain text or markdown, no auth, no HTML parsing.
+Read these in order. Each is plain text or markdown served by this site, so a
+network that blocks raw.githubusercontent.com or github.com still works.
 
 | What | URL |
 |---|---|
@@ -82,10 +83,10 @@ Read these in order. Each is plain text or markdown, no auth, no HTML parsing.
 | The C ABI contract: 17 functions, JSON shapes, ownership | `https://crawler-requests.github.io/rust-curl-impersonate/skills/rust-curl-impersonate-native/references/api.md` |
 | Symptom → cause | `https://crawler-requests.github.io/rust-curl-impersonate/skills/rust-curl-impersonate-native/references/troubleshooting.md` |
 | Per-language notes (python, java, go, node, php, csharp, swift, android, c, rust) | `https://crawler-requests.github.io/rust-curl-impersonate/skills/rust-curl-impersonate-native/references/languages/<language>.md` |
-| Authoritative C header | `https://raw.githubusercontent.com/crawler-requests/rust-curl-impersonate/main/bindings/ffi/rci.h` |
-| Full per-language walkthrough (C, C++, Python, Node, Go, Java, PHP, C#, Swift) | `https://raw.githubusercontent.com/crawler-requests/rust-curl-impersonate/main/docs/embedding.md` |
-| Building a wrapper library on top of this one | `https://raw.githubusercontent.com/crawler-requests/rust-curl-impersonate/main/docs/wrapper-guide.md` |
-| Rust API overview | `https://raw.githubusercontent.com/crawler-requests/rust-curl-impersonate/main/README.md` |
+| Authoritative C header | `https://crawler-requests.github.io/rust-curl-impersonate/rci.h` |
+| Full per-language walkthrough (C, C++, Python, Node, Go, Java, PHP, C#, Swift) | `https://crawler-requests.github.io/rust-curl-impersonate/docs/embedding.md` |
+| Building a wrapper library on top of this one | `https://crawler-requests.github.io/rust-curl-impersonate/docs/wrapper-guide.md` |
+| Rust API overview | `https://crawler-requests.github.io/rust-curl-impersonate/README.md` |
 
 Ready-made bindings, downloadable as single files:
 
@@ -174,7 +175,7 @@ machine. Fix that before writing any wrapper code.
 ## If you are writing an SDK on top of this
 
 Read
-[`docs/wrapper-guide.md`](https://raw.githubusercontent.com/crawler-requests/rust-curl-impersonate/main/docs/wrapper-guide.md)
+[`docs/wrapper-guide.md`](https://crawler-requests.github.io/rust-curl-impersonate/docs/wrapper-guide.md)
 before choosing a design: it covers which path to take, what a wrapper has to
 add (handle lifetime, binary-safe bodies, one error model, ownership), where
 cross-request state lives, how to widen the ABI, and an acceptance checklist.
