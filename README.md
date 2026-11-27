@@ -28,6 +28,12 @@ Python、Node、Go、Java、PHP 的示例都实测跑通）。归档里自带两
 `java/`（独立 Maven 工程，JNA）。
 函数级细节：[bindings/ffi/README.md](bindings/ffi/README.md)。
 
+**要在这个库上面再封装一层**（语言 SDK、框架客户端、统一客户端）：
+[docs/wrapper-guide.md](docs/wrapper-guide.md)。它讲路径怎么选、封装层要补哪四件事
+（句柄生命周期、二进制安全、错误模型、所有权）、每种语言的最小可复现命令、
+需要跨请求状态时状态放哪、8 条已知行为（含两个 2026-11-27 修掉的缺陷）、以及
+「ABI 不够用时怎么加函数」和一张验收清单。
+
 **给 AI agent 用**：装上 [rust-curl-impersonate-skills](https://github.com/crawler-requests/rust-curl-impersonate-skills)
 后，agent 会自己按目标平台下载归档、校验 ABI、从头文件生成声明、复用现成封装，
 并用真实指纹证明接入成功：
