@@ -1,49 +1,56 @@
 import { useEffect, useState } from "react";
 import { GithubOutlined, StarFilled } from "@ant-design/icons";
+import { isFresh, readStarRecord, writeStarRecord } from "../data/starCache";
 
 // A GitHub repository badge in the header: the mark, the repository name and
 // its star count, fetched from the GitHub API.
 //
-// The API allows 60 anonymous requests an hour per address, so the answer is
-// cached for half an hour in localStorage rather than fetched on every visit.
-// A failed fetch (offline, rate limited, blocked) leaves the badge without a
-// star count instead of hiding it.
+// The API allows 60 anonymous requests an hour per address, so the count is
+// kept in IndexedDB for half an hour (src/data/starCache.ts). A cached count
+// paints as soon as the read completes; when it is older than the TTL it still
+// paints, and a fresh fetch replaces it in place. Only a visit with no record
+// at all starts without a number.
+//
+// A failed fetch (offline, rate limited, blocked) leaves the last known count
+// in place, or no count at all if there never was one; the badge stays.
 
 const REPO = "crawler-requests/rust-curl-impersonate";
 const URL = `https://github.com/${REPO}`;
-const CACHE_KEY = "github-stars:" + REPO;
-const TTL_MS = 30 * 60 * 1000;
 
-interface Cached {
-  stars: number;
-  at: number;
-}
-
-function readCache(): number | null {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const cached = JSON.parse(raw) as Cached;
-    if (!Number.isFinite(cached.stars) || Date.now() - cached.at > TTL_MS) {
-      return null;
-    }
-    return cached.stars;
-  } catch {
-    // A blocked or corrupt storage behaves like no cache.
-    return null;
-  }
-}
-
-function writeCache(stars: number) {
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ stars, at: Date.now() }));
-  } catch {
-    // Private mode can refuse the write; the count still shows this visit.
-  }
-}
-
+// One decimal below ten thousand reads precisely ("4.3k"); above that the
+// decimal is noise ("12k"), and a million - unreachable for this repo but
+// cheap to handle - becomes "1.2M" rather than "1000k".
 function formatStars(count: number): string {
-  return count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
+  if (count < 1000) return String(count);
+  if (count < 10000) return `${(count / 1000).toFixed(1)}k`;
+  if (count < 999500) return `${Math.round(count / 1000)}k`;
+  return `${(count / 1000000).toFixed(1)}M`;
+}
+
+// Shared across mounts so a remount while the request is in flight (React
+// Strict Mode's double effect, a route change) does not spend the quota twice.
+// It is released when the request settles, so a later stale cache can fetch
+// again rather than replaying the first answer.
+let inflight: Promise<number | null> | null = null;
+
+function fetchStars(): Promise<number | null> {
+  if (inflight) return inflight;
+
+  inflight = fetch(`https://api.github.com/repos/${REPO}`, {
+    headers: { Accept: "application/vnd.github+json" },
+  })
+    .then((response) => (response.ok ? response.json() : null))
+    .then((data: { stargazers_count?: number } | null) => {
+      if (!data || typeof data.stargazers_count !== "number") return null;
+      void writeStarRecord(REPO, { stars: data.stargazers_count, at: Date.now() });
+      return data.stargazers_count;
+    })
+    .catch(() => null)
+    .finally(() => {
+      inflight = null;
+    });
+
+  return inflight;
 }
 
 export function GitHubBadge() {
@@ -52,27 +59,21 @@ export function GitHubBadge() {
   const [stars, setStars] = useState<number | null>(null);
 
   useEffect(() => {
-    const cached = readCache();
-    if (cached !== null) {
-      setStars(cached);
-      return;
-    }
-
     let cancelled = false;
-    fetch(`https://api.github.com/repos/${REPO}`, {
-      headers: { Accept: "application/vnd.github+json" },
-    })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data: { stargazers_count?: number } | null) => {
-        if (cancelled || !data || typeof data.stargazers_count !== "number") {
-          return;
-        }
-        writeCache(data.stargazers_count);
-        setStars(data.stargazers_count);
-      })
-      .catch(() => {
-        // Offline or blocked: leave the count unknown.
+    const paint = (count: number) => {
+      if (!cancelled) setStars(count);
+    };
+
+    void readStarRecord(REPO).then((record) => {
+      if (cancelled) return;
+      if (record) {
+        paint(record.stars);
+        if (isFresh(record)) return;
+      }
+      void fetchStars().then((count) => {
+        if (count !== null) paint(count);
       });
+    });
 
     return () => {
       cancelled = true;

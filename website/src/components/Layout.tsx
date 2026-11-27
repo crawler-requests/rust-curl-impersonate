@@ -18,9 +18,10 @@ const NAV = [
   { to: "/limits", label: "边界" },
 ];
 
-// Under 920px the wordmark, the links and the badge no longer fit on one line
-// (the badge alone is ~270px), so the header keeps the wordmark, the badge and
-// one button: a sheet listing the same links, one line each.
+// Under 1000px the wordmark, the links and the badge no longer fit on one line
+// (the badge alone is ~270px, and a star count widens it), so the header keeps
+// the wordmark, the badge and one button: a sheet listing the same links, one
+// line each.
 
 function MobileSheet() {
   const [open, setOpen] = useState(false);
@@ -97,7 +98,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="site-header__inner">
           <Link to="/" className="wordmark" style={{ textDecoration: "none" }}>
             <span className="wordmark__dot" />
-            rust-curl-impersonate
+            <span className="wordmark__name">rust-curl-impersonate</span>
           </Link>
           <nav className="site-header__links">
             <ClientMenu />

@@ -94,6 +94,14 @@ body {
   transform: translateY(-3px);
 }
 
+/* The name sits in its own box so an ellipsis lands on the text, not on the
+   dot beside it. */
+.wordmark__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .site-header__links {
   margin-left: auto;
   display: flex;
@@ -484,11 +492,12 @@ body {
 }
 
 /* The six links plus the family menu stop fitting before the phone breakpoint,
-   so the header switches to a sheet at 760 rather than at 640. */
-/* The wordmark, the six links and the badge need about 900px together: the
-   badge alone is ~270px and none of its parts may wrap. Below that the header
-   keeps the wordmark and the badge, and everything else moves into the sheet. */
-@media (max-width: 920px) {
+   so the header switches to a sheet rather than waiting for 640. */
+/* The wordmark, the six links and the badge need up to ~985px together: the
+   badge alone is ~270px, it grows with the star count, and none of its parts
+   may wrap. Below 1000 the header keeps the wordmark and the badge, and
+   everything else moves into the sheet. */
+@media (max-width: 1000px) {
   .site-header__inner {
     gap: 12px;
   }
@@ -510,6 +519,24 @@ body {
   }
   .page {
     padding: 0 20px;
+  }
+}
+
+/* A wordmark, a badge with a star count and the sheet button need ~362px; a
+   320px or 360px phone cannot hold all three on one line. There the wordmark
+   shrinks and shows an ellipsis: it is the only header part whose width is
+   not fixed by content, and it must not push the header sideways. */
+@media (max-width: 380px) {
+  .site-header__inner {
+    gap: 10px;
+  }
+  .wordmark {
+    flex-shrink: 1;
+    min-width: 0;
+    font-size: 17px;
+  }
+  .wordmark__dot {
+    flex-shrink: 0;
   }
 }
 
