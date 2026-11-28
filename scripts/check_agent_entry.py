@@ -13,8 +13,9 @@ so every URL in it must resolve without a login. This checks two things:
     python3 scripts/check_agent_entry.py --live          # + fetch every URL
     python3 scripts/check_agent_entry.py --live --site-only
 
-`--site-only` skips the raw.githubusercontent.com URLs, which need network
-access to GitHub; the site URLs alone prove the published copy.
+`--site-only` checks only URLs this project publishes; the github.com and
+raw.githubusercontent.com links are skipped because some networks cannot reach
+them. Run the full check from a network that can.
 """
 
 import argparse
@@ -165,7 +166,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--live", action="store_true", help="fetch every URL and require 200")
     parser.add_argument("--site-only", action="store_true",
-                        help="with --live, skip raw.githubusercontent.com URLs")
+                        help="with --live, check only URLs this project publishes (skip "
+                             "github.com, raw.githubusercontent.com and the release page)")
     arguments = parser.parse_args()
 
     check_local()
@@ -178,7 +180,10 @@ def main():
 
     failures = []
     for url in urls():
-        if arguments.site_only and "raw.githubusercontent.com" in url:
+        if arguments.site_only and not url.startswith(SITE):
+            # github.com and raw.githubusercontent.com are blocked or flaky
+            # from some networks while the published site is not; a release
+            # checklist runs this from a network where the site is reachable.
             print(f"skip  {url}")
             continue
         status, length = head(url)
