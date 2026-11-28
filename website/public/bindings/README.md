@@ -130,19 +130,34 @@ the response shapes, and working examples for C, C++, Python, Node, Go,
 Java/Kotlin, PHP, C# and Swift. This file keeps the function list; that one
 shows how to call it from each language.
 
-Two ready-made bindings ship with every release archive, so a consumer does not
-have to write the glue:
+Six ready-made bindings ship with every release archive, so a consumer does not
+have to write the glue. Each carries its own tests and a README in the
+repository:
 
 - `python/rci_bindings.py` — ctypes; reads `rci.h` at load time and applies all
-  17 signatures, so it cannot drift from the header. Has `Library` / `Profile` /
-  `Client` / `Response` and `python/tests/` (20 offline checks plus a retrying
-  HTTP/3 case).
+  17 signatures, so it cannot drift from the header. `python/tests/` has 19
+  offline checks plus an optional HTTP/3 case.
 - `java/` — a standalone Maven project with a JNA binding (`RciLibrary`, a
   `RustCurlImpersonate` facade, a dependency-free JSON reader) and 16 JUnit
   tests. JNA rather than Panama because Panama is still preview on JDK 21 and
   needs `--enable-native-access`.
+- `go/` — a cgo binding (`rci.Library`-style API: `NewClient`, `Get`,
+  `RequestWithHeaders`, `Close`) whose tests cover errors, binary bodies,
+  redirect policy, the cookie jar and runtime registration. 13 tests.
+- `node/rci.js` — koffi (prebuilt FFI, no native build tools). `node --test`
+  runs 13 checks; `Rci.load({ ffi })` swaps in ffi-napi.
+- `php/rci.php` — PHP 7.4+ FFI. `tests.php` runs 30 checks, and its first block
+  compares the inline `FFI::cdef` declarations against `rci.h`; PHP is the one
+  language whose declarations are hand-held, so that comparison is its gate.
+- `include/rci.hpp` (`cpp/` in the repository) — a header-only C++17 layer:
+  move-only handle and owned strings, `{"error": ...}` as exceptions, no JSON
+  dependency. `tests.cpp` runs 29 checks and compiles with `-Wall -Wextra
+  -Werror`.
 
-Both were run against the locally built library on 2026-11-26; the Python tests
-pass 20/20 (1 skipped without `RCI_H3=1`) and the Java tests 16/16 (0 skipped
-with `-Drci.h3=1`). `tools/gen_signatures.py --check` is the gate that keeps
+All of them run against the offline server (`python/testserver.py`, or
+`local_echo_server.py` in the skill) in CI as well as locally; the Go, Node,
+  PHP and C++ ones are new on 2026-11-29 and were exercised from both the
+  repository and a packed archive. The Python and Java suites were last run
+  against the locally built library on 2026-11-26 (19/1 skipped and 16/1
+  skipped without the HTTP/3 opt-in). `tools/gen_signatures.py --check` is the gate that keeps
 `rci.h` and the Java declarations in step.

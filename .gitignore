@@ -19,3 +19,7 @@ __pycache__/
 
 # the LAN/status-bar service list is machine-local
 server-url.txt
+
+# Node binding dependencies
+/bindings/ffi/node/node_modules/
+/bindings/ffi/node/package-lock.json

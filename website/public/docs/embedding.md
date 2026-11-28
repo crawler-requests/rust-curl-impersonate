@@ -290,6 +290,28 @@ false`、`fidelity: "close"`。
 
 ---
 
+## 2.6 现成封装一览（不需要自己写）
+
+归档里除了 Python 和 Java，还带 Go、Node、PHP、C++ 四套封装，每个都有测试与 README：
+
+| 语言 | 位置 | 测试 | 读懂它的入口 |
+|---|---|---|---|
+| Python | `python/rci_bindings.py` | 19 项 | `python/tests/test_rci_bindings.py` |
+| Java | `java/`（Maven + JNA） | 16 项 | `java/README.md` |
+| Go | `go/` | 13 项 | `bindings/ffi/go/README.md` |
+| Node | `node/rci.js` + koffi | 13 项 | `bindings/ffi/node/README.md` |
+| PHP | `php/rci.php` | 30 项 | `bindings/ffi/php/README.md` |
+| C++ | `include/rci.hpp`（仓库里是 `bindings/ffi/c/`） | 29 项 | `bindings/ffi/c/README.md` |
+
+每个封装都做同样的四件事：释放所有 `char *`、把 `{"error": ...}` 变成异常、
+非 UTF-8 身体解十六进制、把句柄生命周期绑到语言的作用域；选项名用类型或白名单
+表达，未知键在调用库之前就被拒。语言侧的差异只剩 FFI 层本身。
+
+离线测试服务器（`python/testserver.py`，skill 里是 `local_echo_server.py`）提供
+`/`、`/index.html`、`/redirect`、`/echo`（GET 与 POST）、`/cookie`（两条
+`Set-Cookie`）、`/rci-smoke.bin`，足以验证请求路径、头合并、重定向策略、cookie
+罐与二进制解码。
+
 ## 3. Python
 
 归档里的 `python/rci_bindings.py` 是完整封装：`Library`（加载 + 按 `rci.h`

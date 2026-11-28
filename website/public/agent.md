@@ -101,6 +101,13 @@ Ready-made bindings, downloadable as single files:
 | JNA binding, entry point (standalone Maven project) | `https://crawler-requests.github.io/rust-curl-impersonate/skills/rust-curl-impersonate-native/assets/java/README.md` |
 | JNA binding, declarations | `https://crawler-requests.github.io/rust-curl-impersonate/skills/rust-curl-impersonate-native/assets/java/src/main/java/io/github/crawlerrequests/impersonate/RciLibrary.java` |
 
+Six bindings ship in every release archive — Python, Java, Go, Node, PHP and
+C++ — each with its own tests. If you are writing the first wrapper for a
+language that is not in that list, the four things every one of them does are
+worth copying: free every `char *`, turn `{"error": ...}` into your language's
+exception or error, hex-decode when `body_is_text` is false, and tie the handle
+to a scope.
+
 ## Get the library
 
 Prebuilt for 18 targets, each archive carrying `include/rci.h`, the shared and the

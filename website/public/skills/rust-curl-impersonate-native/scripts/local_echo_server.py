@@ -7,10 +7,11 @@ Routes:
   /            200 "hello from rust-curl-impersonate" (text/plain)
   /index.html  the same
   /redirect   302 to /index.html
-  /echo        echoes method, request headers and body as JSON
-  /binary      raw bytes (0x00 0x01 0x02 0xff 0xfe) to check hex decoding
-               (/rci-smoke.bin is accepted too: that is the name the shipped
-               binding tests use)
+  /echo       echoes method, request headers and body as JSON (GET and POST)
+  /cookie     two Set-Cookie headers, for a handle's cookie jar to carry
+  /binary     raw bytes (0x00 0x01 0x02 0xff 0xfe) to check hex decoding
+              (/rci-smoke.bin is accepted too: that is the name the shipped
+              binding tests use)
 
 Use it to prove a wrapper's request path, header merging, redirect policy and
 binary-body decoding without depending on the network:
@@ -52,6 +53,13 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, b"hello from rust-curl-impersonate")
         elif path == "/echo":
             self._echo(b"")
+        elif path == "/cookie":
+            # Two Set-Cookie headers, so a binding's cookie-jar test has
+            # something to carry to the next request on the same handle.
+            self._send(200, b"set", extra=[
+                ("Set-Cookie", "sid=abc123; Path=/"),
+                ("Set-Cookie", "theme=dark; Path=/"),
+            ])
         else:
             self._send(404, b"not found")
 

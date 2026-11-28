@@ -233,6 +233,44 @@ jobs:
               target/release/librust_curl_impersonate_ffi.so
           echo "archive files: $(find "$root" -type f | wc -l)"
 
+      # The four source bindings that ship beside the release archive are run
+      # here, from the repository, against the same local server. They are the
+      # first thing a wrapper author copies, so a broken declaration or a stale
+      # route (the offline server must serve /cookie and GET /echo) is caught
+      # before a release rather than by a downloader.
+      - name: The Go, Node, PHP and C++ bindings
+        shell: bash
+        run: |
+          set -e
+          python3 -I bindings/ffi/python/testserver.py 8765 > /tmp/testserver-bindings.log 2>&1 &
+          for _ in $(seq 1 20); do
+            curl -sf http://127.0.0.1:8765/index.html >/dev/null && break
+            sleep 0.5
+          done
+          lib="${{ github.workspace }}/target/release/librust_curl_impersonate_ffi.so"
+
+          # Go (cgo, linked against the freshly built library)
+          ( cd bindings/ffi/go
+            CGO_LDFLAGS="-L${{ github.workspace }}/target/release -lrust_curl_impersonate_ffi -Wl,-rpath,${{ github.workspace }}/target/release" \
+              go test ./... )
+
+          # Node (koffi is installed from the lockfile-free package.json)
+          ( cd bindings/ffi/node
+            npm install --no-audit --no-fund --silent
+            RCI_LIB="$lib" node --test )
+
+          # PHP (FFI is a standard extension in the runner's PHP build)
+          ( cd bindings/ffi/php
+            RCI_LIB="$lib" RCI_HEADER="${{ github.workspace }}/bindings/ffi/rci.h" \
+              php tests.php )
+
+          # C++ (header + tests, warnings as errors)
+          ( cd bindings/ffi/c
+            g++ -std=c++17 -Wall -Wextra -Werror -I "${{ github.workspace }}/bindings/ffi" \
+              tests.cpp -L "${{ github.workspace }}/target/release" \
+              -lrust_curl_impersonate_ffi -Wl,-rpath,"${{ github.workspace }}/target/release" -o /tmp/cpp-binding-tests
+            /tmp/cpp-binding-tests )
+
       - name: Header compiles as C and C++
         run: |
           printf '#include "rci.h"\nint main(void){return 0;}\n' > /tmp/hdr.c

@@ -37,21 +37,35 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, BINARY, content_type="application/octet-stream")
         elif path in ("/", "/index.html"):
             self._send(200, b"hello from rust-curl-impersonate")
+        elif path == "/echo":
+            # GET echoes too, so a binding can check headers and cookies
+            # without building a body. The POST branch below echoes the body.
+            self._echo(b"")
+        elif path == "/cookie":
+            # Two Set-Cookie headers, so a handle's cookie jar has something
+            # to carry to the next request on the same handle.
+            self._send(200, b"set", extra=[
+                ("Set-Cookie", "sid=abc123; Path=/"),
+                ("Set-Cookie", "theme=dark; Path=/"),
+            ])
         else:
             self._send(404, b"not found")
 
-    def do_POST(self):
-        length = int(self.headers.get("Content-Length") or 0)
-        body = self.rfile.read(length) if length else b""
+    def _echo(self, body):
         payload = json.dumps(
             {
-                "method": "POST",
+                "method": self.command,
                 "path": self.path,
                 "headers": {name.lower(): value for name, value in self.headers.items()},
                 "body": body.decode("utf-8", "replace"),
             }
         ).encode()
         self._send(200, payload, content_type="application/json")
+
+    def do_POST(self):
+        length = int(self.headers.get("Content-Length") or 0)
+        body = self.rfile.read(length) if length else b""
+        self._echo(body)
 
     def log_message(self, *args):
         pass

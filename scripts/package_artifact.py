@@ -43,6 +43,14 @@ PYTHON_FILES = ("rci_bindings.py", "demo.py", "testserver.py", "smoke.py")
 # copied, and neither is anything else not listed here.
 JAVA_FILES = ("pom.xml", "src", "README.md")
 
+# Source-only bindings: they carry their own tests and a README, and build
+# against the library in lib/. Nothing here needs a toolchain on the packaging
+# host, which is why they ship as source rather than prebuilt.
+GO_FILES = ("go.mod", "rci.go", "cgo.go", "json.go", "load.go", "rci_test.go", "README.md", "tests")
+NODE_FILES = ("package.json", "rci.js", "rci.test.js", "README.md")
+PHP_FILES = ("rci.php", "tests.php", "README.md")
+CPP_FILES = ("rci.hpp", "tests.cpp", "README.md")
+
 
 def find_library(release_dir):
     for name in LIBRARIES:
@@ -202,6 +210,34 @@ def stage(target, version, target_dir, out_dir):
                 os.makedirs(java_dir, exist_ok=True)
                 shutil.copy2(source, os.path.join(java_dir, name))
 
+    # Source bindings for the other languages. They live outside python/ and
+    # java/ so the layout matches the repository, where each language has its
+    # own directory beside rci.h.
+    for directory, names in (
+        ("go", GO_FILES),
+        ("node", NODE_FILES),
+        ("php", PHP_FILES),
+        ("cpp", CPP_FILES),
+    ):
+        source_root = os.path.join(ROOT, "bindings", "ffi", "c" if directory == "cpp" else directory)
+        target_root = os.path.join(stage_dir, directory)
+        for name in names:
+            source = os.path.join(source_root, name)
+            if os.path.isdir(source):
+                shutil.copytree(
+                    source,
+                    os.path.join(target_root, name),
+                    ignore=shutil.ignore_patterns("__pycache__", ".pytest_cache", "node_modules"),
+                )
+            elif os.path.exists(source):
+                os.makedirs(target_root, exist_ok=True)
+                shutil.copy2(source, os.path.join(target_root, name))
+    # The C++ header sits in bindings/ffi/c/ in the repository, but in an
+    # archive it belongs next to rci.h, where a C++ caller looks for it.
+    cpp_header = os.path.join(ROOT, "bindings", "ffi", "c", "rci.hpp")
+    if os.path.exists(cpp_header):
+        shutil.copy2(cpp_header, os.path.join(stage_dir, "include", "rci.hpp"))
+
     # Android artifacts are consumed as a shared library, not as a host binary.
     echo = os.path.join(release_dir, "examples", "echo" + (".exe" if "windows" in target else ""))
     if "android" not in target and "apple-ios" not in target and os.path.exists(echo):
@@ -230,6 +266,11 @@ REQUIRED = {
     "python/demo.py",
     "python/rci_bindings.py",
     "java/pom.xml",
+    "include/rci.hpp",
+    "go/go.mod",
+    "node/rci.js",
+    "php/rci.php",
+    "cpp/tests.cpp",
     "USING_THIS_ARCHIVE.md",
     "EMBEDDING.md",
     "README.md",

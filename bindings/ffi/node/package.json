@@ -1,0 +1,14 @@
+{
+  "name": "rust-curl-impersonate-node",
+  "version": "0.1.0",
+  "description": "Node binding for the rust-curl-impersonate C ABI (koffi)",
+  "license": "MIT",
+  "main": "rci.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "koffi": "^3.3.8"
+  }
+}
