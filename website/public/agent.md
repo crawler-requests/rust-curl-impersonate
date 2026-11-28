@@ -108,6 +108,15 @@ worth copying: free every `char *`, turn `{"error": ...}` into your language's
 exception or error, hex-decode when `body_is_text` is false, and tie the handle
 to a scope.
 
+The tests in those six are the fastest way to check a new wrapper: every one
+runs against the offline server and asserts the same list — 48 presets,
+profile metadata, a 200 with its version, a binary body decoded, per-request
+headers, an unknown option refused, a 302 returned rather than followed,
+`follow_safe` refusing a loopback hop, the cookie jar carrying between two
+requests on one handle, the wire profile, and a record registered at run time.
+Copy that list before writing code; it is also the list in
+`docs/wrapper-guide.md` §9.
+
 ## Get the library
 
 Prebuilt for 18 targets, each archive carrying `include/rci.h`, the shared and the
