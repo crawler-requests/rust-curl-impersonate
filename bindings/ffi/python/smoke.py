@@ -20,7 +20,18 @@ import json
 import os
 import sys
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+HERE = os.path.dirname(os.path.abspath(__file__))
+# In the repository this file sits at bindings/ffi/python/, so the build output
+# is three levels up. In a release archive it sits at <root>/python/, next to
+# lib/ and include/, so the archive root is one level up. Pick whichever
+# layout actually exists instead of assuming the repository one.
+_ARCHIVE_ROOT = os.path.abspath(os.path.join(HERE, ".."))
+if os.path.isdir(os.path.join(HERE, "..", "lib")) or os.path.isdir(
+    os.path.join(HERE, "..", "include")
+):
+    ROOT = _ARCHIVE_ROOT
+else:
+    ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 
 if sys.platform == "darwin":
     LIB_NAME = "librust_curl_impersonate_ffi.dylib"
@@ -29,7 +40,21 @@ elif os.name == "nt":
 else:
     LIB_NAME = "librust_curl_impersonate_ffi.so"
 
-LIB = os.environ.get("RCI_LIB") or os.path.join(ROOT, "target", "release", LIB_NAME)
+
+def _default_library():
+    """The library inside a release archive, or the build output.
+
+    Trying the build-output path first made the script fail from an archive
+    unless RCI_LIB was set by hand, which is the one thing a smoke test in an
+    archive should not require.
+    """
+    archive = os.path.join(ROOT, "lib", LIB_NAME)
+    if os.path.exists(archive):
+        return archive
+    return os.path.join(ROOT, "target", "release", LIB_NAME)
+
+
+LIB = os.environ.get("RCI_LIB") or _default_library()
 BASE = os.environ.get("RCI_BASE", "http://127.0.0.1:8765")
 
 if not os.path.exists(LIB):
@@ -134,6 +159,10 @@ last = take(lib.rci_client_last_headers(handle))
 check("last_headers matches", last == reply.get("headers"))
 
 binary = os.path.join(ROOT, "target", "rci-smoke.bin")
+# A release archive has no target/ directory: the file is only a fixture the
+# test server reads, so put it beside the script when that directory is absent.
+if not os.path.isdir(os.path.dirname(binary)):
+    binary = os.path.join(os.path.dirname(os.path.abspath(__file__)), "rci-smoke.bin")
 with open(binary, "wb") as handle_out:
     handle_out.write(b"\x00\x01\x02\xff\xfe binary")
 try:

@@ -85,15 +85,59 @@ def _strip_static(path):
 
 
 def release_dir_for(target_dir, target):
-    """Cross builds write to <target-dir>/<target>/release; a native build
-    without `--target` writes to <target-dir>/release."""
-    for candidate in (
+    """Where the build for `target` landed.
+
+    A `cargo build --target <target>` writes to <target-dir>/<target>/release.
+    A native build *without* `--target` writes to <target-dir>/release, and
+    that directory is the right answer only when it is the host's build.
+
+    The previous version took the first candidate that had a library, so a
+    leftover cross-build directory silently won over the fresh native one —
+    a release could ship a library weeks older than the code being released.
+    Prefer a directory whose library is newer than its own sources; if both
+    qualify, prefer the cross-build directory, which is the one a release
+    workflow produces.
+    """
+    candidates = [
         os.path.join(target_dir, target, "release"),
         os.path.join(target_dir, "release"),
-    ):
-        if any(os.path.exists(os.path.join(candidate, name)) for name in LIBRARIES):
-            return candidate
-    return os.path.join(target_dir, target, "release")
+    ]
+    present = [
+        candidate
+        for candidate in candidates
+        if any(os.path.exists(os.path.join(candidate, name)) for name in LIBRARIES)
+    ]
+    if not present:
+        return candidates[0]
+    if len(present) == 1:
+        return present[0]
+    # Both exist: same target, two builds. The newer library wins; a tie goes
+    # to the own-target directory.
+    def library_age(candidate):
+        stamps = [
+            os.path.getmtime(os.path.join(candidate, name))
+            for name in LIBRARIES
+            if os.path.exists(os.path.join(candidate, name))
+        ]
+        return max(stamps)
+
+    ordered = sorted(present, key=library_age, reverse=True)
+    return ordered[0]
+
+
+def manifest_version():
+    """The version the release workflow resolves, read from Cargo.toml.
+
+    The workflow takes the tag name (or the manual `version` input) and never
+    compares it with anything, so a mistyped tag could publish an archive
+    labelled v0.5.0 whose library and manifests say 0.1.0. `--version` is
+    checked against this value unless a caller passes `--allow-version-mismatch`
+    (a pre-release or dev build has no tag to match).
+    """
+    import tomllib
+
+    with open(os.path.join(ROOT, "Cargo.toml"), "rb") as handle:
+        return tomllib.load(handle)["package"]["version"]
 
 
 def stage(target, version, target_dir, out_dir):
@@ -234,7 +278,20 @@ def main():
     parser.add_argument("--version", required=True)
     parser.add_argument("--target-dir", default=os.path.join(ROOT, "target"))
     parser.add_argument("--out", default=os.path.join(ROOT, "dist"))
+    parser.add_argument(
+        "--allow-version-mismatch",
+        action="store_true",
+        help="pack a version that Cargo.toml does not declare (a dev or pre-release build)",
+    )
     args = parser.parse_args()
+    declared = manifest_version()
+    if not args.allow_version_mismatch:
+        normalized = args.version.lstrip("v")
+        if normalized != declared and not normalized.startswith(declared + "-"):
+            sys.exit(
+                f"--version {args.version} does not match Cargo.toml's {declared}; "
+                "bump Cargo.toml or pass --allow-version-mismatch"
+            )
     os.makedirs(args.out, exist_ok=True)
     archive = stage(args.target, args.version, args.target_dir, args.out)
     print(archive, os.path.getsize(archive), "bytes")

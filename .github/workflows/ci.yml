@@ -202,6 +202,37 @@ jobs:
               python3 -I bindings/ffi/python/smoke.py 2>&1 \
               | grep 'http3 profile=' || true
           done
+      # The archive is the artefact every non-Rust wrapper downloads, and it
+      # is built from the same Linux library this job just produced. Packing it
+      # here catches two things the in-repo tests cannot: a stale cross-build
+      # directory winning over the fresh library, and the shipped scripts
+      # (`smoke.py` above all) failing when they sit in the archive layout
+      # rather than the repository one.
+      - name: The release archive works on its own
+        shell: bash
+        run: |
+          python3 -I bindings/ffi/python/testserver.py 8765 > /tmp/testserver-archive.log 2>&1 &
+          for _ in $(seq 1 20); do
+            curl -sf http://127.0.0.1:8765/index.html >/dev/null && break
+            sleep 0.5
+          done
+          version=$(python3 -I -c 'import tomllib; print(tomllib.load(open("Cargo.toml","rb"))["package"]["version"])')
+          python3 -I scripts/package_artifact.py --target x86_64-unknown-linux-gnu \
+            --version "$version" --out /tmp/archive-ci
+          root=/tmp/archive-ci/rust-curl-impersonate-ffi-$version-x86_64-unknown-linux-gnu
+          # Simulate a downloader: no environment overrides in smoke.py. The
+          # subshell keeps the relative paths below anchored at the workspace.
+          ( cd "$root" && python3 -I python/smoke.py )
+          # The shipped binding tests run against the library inside the archive.
+          python3 -m pip install --quiet pytest
+          RCI_LIB="$root/lib/librust_curl_impersonate_ffi.so" \
+            python3 -m pytest "$root/python/tests" -q
+          # The library in the archive must be the one this job built, not a
+          # leftover from an earlier cross build: same bytes, not same age.
+          cmp "$root/lib/librust_curl_impersonate_ffi.so" \
+              target/release/librust_curl_impersonate_ffi.so
+          echo "archive files: $(find "$root" -type f | wc -l)"
+
       - name: Header compiles as C and C++
         run: |
           printf '#include "rci.h"\nint main(void){return 0;}\n' > /tmp/hdr.c

@@ -341,13 +341,21 @@ jobs:
           esac
           cargo build --release -p rust-curl-impersonate-ffi --target ${{ matrix.target }}
 
+      # The archive's name and the version inside it have to be the same, and
+      # `package_artifact.py` refuses a version Cargo.toml does not declare. A
+      # pre-release tag (`v0.4.0-rc1`) differs from the manifest on purpose, so
+      # only those (and manual runs whose tag is ahead of Cargo.toml) take the
+      # escape hatch.
       - name: Package
         shell: bash
         run: |
+          version="${VERSION#v}"
+          extra=""
+          if [[ "$version" == *-* ]]; then extra="--allow-version-mismatch"; fi
           python scripts/package_artifact.py \
             --target "${{ matrix.target }}" \
             --version "$VERSION" \
-            --out dist
+            --out dist $extra
 
       # The header and the shipped library must agree: every rci_ function the
       # header declares is in the library's dynamic export table.
